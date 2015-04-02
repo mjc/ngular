@@ -1,19 +1,19 @@
 /**
-Ember Metal
+Ngular Metal
 
-@module ember
-@submodule ember-metal
+@module ngular
+@submodule ngular-metal
 */
 
 // BEGIN IMPORTS
-import Ember from "ember-metal/core";
-import merge from "ember-metal/merge";
+import Ngular from "ngular-metal/core";
+import merge from "ngular-metal/merge";
 import {
   instrument,
   reset as instrumentationReset,
   subscribe as instrumentationSubscribe,
   unsubscribe as instrumentationUnsubscribe
-} from "ember-metal/instrumentation";
+} from "ngular-metal/instrumentation";
 import {
   EMPTY_META,
   GUID_KEY,
@@ -36,28 +36,28 @@ import {
   typeOf,
   uuid,
   wrap
-} from "ember-metal/utils";
-import EmberError from "ember-metal/error";
-import EnumerableUtils from "ember-metal/enumerable_utils";
-import Cache from "ember-metal/cache";
+} from "ngular-metal/utils";
+import NgularError from "ngular-metal/error";
+import EnumerableUtils from "ngular-metal/enumerable_utils";
+import Cache from "ngular-metal/cache";
 import {
   hasPropertyAccessors
-} from 'ember-metal/platform/define_property';
-import create from 'ember-metal/platform/create';
+} from 'ngular-metal/platform/define_property';
+import create from 'ngular-metal/platform/create';
 import {
   filter,
   forEach,
   indexOf,
   map
-} from "ember-metal/array";
-import Logger from "ember-metal/logger";
+} from "ngular-metal/array";
+import Logger from "ngular-metal/logger";
 
 import {
   _getPath,
   get,
   getWithDefault,
   normalizeTuple
-} from "ember-metal/property_get";
+} from "ngular-metal/property_get";
 
 import {
   accumulateListeners,
@@ -70,9 +70,9 @@ import {
   suspendListener,
   suspendListeners,
   watchedEvents
-} from "ember-metal/events";
+} from "ngular-metal/events";
 
-import ObserverSet from "ember-metal/observer_set";
+import ObserverSet from "ngular-metal/observer_set";
 
 import {
   beginPropertyChanges,
@@ -81,52 +81,52 @@ import {
   overrideChains,
   propertyDidChange,
   propertyWillChange
-} from "ember-metal/property_events";
+} from "ngular-metal/property_events";
 
 import {
   defineProperty
-} from "ember-metal/properties";
+} from "ngular-metal/properties";
 import {
   set,
   trySet
-} from "ember-metal/property_set";
+} from "ngular-metal/property_set";
 
 import {
   Map,
   MapWithDefault,
   OrderedSet
-} from "ember-metal/map";
-import getProperties from "ember-metal/get_properties";
-import setProperties from "ember-metal/set_properties";
+} from "ngular-metal/map";
+import getProperties from "ngular-metal/get_properties";
+import setProperties from "ngular-metal/set_properties";
 import {
   watchKey,
   unwatchKey
-} from "ember-metal/watch_key";
+} from "ngular-metal/watch_key";
 import {
   ChainNode,
   finishChains,
   flushPendingChains,
   removeChainWatcher
-} from "ember-metal/chains";
+} from "ngular-metal/chains";
 import {
   watchPath,
   unwatchPath
-} from "ember-metal/watch_path";
+} from "ngular-metal/watch_path";
 import {
   destroy,
   isWatching,
   rewatch,
   unwatch,
   watch
-} from "ember-metal/watching";
-import expandProperties from "ember-metal/expand_properties";
+} from "ngular-metal/watching";
+import expandProperties from "ngular-metal/expand_properties";
 import {
   ComputedProperty,
   computed,
   cacheFor
-} from "ember-metal/computed";
+} from "ngular-metal/computed";
 
-import alias from 'ember-metal/alias';
+import alias from 'ngular-metal/alias';
 import {
   empty,
   notEmpty,
@@ -147,7 +147,7 @@ import {
   or,
   any,
   collect
-} from "ember-metal/computed_macros";
+} from "ngular-metal/computed_macros";
 
 computed.empty = empty;
 computed.notEmpty = notEmpty;
@@ -182,7 +182,7 @@ import {
   observersFor,
   removeBeforeObserver,
   removeObserver
-} from "ember-metal/observer";
+} from "ngular-metal/observer";
 import {
   IS_BINDING,
   Mixin,
@@ -192,20 +192,20 @@ import {
   mixin,
   observer,
   required
-} from "ember-metal/mixin";
+} from "ngular-metal/mixin";
 import {
   Binding,
   bind,
   isGlobalPath,
   oneWay
-} from "ember-metal/binding";
-import run from "ember-metal/run_loop";
-import Libraries from "ember-metal/libraries";
-import isNone from 'ember-metal/is_none';
-import isEmpty from 'ember-metal/is_empty';
-import isBlank from 'ember-metal/is_blank';
-import isPresent from 'ember-metal/is_present';
-import keys from 'ember-metal/keys';
+} from "ngular-metal/binding";
+import run from "ngular-metal/run_loop";
+import Libraries from "ngular-metal/libraries";
+import isNone from 'ngular-metal/is_none';
+import isEmpty from 'ngular-metal/is_empty';
+import isBlank from 'ngular-metal/is_blank';
+import isPresent from 'ngular-metal/is_present';
+import keys from 'ngular-metal/keys';
 import Backburner from 'backburner';
 import {
   isStream,
@@ -218,171 +218,171 @@ import {
   scanHash,
   concat,
   chain
-} from "ember-metal/streams/utils";
+} from "ngular-metal/streams/utils";
 
-import Stream from "ember-metal/streams/stream";
+import Stream from "ngular-metal/streams/stream";
 
 // END IMPORTS
 
 // BEGIN EXPORTS
-var EmberInstrumentation = Ember.Instrumentation = {};
-EmberInstrumentation.instrument = instrument;
-EmberInstrumentation.subscribe = instrumentationSubscribe;
-EmberInstrumentation.unsubscribe = instrumentationUnsubscribe;
-EmberInstrumentation.reset  = instrumentationReset;
+var NgularInstrumentation = Ngular.Instrumentation = {};
+NgularInstrumentation.instrument = instrument;
+NgularInstrumentation.subscribe = instrumentationSubscribe;
+NgularInstrumentation.unsubscribe = instrumentationUnsubscribe;
+NgularInstrumentation.reset  = instrumentationReset;
 
-Ember.instrument = instrument;
-Ember.subscribe = instrumentationSubscribe;
+Ngular.instrument = instrument;
+Ngular.subscribe = instrumentationSubscribe;
 
-Ember._Cache = Cache;
+Ngular._Cache = Cache;
 
-Ember.generateGuid    = generateGuid;
-Ember.GUID_KEY        = GUID_KEY;
-Ember.create          = create;
-Ember.keys            = keys;
-Ember.platform        = {
+Ngular.generateGuid    = generateGuid;
+Ngular.GUID_KEY        = GUID_KEY;
+Ngular.create          = create;
+Ngular.keys            = keys;
+Ngular.platform        = {
   defineProperty: defineProperty,
   hasPropertyAccessors: hasPropertyAccessors
 };
 
-var EmberArrayPolyfills = Ember.ArrayPolyfills = {};
+var NgularArrayPolyfills = Ngular.ArrayPolyfills = {};
 
-EmberArrayPolyfills.map = map;
-EmberArrayPolyfills.forEach = forEach;
-EmberArrayPolyfills.filter = filter;
-EmberArrayPolyfills.indexOf = indexOf;
+NgularArrayPolyfills.map = map;
+NgularArrayPolyfills.forEach = forEach;
+NgularArrayPolyfills.filter = filter;
+NgularArrayPolyfills.indexOf = indexOf;
 
-Ember.Error           = EmberError;
-Ember.guidFor         = guidFor;
-Ember.META_DESC       = META_DESC;
-Ember.EMPTY_META      = EMPTY_META;
-Ember.meta            = meta;
-Ember.getMeta         = getMeta;
-Ember.setMeta         = setMeta;
-Ember.metaPath        = metaPath;
-Ember.inspect         = inspect;
-Ember.typeOf          = typeOf;
-Ember.tryCatchFinally = deprecatedTryCatchFinally;
-Ember.isArray         = isArray;
-Ember.makeArray       = makeArray;
-Ember.canInvoke       = canInvoke;
-Ember.tryInvoke       = tryInvoke;
-Ember.tryFinally      = deprecatedTryFinally;
-Ember.wrap            = wrap;
-Ember.apply           = apply;
-Ember.applyStr        = applyStr;
-Ember.uuid            = uuid;
+Ngular.Error           = NgularError;
+Ngular.guidFor         = guidFor;
+Ngular.META_DESC       = META_DESC;
+Ngular.EMPTY_META      = EMPTY_META;
+Ngular.meta            = meta;
+Ngular.getMeta         = getMeta;
+Ngular.setMeta         = setMeta;
+Ngular.metaPath        = metaPath;
+Ngular.inspect         = inspect;
+Ngular.typeOf          = typeOf;
+Ngular.tryCatchFinally = deprecatedTryCatchFinally;
+Ngular.isArray         = isArray;
+Ngular.makeArray       = makeArray;
+Ngular.canInvoke       = canInvoke;
+Ngular.tryInvoke       = tryInvoke;
+Ngular.tryFinally      = deprecatedTryFinally;
+Ngular.wrap            = wrap;
+Ngular.apply           = apply;
+Ngular.applyStr        = applyStr;
+Ngular.uuid            = uuid;
 
-Ember.Logger = Logger;
+Ngular.Logger = Logger;
 
-Ember.get            = get;
-Ember.getWithDefault = getWithDefault;
-Ember.normalizeTuple = normalizeTuple;
-Ember._getPath       = _getPath;
+Ngular.get            = get;
+Ngular.getWithDefault = getWithDefault;
+Ngular.normalizeTuple = normalizeTuple;
+Ngular._getPath       = _getPath;
 
-Ember.EnumerableUtils = EnumerableUtils;
+Ngular.EnumerableUtils = EnumerableUtils;
 
-Ember.on                  = on;
-Ember.addListener         = addListener;
-Ember.removeListener      = removeListener;
-Ember._suspendListener    = suspendListener;
-Ember._suspendListeners   = suspendListeners;
-Ember.sendEvent           = sendEvent;
-Ember.hasListeners        = hasListeners;
-Ember.watchedEvents       = watchedEvents;
-Ember.listenersFor        = listenersFor;
-Ember.accumulateListeners = accumulateListeners;
+Ngular.on                  = on;
+Ngular.addListener         = addListener;
+Ngular.removeListener      = removeListener;
+Ngular._suspendListener    = suspendListener;
+Ngular._suspendListeners   = suspendListeners;
+Ngular.sendEvent           = sendEvent;
+Ngular.hasListeners        = hasListeners;
+Ngular.watchedEvents       = watchedEvents;
+Ngular.listenersFor        = listenersFor;
+Ngular.accumulateListeners = accumulateListeners;
 
-Ember._ObserverSet = ObserverSet;
+Ngular._ObserverSet = ObserverSet;
 
-Ember.propertyWillChange = propertyWillChange;
-Ember.propertyDidChange = propertyDidChange;
-Ember.overrideChains = overrideChains;
-Ember.beginPropertyChanges = beginPropertyChanges;
-Ember.endPropertyChanges = endPropertyChanges;
-Ember.changeProperties = changeProperties;
+Ngular.propertyWillChange = propertyWillChange;
+Ngular.propertyDidChange = propertyDidChange;
+Ngular.overrideChains = overrideChains;
+Ngular.beginPropertyChanges = beginPropertyChanges;
+Ngular.endPropertyChanges = endPropertyChanges;
+Ngular.changeProperties = changeProperties;
 
-Ember.defineProperty = defineProperty;
+Ngular.defineProperty = defineProperty;
 
-Ember.set    = set;
-Ember.trySet = trySet;
+Ngular.set    = set;
+Ngular.trySet = trySet;
 
-Ember.OrderedSet = OrderedSet;
-Ember.Map = Map;
-Ember.MapWithDefault = MapWithDefault;
+Ngular.OrderedSet = OrderedSet;
+Ngular.Map = Map;
+Ngular.MapWithDefault = MapWithDefault;
 
-Ember.getProperties = getProperties;
-Ember.setProperties = setProperties;
+Ngular.getProperties = getProperties;
+Ngular.setProperties = setProperties;
 
-Ember.watchKey   = watchKey;
-Ember.unwatchKey = unwatchKey;
+Ngular.watchKey   = watchKey;
+Ngular.unwatchKey = unwatchKey;
 
-Ember.flushPendingChains = flushPendingChains;
-Ember.removeChainWatcher = removeChainWatcher;
-Ember._ChainNode = ChainNode;
-Ember.finishChains = finishChains;
+Ngular.flushPendingChains = flushPendingChains;
+Ngular.removeChainWatcher = removeChainWatcher;
+Ngular._ChainNode = ChainNode;
+Ngular.finishChains = finishChains;
 
-Ember.watchPath = watchPath;
-Ember.unwatchPath = unwatchPath;
+Ngular.watchPath = watchPath;
+Ngular.unwatchPath = unwatchPath;
 
-Ember.watch = watch;
-Ember.isWatching = isWatching;
-Ember.unwatch = unwatch;
-Ember.rewatch = rewatch;
-Ember.destroy = destroy;
+Ngular.watch = watch;
+Ngular.isWatching = isWatching;
+Ngular.unwatch = unwatch;
+Ngular.rewatch = rewatch;
+Ngular.destroy = destroy;
 
-Ember.expandProperties = expandProperties;
+Ngular.expandProperties = expandProperties;
 
-Ember.ComputedProperty = ComputedProperty;
-Ember.computed = computed;
-Ember.cacheFor = cacheFor;
+Ngular.ComputedProperty = ComputedProperty;
+Ngular.computed = computed;
+Ngular.cacheFor = cacheFor;
 
-Ember.addObserver = addObserver;
-Ember.observersFor = observersFor;
-Ember.removeObserver = removeObserver;
-Ember.addBeforeObserver = addBeforeObserver;
-Ember._suspendBeforeObserver = _suspendBeforeObserver;
-Ember._suspendBeforeObservers = _suspendBeforeObservers;
-Ember._suspendObserver = _suspendObserver;
-Ember._suspendObservers = _suspendObservers;
-Ember.beforeObserversFor = beforeObserversFor;
-Ember.removeBeforeObserver = removeBeforeObserver;
+Ngular.addObserver = addObserver;
+Ngular.observersFor = observersFor;
+Ngular.removeObserver = removeObserver;
+Ngular.addBeforeObserver = addBeforeObserver;
+Ngular._suspendBeforeObserver = _suspendBeforeObserver;
+Ngular._suspendBeforeObservers = _suspendBeforeObservers;
+Ngular._suspendObserver = _suspendObserver;
+Ngular._suspendObservers = _suspendObservers;
+Ngular.beforeObserversFor = beforeObserversFor;
+Ngular.removeBeforeObserver = removeBeforeObserver;
 
-Ember.IS_BINDING = IS_BINDING;
-Ember.required = required;
-Ember.aliasMethod = aliasMethod;
-Ember.observer = observer;
-Ember.immediateObserver = immediateObserver;
-Ember.beforeObserver = beforeObserver;
-Ember.mixin = mixin;
-Ember.Mixin = Mixin;
+Ngular.IS_BINDING = IS_BINDING;
+Ngular.required = required;
+Ngular.aliasMethod = aliasMethod;
+Ngular.observer = observer;
+Ngular.immediateObserver = immediateObserver;
+Ngular.beforeObserver = beforeObserver;
+Ngular.mixin = mixin;
+Ngular.Mixin = Mixin;
 
-Ember.oneWay = oneWay;
-Ember.bind = bind;
-Ember.Binding = Binding;
-Ember.isGlobalPath = isGlobalPath;
+Ngular.oneWay = oneWay;
+Ngular.bind = bind;
+Ngular.Binding = Binding;
+Ngular.isGlobalPath = isGlobalPath;
 
-Ember.run = run;
+Ngular.run = run;
 
 /**
  * @class Backburner
- * @for Ember
+ * @for Ngular
  * @private
 */
-Ember.Backburner = Backburner;
+Ngular.Backburner = Backburner;
 
-Ember.libraries = new Libraries();
-Ember.libraries.registerCoreLibrary('Ember', Ember.VERSION);
+Ngular.libraries = new Libraries();
+Ngular.libraries.registerCoreLibrary('Ngular', Ngular.VERSION);
 
-Ember.isNone = isNone;
-Ember.isEmpty = isEmpty;
-Ember.isBlank = isBlank;
-Ember.isPresent = isPresent;
+Ngular.isNone = isNone;
+Ngular.isEmpty = isEmpty;
+Ngular.isBlank = isBlank;
+Ngular.isPresent = isPresent;
 
-Ember.merge = merge;
+Ngular.merge = merge;
 
-if (Ember.FEATURES.isEnabled('ember-metal-stream')) {
-  Ember.stream = {
+if (Ngular.FEATURES.isEnabled('ngular-metal-stream')) {
+  Ngular.stream = {
     Stream: Stream,
 
     isStream: isStream,
@@ -399,12 +399,12 @@ if (Ember.FEATURES.isEnabled('ember-metal-stream')) {
 }
 
 /**
-  A function may be assigned to `Ember.onerror` to be called when Ember
+  A function may be assigned to `Ngular.onerror` to be called when Ngular
   internals encounter an error. This is useful for specialized error handling
   and reporting code.
 
   ```javascript
-  Ember.onerror = function(error) {
+  Ngular.onerror = function(error) {
     Em.$.ajax('/report-error', 'POST', {
       stack: error.stack,
       otherInformation: 'whatever app state you want to provide'
@@ -412,19 +412,19 @@ if (Ember.FEATURES.isEnabled('ember-metal-stream')) {
   };
   ```
 
-  Internally, `Ember.onerror` is used as Backburner's error handler.
+  Internally, `Ngular.onerror` is used as Backburner's error handler.
 
   @event onerror
-  @for Ember
+  @for Ngular
   @param {Exception} error the error object
 */
-Ember.onerror = null;
+Ngular.onerror = null;
 // END EXPORTS
 
-// do this for side-effects of updating Ember.assert, warn, etc when
-// ember-debug is present
-if (Ember.__loader.registry['ember-debug']) {
-  requireModule('ember-debug');
+// do this for side-effects of updating Ngular.assert, warn, etc when
+// ngular-debug is present
+if (Ngular.__loader.registry['ngular-debug']) {
+  requireModule('ngular-debug');
 }
 
-export default Ember;
+export default Ngular;

@@ -1,26 +1,26 @@
-import Ember from "ember-metal/core"; // Ember.lookup
-import _MetamorphView from "ember-views/views/metamorph_view";
-import EmberView from "ember-views/views/view";
-import handlebarsGet from "ember-htmlbars/compat/handlebars-get";
-import { Registry } from "ember-runtime/system/container";
-import { runAppend, runDestroy } from "ember-runtime/tests/utils";
+import Ngular from "ngular-metal/core"; // Ngular.lookup
+import _MetamorphView from "ngular-views/views/metamorph_view";
+import NgularView from "ngular-views/views/view";
+import handlebarsGet from "ngular-htmlbars/compat/handlebars-get";
+import { Registry } from "ngular-runtime/system/container";
+import { runAppend, runDestroy } from "ngular-runtime/tests/utils";
 
-import EmberHandlebars from "ember-htmlbars/compat";
+import NgularHandlebars from "ngular-htmlbars/compat";
 
-var compile = EmberHandlebars.compile;
+var compile = NgularHandlebars.compile;
 
-var originalLookup = Ember.lookup;
+var originalLookup = Ngular.lookup;
 var TemplateTests, registry, container, lookup, view;
 
-QUnit.module("ember-htmlbars: Ember.Handlebars.get", {
+QUnit.module("ngular-htmlbars: Ngular.Handlebars.get", {
   setup() {
-    Ember.lookup = lookup = {};
+    Ngular.lookup = lookup = {};
     registry = new Registry();
     container = registry.container();
     registry.optionsForType('template', { instantiate: false });
     registry.optionsForType('helper', { instantiate: false });
     registry.register('view:default', _MetamorphView);
-    registry.register('view:toplevel', EmberView.extend());
+    registry.register('view:toplevel', NgularView.extend());
   },
 
   teardown() {
@@ -28,7 +28,7 @@ QUnit.module("ember-htmlbars: Ember.Handlebars.get", {
     runDestroy(view);
     registry = container = view = null;
 
-    Ember.lookup = lookup = originalLookup;
+    Ngular.lookup = lookup = originalLookup;
     TemplateTests = null;
   }
 });
@@ -44,7 +44,7 @@ QUnit.test('it can lookup a path from the current context', function() {
     });
   });
 
-  view = EmberView.create({
+  view = NgularView.create({
     container: container,
     controller: {
       foo: 'bar'
@@ -66,7 +66,7 @@ QUnit.test('it can lookup a path from the current keywords', function() {
     });
   });
 
-  view = EmberView.create({
+  view = NgularView.create({
     container: container,
     controller: {
       foo: 'bar'
@@ -90,7 +90,7 @@ QUnit.test('it can lookup a path from globals', function() {
     });
   });
 
-  view = EmberView.create({
+  view = NgularView.create({
     container: container,
     controller: { },
     template: compile('{{handlebars-get "Blammo.foo"}}')
@@ -107,10 +107,10 @@ QUnit.test('it raises a deprecation warning on use', function() {
 
     expectDeprecation(function() {
       handlebarsGet(context, path, options);
-    }, 'Usage of Ember.Handlebars.get is deprecated, use a Component or Ember.Handlebars.makeBoundHelper instead.');
+    }, 'Usage of Ngular.Handlebars.get is deprecated, use a Component or Ngular.Handlebars.makeBoundHelper instead.');
   });
 
-  view = EmberView.create({
+  view = NgularView.create({
     container: container,
     controller: {
       foo: 'bar'

@@ -1,2 +1,2 @@
-import Renderer from 'ember-metal-views/renderer';
+import Renderer from 'ngular-metal-views/renderer';
 export { Renderer };

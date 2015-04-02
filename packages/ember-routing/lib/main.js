@@ -1,43 +1,43 @@
 /**
-Ember Routing
+Ngular Routing
 
-@module ember
-@submodule ember-routing
-@requires ember-views
+@module ngular
+@submodule ngular-routing
+@requires ngular-views
 */
 
-import Ember from "ember-metal/core";
+import Ngular from "ngular-metal/core";
 
 // ES6TODO: Cleanup modules with side-effects below
-import "ember-routing/ext/run_loop";
-import "ember-routing/ext/controller";
+import "ngular-routing/ext/run_loop";
+import "ngular-routing/ext/controller";
 
-import EmberLocation from "ember-routing/location/api";
-import NoneLocation from "ember-routing/location/none_location";
-import HashLocation from "ember-routing/location/hash_location";
-import HistoryLocation from "ember-routing/location/history_location";
-import AutoLocation from "ember-routing/location/auto_location";
+import NgularLocation from "ngular-routing/location/api";
+import NoneLocation from "ngular-routing/location/none_location";
+import HashLocation from "ngular-routing/location/hash_location";
+import HistoryLocation from "ngular-routing/location/history_location";
+import AutoLocation from "ngular-routing/location/auto_location";
 
-import generateController from "ember-routing/system/generate_controller";
+import generateController from "ngular-routing/system/generate_controller";
 import {
   generateControllerFactory
-} from "ember-routing/system/generate_controller";
-import controllerFor from "ember-routing/system/controller_for";
-import RouterDSL from "ember-routing/system/dsl";
-import Router from "ember-routing/system/router";
-import Route from "ember-routing/system/route";
+} from "ngular-routing/system/generate_controller";
+import controllerFor from "ngular-routing/system/controller_for";
+import RouterDSL from "ngular-routing/system/dsl";
+import Router from "ngular-routing/system/router";
+import Route from "ngular-routing/system/route";
 
-Ember.Location = EmberLocation;
-Ember.AutoLocation = AutoLocation;
-Ember.HashLocation = HashLocation;
-Ember.HistoryLocation = HistoryLocation;
-Ember.NoneLocation = NoneLocation;
+Ngular.Location = NgularLocation;
+Ngular.AutoLocation = AutoLocation;
+Ngular.HashLocation = HashLocation;
+Ngular.HistoryLocation = HistoryLocation;
+Ngular.NoneLocation = NoneLocation;
 
-Ember.controllerFor = controllerFor;
-Ember.generateControllerFactory = generateControllerFactory;
-Ember.generateController = generateController;
-Ember.RouterDSL = RouterDSL;
-Ember.Router = Router;
-Ember.Route = Route;
+Ngular.controllerFor = controllerFor;
+Ngular.generateControllerFactory = generateControllerFactory;
+Ngular.generateController = generateController;
+Ngular.RouterDSL = RouterDSL;
+Ngular.Router = Router;
+Ngular.Route = Route;
 
-export default Ember;
+export default Ngular;

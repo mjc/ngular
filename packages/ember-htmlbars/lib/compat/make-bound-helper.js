@@ -1,20 +1,20 @@
 /**
-@module ember
-@submodule ember-htmlbars
+@module ngular
+@submodule ngular-htmlbars
 */
 
-import Ember from "ember-metal/core"; // Ember.FEATURES, Ember.assert, Ember.Handlebars, Ember.lookup
-import { IS_BINDING } from "ember-metal/mixin";
-import Helper from "ember-htmlbars/system/helper";
+import Ngular from "ngular-metal/core"; // Ngular.FEATURES, Ngular.assert, Ngular.Handlebars, Ngular.lookup
+import { IS_BINDING } from "ngular-metal/mixin";
+import Helper from "ngular-htmlbars/system/helper";
 
-import Stream from "ember-metal/streams/stream";
+import Stream from "ngular-metal/streams/stream";
 import {
   readArray,
   scanArray,
   scanHash,
   readHash,
   isStream
-} from "ember-metal/streams/utils";
+} from "ngular-metal/streams/utils";
 
 /**
   A helper function used by `registerBoundHelper`. Takes the
@@ -25,7 +25,7 @@ import {
   is for registering helpers on the container:
 
   ```js
-  var boundHelperFn = Ember.Handlebars.makeBoundHelper(function(word) {
+  var boundHelperFn = Ngular.Handlebars.makeBoundHelper(function(word) {
     return word.toUpperCase();
   });
 
@@ -36,7 +36,7 @@ import {
   `makeBoundHelper`, the registered helper would be unbound.
 
   @method makeBoundHelper
-  @for Ember.Handlebars
+  @for Ngular.Handlebars
   @param {Function} function
   @param {String} dependentKeys*
   @since 1.2.0
@@ -53,7 +53,7 @@ export default function makeBoundHelper(fn, compatMode) {
     var numParams = params.length;
     var param;
 
-    Ember.assert("registerBoundHelper-generated helpers do not support use with Handlebars blocks.", !options.template);
+    Ngular.assert("registerBoundHelper-generated helpers do not support use with Handlebars blocks.", !options.template);
 
     for (var prop in hash) {
       if (IS_BINDING.test(prop)) {

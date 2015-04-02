@@ -21,8 +21,8 @@ var compareCommits = RSVP.denodeify(github.repos.compareCommits);
 var currentVersion = process.env.PRIOR_VERSION;
 
 compareCommits({
-  user: 'emberjs',
-  repo: 'ember.js',
+  user: 'ngularjs',
+  repo: 'ngular.js',
   base: currentVersion,
   head: 'master'
 })
@@ -51,7 +51,7 @@ function processPages(res) {
     return a.number > b.number;
   }).map(function(pr) {
     var link   = '[#' + pr.number + ']' +
-                 '(https://github.com/emberjs/ember.js/pull/' + pr.number + ')';
+                 '(https://github.com/ngularjs/ngular.js/pull/' + pr.number + ')';
     var title  = pr.title;
     var author = '[@' + pr.author + ']' +
                  '(https://github.com/' + pr.author +')';

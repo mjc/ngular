@@ -1,14 +1,14 @@
 /**
-@module ember
-@submodule ember-views
+@module ngular
+@submodule ngular-views
 */
 
-import EmberError from "ember-metal/error";
-import run from "ember-metal/run_loop";
+import NgularError from "ngular-metal/error";
+import run from "ngular-metal/run_loop";
 import {
   GUID_KEY,
   uuid
-} from "ember-metal/utils";
+} from "ngular-metal/utils";
 
 function K() { return this; }
 
@@ -67,7 +67,7 @@ SimpleBoundView.prototype = {
       case 'destroyed':
         break;
       case 'inBuffer':
-        throw new EmberError("Something you did tried to replace an {{expression}} before it was inserted into the DOM.");
+        throw new NgularError("Something you did tried to replace an {{expression}} before it was inserted into the DOM.");
       case 'hasElement':
       case 'inDOM':
         this.updateId = run.scheduleOnce('render', this, 'update');

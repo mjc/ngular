@@ -1,9 +1,9 @@
-import Namespace from "ember-runtime/system/namespace";
-import Application from "ember-runtime/system/application";
+import Namespace from "ngular-runtime/system/namespace";
+import Application from "ngular-runtime/system/application";
 
-QUnit.module('Ember.Application');
+QUnit.module('Ngular.Application');
 
-QUnit.test('Ember.Application should be a subclass of Ember.Namespace', function() {
+QUnit.test('Ngular.Application should be a subclass of Ngular.Namespace', function() {
 
-  ok(Namespace.detect(Application), 'Ember.Application subclass of Ember.Namespace');
+  ok(Namespace.detect(Application), 'Ngular.Application subclass of Ngular.Namespace');
 });

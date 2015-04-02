@@ -1,13 +1,13 @@
 /**
-@module ember
-@submodule ember-views
+@module ngular
+@submodule ngular-views
 */
 
-import { set } from "ember-metal/property_set";
-import _MetamorphView from "ember-views/views/metamorph_view";
-import NormalizedRerenderIfNeededSupport from "ember-views/mixins/normalized_rerender_if_needed";
-import run from 'ember-metal/run_loop';
-import renderView from "ember-htmlbars/system/render-view";
+import { set } from "ngular-metal/property_set";
+import _MetamorphView from "ngular-views/views/metamorph_view";
+import NormalizedRerenderIfNeededSupport from "ngular-views/mixins/normalized_rerender_if_needed";
+import run from 'ngular-metal/run_loop';
+import renderView from "ngular-htmlbars/system/render-view";
 
 export default _MetamorphView.extend(NormalizedRerenderIfNeededSupport, {
   init() {

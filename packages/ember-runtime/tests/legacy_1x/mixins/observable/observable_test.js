@@ -1,15 +1,15 @@
-import { get } from 'ember-metal/property_get';
-import { forEach } from 'ember-metal/enumerable_utils';
-import { computed } from 'ember-metal/computed';
-import run from 'ember-metal/run_loop';
-import { typeOf } from 'ember-metal/utils';
-import { observer } from 'ember-metal/mixin';
+import { get } from 'ngular-metal/property_get';
+import { forEach } from 'ngular-metal/enumerable_utils';
+import { computed } from 'ngular-metal/computed';
+import run from 'ngular-metal/run_loop';
+import { typeOf } from 'ngular-metal/utils';
+import { observer } from 'ngular-metal/mixin';
 import {
   fmt,
   w
-} from "ember-runtime/system/string";
-import EmberObject from 'ember-runtime/system/object';
-import Observable from 'ember-runtime/mixins/observable';
+} from "ngular-runtime/system/string";
+import NgularObject from 'ngular-runtime/system/object';
+import Observable from 'ngular-runtime/mixins/observable';
 
 /*
   NOTE: This test is adapted from the 1.x series of unit tests.  The tests
@@ -18,29 +18,29 @@ import Observable from 'ember-runtime/mixins/observable';
 
   CHANGES FROM 1.6:
 
-  * Added ObservableObject which applies the Ember.Observable mixin.
-  * Changed reference to Ember.T_FUNCTION to 'function'
+  * Added ObservableObject which applies the Ngular.Observable mixin.
+  * Changed reference to Ngular.T_FUNCTION to 'function'
   * Changed all references to sc_super to this._super.apply(this, arguments)
-  * Changed Ember.objectForPropertyPath() to Ember.getPath()
+  * Changed Ngular.objectForPropertyPath() to Ngular.getPath()
   * Removed allPropertiesDidChange test - no longer supported
   * Changed test that uses 'ObjectE' as path to 'objectE' to reflect new
     rule on using capital letters for property paths.
   * Removed test passing context to addObserver.  context param is no longer
     supported.
-  * Changed calls to Ember.Binding.flushPendingChanges() -> run.sync()
+  * Changed calls to Ngular.Binding.flushPendingChanges() -> run.sync()
   * removed test in observer around line 862 that expected key/value to be
     the last item in the chained path.  Should be root and chained path
 
 */
 
 // ========================================================================
-// Ember.Observable Tests
+// Ngular.Observable Tests
 // ========================================================================
 
 var object, ObjectC, ObjectD, objectA, objectB, lookup;
 
-var ObservableObject = EmberObject.extend(Observable);
-var originalLookup = Ember.lookup;
+var ObservableObject = NgularObject.extend(Observable);
+var originalLookup = Ngular.lookup;
 
 // ..........................................................
 // GET()
@@ -94,9 +94,9 @@ QUnit.test("should call unknownProperty when value is undefined", function() {
 });
 
 // ..........................................................
-// Ember.GET()
+// Ngular.GET()
 //
-QUnit.module("Ember.get()", {
+QUnit.module("Ngular.get()", {
   setup() {
     objectA = ObservableObject.createWithMixins({
 
@@ -125,24 +125,24 @@ QUnit.module("Ember.get()", {
   }
 });
 
-QUnit.test("should get normal properties on Ember.Observable", function() {
+QUnit.test("should get normal properties on Ngular.Observable", function() {
   equal(get(objectA, 'normal'), 'value');
 });
 
-QUnit.test("should call computed properties on Ember.Observable and return their result", function() {
+QUnit.test("should call computed properties on Ngular.Observable and return their result", function() {
   equal(get(objectA, "computed"), "value");
 });
 
-QUnit.test("should return the function for a non-computed property on Ember.Observable", function() {
+QUnit.test("should return the function for a non-computed property on Ngular.Observable", function() {
   var value = get(objectA, "method");
   equal(typeOf(value), 'function');
 });
 
-QUnit.test("should return null when property value is null on Ember.Observable", function() {
+QUnit.test("should return null when property value is null on Ngular.Observable", function() {
   equal(get(objectA, "nullProperty"), null);
 });
 
-QUnit.test("should call unknownProperty when value is undefined on Ember.Observable", function() {
+QUnit.test("should call unknownProperty when value is undefined on Ngular.Observable", function() {
   equal(get(object, "unknown"), "unknown");
   equal(object.lastUnknownProperty, "unknown");
 });
@@ -169,18 +169,18 @@ QUnit.test("raise if the provided object is undefined", function() {
   }, /Cannot call get with 'key' on an undefined object/i);
 });
 
-QUnit.test("should work when object is Ember (used in Ember.get)", function() {
-  equal(get('Ember.RunLoop'), Ember.RunLoop, 'Ember.get');
-  equal(get(Ember, 'RunLoop'), Ember.RunLoop, 'Ember.get(Ember, RunLoop)');
+QUnit.test("should work when object is Ngular (used in Ngular.get)", function() {
+  equal(get('Ngular.RunLoop'), Ngular.RunLoop, 'Ngular.get');
+  equal(get(Ngular, 'RunLoop'), Ngular.RunLoop, 'Ngular.get(Ngular, RunLoop)');
 });
 
-QUnit.module("Ember.get() with paths", {
+QUnit.module("Ngular.get() with paths", {
   setup() {
-    lookup = Ember.lookup = {};
+    lookup = Ngular.lookup = {};
   },
 
   teardown() {
-    Ember.lookup = originalLookup;
+    Ngular.lookup = originalLookup;
   }
 });
 
@@ -318,7 +318,7 @@ QUnit.test("should call unknownProperty with value when property is undefined", 
 
 QUnit.module("Computed properties", {
   setup() {
-    lookup = Ember.lookup = {};
+    lookup = Ngular.lookup = {};
 
     object = ObservableObject.createWithMixins({
 
@@ -421,7 +421,7 @@ QUnit.module("Computed properties", {
     });
   },
   teardown() {
-    Ember.lookup = originalLookup;
+    Ngular.lookup = originalLookup;
   }
 });
 
@@ -690,7 +690,7 @@ QUnit.module("Observable objects & object properties ", {
       toggleVal: true,
       observedProperty: 'beingWatched',
       testRemove: 'observerToBeRemoved',
-      normalArray: Ember.A([1,2,3,4,5]),
+      normalArray: Ngular.A([1,2,3,4,5]),
 
       getEach() {
         var keys = ['normal','abnormal'];
@@ -740,7 +740,7 @@ QUnit.test('incrementProperty and decrementProperty', function() {
   }, /Must pass a numeric value to incrementProperty/i);
 
   expectAssertion(function() {
-    newValue = object.incrementProperty('numberVal', 'Ember'); // Increment by non-numeric String
+    newValue = object.incrementProperty('numberVal', 'Ngular'); // Increment by non-numeric String
   }, /Must pass a numeric value to incrementProperty/i);
 
   expectAssertion(function() {
@@ -764,7 +764,7 @@ QUnit.test('incrementProperty and decrementProperty', function() {
   }, /Must pass a numeric value to decrementProperty/i);
 
   expectAssertion(function() {
-    newValue = object.decrementProperty('numberVal', 'Ember'); // Decrement by non-numeric String
+    newValue = object.decrementProperty('numberVal', 'Ngular'); // Decrement by non-numeric String
   }, /Must pass a numeric value to decrementProperty/i);
 
   expectAssertion(function() {
@@ -861,7 +861,7 @@ QUnit.module("object.removeObserver()", {
       observer2() {
         this.removeObserver('observableValue', null, 'observer1');
         this.removeObserver('observableValue', null, 'observer2');
-        this.hasObserverFor('observableValue');   // Tickle 'getMembers()'
+        this.hasObserverFor('observableValue');   // Tickle 'getMngulars()'
         this.removeObserver('observableValue', null, 'observer3');
       },
       observer3() {
@@ -920,7 +920,7 @@ QUnit.test("removing an observer inside of an observer shouldn’t cause any pro
 QUnit.module("Bind function ", {
 
   setup() {
-    originalLookup = Ember.lookup;
+    originalLookup = Ngular.lookup;
     objectA = ObservableObject.create({
       name: "Sproutcore",
       location: "Timbaktu"
@@ -933,7 +933,7 @@ QUnit.module("Bind function ", {
       }
     });
 
-    lookup = Ember.lookup = {
+    lookup = Ngular.lookup = {
       'Namespace': {
         objectA: objectA,
         objectB: objectB
@@ -942,7 +942,7 @@ QUnit.module("Bind function ", {
   },
 
   teardown() {
-    Ember.lookup = originalLookup;
+    Ngular.lookup = originalLookup;
   }
 });
 

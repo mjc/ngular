@@ -1,19 +1,19 @@
-import environment from "ember-metal/environment";
+import environment from "ngular-metal/environment";
 
 import DOMHelper from "dom-helper";
 
-import inline from "ember-htmlbars/hooks/inline";
-import content from "ember-htmlbars/hooks/content";
-import component from "ember-htmlbars/hooks/component";
-import block from "ember-htmlbars/hooks/block";
-import element from "ember-htmlbars/hooks/element";
-import subexpr from "ember-htmlbars/hooks/subexpr";
-import attribute from "ember-htmlbars/hooks/attribute";
-import concat from "ember-htmlbars/hooks/concat";
-import get from "ember-htmlbars/hooks/get";
-import set from "ember-htmlbars/hooks/set";
+import inline from "ngular-htmlbars/hooks/inline";
+import content from "ngular-htmlbars/hooks/content";
+import component from "ngular-htmlbars/hooks/component";
+import block from "ngular-htmlbars/hooks/block";
+import element from "ngular-htmlbars/hooks/element";
+import subexpr from "ngular-htmlbars/hooks/subexpr";
+import attribute from "ngular-htmlbars/hooks/attribute";
+import concat from "ngular-htmlbars/hooks/concat";
+import get from "ngular-htmlbars/hooks/get";
+import set from "ngular-htmlbars/hooks/set";
 
-import helpers from "ember-htmlbars/helpers";
+import helpers from "ngular-htmlbars/helpers";
 
 export default {
   hooks: {

@@ -1,15 +1,15 @@
 /* jshint scripturl:true */
 
-import EmberView from "ember-views/views/view";
-import compile from "ember-template-compiler/system/compile";
-import run from "ember-metal/run_loop";
-import { SafeString } from "ember-htmlbars/utils/string";
-import { runAppend, runDestroy } from "ember-runtime/tests/utils";
-import environment from "ember-metal/environment";
+import NgularView from "ngular-views/views/view";
+import compile from "ngular-template-compiler/system/compile";
+import run from "ngular-metal/run_loop";
+import { SafeString } from "ngular-htmlbars/utils/string";
+import { runAppend, runDestroy } from "ngular-runtime/tests/utils";
+import environment from "ngular-metal/environment";
 
 var view;
 
-QUnit.module("ember-htmlbars: sanitized attribute", {
+QUnit.module("ngular-htmlbars: sanitized attribute", {
   teardown() {
     runDestroy(view);
   }
@@ -40,7 +40,7 @@ for (var i=0, l=badTags.length; i<l; i++) {
     }
 
     QUnit.test("XSS - should not bind unsafe "+tagName+" "+attr+" values", function() {
-      view = EmberView.create({
+      view = NgularView.create({
         template: template,
         badValue: "javascript:alert('XSS')"
       });
@@ -53,7 +53,7 @@ for (var i=0, l=badTags.length; i<l; i++) {
     });
 
     QUnit.test("XSS - should not bind unsafe "+tagName+" "+attr+" values on rerender", function() {
-      view = EmberView.create({
+      view = NgularView.create({
         template: template,
         badValue: "/sunshine/and/rainbows"
       });
@@ -72,7 +72,7 @@ for (var i=0, l=badTags.length; i<l; i++) {
     });
 
     QUnit.test("should bind unsafe "+tagName+" "+attr+" values if they are SafeString", function() {
-      view = EmberView.create({
+      view = NgularView.create({
         template: template,
         badValue: new SafeString("javascript:alert('XSS')")
       });

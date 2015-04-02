@@ -1,5 +1,5 @@
 /*globals Foo:true, $foo:true */
-import { normalizeTuple } from "ember-metal/property_get";
+import { normalizeTuple } from "ngular-metal/property_get";
 
 var obj;
 var moduleOpts = {
@@ -74,8 +74,8 @@ QUnit.test('[obj, this.Foo.bar] -> [obj, Foo.bar]', function() {
 // GLOBAL PATHS
 //
 
-QUnit.test('[obj, Foo] -> [Ember.lookup, Foo]', function() {
-  deepEqual(normalizeTuple(obj, 'Foo'), [Ember.lookup, 'Foo']);
+QUnit.test('[obj, Foo] -> [Ngular.lookup, Foo]', function() {
+  deepEqual(normalizeTuple(obj, 'Foo'), [Ngular.lookup, 'Foo']);
 });
 
 QUnit.test('[obj, Foo.bar] -> [Foo, bar]', function() {
@@ -90,8 +90,8 @@ QUnit.test('[obj, $foo.bar.baz] -> [$foo, bar.baz]', function() {
 // NO TARGET
 //
 
-QUnit.test('[null, Foo] -> [Ember.lookup, Foo]', function() {
-  deepEqual(normalizeTuple(null, 'Foo'), [Ember.lookup, 'Foo']);
+QUnit.test('[null, Foo] -> [Ngular.lookup, Foo]', function() {
+  deepEqual(normalizeTuple(null, 'Foo'), [Ngular.lookup, 'Foo']);
 });
 
 QUnit.test('[null, Foo.bar] -> [Foo, bar]', function() {
@@ -106,8 +106,8 @@ QUnit.test("[null, foo.bar] -> [undefined, '']", function() {
   deepEqual(normalizeTuple(null, 'foo'), [undefined, '']);
 });
 
-QUnit.test('[null, $foo] -> [Ember.lookup, $foo]', function() {
-  deepEqual(normalizeTuple(null, '$foo'), [Ember.lookup, '$foo']);
+QUnit.test('[null, $foo] -> [Ngular.lookup, $foo]', function() {
+  deepEqual(normalizeTuple(null, '$foo'), [Ngular.lookup, '$foo']);
 });
 
 QUnit.test('[null, $foo.bar] -> [$foo, bar]', function() {

@@ -1,18 +1,18 @@
-import Ember from "ember-metal/core"; // Ember.FEATURES, Ember.Test
-import { get } from "ember-metal/property_get";
-import { Mixin } from "ember-metal/mixin";
-import { computed } from "ember-metal/computed";
-import RSVP from "ember-runtime/ext/rsvp";
+import Ngular from "ngular-metal/core"; // Ngular.FEATURES, Ngular.Test
+import { get } from "ngular-metal/property_get";
+import { Mixin } from "ngular-metal/mixin";
+import { computed } from "ngular-metal/computed";
+import RSVP from "ngular-runtime/ext/rsvp";
 
 /**
-@module ember
-@submodule ember-runtime
+@module ngular
+@submodule ngular-runtime
 */
 
 
 /**
   @class Deferred
-  @namespace Ember
+  @namespace Ngular
  */
 export default Mixin.create({
   /**
@@ -68,8 +68,8 @@ export default Mixin.create({
   },
 
   _deferred: computed(function() {
-    Ember.deprecate('Usage of Ember.DeferredMixin or Ember.Deferred is deprecated.', this._suppressDeferredDeprecation, { url: 'http://emberjs.com/guides/deprecations/#toc_deprecate-ember-deferredmixin-and-ember-deferred' });
+    Ngular.deprecate('Usage of Ngular.DeferredMixin or Ngular.Deferred is deprecated.', this._suppressDeferredDeprecation, { url: 'http://github.com/mjc/ngular/guides/deprecations/#toc_deprecate-ngular-deferredmixin-and-ngular-deferred' });
 
-    return RSVP.defer('Ember: DeferredMixin - ' + this);
+    return RSVP.defer('Ngular: DeferredMixin - ' + this);
   })
 });

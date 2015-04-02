@@ -1,9 +1,9 @@
-import run from 'ember-metal/run_loop';
-import get from 'ember-metal/property_get';
-import EmberObject from 'ember-runtime/system/object';
-import Mixin from 'ember-metal/mixin';
+import run from 'ngular-metal/run_loop';
+import get from 'ngular-metal/property_get';
+import NgularObject from 'ngular-runtime/system/object';
+import Mixin from 'ngular-metal/mixin';
 
-QUnit.module('Ember.Mixin#reopen');
+QUnit.module('Ngular.Mixin#reopen');
 
 QUnit.test('using reopen() to add more properties to a simple', function() {
   var MixinA = Mixin.create({ foo: 'FOO', baz: 'BAZ' });
@@ -17,7 +17,7 @@ QUnit.test('using reopen() to add more properties to a simple', function() {
 });
 
 QUnit.test('using reopen() and calling _super where there is not a super function does not cause infinite recursion', function() {
-  var Taco = EmberObject.extend({
+  var Taco = NgularObject.extend({
     createBreakfast() {
       // There is no original createBreakfast function.
       // Calling the wrapped _super function here

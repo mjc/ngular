@@ -1,24 +1,24 @@
-import run from 'ember-metal/run_loop';
-import jQuery from 'ember-views/system/jquery';
-import EmberView from 'ember-views/views/view';
-import { Registry } from "ember-runtime/system/container";
-import EmberObject from 'ember-runtime/system/object';
-import _MetamorphView from 'ember-views/views/metamorph_view';
-import compile from 'ember-template-compiler/system/compile';
-import { runAppend, runDestroy } from "ember-runtime/tests/utils";
+import run from 'ngular-metal/run_loop';
+import jQuery from 'ngular-views/system/jquery';
+import NgularView from 'ngular-views/views/view';
+import { Registry } from "ngular-runtime/system/container";
+import NgularObject from 'ngular-runtime/system/object';
+import _MetamorphView from 'ngular-views/views/metamorph_view';
+import compile from 'ngular-template-compiler/system/compile';
+import { runAppend, runDestroy } from "ngular-runtime/tests/utils";
 
-import { set } from 'ember-metal/property_set';
+import { set } from 'ngular-metal/property_set';
 
 var view, registry, container;
 var trim = jQuery.trim;
 
-QUnit.module('ember-htmlbars: {{#with}} and {{#view}} integration', {
+QUnit.module('ngular-htmlbars: {{#with}} and {{#view}} integration', {
   setup() {
     registry = new Registry();
     container = registry.container();
     registry.optionsForType('template', { instantiate: false });
     registry.register('view:default', _MetamorphView);
-    registry.register('view:toplevel', EmberView.extend());
+    registry.register('view:toplevel', NgularView.extend());
   },
 
   teardown() {
@@ -31,11 +31,11 @@ QUnit.module('ember-htmlbars: {{#with}} and {{#view}} integration', {
 QUnit.test('View should update when the property used with the #with helper changes [DEPRECATED]', function() {
   registry.register('template:foo', compile('<h1 id="first">{{#with view.content}}{{wham}}{{/with}}</h1>'));
 
-  view = EmberView.create({
+  view = NgularView.create({
     container: container,
     templateName: 'foo',
 
-    content: EmberObject.create({
+    content: NgularObject.create({
       wham: 'bam',
       thankYou: "ma'am"
     })
@@ -48,7 +48,7 @@ QUnit.test('View should update when the property used with the #with helper chan
   equal(view.$('#first').text(), 'bam', 'precond - view renders Handlebars template');
 
   run(function() {
-    set(view, 'content', EmberObject.create({
+    set(view, 'content', NgularObject.create({
       wham: 'bazam'
     }));
   });
@@ -58,7 +58,7 @@ QUnit.test('View should update when the property used with the #with helper chan
 
 QUnit.test('should expose a view keyword [DEPRECATED]', function() {
   var templateString = '{{#with view.differentContent}}{{view.foo}}{{#view baz="bang"}}{{view.baz}}{{/view}}{{/with}}';
-  view = EmberView.create({
+  view = NgularView.create({
     container: container,
     differentContent: {
       view: {
@@ -80,13 +80,13 @@ QUnit.test('should expose a view keyword [DEPRECATED]', function() {
 });
 
 QUnit.test('bindings can be `this`, in which case they *are* the current context [DEPRECATED]', function() {
-  view = EmberView.create({
+  view = NgularView.create({
     museumOpen: true,
 
-    museumDetails: EmberObject.create({
+    museumDetails: NgularObject.create({
       name: 'SFMoMA',
       price: 20,
-      museumView: EmberView.extend({
+      museumView: NgularView.extend({
         template: compile('Name: {{view.museum.name}} Price: ${{view.museum.price}}')
       })
     }),
@@ -111,26 +111,26 @@ QUnit.test('child views can be inserted inside a bind block', function() {
     world: 'world!'
   };
 
-  var OtherView = EmberView.extend({
+  var OtherView = NgularView.extend({
     container: container,
     templateName: 'other'
   });
 
-  var BQView = EmberView.extend({
+  var BQView = NgularView.extend({
     container: container,
     otherView: OtherView,
     tagName: 'blockquote',
     templateName: 'nested'
   });
 
-  view = EmberView.create({
+  view = NgularView.create({
     container: container,
     bqView: BQView,
     context: context,
     templateName: 'nester'
   });
 
-  set(context, 'content', EmberObject.create({
+  set(context, 'content', NgularObject.create({
     blah: 'wot'
   }));
 
@@ -152,7 +152,7 @@ QUnit.test('views render their template in the context of the parent view\'s con
     }
   };
 
-  view = EmberView.create({
+  view = NgularView.create({
     container: container,
     templateName: 'parent',
     context: context
@@ -165,12 +165,12 @@ QUnit.test('views render their template in the context of the parent view\'s con
 QUnit.test('views make a view keyword available that allows template to reference view context', function() {
   registry.register('template:parent', compile('<h1>{{#with view.content as person}}{{#view person.subview}}{{view.firstName}} {{person.lastName}}{{/view}}{{/with}}</h1>'));
 
-  view = EmberView.create({
+  view = NgularView.create({
     container: container,
     templateName: 'parent',
 
     content: {
-      subview: EmberView.extend({
+      subview: NgularView.extend({
         firstName: 'Brodele'
       }),
       firstName: 'Lana',

@@ -1,27 +1,27 @@
-import Ember from "ember-metal/core"; // Ember.assert
-import { get } from "ember-metal/property_get";
+import Ngular from "ngular-metal/core"; // Ngular.assert
+import { get } from "ngular-metal/property_get";
 import {
   isArray
-} from "ember-metal/utils";
-import { computed } from "ember-metal/computed";
+} from "ngular-metal/utils";
+import { computed } from "ngular-metal/computed";
 import {
   beforeObserver,
   observer
-} from "ember-metal/mixin";
+} from "ngular-metal/mixin";
 import {
   beginPropertyChanges,
   endPropertyChanges
-} from "ember-metal/property_events";
-import EmberError from "ember-metal/error";
-import EmberObject from "ember-runtime/system/object";
-import MutableArray from "ember-runtime/mixins/mutable_array";
-import Enumerable from "ember-runtime/mixins/enumerable";
-import { fmt } from "ember-runtime/system/string";
-import alias from "ember-metal/alias";
+} from "ngular-metal/property_events";
+import NgularError from "ngular-metal/error";
+import NgularObject from "ngular-runtime/system/object";
+import MutableArray from "ngular-runtime/mixins/mutable_array";
+import Enumerable from "ngular-runtime/mixins/enumerable";
+import { fmt } from "ngular-runtime/system/string";
+import alias from "ngular-metal/alias";
 
 /**
-@module ember
-@submodule ember-runtime
+@module ngular
+@submodule ngular-runtime
 */
 
 var OUT_OF_RANGE_EXCEPTION = "Index out of range";
@@ -30,8 +30,8 @@ var EMPTY = [];
 function K() { return this; }
 
 /**
-  An ArrayProxy wraps any other object that implements `Ember.Array` and/or
-  `Ember.MutableArray,` forwarding all requests. This makes it very useful for
+  An ArrayProxy wraps any other object that implements `Ngular.Array` and/or
+  `Ngular.MutableArray,` forwarding all requests. This makes it very useful for
   a number of binding use cases or other cases where being able to swap
   out the underlying array is useful.
 
@@ -39,7 +39,7 @@ function K() { return this; }
 
   ```javascript
   var pets = ['dog', 'cat', 'fish'];
-  var ap = Ember.ArrayProxy.create({ content: Ember.A(pets) });
+  var ap = Ngular.ArrayProxy.create({ content: Ngular.A(pets) });
 
   ap.get('firstObject');                        // 'dog'
   ap.set('content', ['amoeba', 'paramecium']);
@@ -52,8 +52,8 @@ function K() { return this; }
 
   ```javascript
   var pets = ['dog', 'cat', 'fish'];
-  var ap = Ember.ArrayProxy.create({
-      content: Ember.A(pets),
+  var ap = Ngular.ArrayProxy.create({
+      content: Ngular.A(pets),
       objectAtContent: function(idx) {
           return this.get('content').objectAt(idx).toUpperCase();
       }
@@ -63,18 +63,18 @@ function K() { return this; }
   ```
 
   @class ArrayProxy
-  @namespace Ember
-  @extends Ember.Object
-  @uses Ember.MutableArray
+  @namespace Ngular
+  @extends Ngular.Object
+  @uses Ngular.MutableArray
 */
-var ArrayProxy = EmberObject.extend(MutableArray, {
+var ArrayProxy = NgularObject.extend(MutableArray, {
 
   /**
-    The content array. Must be an object that implements `Ember.Array` and/or
-    `Ember.MutableArray.`
+    The content array. Must be an object that implements `Ngular.Array` and/or
+    `Ngular.MutableArray.`
 
     @property content
-    @type Ember.Array
+    @type Ngular.Array
   */
   content: null,
 
@@ -147,7 +147,7 @@ var ArrayProxy = EmberObject.extend(MutableArray, {
 
     @method contentArrayWillChange
 
-    @param {Ember.Array} contentArray the content array
+    @param {Ngular.Array} contentArray the content array
     @param {Number} start starting index of the change
     @param {Number} removeCount count of items removed
     @param {Number} addCount count of items added
@@ -159,7 +159,7 @@ var ArrayProxy = EmberObject.extend(MutableArray, {
 
     @method contentArrayDidChange
 
-    @param {Ember.Array} contentArray the content array
+    @param {Ngular.Array} contentArray the content array
     @param {Number} start starting index of the change
     @param {Number} removeCount count of items removed
     @param {Number} addCount count of items added
@@ -176,7 +176,7 @@ var ArrayProxy = EmberObject.extend(MutableArray, {
   _contentDidChange: observer('content', function() {
     var content = get(this, 'content');
 
-    Ember.assert("Can't set ArrayProxy's content to itself", content !== this);
+    Ngular.assert("Can't set ArrayProxy's content to itself", content !== this);
 
     this._setupContent();
   }),
@@ -185,8 +185,8 @@ var ArrayProxy = EmberObject.extend(MutableArray, {
     var content = get(this, 'content');
 
     if (content) {
-      Ember.assert(fmt('ArrayProxy expects an Array or ' +
-        'Ember.ArrayProxy, but you passed %@', [typeof content]),
+      Ngular.assert(fmt('ArrayProxy expects an Array or ' +
+        'Ngular.ArrayProxy, but you passed %@', [typeof content]),
         isArray(content) || content.isDestroyed);
 
       content.addArrayObserver(this, {
@@ -210,7 +210,7 @@ var ArrayProxy = EmberObject.extend(MutableArray, {
     var arrangedContent = get(this, 'arrangedContent');
     var len = arrangedContent ? get(arrangedContent, 'length') : 0;
 
-    Ember.assert("Can't set ArrayProxy's content to itself", arrangedContent !== this);
+    Ngular.assert("Can't set ArrayProxy's content to itself", arrangedContent !== this);
 
     this._setupArrangedContent();
 
@@ -222,8 +222,8 @@ var ArrayProxy = EmberObject.extend(MutableArray, {
     var arrangedContent = get(this, 'arrangedContent');
 
     if (arrangedContent) {
-      Ember.assert(fmt('ArrayProxy expects an Array or ' +
-        'Ember.ArrayProxy, but you passed %@', [typeof arrangedContent]),
+      Ngular.assert(fmt('ArrayProxy expects an Array or ' +
+        'Ngular.ArrayProxy, but you passed %@', [typeof arrangedContent]),
         isArray(arrangedContent) || arrangedContent.isDestroyed);
 
       arrangedContent.addArrayObserver(this, {
@@ -259,7 +259,7 @@ var ArrayProxy = EmberObject.extend(MutableArray, {
 
   _replace(idx, amt, objects) {
     var content = get(this, 'content');
-    Ember.assert('The content property of '+ this.constructor + ' should be set before modifying it', content);
+    Ngular.assert('The content property of '+ this.constructor + ' should be set before modifying it', content);
     if (content) {
       this.replaceContent(idx, amt, objects);
     }
@@ -271,13 +271,13 @@ var ArrayProxy = EmberObject.extend(MutableArray, {
     if (get(this, 'arrangedContent') === get(this, 'content')) {
       this._replace(...arguments);
     } else {
-      throw new EmberError("Using replace on an arranged ArrayProxy is not allowed.");
+      throw new NgularError("Using replace on an arranged ArrayProxy is not allowed.");
     }
   },
 
   _insertAt(idx, object) {
     if (idx > get(this, 'content.length')) {
-      throw new EmberError(OUT_OF_RANGE_EXCEPTION);
+      throw new NgularError(OUT_OF_RANGE_EXCEPTION);
     }
 
     this._replace(idx, 0, [object]);
@@ -288,7 +288,7 @@ var ArrayProxy = EmberObject.extend(MutableArray, {
     if (get(this, 'arrangedContent') === get(this, 'content')) {
       return this._insertAt(idx, object);
     } else {
-      throw new EmberError("Using insertAt on an arranged ArrayProxy is not allowed.");
+      throw new NgularError("Using insertAt on an arranged ArrayProxy is not allowed.");
     }
   },
 
@@ -300,7 +300,7 @@ var ArrayProxy = EmberObject.extend(MutableArray, {
       var i;
 
       if ((start < 0) || (start >= get(this, 'length'))) {
-        throw new EmberError(OUT_OF_RANGE_EXCEPTION);
+        throw new NgularError(OUT_OF_RANGE_EXCEPTION);
       }
 
       if (len === undefined) {
@@ -333,7 +333,7 @@ var ArrayProxy = EmberObject.extend(MutableArray, {
 
   pushObjects(objects) {
     if (!(Enumerable.detect(objects) || isArray(objects))) {
-      throw new TypeError("Must pass Ember.Enumerable to Ember.MutableArray#pushObjects");
+      throw new TypeError("Must pass Ngular.Enumerable to Ngular.MutableArray#pushObjects");
     }
     this._replace(get(this, 'length'), 0, objects);
     return this;

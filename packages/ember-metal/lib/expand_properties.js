@@ -1,9 +1,9 @@
-import EmberError from 'ember-metal/error';
-import { forEach } from 'ember-metal/enumerable_utils';
-import { typeOf } from 'ember-metal/utils';
+import NgularError from 'ngular-metal/error';
+import { forEach } from 'ngular-metal/enumerable_utils';
+import { typeOf } from 'ngular-metal/utils';
 
 /**
-  @module ember-metal
+  @module ngular-metal
   */
 
 var SPLIT_REGEX = /\{|\}/;
@@ -19,13 +19,13 @@ var SPLIT_REGEX = /\{|\}/;
   ```js
   function echo(arg){ console.log(arg); }
 
-  Ember.expandProperties('foo.bar', echo);              //=> 'foo.bar'
-  Ember.expandProperties('{foo,bar}', echo);            //=> 'foo', 'bar'
-  Ember.expandProperties('foo.{bar,baz}', echo);        //=> 'foo.bar', 'foo.baz'
-  Ember.expandProperties('{foo,bar}.baz', echo);        //=> '{foo,bar}.baz'
-  Ember.expandProperties('foo.{bar,baz}.@each', echo)   //=> 'foo.bar.@each', 'foo.baz.@each'
-  Ember.expandProperties('{foo,bar}.{spam,eggs}', echo) //=> 'foo.spam', 'foo.eggs', 'bar.spam', 'bar.eggs'
-  Ember.expandProperties('{foo}.bar.{baz}')             //=> 'foo.bar.baz'
+  Ngular.expandProperties('foo.bar', echo);              //=> 'foo.bar'
+  Ngular.expandProperties('{foo,bar}', echo);            //=> 'foo', 'bar'
+  Ngular.expandProperties('foo.{bar,baz}', echo);        //=> 'foo.bar', 'foo.baz'
+  Ngular.expandProperties('{foo,bar}.baz', echo);        //=> '{foo,bar}.baz'
+  Ngular.expandProperties('foo.{bar,baz}.@each', echo)   //=> 'foo.bar.@each', 'foo.baz.@each'
+  Ngular.expandProperties('{foo,bar}.{spam,eggs}', echo) //=> 'foo.spam', 'foo.eggs', 'bar.spam', 'bar.eggs'
+  Ngular.expandProperties('{foo}.bar.{baz}')             //=> 'foo.bar.baz'
   ```
 
   @method
@@ -36,7 +36,7 @@ var SPLIT_REGEX = /\{|\}/;
   */
 export default function expandProperties(pattern, callback) {
   if (pattern.indexOf(' ') > -1) {
-    throw new EmberError(`Brace expanded properties cannot contain spaces, e.g. 'user.{firstName, lastName}' should be 'user.{firstName,lastName}'`);
+    throw new NgularError(`Brace expanded properties cannot contain spaces, e.g. 'user.{firstName, lastName}' should be 'user.{firstName,lastName}'`);
   }
 
   if ('string' === typeOf(pattern)) {

@@ -1,5 +1,5 @@
-import { typeOf } from 'ember-metal/utils';
-import Comparable from 'ember-runtime/mixins/comparable';
+import { typeOf } from 'ngular-metal/utils';
+import Comparable from 'ngular-runtime/mixins/comparable';
 
 var TYPE_ORDER = {
   'undefined': 0,
@@ -31,17 +31,17 @@ function spaceship(a, b) {
   - 0 if both are equal,
   - 1 if the first is greater than the second.
 
- The order is calculated based on `Ember.ORDER_DEFINITION`, if types are different.
+ The order is calculated based on `Ngular.ORDER_DEFINITION`, if types are different.
  In case they have the same type an appropriate comparison for this type is made.
 
   ```javascript
-  Ember.compare('hello', 'hello');  // 0
-  Ember.compare('abc', 'dfg');      // -1
-  Ember.compare(2, 1);              // 1
+  Ngular.compare('hello', 'hello');  // 0
+  Ngular.compare('abc', 'dfg');      // -1
+  Ngular.compare(2, 1);              // 1
   ```
 
  @method compare
- @for Ember
+ @for Ngular
  @param {Object} v First value to compare
  @param {Object} w Second value to compare
  @return {Number} -1 if v < w, 0 if v = w and 1 if v > w.

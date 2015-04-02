@@ -1,15 +1,15 @@
 /**
-@module ember
-@submodule ember-routing-htmlbars
+@module ngular
+@submodule ngular-routing-htmlbars
 */
 
-import Ember from "ember-metal/core"; // Handlebars, uuid, FEATURES, assert, deprecate
-import { uuid } from "ember-metal/utils";
-import run from "ember-metal/run_loop";
-import { readUnwrappedModel } from "ember-views/streams/utils";
-import { isSimpleClick } from "ember-views/system/utils";
-import ActionManager from "ember-views/system/action_manager";
-import { isStream } from "ember-metal/streams/utils";
+import Ngular from "ngular-metal/core"; // Handlebars, uuid, FEATURES, assert, deprecate
+import { uuid } from "ngular-metal/utils";
+import run from "ngular-metal/run_loop";
+import { readUnwrappedModel } from "ngular-views/streams/utils";
+import { isSimpleClick } from "ngular-views/system/utils";
+import ActionManager from "ngular-views/system/action_manager";
+import { isStream } from "ngular-metal/streams/utils";
 
 function actionArgs(parameters, actionName) {
   var ret, i, l;
@@ -89,7 +89,7 @@ ActionHelper.registerAction = function(actionNameOrStream, options, allowedKeys)
       if (isStream(actionNameOrStream)) {
         actionName = actionNameOrStream.value();
 
-        Ember.assert("You specified a quoteless path to the {{action}} helper " +
+        Ngular.assert("You specified a quoteless path to the {{action}} helper " +
                      "which did not resolve to an action name (a string). " +
                      "Perhaps you meant to use a quoted actionName? (e.g. {{action 'save'}}).",
                      typeof actionName === 'string');
@@ -101,7 +101,7 @@ ActionHelper.registerAction = function(actionNameOrStream, options, allowedKeys)
         if (target.send) {
           target.send.apply(target, actionArgs(parameters, actionName));
         } else {
-          Ember.assert("The action '" + actionName + "' did not exist on " + target, typeof target[actionName] === 'function');
+          Ngular.assert("The action '" + actionName + "' did not exist on " + target, typeof target[actionName] === 'function');
           target[actionName].apply(target, actionArgs(parameters));
         }
       });
@@ -123,7 +123,7 @@ ActionHelper.registerAction = function(actionNameOrStream, options, allowedKeys)
   If the controller does not implement the specified action, the event is sent
   to the current route, and it bubbles up the route hierarchy from there.
 
-  For more advanced event handling see [Ember.Component](/api/classes/Ember.Component.html)
+  For more advanced event handling see [Ngular.Component](/api/classes/Ngular.Component.html)
 
 
   ### Use
@@ -138,7 +138,7 @@ ActionHelper.registerAction = function(actionNameOrStream, options, allowedKeys)
   And application code
 
   ```javascript
-  App.ApplicationController = Ember.Controller.extend({
+  App.ApplicationController = Ngular.Controller.extend({
     actions: {
       anActionName: function() {
       }
@@ -149,8 +149,8 @@ ActionHelper.registerAction = function(actionNameOrStream, options, allowedKeys)
   Will result in the following rendered HTML
 
   ```html
-  <div class="ember-view">
-    <div data-ember-action="1">
+  <div class="ngular-view">
+    <div data-ngular-action="1">
       click me
     </div>
   </div>
@@ -189,7 +189,7 @@ ActionHelper.registerAction = function(actionNameOrStream, options, allowedKeys)
   ```
 
   If you need the default handler to trigger you should either register your
-  own event handler, or use event methods on your view class. See [Ember.View](/api/classes/Ember.View.html)
+  own event handler, or use event methods on your view class. See [Ngular.View](/api/classes/Ngular.View.html)
   'Responding to Browser Events' for more information.
 
   ### Specifying DOM event type
@@ -203,7 +203,7 @@ ActionHelper.registerAction = function(actionNameOrStream, options, allowedKeys)
   </div>
   ```
 
-  See `Ember.View` 'Responding to Browser Events' for a list of
+  See `Ngular.View` 'Responding to Browser Events' for a list of
   acceptable DOM event names.
 
   ### Specifying whitelisted modifier keys
@@ -231,7 +231,7 @@ ActionHelper.registerAction = function(actionNameOrStream, options, allowedKeys)
 
   There are several possible target objects for `{{action}}` helpers:
 
-  In a typical Ember application, where templates are managed through use of the
+  In a typical Ngular application, where templates are managed through use of the
   `{{outlet}}` helper, actions will bubble to the current controller, then
   to the current route, and then up the route hierarchy.
 
@@ -247,7 +247,7 @@ ActionHelper.registerAction = function(actionNameOrStream, options, allowedKeys)
   ```
 
   ```javascript
-  App.ApplicationView = Ember.View.extend({
+  App.ApplicationView = Ngular.View.extend({
     actions: {
       anActionName: function() {}
     }
@@ -273,7 +273,7 @@ ActionHelper.registerAction = function(actionNameOrStream, options, allowedKeys)
   with the value of `person` as a parameter.
 
   @method action
-  @for Ember.Handlebars.helpers
+  @for Ngular.Handlebars.helpers
   @param {String} actionName
   @param {Object} [context]*
   @param {Hash} options
@@ -289,8 +289,8 @@ export function actionHelper(params, hash, options, env) {
     target = view.getStream(hash.target);
   }
 
-  // Ember.assert("You specified a quoteless path to the {{action}} helper which did not resolve to an action name (a string). Perhaps you meant to use a quoted actionName? (e.g. {{action 'save'}}).", !params[0].isStream);
-  // Ember.deprecate("You specified a quoteless path to the {{action}} helper which did not resolve to an action name (a string). Perhaps you meant to use a quoted actionName? (e.g. {{action 'save'}}).", params[0].isStream);
+  // Ngular.assert("You specified a quoteless path to the {{action}} helper which did not resolve to an action name (a string). Perhaps you meant to use a quoted actionName? (e.g. {{action 'save'}}).", !params[0].isStream);
+  // Ngular.deprecate("You specified a quoteless path to the {{action}} helper which did not resolve to an action name (a string). Perhaps you meant to use a quoted actionName? (e.g. {{action 'save'}}).", params[0].isStream);
 
   var actionOptions = {
     eventName: hash.on || "click",
@@ -303,5 +303,5 @@ export function actionHelper(params, hash, options, env) {
   };
 
   var actionId = ActionHelper.registerAction(params[0], actionOptions, hash.allowedKeys);
-  env.dom.setAttribute(options.element, 'data-ember-action', actionId);
+  env.dom.setAttribute(options.element, 'data-ngular-action', actionId);
 }

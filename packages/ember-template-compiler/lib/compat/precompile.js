@@ -1,13 +1,13 @@
 /**
-@module ember
-@submodule ember-template-compiler
+@module ngular
+@submodule ngular-template-compiler
 */
-import compileOptions from "ember-template-compiler/system/compile_options";
+import compileOptions from "ngular-template-compiler/system/compile_options";
 
 var compile, compileSpec;
 
 export default function(string) {
-  if ((!compile || !compileSpec) && Ember.__loader.registry['htmlbars-compiler/compiler']) {
+  if ((!compile || !compileSpec) && Ngular.__loader.registry['htmlbars-compiler/compiler']) {
     var Compiler = requireModule('htmlbars-compiler/compiler');
 
     compile = Compiler.compile;
@@ -15,7 +15,7 @@ export default function(string) {
   }
 
   if (!compile || !compileSpec) {
-    throw new Error('Cannot call `precompile` without the template compiler loaded. Please load `ember-template-compiler.js` prior to calling `precompile`.');
+    throw new Error('Cannot call `precompile` without the template compiler loaded. Please load `ngular-template-compiler.js` prior to calling `precompile`.');
   }
 
   var asObject = arguments[1] === undefined ? true : arguments[1];

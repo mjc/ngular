@@ -1,6 +1,6 @@
 /**
-@module ember
-@submodule ember-views
+@module ngular
+@submodule ngular-views
 */
 
 function ActionManager() {}

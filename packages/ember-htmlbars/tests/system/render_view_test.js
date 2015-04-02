@@ -1,10 +1,10 @@
-import { runAppend, runDestroy } from "ember-runtime/tests/utils";
-import EmberView from 'ember-views/views/view';
-import defaultEnv from "ember-htmlbars/env";
-import keys from 'ember-metal/keys';
+import { runAppend, runDestroy } from "ngular-runtime/tests/utils";
+import NgularView from 'ngular-views/views/view';
+import defaultEnv from "ngular-htmlbars/env";
+import keys from 'ngular-metal/keys';
 
 var view;
-QUnit.module('ember-htmlbars: renderView', {
+QUnit.module('ngular-htmlbars: renderView', {
   teardown() {
     runDestroy(view);
   }
@@ -14,10 +14,10 @@ QUnit.test('default environment values are passed through', function() {
   var keyNames = keys(defaultEnv);
   expect(keyNames.length);
 
-  view = EmberView.create({
+  view = NgularView.create({
     template: {
       isHTMLBars: true,
-      revision: 'Ember@VERSION_STRING_PLACEHOLDER',
+      revision: 'Ngular@VERSION_STRING_PLACEHOLDER',
       render(view, env, contextualElement, blockArguments) {
         for (var i = 0, l = keyNames.length; i < l; i++) {
           var keyName = keyNames[i];
@@ -32,7 +32,7 @@ QUnit.test('default environment values are passed through', function() {
 });
 
 QUnit.test('Provides a helpful assertion if revisions do not match.', function() {
-  view = EmberView.create({
+  view = NgularView.create({
     template: {
       isHTMLBars: true,
       revision: 'Foo-Bar-Baz',

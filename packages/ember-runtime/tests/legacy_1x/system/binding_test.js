@@ -1,10 +1,10 @@
-import Ember from "ember-metal/core";
-import {get} from 'ember-metal/property_get';
-import {set} from 'ember-metal/property_set';
-import run from 'ember-metal/run_loop';
-import {Binding, bind, oneWay} from "ember-metal/binding";
-import {observer as emberObserver} from "ember-metal/mixin";
-import EmberObject from 'ember-runtime/system/object';
+import Ngular from "ngular-metal/core";
+import {get} from 'ngular-metal/property_get';
+import {set} from 'ngular-metal/property_set';
+import run from 'ngular-metal/run_loop';
+import {Binding, bind, oneWay} from "ngular-metal/binding";
+import {observer as ngularObserver} from "ngular-metal/mixin";
+import NgularObject from 'ngular-runtime/system/object';
 
 
 /*
@@ -23,7 +23,7 @@ import EmberObject from 'ember-runtime/system/object';
 
   * tests that inspected internal properties were removed.
 
-  * converted foo.get/foo.set to use get/Ember.set
+  * converted foo.get/foo.set to use get/Ngular.set
 
   * Removed tests for Binding.isConnected.  Since binding instances are now
     shared this property no longer makes sense.
@@ -49,8 +49,8 @@ var originalLookup, lookup;
 
 QUnit.module("basic object binding", {
   setup() {
-    fromObject = EmberObject.create({ value: 'start' });
-    toObject = EmberObject.create({ value: 'end' });
+    fromObject = NgularObject.create({ value: 'start' });
+    toObject = NgularObject.create({ value: 'end' });
     root = { fromObject: fromObject, toObject: toObject };
     run(function () {
       binding = bind(root, 'toObject.value', 'fromObject.value');
@@ -81,18 +81,18 @@ QUnit.test("toObject change should propagate to fromObject only after flush", fu
 QUnit.test("deferred observing during bindings", function() {
 
   // setup special binding
-  fromObject = EmberObject.create({
+  fromObject = NgularObject.create({
     value1: 'value1',
     value2: 'value2'
   });
 
-  toObject = EmberObject.createWithMixins({
+  toObject = NgularObject.createWithMixins({
     value1: 'value1',
     value2: 'value2',
 
     callCount: 0,
 
-    observer: emberObserver('value1', 'value2', function() {
+    observer: ngularObserver('value1', 'value2', function() {
       equal(get(this, 'value1'), 'CHANGED', 'value1 when observer fires');
       equal(get(this, 'value2'), 'CHANGED', 'value2 when observer fires');
       this.callCount++;
@@ -129,8 +129,8 @@ QUnit.module("one way binding", {
 
   setup() {
     run(function() {
-      fromObject = EmberObject.create({ value: 'start' });
-      toObject = EmberObject.create({ value: 'end' });
+      fromObject = NgularObject.create({ value: 'start' });
+      toObject = NgularObject.create({ value: 'end' });
       root = { fromObject: fromObject, toObject: toObject };
       binding = oneWay(root, 'toObject.value', 'fromObject.value');
     });
@@ -166,18 +166,18 @@ QUnit.module("chained binding", {
 
   setup() {
     run(function() {
-      first = EmberObject.create({ output: 'first' });
+      first = NgularObject.create({ output: 'first' });
 
-      second = EmberObject.createWithMixins({
+      second = NgularObject.createWithMixins({
         input: 'second',
         output: 'second',
 
-        inputDidChange: emberObserver("input", function() {
+        inputDidChange: ngularObserver("input", function() {
           set(this, "output", get(this, "input"));
         })
       });
 
-      third = EmberObject.create({ input: "third" });
+      third = NgularObject.create({ input: "third" });
 
       root = { first: first, second: second, third: third };
       binding1 = bind(root, 'second.input', 'first.output');
@@ -208,28 +208,28 @@ QUnit.test("changing first output should propagate to third after flush", functi
 
 QUnit.module("Custom Binding", {
   setup() {
-    originalLookup = Ember.lookup;
-    Ember.lookup = lookup = {};
+    originalLookup = Ngular.lookup;
+    Ngular.lookup = lookup = {};
 
-    Bon1 = EmberObject.extend({
+    Bon1 = NgularObject.extend({
       value1: "hi",
       value2: 83,
       array1: []
     });
 
-    bon2 = EmberObject.create({
+    bon2 = NgularObject.create({
       val1: "hello",
       val2: 25,
       arr: [1,2,3,4]
     });
 
-    Ember.lookup['TestNamespace'] = TestNamespace = {
+    Ngular.lookup['TestNamespace'] = TestNamespace = {
       bon2: bon2,
       Bon1: Bon1
     };
   },
   teardown() {
-    Ember.lookup = originalLookup;
+    Ngular.lookup = originalLookup;
     Bon1 = bon2 = TestNamespace  = null;
     run.cancelTimers();
   }
@@ -239,17 +239,17 @@ QUnit.test("two bindings to the same value should sync in the order they are ini
 
   run.begin();
 
-  var a = EmberObject.create({
+  var a = NgularObject.create({
     foo: "bar"
   });
 
-  var b = EmberObject.createWithMixins({
+  var b = NgularObject.createWithMixins({
     foo: "baz",
     fooBinding: "a.foo",
 
     a: a,
 
-    C: EmberObject.extend({
+    C: NgularObject.extend({
       foo: "bee",
       fooBinding: "owner.foo"
     }),
@@ -274,16 +274,16 @@ QUnit.test("two bindings to the same value should sync in the order they are ini
 
 QUnit.module("propertyNameBinding with longhand", {
   setup() {
-    originalLookup = Ember.lookup;
-    Ember.lookup = lookup = {};
+    originalLookup = Ngular.lookup;
+    Ngular.lookup = lookup = {};
 
-    Ember.lookup['TestNamespace'] = TestNamespace = {};
+    Ngular.lookup['TestNamespace'] = TestNamespace = {};
     run(function () {
-      TestNamespace.fromObject = EmberObject.create({
+      TestNamespace.fromObject = NgularObject.create({
         value: "originalValue"
       });
 
-      TestNamespace.toObject = EmberObject.createWithMixins({
+      TestNamespace.toObject = NgularObject.createWithMixins({
         valueBinding: Binding.from('TestNamespace.fromObject.value'),
         localValue: "originalLocal",
         relativeBinding: Binding.from('localValue')
@@ -292,7 +292,7 @@ QUnit.module("propertyNameBinding with longhand", {
   },
   teardown() {
     TestNamespace = undefined;
-    Ember.lookup = originalLookup;
+    Ngular.lookup = originalLookup;
   }
 });
 

@@ -1,38 +1,38 @@
-import Ember from 'ember-metal/core'; // A, FEATURES, assert
-import { set } from "ember-metal/property_set";
-import run from "ember-metal/run_loop";
-import EventDispatcher from "ember-views/system/event_dispatcher";
-import ActionManager from "ember-views/system/action_manager";
+import Ngular from 'ngular-metal/core'; // A, FEATURES, assert
+import { set } from "ngular-metal/property_set";
+import run from "ngular-metal/run_loop";
+import EventDispatcher from "ngular-views/system/event_dispatcher";
+import ActionManager from "ngular-views/system/action_manager";
 
-import { Registry } from "ember-runtime/system/container";
-import EmberObject from "ember-runtime/system/object";
-import EmberController from "ember-runtime/controllers/controller";
-import EmberArrayController from "ember-runtime/controllers/array_controller";
+import { Registry } from "ngular-runtime/system/container";
+import NgularObject from "ngular-runtime/system/object";
+import NgularController from "ngular-runtime/controllers/controller";
+import NgularArrayController from "ngular-runtime/controllers/array_controller";
 
-import compile from "ember-template-compiler/system/compile";
-import EmberView from "ember-views/views/view";
-import EmberComponent from "ember-views/views/component";
-import jQuery from "ember-views/system/jquery";
+import compile from "ngular-template-compiler/system/compile";
+import NgularView from "ngular-views/views/view";
+import NgularComponent from "ngular-views/views/component";
+import jQuery from "ngular-views/system/jquery";
 
-import helpers from "ember-htmlbars/helpers";
+import helpers from "ngular-htmlbars/helpers";
 import {
   registerHelper
-} from "ember-htmlbars/helpers";
+} from "ngular-htmlbars/helpers";
 
 import {
   ActionHelper,
   actionHelper
-} from "ember-routing-htmlbars/helpers/action";
+} from "ngular-routing-htmlbars/helpers/action";
 
 import {
   runAppend,
   runDestroy
-} from "ember-runtime/tests/utils";
+} from "ngular-runtime/tests/utils";
 
 var dispatcher, view, originalActionHelper;
 var originalRegisterAction = ActionHelper.registerAction;
 
-QUnit.module("ember-routing-htmlbars: action helper", {
+QUnit.module("ngular-routing-htmlbars: action helper", {
   setup() {
     originalActionHelper = helpers['action'];
     registerHelper('action', actionHelper);
@@ -53,13 +53,13 @@ QUnit.module("ember-routing-htmlbars: action helper", {
 });
 
 QUnit.test("should output a data attribute with a guid", function() {
-  view = EmberView.create({
+  view = NgularView.create({
     template: compile('<a href="#" {{action "edit"}}>edit</a>')
   });
 
   runAppend(view);
 
-  ok(view.$('a').attr('data-ember-action').match(/\d+/), "A data-ember-action attribute with a guid was added");
+  ok(view.$('a').attr('data-ngular-action').match(/\d+/), "A data-ngular-action attribute with a guid was added");
 });
 
 QUnit.test("should by default register a click event", function() {
@@ -69,7 +69,7 @@ QUnit.test("should by default register a click event", function() {
     registeredEventName = options.eventName;
   };
 
-  view = EmberView.create({
+  view = NgularView.create({
     template: compile('<a href="#" {{action "edit"}}>edit</a>')
   });
 
@@ -85,7 +85,7 @@ QUnit.test("should allow alternative events to be handled", function() {
     registeredEventName = options.eventName;
   };
 
-  view = EmberView.create({
+  view = NgularView.create({
     template: compile('<a href="#" {{action "edit" on="mouseUp"}}>edit</a>')
   });
 
@@ -102,7 +102,7 @@ QUnit.test("should by default target the view's controller", function() {
     registeredTarget = options.target.value();
   };
 
-  view = EmberView.create({
+  view = NgularView.create({
     controller: controller,
     template: compile('<a href="#" {{action "edit"}}>edit</a>')
   });
@@ -115,14 +115,14 @@ QUnit.test("should by default target the view's controller", function() {
 QUnit.test("Inside a yield, the target points at the original target", function() {
   var watted = false;
 
-  var component = EmberComponent.extend({
+  var component = NgularComponent.extend({
     boundText: "inner",
     truthy: true,
     obj: {},
     layout: compile("<div>{{boundText}}</div><div>{{#if truthy}}{{yield}}{{/if}}</div>")
   });
 
-  view = EmberView.create({
+  view = NgularView.create({
     controller: {
       boundText: "outer",
       truthy: true,
@@ -150,9 +150,9 @@ QUnit.test("should target the current controller inside an {{each}} loop [DEPREC
     registeredTarget = options.target.value();
   };
 
-  var itemController = EmberController.create();
+  var itemController = NgularController.create();
 
-  var ArrayController = EmberArrayController.extend({
+  var ArrayController = NgularArrayController.extend({
     itemController: 'stub',
     controllerAt(idx, object) {
       return itemController;
@@ -160,10 +160,10 @@ QUnit.test("should target the current controller inside an {{each}} loop [DEPREC
   });
 
   var controller = ArrayController.create({
-    model: Ember.A([1])
+    model: Ngular.A([1])
   });
 
-  view = EmberView.create({
+  view = NgularView.create({
     controller: controller,
     template: compile('{{#each controller}}<button {{action "editTodo"}}>Edit</button>{{/each}}')
   });
@@ -182,17 +182,17 @@ QUnit.test("should target the with-controller inside an {{#with controller='pers
     registeredTarget = options.target.value();
   };
 
-  var PersonController = EmberController.extend();
+  var PersonController = NgularController.extend();
   var registry = new Registry();
   var container = registry.container();
-  var parentController = EmberObject.create({
+  var parentController = NgularObject.create({
     container: container
   });
 
-  view = EmberView.create({
+  view = NgularView.create({
     container: container,
     template: compile('{{#with view.person controller="person"}}<div {{action "editTodo"}}></div>{{/with}}'),
-    person: EmberObject.create(),
+    person: NgularObject.create(),
     controller: parentController
   });
 
@@ -211,7 +211,7 @@ QUnit.test("should target the with-controller inside an {{each}} in a {{#with co
 
   var eventsCalled = [];
 
-  var PeopleController = EmberArrayController.extend({
+  var PeopleController = NgularArrayController.extend({
     actions: {
       robert() { eventsCalled.push('robert'); },
       brian() { eventsCalled.push('brian'); }
@@ -220,15 +220,15 @@ QUnit.test("should target the with-controller inside an {{each}} in a {{#with co
 
   var registry = new Registry();
   var container = registry.container();
-  var parentController = EmberObject.create({
+  var parentController = NgularObject.create({
     container: container,
-    people: Ember.A([
+    people: Ngular.A([
       { name: 'robert' },
       { name: 'brian' }
     ])
   });
 
-  view = EmberView.create({
+  view = NgularView.create({
     container: container,
     template: compile('{{#with people controller="people"}}{{#each}}<a href="#" {{action name}}>{{name}}</a>{{/each}}{{/with}}'),
     controller: parentController
@@ -250,9 +250,9 @@ QUnit.test("should allow a target to be specified", function() {
     registeredTarget = options.target.value();
   };
 
-  var anotherTarget = EmberView.create();
+  var anotherTarget = NgularView.create();
 
-  view = EmberView.create({
+  view = NgularView.create({
     controller: {},
     template: compile('<a href="#" {{action "edit" target=view.anotherTarget}}>edit</a>'),
     anotherTarget: anotherTarget
@@ -283,7 +283,7 @@ QUnit.test("should lazily evaluate the target", function() {
 
   controller.theTarget = first;
 
-  view = EmberView.create({
+  view = NgularView.create({
     controller: controller,
     template: compile('<a href="#" {{action "edit" target=theTarget}}>edit</a>')
   });
@@ -311,18 +311,18 @@ QUnit.test("should lazily evaluate the target", function() {
 QUnit.test("should register an event handler", function() {
   var eventHandlerWasCalled = false;
 
-  var controller = EmberController.extend({
+  var controller = NgularController.extend({
     actions: { edit() { eventHandlerWasCalled = true; } }
   }).create();
 
-  view = EmberView.create({
+  view = NgularView.create({
     controller: controller,
     template: compile('<a href="#" {{action "edit"}}>click me</a>')
   });
 
   runAppend(view);
 
-  var actionId = view.$('a[data-ember-action]').attr('data-ember-action');
+  var actionId = view.$('a[data-ngular-action]').attr('data-ngular-action');
 
   ok(ActionManager.registeredActions[actionId], "The action was registered");
 
@@ -335,21 +335,21 @@ QUnit.test("handles whitelisted modifier keys", function() {
   var eventHandlerWasCalled = false;
   var shortcutHandlerWasCalled = false;
 
-  var controller = EmberController.extend({
+  var controller = NgularController.extend({
     actions: {
       edit() { eventHandlerWasCalled = true; },
       shortcut() { shortcutHandlerWasCalled = true; }
     }
   }).create();
 
-  view = EmberView.create({
+  view = NgularView.create({
     controller: controller,
     template: compile('<a href="#" {{action "edit" allowedKeys="alt"}}>click me</a> <div {{action "shortcut" allowedKeys="any"}}>click me too</div>')
   });
 
   runAppend(view);
 
-  var actionId = view.$('a[data-ember-action]').attr('data-ember-action');
+  var actionId = view.$('a[data-ngular-action]').attr('data-ngular-action');
 
   ok(ActionManager.registeredActions[actionId], "The action was registered");
 
@@ -371,14 +371,14 @@ QUnit.test("should be able to use action more than once for the same event withi
   var deleteWasCalled = false;
   var originalEventHandlerWasCalled = false;
 
-  var controller = EmberController.extend({
+  var controller = NgularController.extend({
     actions: {
       edit() { editWasCalled = true; },
       "delete"() { deleteWasCalled = true; }
     }
   }).create();
 
-  view = EmberView.create({
+  view = NgularView.create({
     controller: controller,
     template: compile(
       '<a id="edit" href="#" {{action "edit"}}>edit</a><a id="delete" href="#" {{action "delete"}}>delete</a>'
@@ -413,14 +413,14 @@ QUnit.test("the event should not bubble if `bubbles=false` is passed", function(
   var deleteWasCalled = false;
   var originalEventHandlerWasCalled = false;
 
-  var controller = EmberController.extend({
+  var controller = NgularController.extend({
     actions: {
       edit() { editWasCalled = true; },
       "delete"() { deleteWasCalled = true; }
     }
   }).create();
 
-  view = EmberView.create({
+  view = NgularView.create({
     controller: controller,
     template: compile(
       '<a id="edit" href="#" {{action "edit" bubbles=false}}>edit</a><a id="delete" href="#" {{action "delete" bubbles=false}}>delete</a>'
@@ -456,13 +456,13 @@ QUnit.test("the event should not bubble if `bubbles=false` is passed", function(
 QUnit.test("should work properly in an #each block", function() {
   var eventHandlerWasCalled = false;
 
-  var controller = EmberController.extend({
+  var controller = NgularController.extend({
     actions: { edit() { eventHandlerWasCalled = true; } }
   }).create();
 
-  view = EmberView.create({
+  view = NgularView.create({
     controller: controller,
-    items: Ember.A([1, 2, 3, 4]),
+    items: Ngular.A([1, 2, 3, 4]),
     template: compile('{{#each item in view.items}}<a href="#" {{action "edit"}}>click me</a>{{/each}}')
   });
 
@@ -476,11 +476,11 @@ QUnit.test("should work properly in an #each block", function() {
 QUnit.test("should work properly in a {{#with foo as bar}} block", function() {
   var eventHandlerWasCalled = false;
 
-  var controller = EmberController.extend({
+  var controller = NgularController.extend({
     actions: { edit() { eventHandlerWasCalled = true; } }
   }).create();
 
-  view = EmberView.create({
+  view = NgularView.create({
     controller: controller,
     something: { ohai: 'there' },
     template: compile('{{#with view.something as somethingElse}}<a href="#" {{action "edit"}}>click me</a>{{/with}}')
@@ -496,11 +496,11 @@ QUnit.test("should work properly in a {{#with foo as bar}} block", function() {
 QUnit.test("should work properly in a #with block [DEPRECATED]", function() {
   var eventHandlerWasCalled = false;
 
-  var controller = EmberController.extend({
+  var controller = NgularController.extend({
     actions: { edit() { eventHandlerWasCalled = true; } }
   }).create();
 
-  view = EmberView.create({
+  view = NgularView.create({
     controller: controller,
     something: { ohai: 'there' },
     template: compile('{{#with view.something}}<a href="#" {{action "edit"}}>click me</a>{{/with}}')
@@ -518,14 +518,14 @@ QUnit.test("should work properly in a #with block [DEPRECATED]", function() {
 QUnit.test("should unregister event handlers on rerender", function() {
   var eventHandlerWasCalled = false;
 
-  view = EmberView.extend({
+  view = NgularView.extend({
     template: compile('<a href="#" {{action "edit"}}>click me</a>'),
     actions: { edit() { eventHandlerWasCalled = true; } }
   }).create();
 
   runAppend(view);
 
-  var previousActionId = view.$('a[data-ember-action]').attr('data-ember-action');
+  var previousActionId = view.$('a[data-ngular-action]').attr('data-ngular-action');
 
   run(function() {
     view.rerender();
@@ -533,25 +533,25 @@ QUnit.test("should unregister event handlers on rerender", function() {
 
   ok(!ActionManager.registeredActions[previousActionId], "On rerender, the event handler was removed");
 
-  var newActionId = view.$('a[data-ember-action]').attr('data-ember-action');
+  var newActionId = view.$('a[data-ngular-action]').attr('data-ngular-action');
 
   ok(ActionManager.registeredActions[newActionId], "After rerender completes, a new event handler was added");
 });
 
 QUnit.test("should unregister event handlers on inside virtual views", function() {
-  var things = Ember.A([
+  var things = Ngular.A([
     {
       name: 'Thingy'
     }
   ]);
-  view = EmberView.create({
+  view = NgularView.create({
     template: compile('{{#each thing in view.things}}<a href="#" {{action "edit"}}>click me</a>{{/each}}'),
     things: things
   });
 
   runAppend(view);
 
-  var actionId = view.$('a[data-ember-action]').attr('data-ember-action');
+  var actionId = view.$('a[data-ngular-action]').attr('data-ngular-action');
 
   run(function() {
     things.removeAt(0);
@@ -563,11 +563,11 @@ QUnit.test("should unregister event handlers on inside virtual views", function(
 QUnit.test("should properly capture events on child elements of a container with an action", function() {
   var eventHandlerWasCalled = false;
 
-  var controller = EmberController.extend({
+  var controller = NgularController.extend({
     actions: { edit() { eventHandlerWasCalled = true; } }
   }).create();
 
-  view = EmberView.create({
+  view = NgularView.create({
     controller: controller,
     template: compile('<div {{action "edit"}}><button>click me</button></div>')
   });
@@ -583,11 +583,11 @@ QUnit.test("should allow bubbling of events from action helper to original paren
   var eventHandlerWasCalled = false;
   var originalEventHandlerWasCalled = false;
 
-  var controller = EmberController.extend({
+  var controller = NgularController.extend({
     actions: { edit() { eventHandlerWasCalled = true; } }
   }).create();
 
-  view = EmberView.create({
+  view = NgularView.create({
     controller: controller,
     template: compile('<a href="#" {{action "edit"}}>click me</a>'),
     click() { originalEventHandlerWasCalled = true; }
@@ -604,11 +604,11 @@ QUnit.test("should not bubble an event from action helper to original parent eve
   var eventHandlerWasCalled = false;
   var originalEventHandlerWasCalled = false;
 
-  var controller = EmberController.extend({
+  var controller = NgularController.extend({
     actions: { edit() { eventHandlerWasCalled = true; } }
   }).create();
 
-  view = EmberView.create({
+  view = NgularView.create({
     controller: controller,
     template: compile('<a href="#" {{action "edit" bubbles=false}}>click me</a>'),
     click() { originalEventHandlerWasCalled = true; }
@@ -625,11 +625,11 @@ QUnit.test("should not bubble an event from action helper to original parent eve
 QUnit.test("should allow 'send' as action name (#594)", function() {
   var eventHandlerWasCalled = false;
 
-  var controller = EmberController.extend({
+  var controller = NgularController.extend({
     send() { eventHandlerWasCalled = true; }
   }).create();
 
-  view = EmberView.create({
+  view = NgularView.create({
     controller: controller,
     template: compile('<a href="#" {{action "send" }}>send</a>')
   });
@@ -646,7 +646,7 @@ QUnit.test("should send the view, event and current context to the action", func
   var passedTarget;
   var passedContext;
 
-  var aTarget = EmberController.extend({
+  var aTarget = NgularController.extend({
     actions: {
       edit(context) {
         passedTarget = this;
@@ -657,7 +657,7 @@ QUnit.test("should send the view, event and current context to the action", func
 
   var aContext = { aTarget: aTarget };
 
-  view = EmberView.create({
+  view = NgularView.create({
     context: aContext,
     template: compile('<a id="edit" href="#" {{action "edit" this target=aTarget}}>edit</a>')
   });
@@ -673,7 +673,7 @@ QUnit.test("should send the view, event and current context to the action", func
 QUnit.test("should only trigger actions for the event they were registered on", function() {
   var editWasCalled = false;
 
-  view = EmberView.extend({
+  view = NgularView.extend({
     template: compile('<a href="#" {{action "edit"}}>edit</a>'),
     actions: { edit() { editWasCalled = true; } }
   }).create();
@@ -687,8 +687,8 @@ QUnit.test("should only trigger actions for the event they were registered on", 
 
 QUnit.test("should unwrap controllers passed as a context", function() {
   var passedContext;
-  var model = EmberObject.create();
-  var controller = EmberController.extend({
+  var model = NgularObject.create();
+  var controller = NgularController.extend({
     model: model,
     actions: {
       edit(context) {
@@ -697,7 +697,7 @@ QUnit.test("should unwrap controllers passed as a context", function() {
     }
   }).create();
 
-  view = EmberView.create({
+  view = NgularView.create({
     controller: controller,
     template: compile('<button {{action "edit" this}}>edit</button>')
   });
@@ -711,8 +711,8 @@ QUnit.test("should unwrap controllers passed as a context", function() {
 
 QUnit.test("should not unwrap controllers passed as `controller`", function() {
   var passedContext;
-  var model = EmberObject.create();
-  var controller = EmberController.extend({
+  var model = NgularObject.create();
+  var controller = NgularController.extend({
     model: model,
     actions: {
       edit(context) {
@@ -721,7 +721,7 @@ QUnit.test("should not unwrap controllers passed as `controller`", function() {
     }
   }).create();
 
-  view = EmberView.create({
+  view = NgularView.create({
     controller: controller,
     template: compile('<button {{action "edit" controller}}>edit</button>')
   });
@@ -735,9 +735,9 @@ QUnit.test("should not unwrap controllers passed as `controller`", function() {
 
 QUnit.test("should allow multiple contexts to be specified", function() {
   var passedContexts;
-  var models = [EmberObject.create(), EmberObject.create()];
+  var models = [NgularObject.create(), NgularObject.create()];
 
-  var controller = EmberController.extend({
+  var controller = NgularController.extend({
     actions: {
       edit() {
         passedContexts = [].slice.call(arguments);
@@ -745,7 +745,7 @@ QUnit.test("should allow multiple contexts to be specified", function() {
     }
   }).create();
 
-  view = EmberView.create({
+  view = NgularView.create({
     controller: controller,
     modelA: models[0],
     modelB: models[1],
@@ -761,9 +761,9 @@ QUnit.test("should allow multiple contexts to be specified", function() {
 
 QUnit.test("should allow multiple contexts to be specified mixed with string args", function() {
   var passedParams;
-  var model = EmberObject.create();
+  var model = NgularObject.create();
 
-  var controller = EmberController.extend({
+  var controller = NgularController.extend({
     actions: {
       edit() {
         passedParams = [].slice.call(arguments);
@@ -771,7 +771,7 @@ QUnit.test("should allow multiple contexts to be specified mixed with string arg
     }
   }).create();
 
-  view = EmberView.create({
+  view = NgularView.create({
     controller: controller,
     modelA: model,
     template: compile('<button {{action "edit" "herp" view.modelA}}>edit</button>')
@@ -787,11 +787,11 @@ QUnit.test("should allow multiple contexts to be specified mixed with string arg
 QUnit.test("it does not trigger action with special clicks", function() {
   var showCalled = false;
 
-  view = EmberView.create({
+  view = NgularView.create({
     template: compile("<a {{action 'show' href=true}}>Hi</a>")
   });
 
-  var controller = EmberController.extend({
+  var controller = NgularController.extend({
     actions: {
       show() {
         showCalled = true;
@@ -830,11 +830,11 @@ QUnit.test("it does not trigger action with special clicks", function() {
 QUnit.test("it can trigger actions for keyboard events", function() {
   var showCalled = false;
 
-  view = EmberView.create({
+  view = NgularView.create({
     template: compile("<input type='text' {{action 'show' on='keyUp'}}>")
   });
 
-  var controller = EmberController.extend({
+  var controller = NgularController.extend({
     actions: {
       show() {
         showCalled = true;
@@ -859,11 +859,11 @@ QUnit.test("a quoteless parameter should allow dynamic lookup of the actionName"
   var lastAction;
   var actionOrder = [];
 
-  view = EmberView.create({
+  view = NgularView.create({
     template: compile("<a id='woot-bound-param' {{action hookMeUp}}>Hi</a>")
   });
 
-  var controller = EmberController.extend({
+  var controller = NgularController.extend({
     hookMeUp: 'biggityBoom',
     actions: {
       biggityBoom() {
@@ -910,12 +910,12 @@ QUnit.test("a quoteless parameter should lookup actionName in context [DEPRECATE
   var lastAction;
   var actionOrder = [];
 
-  view = EmberView.create({
+  view = NgularView.create({
     template: compile("{{#each allactions}}<a {{bind-attr id='name'}} {{action name}}>{{title}}</a>{{/each}}")
   });
 
-  var controller = EmberController.extend({
-    allactions: Ember.A([{ title: 'Biggity Boom',name: 'biggityBoom' },
+  var controller = NgularController.extend({
+    allactions: Ngular.A([{ title: 'Biggity Boom',name: 'biggityBoom' },
                          { title: 'Whomp Whomp',name: 'whompWhomp' },
                          { title: 'Sloopy Dookie',name: 'sloopyDookie' }]),
     actions: {
@@ -961,12 +961,12 @@ QUnit.test("a quoteless parameter should resolve actionName, including path", fu
   var lastAction;
   var actionOrder = [];
 
-  view = EmberView.create({
+  view = NgularView.create({
     template: compile("{{#each item in allactions}}<a {{bind-attr id='item.name'}} {{action item.name}}>{{item.title}}</a>{{/each}}")
   });
 
-  var controller = EmberController.extend({
-    allactions: Ember.A([{ title: 'Biggity Boom',name: 'biggityBoom' },
+  var controller = NgularController.extend({
+    allactions: Ngular.A([{ title: 'Biggity Boom',name: 'biggityBoom' },
                          { title: 'Whomp Whomp',name: 'whompWhomp' },
                          { title: 'Sloopy Dookie',name: 'sloopyDookie' }]),
     actions: {
@@ -1008,11 +1008,11 @@ QUnit.test("a quoteless parameter should resolve actionName, including path", fu
 QUnit.test("a quoteless parameter that does not resolve to a value asserts", function() {
   var triggeredAction;
 
-  view = EmberView.create({
+  view = NgularView.create({
     template: compile("<a id='oops-bound-param' {{action ohNoeNotValid}}>Hi</a>")
   });
 
-  var controller = EmberController.extend({
+  var controller = NgularController.extend({
     actions: {
       ohNoeNotValid() {
         triggeredAction = true;
@@ -1034,7 +1034,7 @@ QUnit.test("a quoteless parameter that does not resolve to a value asserts", fun
      "Perhaps you meant to use a quoted actionName? (e.g. {{action 'save'}}).");
 });
 
-QUnit.module("ember-routing-htmlbars: action helper - deprecated invoking directly on target", {
+QUnit.module("ngular-routing-htmlbars: action helper - deprecated invoking directly on target", {
   setup() {
     originalActionHelper = helpers['action'];
     registerHelper('action', actionHelper);
@@ -1053,11 +1053,11 @@ QUnit.module("ember-routing-htmlbars: action helper - deprecated invoking direct
 });
 
 QUnit.test("should respect preventDefault=false option if provided", function() {
-  view = EmberView.create({
+  view = NgularView.create({
     template: compile("<a {{action 'show' preventDefault=false}}>Hi</a>")
   });
 
-  var controller = EmberController.extend({
+  var controller = NgularController.extend({
     actions: {
       show() { }
     }

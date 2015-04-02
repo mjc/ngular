@@ -1,5 +1,5 @@
-import EmberError from "ember-metal/error";
-import EnumerableUtils from "ember-metal/enumerable_utils";
+import NgularError from "ngular-metal/error";
+import EnumerableUtils from "ngular-metal/enumerable_utils";
 
 var RETAIN = 'r';
 var FILTER = 'f';
@@ -12,12 +12,12 @@ function Operation(type, count) {
 export default SubArray;
 
 /**
-  An `Ember.SubArray` tracks an array in a way similar to, but more specialized
-  than, `Ember.TrackedArray`.  It is useful for keeping track of the indexes of
+  An `Ngular.SubArray` tracks an array in a way similar to, but more specialized
+  than, `Ngular.TrackedArray`.  It is useful for keeping track of the indexes of
   items within a filtered array.
 
   @class SubArray
-  @namespace Ember
+  @namespace Ngular
 */
 function SubArray(length) {
   if (arguments.length < 1) { length = 0; }
@@ -110,7 +110,7 @@ SubArray.prototype = {
         self._composeAt(operationIndex);
       }
     }, function() {
-      throw new EmberError("Can't remove an item that has never been added.");
+      throw new NgularError("Can't remove an item that has never been added.");
     });
 
     return returnValue;

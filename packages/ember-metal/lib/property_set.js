@@ -1,16 +1,16 @@
-import Ember from "ember-metal/core";
-import { _getPath as getPath } from "ember-metal/property_get";
+import Ngular from "ngular-metal/core";
+import { _getPath as getPath } from "ngular-metal/property_get";
 import {
   propertyWillChange,
   propertyDidChange
-} from "ember-metal/property_events";
-import { defineProperty } from "ember-metal/properties";
-import EmberError from "ember-metal/error";
+} from "ngular-metal/property_events";
+import { defineProperty } from "ngular-metal/properties";
+import NgularError from "ngular-metal/error";
 import {
   isPath,
   isGlobalPath
-} from "ember-metal/path_cache";
-import { hasPropertyAccessors } from "ember-metal/platform/define_property";
+} from "ngular-metal/path_cache";
+import { hasPropertyAccessors } from "ngular-metal/platform/define_property";
 
 /**
   Sets the value of a property on an object, respecting computed properties
@@ -19,7 +19,7 @@ import { hasPropertyAccessors } from "ember-metal/platform/define_property";
   method then that will be invoked as well.
 
   @method set
-  @for Ember
+  @for Ngular
   @param {Object} obj The object to modify.
   @param {String} keyName The property key to set
   @param {Object} value The value to set
@@ -27,21 +27,21 @@ import { hasPropertyAccessors } from "ember-metal/platform/define_property";
 */
 export function set(obj, keyName, value, tolerant) {
   if (typeof obj === 'string') {
-    Ember.assert(`Path '${obj}' must be global if no obj is given.`, isGlobalPath(obj));
+    Ngular.assert(`Path '${obj}' must be global if no obj is given.`, isGlobalPath(obj));
     value = keyName;
     keyName = obj;
-    obj = Ember.lookup;
+    obj = Ngular.lookup;
   }
 
-  Ember.assert(`Cannot call set with '${keyName}' key.`, !!keyName);
+  Ngular.assert(`Cannot call set with '${keyName}' key.`, !!keyName);
 
-  if (obj === Ember.lookup) {
+  if (obj === Ngular.lookup) {
     return setPath(obj, keyName, value, tolerant);
   }
 
   var meta, possibleDesc, desc;
   if (obj) {
-    meta = obj['__ember_meta__'];
+    meta = obj['__ngular_meta__'];
     possibleDesc = obj[keyName];
     desc = (possibleDesc !== null && typeof possibleDesc === 'object' && possibleDesc.isDescriptor) ? possibleDesc : undefined;
   }
@@ -51,8 +51,8 @@ export function set(obj, keyName, value, tolerant) {
     return setPath(obj, keyName, value, tolerant);
   }
 
-  Ember.assert("You need to provide an object and key to `set`.", !!obj && keyName !== undefined);
-  Ember.assert('calling set on destroyed object', !obj.isDestroyed);
+  Ngular.assert("You need to provide an object and key to `set`.", !!obj && keyName !== undefined);
+  Ngular.assert('calling set on destroyed object', !obj.isDestroyed);
 
   if (desc) {
     desc.set(obj, keyName, value);
@@ -71,7 +71,7 @@ export function set(obj, keyName, value, tolerant) {
       obj.setUnknownProperty(keyName, value);
     } else if (meta && meta.watching[keyName] > 0) {
       if (meta.proto !== obj) {
-        if (Ember.FEATURES.isEnabled('mandatory-setter')) {
+        if (Ngular.FEATURES.isEnabled('mandatory-setter')) {
           if (hasPropertyAccessors) {
             currentValue = meta.values[keyName];
           } else {
@@ -84,7 +84,7 @@ export function set(obj, keyName, value, tolerant) {
       // only trigger a change if the value has changed
       if (value !== currentValue) {
         propertyWillChange(obj, keyName);
-        if (Ember.FEATURES.isEnabled('mandatory-setter')) {
+        if (Ngular.FEATURES.isEnabled('mandatory-setter')) {
           if (hasPropertyAccessors) {
             if (
               (currentValue === undefined && !(keyName in obj)) ||
@@ -125,14 +125,14 @@ function setPath(root, path, value, tolerant) {
   }
 
   if (!keyName || keyName.length === 0) {
-    throw new EmberError('Property set failed: You passed an empty path');
+    throw new NgularError('Property set failed: You passed an empty path');
   }
 
   if (!root) {
     if (tolerant) {
       return;
     } else {
-      throw new EmberError('Property set failed: object in path "'+path+'" could not be found or was destroyed.');
+      throw new NgularError('Property set failed: object in path "'+path+'" could not be found or was destroyed.');
     }
   }
 
@@ -140,14 +140,14 @@ function setPath(root, path, value, tolerant) {
 }
 
 /**
-  Error-tolerant form of `Ember.set`. Will not blow up if any part of the
+  Error-tolerant form of `Ngular.set`. Will not blow up if any part of the
   chain is `undefined`, `null`, or destroyed.
 
   This is primarily used when syncing bindings, which may try to update after
   an object has been destroyed.
 
   @method trySet
-  @for Ember
+  @for Ngular
   @param {Object} obj The object to modify.
   @param {String} path The property path to set
   @param {Object} value The value to set

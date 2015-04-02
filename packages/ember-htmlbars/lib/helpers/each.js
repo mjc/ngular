@@ -1,10 +1,10 @@
 
 /**
-@module ember
-@submodule ember-htmlbars
+@module ngular
+@submodule ngular-htmlbars
 */
-import Ember from "ember-metal/core"; // Ember.assert;
-import EachView from "ember-views/views/each";
+import Ngular from "ngular-metal/core"; // Ngular.assert;
+import EachView from "ngular-views/views/each";
 
 /**
   The `{{#each}}` helper loops over elements in a collection. It is an extension
@@ -68,7 +68,7 @@ import EachView from "ember-views/views/each";
   Will use the following view for each item
 
   ```javascript
-  App.PersonView = Ember.View.extend({
+  App.PersonView = Ngular.View.extend({
     tagName: 'li'
   });
   ```
@@ -77,19 +77,19 @@ import EachView from "ember-views/views/each";
 
   ```html
   <ul>
-    <li class="ember-view">Yehuda</li>
-    <li class="ember-view">Tom</li>
-    <li class="ember-view">Paul</li>
+    <li class="ngular-view">Yehuda</li>
+    <li class="ngular-view">Tom</li>
+    <li class="ngular-view">Paul</li>
   </ul>
   ```
 
   `itemViewClass` also enables a non-block form of `{{each}}`. The view
-  must {{#crossLink "Ember.View/toc_templates"}}provide its own template{{/crossLink}},
+  must {{#crossLink "Ngular.View/toc_templates"}}provide its own template{{/crossLink}},
   and then the block should be dropped. An example that outputs the same HTML
   as the previous one:
 
   ```javascript
-  App.PersonView = Ember.View.extend({
+  App.PersonView = Ngular.View.extend({
     tagName: 'li',
     template: '{{developer.name}}'
   });
@@ -107,7 +107,7 @@ import EachView from "ember-views/views/each";
   case of the each helper.
 
   ```javascript
-  App.NoPeopleView = Ember.View.extend({
+  App.NoPeopleView = Ngular.View.extend({
     tagName: 'li',
     template: 'No person is available, sorry'
   });
@@ -123,9 +123,9 @@ import EachView from "ember-views/views/each";
 
   ### Wrapping each item in a controller
 
-  Controllers in Ember manage state and decorate data. In many cases,
+  Controllers in Ngular manage state and decorate data. In many cases,
   providing a controller for each item in a list can be useful.
-  Specifically, an {{#crossLink "Ember.ObjectController"}}Ember.ObjectController{{/crossLink}}
+  Specifically, an {{#crossLink "Ngular.ObjectController"}}Ngular.ObjectController{{/crossLink}}
   should probably be used. Item controllers are passed the item they
   will present as a `model` property, and an object controller will
   proxy property lookups to `model` for us.
@@ -134,7 +134,7 @@ import EachView from "ember-views/views/each";
   while any other property lookups are delegated to the model. An example:
 
   ```javascript
-  App.RecruitController = Ember.ObjectController.extend({
+  App.RecruitController = Ngular.ObjectController.extend({
     isAvailableForHire: function() {
       return !this.get('isEmployed') && this.get('isSeekingWork');
     }.property('isEmployed', 'isSeekingWork')
@@ -148,7 +148,7 @@ import EachView from "ember-views/views/each";
   ```
 
   @method each
-  @for Ember.Handlebars.helpers
+  @for Ngular.Handlebars.helpers
   @param [name] {String} name for item (used with `in`)
   @param [path] {String} path
   @param [options] {Object} Handlebars key/value pairs of options
@@ -161,7 +161,7 @@ function eachHelper(params, hash, options, env) {
   var helperName = 'each';
   var path = params[0] || view.getStream('');
 
-  Ember.assert(
+  Ngular.assert(
     "If you pass more than one argument to the each helper, " +
     "it must be in the form {{#each foo in bar}}",
     params.length <= 1
@@ -174,11 +174,11 @@ function eachHelper(params, hash, options, env) {
     hash.blockParams = blockParams;
   }
 
-  Ember.deprecate(
+  Ngular.deprecate(
     "Using the context switching form of {{each}} is deprecated. " +
     "Please use the block param form (`{{#each bar as |foo|}}`) instead.",
     hash.keyword === true || typeof hash.keyword === 'string',
-    { url: 'http://emberjs.com/guides/deprecations/#toc_more-consistent-handlebars-scope' }
+    { url: 'http://github.com/mjc/ngular/guides/deprecations/#toc_more-consistent-handlebars-scope' }
   );
 
   hash.dataSource = path;

@@ -1,8 +1,8 @@
-QUnit.module("Ember Error Throwing");
+QUnit.module("Ngular Error Throwing");
 
-QUnit.test("new Ember.Error displays provided message", function() {
+QUnit.test("new Ngular.Error displays provided message", function() {
   throws(function() {
-    throw new Ember.Error('A Message');
+    throw new Ngular.Error('A Message');
   }, function(e) {
     return e.message === 'A Message';
   }, 'the assigned message was displayed');

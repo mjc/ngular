@@ -1,30 +1,30 @@
-import run from 'ember-metal/run_loop';
-import jQuery from 'ember-views/system/jquery';
-import EmberView from 'ember-views/views/view';
-import { Binding } from 'ember-metal/binding';
-import EmberObject from 'ember-runtime/system/object';
-import { computed } from 'ember-metal/computed';
-import ContainerView from 'ember-views/views/container_view';
-import compile from 'ember-template-compiler/system/compile';
-import { runAppend, runDestroy } from "ember-runtime/tests/utils";
-import { registerHelper } from "ember-htmlbars/helpers";
+import run from 'ngular-metal/run_loop';
+import jQuery from 'ngular-views/system/jquery';
+import NgularView from 'ngular-views/views/view';
+import { Binding } from 'ngular-metal/binding';
+import NgularObject from 'ngular-runtime/system/object';
+import { computed } from 'ngular-metal/computed';
+import ContainerView from 'ngular-views/views/container_view';
+import compile from 'ngular-template-compiler/system/compile';
+import { runAppend, runDestroy } from "ngular-runtime/tests/utils";
+import { registerHelper } from "ngular-htmlbars/helpers";
 
-import { set } from 'ember-metal/property_set';
+import { set } from 'ngular-metal/property_set';
 
 var view, MyApp, originalLookup, lookup;
 
 var trim = jQuery.trim;
 
-QUnit.module('ember-htmlbars: binding integration', {
+QUnit.module('ngular-htmlbars: binding integration', {
   setup() {
-    originalLookup = Ember.lookup;
-    Ember.lookup = lookup = {};
+    originalLookup = Ngular.lookup;
+    Ngular.lookup = lookup = {};
 
-    MyApp = lookup.MyApp = EmberObject.create({});
+    MyApp = lookup.MyApp = NgularObject.create({});
   },
 
   teardown() {
-    Ember.lookup = originalLookup;
+    Ngular.lookup = originalLookup;
 
     runDestroy(view);
     view = null;
@@ -38,7 +38,7 @@ QUnit.test('should call a registered helper for mustache without parameters', fu
     return 'foobar';
   });
 
-  view = EmberView.create({
+  view = NgularView.create({
     template: compile('{{foobar}}')
   });
 
@@ -48,7 +48,7 @@ QUnit.test('should call a registered helper for mustache without parameters', fu
 });
 
 QUnit.test('should bind to the property if no registered helper found for a mustache without parameters', function() {
-  view = EmberView.createWithMixins({
+  view = NgularView.createWithMixins({
     template: compile('{{view.foobarProperty}}'),
     foobarProperty: computed(function() {
       return 'foobarProperty';
@@ -61,9 +61,9 @@ QUnit.test('should bind to the property if no registered helper found for a must
 });
 
 QUnit.test("should be able to update when bound property updates", function() {
-  MyApp.set('controller', EmberObject.create({ name: 'first' }));
+  MyApp.set('controller', NgularObject.create({ name: 'first' }));
 
-  var View = EmberView.extend({
+  var View = NgularView.extend({
     template: compile('<i>{{view.value.name}}, {{view.computed}}</i>'),
     valueBinding: 'MyApp.controller',
     computed: computed(function() {
@@ -78,7 +78,7 @@ QUnit.test("should be able to update when bound property updates", function() {
   runAppend(view);
 
   run(function() {
-    MyApp.set('controller', EmberObject.create({
+    MyApp.set('controller', NgularObject.create({
       name: 'second'
     }));
   });
@@ -88,8 +88,8 @@ QUnit.test("should be able to update when bound property updates", function() {
 });
 
 QUnit.test('should cleanup bound properties on rerender', function() {
-  view = EmberView.create({
-    controller: EmberObject.create({ name: 'wycats' }),
+  view = NgularView.create({
+    controller: NgularObject.create({ name: 'wycats' }),
     template: compile('{{name}}')
   });
 
@@ -105,14 +105,14 @@ QUnit.test('should cleanup bound properties on rerender', function() {
 QUnit.test("should update bound values after view's parent is removed and then re-appended", function() {
   expectDeprecation("Setting `childViews` on a Container is deprecated.");
 
-  var controller = EmberObject.create();
+  var controller = NgularObject.create();
 
   var parentView = ContainerView.create({
     childViews: ['testView'],
 
     controller: controller,
 
-    testView: EmberView.create({
+    testView: NgularView.create({
       template: compile("{{#if showStuff}}{{boundValue}}{{else}}Not true.{{/if}}")
     })
   });
@@ -153,8 +153,8 @@ QUnit.test("should update bound values after view's parent is removed and then r
   runDestroy(parentView);
 });
 
-QUnit.test('should accept bindings as a string or an Ember.Binding', function() {
-  var ViewWithBindings = EmberView.extend({
+QUnit.test('should accept bindings as a string or an Ngular.Binding', function() {
+  var ViewWithBindings = NgularView.extend({
     oneWayBindingTestBinding: Binding.oneWay('context.direction'),
     twoWayBindingTestBinding: Binding.from('context.direction'),
     stringBindingTestBinding: 'context.direction',
@@ -165,9 +165,9 @@ QUnit.test('should accept bindings as a string or an Ember.Binding', function() 
     )
   });
 
-  view = EmberView.create({
+  view = NgularView.create({
     viewWithBindingsClass: ViewWithBindings,
-    context: EmberObject.create({
+    context: NgularObject.create({
       direction: "down"
     }),
     template: compile("{{view view.viewWithBindingsClass}}")

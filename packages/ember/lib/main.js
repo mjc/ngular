@@ -1,34 +1,34 @@
 // require the main entry points for each of these packages
 // this is so that the global exports occur properly
-import "ember-metal";
-import "ember-runtime";
-import "ember-views";
-import "ember-routing";
-import "ember-application";
-import "ember-extension-support";
-import "ember-htmlbars";
-import "ember-routing-htmlbars";
-import "ember-routing-views";
+import "ngular-metal";
+import "ngular-runtime";
+import "ngular-views";
+import "ngular-routing";
+import "ngular-application";
+import "ngular-extension-support";
+import "ngular-htmlbars";
+import "ngular-routing-htmlbars";
+import "ngular-routing-views";
 
-import environment from "ember-metal/environment";
-import { runLoadHooks } from 'ember-runtime/system/lazy_load';
+import environment from "ngular-metal/environment";
+import { runLoadHooks } from 'ngular-runtime/system/lazy_load';
 
-if (Ember.__loader.registry['ember-template-compiler']) {
-  requireModule('ember-template-compiler');
+if (Ngular.__loader.registry['ngular-template-compiler']) {
+  requireModule('ngular-template-compiler');
 }
 
-// do this to ensure that Ember.Test is defined properly on the global
+// do this to ensure that Ngular.Test is defined properly on the global
 // if it is present.
-if (Ember.__loader.registry['ember-testing']) {
-  requireModule('ember-testing');
+if (Ngular.__loader.registry['ngular-testing']) {
+  requireModule('ngular-testing');
 }
 
-runLoadHooks('Ember');
+runLoadHooks('Ngular');
 
 /**
-Ember
+Ngular
 
-@module ember
+@module ngular
 */
 
-Ember.deprecate('Usage of Ember is deprecated for Internet Explorer 6 and 7, support will be removed in the next major version.', !environment.userAgent.match(/MSIE [67]/));
+Ngular.deprecate('Usage of Ngular is deprecated for Internet Explorer 6 and 7, support will be removed in the next major version.', !environment.userAgent.match(/MSIE [67]/));

@@ -1,11 +1,11 @@
-import { get } from "ember-metal/property_get";
-import { isStream } from "ember-metal/streams/utils";
-import BoundPartialView from "ember-views/views/bound_partial_view";
-import lookupPartial from "ember-views/system/lookup_partial";
+import { get } from "ngular-metal/property_get";
+import { isStream } from "ngular-metal/streams/utils";
+import BoundPartialView from "ngular-views/views/bound_partial_view";
+import lookupPartial from "ngular-views/system/lookup_partial";
 
 /**
-@module ember
-@submodule ember-htmlbars
+@module ngular
+@submodule ngular-htmlbars
 */
 
 /**
@@ -44,7 +44,7 @@ import lookupPartial from "ember-views/system/lookup_partial";
 
 
   @method partial
-  @for Ember.Handlebars.helpers
+  @for Ngular.Handlebars.helpers
   @param {String} partialName the name of the template to render minus the leading underscore
 */
 

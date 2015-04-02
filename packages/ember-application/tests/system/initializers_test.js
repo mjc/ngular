@@ -1,12 +1,12 @@
-import run from "ember-metal/run_loop";
-import Application from "ember-application/system/application";
-import { indexOf } from "ember-metal/array";
-import jQuery from "ember-views/system/jquery";
+import run from "ngular-metal/run_loop";
+import Application from "ngular-application/system/application";
+import { indexOf } from "ngular-metal/array";
+import jQuery from "ngular-views/system/jquery";
 import Registry from "container/registry";
 
 var app;
 
-QUnit.module("Ember.Application initializers", {
+QUnit.module("Ngular.Application initializers", {
   setup() {
   },
 
@@ -28,7 +28,7 @@ QUnit.test("initializers require proper 'name' and 'initialize' properties", fun
 
   expectAssertion(function() {
     run(function() {
-      MyApplication.initializer({ initialize: Ember.K });
+      MyApplication.initializer({ initialize: Ngular.K });
     });
   });
 
@@ -323,7 +323,7 @@ QUnit.test("initializers are per-app", function() {
   });
 });
 
-if (Ember.FEATURES.isEnabled("ember-application-initializer-context")) {
+if (Ngular.FEATURES.isEnabled("ngular-application-initializer-context")) {
   QUnit.test("initializers should be executed in their own context", function() {
     expect(1);
     var MyApplication = Application.extend();

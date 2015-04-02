@@ -1,13 +1,13 @@
 /**
-@module ember
-@submodule ember-routing
+@module ngular
+@submodule ngular-routing
 */
 
 /**
 
   Finds a controller instance.
 
-  @for Ember
+  @for Ngular
   @method controllerFor
   @private
 */

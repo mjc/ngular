@@ -1,12 +1,12 @@
-import run from "ember-metal/run_loop";
-import Test from "ember-testing/test";
-import Adapter from "ember-testing/adapters/adapter";
-import QUnitAdapter from "ember-testing/adapters/qunit";
-import EmberApplication from "ember-application/system/application";
+import run from "ngular-metal/run_loop";
+import Test from "ngular-testing/test";
+import Adapter from "ngular-testing/adapters/adapter";
+import QUnitAdapter from "ngular-testing/adapters/qunit";
+import NgularApplication from "ngular-application/system/application";
 
 var App, originalAdapter;
 
-QUnit.module("ember-testing Adapters", {
+QUnit.module("ngular-testing Adapters", {
   setup() {
     originalAdapter = Test.adapter;
   },
@@ -30,7 +30,7 @@ QUnit.test("Setting a test adapter manually", function() {
   });
 
   run(function() {
-    App = EmberApplication.create();
+    App = NgularApplication.create();
     Test.adapter = CustomAdapter.create();
     App.setupForTesting();
   });
@@ -44,7 +44,7 @@ QUnit.test("QUnitAdapter is used by default", function() {
   Test.adapter = null;
 
   run(function() {
-    App = EmberApplication.create();
+    App = NgularApplication.create();
     App.setupForTesting();
   });
 

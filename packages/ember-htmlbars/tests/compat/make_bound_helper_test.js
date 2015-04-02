@@ -1,29 +1,29 @@
 /*jshint newcap:false*/
-import EmberView from "ember-views/views/view";
-import run from "ember-metal/run_loop";
-import EmberObject from "ember-runtime/system/object";
-import { A } from "ember-runtime/system/native_array";
-import SimpleBoundView from "ember-views/views/simple_bound_view";
+import NgularView from "ngular-views/views/view";
+import run from "ngular-metal/run_loop";
+import NgularObject from "ngular-runtime/system/object";
+import { A } from "ngular-runtime/system/native_array";
+import SimpleBoundView from "ngular-views/views/simple_bound_view";
 
-// import {expectAssertion} from "ember-metal/tests/debug_helpers";
+// import {expectAssertion} from "ngular-metal/tests/debug_helpers";
 
-import { get } from "ember-metal/property_get";
-import { set } from "ember-metal/property_set";
-import { runAppend, runDestroy } from "ember-runtime/tests/utils";
+import { get } from "ngular-metal/property_get";
+import { set } from "ngular-metal/property_set";
+import { runAppend, runDestroy } from "ngular-runtime/tests/utils";
 import {
   dasherize
-} from 'ember-runtime/system/string';
+} from 'ngular-runtime/system/string';
 
-import EmberHandlebars from "ember-htmlbars/compat";
+import NgularHandlebars from "ngular-htmlbars/compat";
 
 var compile, helpers, helper;
-compile = EmberHandlebars.compile;
-helpers = EmberHandlebars.helpers;
-helper = EmberHandlebars.helper;
+compile = NgularHandlebars.compile;
+helpers = NgularHandlebars.helpers;
+helper = NgularHandlebars.helper;
 
 var view;
 
-var originalLookup = Ember.lookup;
+var originalLookup = Ngular.lookup;
 
 function registerRepeatHelper() {
   expectDeprecationInHTMLBars();
@@ -43,12 +43,12 @@ function expectDeprecationInHTMLBars() {
   // enable a deprecation notice
 }
 
-QUnit.module("ember-htmlbars: makeBoundHelper", {
+QUnit.module("ngular-htmlbars: makeBoundHelper", {
   setup() {
   },
   teardown() {
     runDestroy(view);
-    Ember.lookup = originalLookup;
+    Ngular.lookup = originalLookup;
   }
 });
 
@@ -56,8 +56,8 @@ QUnit.test("primitives should work correctly [DEPRECATED]", function() {
   expectDeprecation('Using the context switching form of {{each}} is deprecated. Please use the block param form (`{{#each bar as |foo|}}`) instead.');
   expectDeprecation('Using the context switching form of `{{with}}` is deprecated. Please use the block param form (`{{#with bar as |foo|}}`) instead.');
 
-  view = EmberView.create({
-    prims: Ember.A(["string", 12]),
+  view = NgularView.create({
+    prims: Ngular.A(["string", 12]),
 
     template: compile('{{#each view.prims}}{{#if this}}inside-if{{/if}}{{#with this}}inside-with{{/with}}{{/each}}')
   });
@@ -74,8 +74,8 @@ QUnit.test("should update bound helpers when properties change", function() {
     return value.toUpperCase();
   });
 
-  view = EmberView.create({
-    controller: EmberObject.create({ name: "Brogrammer" }),
+  view = NgularView.create({
+    controller: NgularObject.create({ name: "Brogrammer" }),
     template: compile("{{capitalize name}}")
   });
 
@@ -97,7 +97,7 @@ QUnit.test("should update bound helpers in a subexpression when properties chang
     return dasherize(value);
   });
 
-  view = EmberView.create({
+  view = NgularView.create({
     controller: { prop: "isThing" },
     template: compile("<div {{bind-attr data-foo=(dasherize prop)}}>{{prop}}</div>")
   });
@@ -118,9 +118,9 @@ QUnit.test("should allow for computed properties with dependencies", function() 
     return get(value, 'name').toUpperCase();
   }, 'name');
 
-  view = EmberView.create({
-    controller: EmberObject.create({
-      person: EmberObject.create({
+  view = NgularView.create({
+    controller: NgularObject.create({
+      person: NgularObject.create({
         name: 'Brogrammer'
       })
     }),
@@ -141,8 +141,8 @@ QUnit.test("should allow for computed properties with dependencies", function() 
 QUnit.test("bound helpers should support options", function() {
   registerRepeatHelper();
 
-  view = EmberView.create({
-    controller: EmberObject.create({ text: 'ab' }),
+  view = NgularView.create({
+    controller: NgularObject.create({ text: 'ab' }),
     template: compile("{{repeat text count=3}}")
   });
 
@@ -158,7 +158,7 @@ QUnit.test("bound helpers should support keywords", function() {
     return value.toUpperCase();
   });
 
-  view = EmberView.create({
+  view = NgularView.create({
     text: 'ab',
     template: compile("{{capitalize view.text}}")
   });
@@ -175,9 +175,9 @@ QUnit.test("bound helpers should support global paths [DEPRECATED]", function() 
     return value.toUpperCase();
   });
 
-  Ember.lookup = { Text: 'ab' };
+  Ngular.lookup = { Text: 'ab' };
 
-  view = EmberView.create({
+  view = NgularView.create({
     template: compile("{{capitalize Text}}")
   });
 
@@ -195,8 +195,8 @@ QUnit.test("bound helper should support this keyword", function() {
     return get(value, 'text').toUpperCase();
   });
 
-  view = EmberView.create({
-    controller: EmberObject.create({ text: 'ab' }),
+  view = NgularView.create({
+    controller: NgularObject.create({ text: 'ab' }),
     template: compile("{{capitalize this}}")
   });
 
@@ -208,8 +208,8 @@ QUnit.test("bound helper should support this keyword", function() {
 QUnit.test("bound helpers should support bound options", function() {
   registerRepeatHelper();
 
-  view = EmberView.create({
-    controller: EmberObject.create({ text: 'ab', numRepeats: 3 }),
+  view = NgularView.create({
+    controller: NgularObject.create({ text: 'ab', numRepeats: 3 }),
     template: compile('{{repeat text countBinding="numRepeats"}}')
   });
 
@@ -234,8 +234,8 @@ QUnit.test("bound helpers should support bound options", function() {
 QUnit.test("bound helpers should support unquoted values as bound options", function() {
   registerRepeatHelper();
 
-  view = EmberView.create({
-    controller: EmberObject.create({ text: 'ab', numRepeats: 3 }),
+  view = NgularView.create({
+    controller: NgularObject.create({ text: 'ab', numRepeats: 3 }),
     template: compile('{{repeat text count=numRepeats}}')
   });
 
@@ -265,8 +265,8 @@ QUnit.test("bound helpers should support multiple bound properties", function() 
     return [].slice.call(arguments, 0, -1).join('');
   });
 
-  view = EmberView.create({
-    controller: EmberObject.create({ thing1: 'ZOID', thing2: 'BERG' }),
+  view = NgularView.create({
+    controller: NgularObject.create({ thing1: 'ZOID', thing2: 'BERG' }),
     template: compile('{{combine thing1 thing2}}')
   });
 
@@ -304,11 +304,11 @@ QUnit.test("bound helpers should expose property names in options.data.propertie
     return a.join(' ');
   });
 
-  view = EmberView.create({
-    controller: EmberObject.create({
+  view = NgularView.create({
+    controller: NgularObject.create({
       thing1: 'ZOID',
       thing2: 'BERG',
-      thing3: EmberObject.create({
+      thing3: NgularObject.create({
         foo: 123
       })
     }),
@@ -327,8 +327,8 @@ QUnit.test("bound helpers can be invoked with zero args", function() {
     return options.hash.text || "TROLOLOL";
   });
 
-  view = EmberView.create({
-    controller: EmberObject.create({ trollText: "yumad" }),
+  view = NgularView.create({
+    controller: NgularObject.create({ trollText: "yumad" }),
     template: compile('{{troll}} and {{troll text="bork"}}')
   });
 
@@ -340,8 +340,8 @@ QUnit.test("bound helpers can be invoked with zero args", function() {
 QUnit.test("bound helpers should not be invoked with blocks", function() {
   registerRepeatHelper();
 
-  view = EmberView.create({
-    controller: EmberObject.create({}),
+  view = NgularView.create({
+    controller: NgularObject.create({}),
     template: compile("{{#repeat}}Sorry, Charlie{{/repeat}}")
   });
 
@@ -354,10 +354,10 @@ QUnit.test("should observe dependent keys passed to registerBoundHelper", functi
   try {
     expectDeprecationInHTMLBars();
 
-    var simplyObject = EmberObject.create({
+    var simplyObject = NgularObject.create({
       firstName: 'Jim',
       lastName: 'Owen',
-      birthday: EmberObject.create({
+      birthday: NgularObject.create({
         year: '2009'
       })
     });
@@ -370,7 +370,7 @@ QUnit.test("should observe dependent keys passed to registerBoundHelper", functi
       ].join(' ');
     }, 'firstName', 'lastName', 'birthday.year');
 
-    view = EmberView.create({
+    view = NgularView.create({
       template: compile('{{fullName this}}'),
       context: simplyObject
     });
@@ -397,8 +397,8 @@ QUnit.test("shouldn't treat raw numbers as bound paths", function() {
     return a + b;
   });
 
-  view = EmberView.create({
-    controller: EmberObject.create({ aNumber: 1 }),
+  view = NgularView.create({
+    controller: NgularObject.create({ aNumber: 1 }),
     template: compile("{{sum aNumber 1}} {{sum 0 aNumber}} {{sum 5 6}}")
   });
 
@@ -420,8 +420,8 @@ QUnit.test("shouldn't treat quoted strings as bound paths", function() {
     return a + b;
   });
 
-  view = EmberView.create({
-    controller: EmberObject.create({ word: "jerkwater", loo: "unused" }),
+  view = NgularView.create({
+    controller: NgularObject.create({ word: "jerkwater", loo: "unused" }),
     template: compile("{{combine word 'loo'}} {{combine '' word}} {{combine 'will' \"didi\"}}")
   });
 
@@ -444,8 +444,8 @@ QUnit.test("bound helpers can handle nulls in array (with primitives) [DEPRECATE
     return val ? val.split('').reverse().join('') : "NOPE";
   });
 
-  view = EmberView.create({
-    controller: EmberObject.create({
+  view = NgularView.create({
+    controller: NgularObject.create({
       things: A([null, 0, undefined, false, "OMG"])
     }),
     template: compile("{{#each things}}{{this}}|{{reverse this}} {{/each}}{{#each thing in things}}{{thing}}|{{reverse thing}} {{/each}}")
@@ -472,8 +472,8 @@ QUnit.test("bound helpers can handle nulls in array (with objects)", function() 
     return val ? get(val, 'foo') : "NOPE";
   });
 
-  view = EmberView.create({
-    controller: EmberObject.create({
+  view = NgularView.create({
+    controller: NgularObject.create({
       things: A([null, { foo: 5 }])
     }),
     template: compile("{{#each things}}{{foo}}|{{print-foo this}} {{/each}}{{#each thing in things}}{{thing.foo}}|{{print-foo thing}} {{/each}}")
@@ -497,7 +497,7 @@ QUnit.test("bound helpers can handle `this` keyword when it's a non-object", fun
     return value + '!';
   });
 
-  view = EmberView.create({
+  view = NgularView.create({
     context: 'alex',
     template: compile("{{shout this}}")
   });
@@ -526,8 +526,8 @@ QUnit.test("should have correct argument types", function() {
     return typeof value;
   });
 
-  view = EmberView.create({
-    controller: EmberObject.create(),
+  view = NgularView.create({
+    controller: NgularObject.create(),
     template: compile('{{getType null}}, {{getType undefProp}}, {{getType "string"}}, {{getType 1}}, {{getType}}')
   });
 
@@ -546,9 +546,9 @@ QUnit.test("when no parameters are bound, no new views are created", function() 
   };
 
   try {
-    view = EmberView.create({
+    view = NgularView.create({
       template: compile('{{repeat "a"}}'),
-      controller: EmberObject.create()
+      controller: NgularObject.create()
     });
     runAppend(view);
   } finally {
@@ -570,9 +570,9 @@ QUnit.test('when no hash parameters are bound, no new views are created', functi
   };
 
   try {
-    view = EmberView.create({
+    view = NgularView.create({
       template: compile('{{repeat "a" count=3}}'),
-      controller: EmberObject.create()
+      controller: NgularObject.create()
     });
     runAppend(view);
   } finally {

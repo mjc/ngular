@@ -1,10 +1,10 @@
 /**
-@module ember
-@submodule ember-htmlbars
+@module ngular
+@submodule ngular-htmlbars
 */
 
-import Ember from "ember-metal/core"; // Ember.assert
-import TextArea from "ember-views/views/text_area";
+import Ngular from "ngular-metal/core"; // Ngular.assert
+import TextArea from "ngular-views/views/text_area";
 
 /**
   `{{textarea}}` inserts a new instance of `<textarea>` tag into the template.
@@ -44,7 +44,7 @@ import TextArea from "ember-views/views/text_area";
   Would result in the following HTML:
 
   ```html
-  <textarea class="ember-text-area">
+  <textarea class="ngular-text-area">
     Lots of static text that ISN'T bound
   </textarea>
   ```
@@ -56,7 +56,7 @@ import TextArea from "ember-views/views/text_area";
   the text area of their browser's window.
 
   ```javascript
-  App.ApplicationController = Ember.Controller.extend({
+  App.ApplicationController = Ngular.Controller.extend({
     writtenWords: "Lots of text that IS bound"
   });
   ```
@@ -68,18 +68,18 @@ import TextArea from "ember-views/views/text_area";
    Would result in the following HTML:
 
   ```html
-  <textarea class="ember-text-area">
+  <textarea class="ngular-text-area">
     Lots of text that IS bound
   </textarea>
   ```
 
   If you wanted a one way binding between the text area and a div tag
-  somewhere else on your screen, you could use `Ember.computed.oneWay`:
+  somewhere else on your screen, you could use `Ngular.computed.oneWay`:
 
   ```javascript
-  App.ApplicationController = Ember.Controller.extend({
+  App.ApplicationController = Ngular.Controller.extend({
     writtenWords: "Lots of text that IS bound",
-    outputWrittenWords: Ember.computed.oneWay("writtenWords")
+    outputWrittenWords: Ngular.computed.oneWay("writtenWords")
   });
   ```
 
@@ -94,7 +94,7 @@ import TextArea from "ember-views/views/text_area";
   Would result in the following HTML:
 
   ```html
-  <textarea class="ember-text-area">
+  <textarea class="ngular-text-area">
     Lots of text that IS bound
   </textarea>
 
@@ -105,16 +105,16 @@ import TextArea from "ember-views/views/text_area";
   </div>
   ```
 
-  Finally, this example really shows the power and ease of Ember when two
-  properties are bound to eachother via `Ember.computed.alias`. Type into
+  Finally, this example really shows the power and ease of Ngular when two
+  properties are bound to eachother via `Ngular.computed.alias`. Type into
   either text area box and they'll both stay in sync. Note that
-  `Ember.computed.alias` costs more in terms of performance, so only use it when
+  `Ngular.computed.alias` costs more in terms of performance, so only use it when
   your really binding in both directions:
 
   ```javascript
-  App.ApplicationController = Ember.Controller.extend({
+  App.ApplicationController = Ngular.Controller.extend({
     writtenWords: "Lots of text that IS bound",
-    twoWayWrittenWords: Ember.computed.alias("writtenWords")
+    twoWayWrittenWords: Ngular.computed.alias("writtenWords")
   });
   ```
 
@@ -124,13 +124,13 @@ import TextArea from "ember-views/views/text_area";
   ```
 
   ```html
-  <textarea id="ember1" class="ember-text-area">
+  <textarea id="ngular1" class="ngular-text-area">
     Lots of text that IS bound
   </textarea>
 
   <-- both updated in real time -->
 
-  <textarea id="ember2" class="ember-text-area">
+  <textarea id="ngular2" class="ngular-text-area">
     Lots of text that IS bound
   </textarea>
   ```
@@ -162,37 +162,37 @@ import TextArea from "ember-views/views/text_area";
   {{textarea focus-in="alertMessage"}}
   ```
 
-  See more about [Text Support Actions](/api/classes/Ember.TextArea.html)
+  See more about [Text Support Actions](/api/classes/Ngular.TextArea.html)
 
   ## Extension
 
-  Internally, `{{textarea}}` creates an instance of `Ember.TextArea`, passing
-  arguments from the helper to `Ember.TextArea`'s `create` method. You can
+  Internally, `{{textarea}}` creates an instance of `Ngular.TextArea`, passing
+  arguments from the helper to `Ngular.TextArea`'s `create` method. You can
   extend the capabilities of text areas in your application by reopening this
   class. For example, if you are building a Bootstrap project where `data-*`
   attributes are used, you can globally add support for a `data-*` attribute
-  on all `{{textarea}}`s' in your app by reopening `Ember.TextArea` or
-  `Ember.TextSupport` and adding it to the `attributeBindings` concatenated
+  on all `{{textarea}}`s' in your app by reopening `Ngular.TextArea` or
+  `Ngular.TextSupport` and adding it to the `attributeBindings` concatenated
   property:
 
   ```javascript
-  Ember.TextArea.reopen({
+  Ngular.TextArea.reopen({
     attributeBindings: ['data-error']
   });
   ```
 
-  Keep in mind when writing `Ember.TextArea` subclasses that `Ember.TextArea`
-  itself extends `Ember.Component`, meaning that it does NOT inherit
+  Keep in mind when writing `Ngular.TextArea` subclasses that `Ngular.TextArea`
+  itself extends `Ngular.Component`, meaning that it does NOT inherit
   the `controller` of the parent view.
 
-  See more about [Ember components](/api/classes/Ember.Component.html)
+  See more about [Ngular components](/api/classes/Ngular.Component.html)
 
   @method textarea
-  @for Ember.Handlebars.helpers
+  @for Ngular.Handlebars.helpers
   @param {Hash} options
 */
 export function textareaHelper(params, hash, options, env) {
-  Ember.assert('You can only pass attributes to the `textarea` helper, not arguments', params.length === 0);
+  Ngular.assert('You can only pass attributes to the `textarea` helper, not arguments', params.length === 0);
 
   return env.helpers.view.helperFunction.call(this, [TextArea], hash, options, env);
 }

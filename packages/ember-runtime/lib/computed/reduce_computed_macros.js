@@ -1,25 +1,25 @@
 /**
-@module ember
-@submodule ember-runtime
+@module ngular
+@submodule ngular-runtime
 */
 
-import Ember from 'ember-metal/core'; // Ember.assert
-import { get } from 'ember-metal/property_get';
+import Ngular from 'ngular-metal/core'; // Ngular.assert
+import { get } from 'ngular-metal/property_get';
 import {
   isArray,
   guidFor
-} from 'ember-metal/utils';
-import EmberError from 'ember-metal/error';
+} from 'ngular-metal/utils';
+import NgularError from 'ngular-metal/error';
 import {
   forEach
-} from 'ember-metal/enumerable_utils';
-import run from 'ember-metal/run_loop';
-import { addObserver } from 'ember-metal/observer';
-import { arrayComputed } from 'ember-runtime/computed/array_computed';
-import { reduceComputed } from 'ember-runtime/computed/reduce_computed';
-import SubArray from 'ember-runtime/system/subarray';
-import keys from 'ember-metal/keys';
-import compare from 'ember-runtime/compare';
+} from 'ngular-metal/enumerable_utils';
+import run from 'ngular-metal/run_loop';
+import { addObserver } from 'ngular-metal/observer';
+import { arrayComputed } from 'ngular-runtime/computed/array_computed';
+import { reduceComputed } from 'ngular-runtime/computed/reduce_computed';
+import SubArray from 'ngular-runtime/system/subarray';
+import keys from 'ngular-metal/keys';
+import compare from 'ngular-runtime/compare';
 
 var a_slice = [].slice;
 
@@ -28,9 +28,9 @@ var a_slice = [].slice;
  in the dependent array.
 
  @method sum
- @for Ember.computed
+ @for Ngular.computed
  @param {String} dependentKey
- @return {Ember.ComputedProperty} computes the sum of all values in the dependentKey's array
+ @return {Ngular.ComputedProperty} computes the sum of all values in the dependentKey's array
  @since 1.4.0
 */
 
@@ -54,9 +54,9 @@ export function sum(dependentKey) {
   array is empty.
 
   ```javascript
-  var Person = Ember.Object.extend({
-    childAges: Ember.computed.mapBy('children', 'age'),
-    maxChildAge: Ember.computed.max('childAges')
+  var Person = Ngular.Object.extend({
+    childAges: Ngular.computed.mapBy('children', 'age'),
+    maxChildAge: Ngular.computed.max('childAges')
   });
 
   var lordByron = Person.create({ children: [] });
@@ -77,9 +77,9 @@ export function sum(dependentKey) {
   ```
 
   @method max
-  @for Ember.computed
+  @for Ngular.computed
   @param {String} dependentKey
-  @return {Ember.ComputedProperty} computes the largest value in the dependentKey's array
+  @return {Ngular.ComputedProperty} computes the largest value in the dependentKey's array
 */
 export function max(dependentKey) {
   return reduceComputed(dependentKey, {
@@ -103,9 +103,9 @@ export function max(dependentKey) {
   array is empty.
 
   ```javascript
-  var Person = Ember.Object.extend({
-    childAges: Ember.computed.mapBy('children', 'age'),
-    minChildAge: Ember.computed.min('childAges')
+  var Person = Ngular.Object.extend({
+    childAges: Ngular.computed.mapBy('children', 'age'),
+    minChildAge: Ngular.computed.min('childAges')
   });
 
   var lordByron = Person.create({ children: [] });
@@ -126,9 +126,9 @@ export function max(dependentKey) {
   ```
 
   @method min
-  @for Ember.computed
+  @for Ngular.computed
   @param {String} dependentKey
-  @return {Ember.ComputedProperty} computes the smallest value in the dependentKey's array
+  @return {Ngular.ComputedProperty} computes the smallest value in the dependentKey's array
 */
 export function min(dependentKey) {
   return reduceComputed(dependentKey, {
@@ -160,8 +160,8 @@ export function min(dependentKey) {
   Example
 
   ```javascript
-  var Hamster = Ember.Object.extend({
-    excitingChores: Ember.computed.map('chores', function(chore, index) {
+  var Hamster = Ngular.Object.extend({
+    excitingChores: Ngular.computed.map('chores', function(chore, index) {
       return chore.toUpperCase() + '!';
     })
   });
@@ -174,10 +174,10 @@ export function min(dependentKey) {
   ```
 
   @method map
-  @for Ember.computed
+  @for Ngular.computed
   @param {String} dependentKey
   @param {Function} callback
-  @return {Ember.ComputedProperty} an array mapped via the callback
+  @return {Ngular.ComputedProperty} an array mapped via the callback
 */
 export function map(dependentKey, callback) {
   var options = {
@@ -199,8 +199,8 @@ export function map(dependentKey, callback) {
   Returns an array mapped to the specified key.
 
   ```javascript
-  var Person = Ember.Object.extend({
-    childAges: Ember.computed.mapBy('children', 'age')
+  var Person = Ngular.Object.extend({
+    childAges: Ngular.computed.mapBy('children', 'age')
   });
 
   var lordByron = Person.create({ children: [] });
@@ -219,10 +219,10 @@ export function map(dependentKey, callback) {
   ```
 
   @method mapBy
-  @for Ember.computed
+  @for Ngular.computed
   @param {String} dependentKey
   @param {String} propertyKey
-  @return {Ember.ComputedProperty} an array mapped to the specified key
+  @return {Ngular.ComputedProperty} an array mapped to the specified key
 */
 export function mapBy(dependentKey, propertyKey) {
   var callback = function(item) { return get(item, propertyKey); };
@@ -231,8 +231,8 @@ export function mapBy(dependentKey, propertyKey) {
 
 /**
   @method mapProperty
-  @for Ember.computed
-  @deprecated Use `Ember.computed.mapBy` instead
+  @for Ngular.computed
+  @deprecated Use `Ngular.computed.mapBy` instead
   @param dependentKey
   @param propertyKey
 */
@@ -251,8 +251,8 @@ export var mapProperty = mapBy;
   ```
 
   ```javascript
-  var Hamster = Ember.Object.extend({
-    remainingChores: Ember.computed.filter('chores', function(chore, index, array) {
+  var Hamster = Ngular.Object.extend({
+    remainingChores: Ngular.computed.filter('chores', function(chore, index, array) {
       return !chore.done;
     })
   });
@@ -269,10 +269,10 @@ export var mapProperty = mapBy;
   ```
 
   @method filter
-  @for Ember.computed
+  @for Ngular.computed
   @param {String} dependentKey
   @param {Function} callback
-  @return {Ember.ComputedProperty} the filtered array
+  @return {Ngular.ComputedProperty} the filtered array
 */
 export function filter(dependentKey, callback) {
   var options = {
@@ -309,8 +309,8 @@ export function filter(dependentKey, callback) {
   Filters the array by the property and value
 
   ```javascript
-  var Hamster = Ember.Object.extend({
-    remainingChores: Ember.computed.filterBy('chores', 'done', false)
+  var Hamster = Ngular.Object.extend({
+    remainingChores: Ngular.computed.filterBy('chores', 'done', false)
   });
 
   var hamster = Hamster.create({
@@ -325,11 +325,11 @@ export function filter(dependentKey, callback) {
   ```
 
   @method filterBy
-  @for Ember.computed
+  @for Ngular.computed
   @param {String} dependentKey
   @param {String} propertyKey
   @param {*} value
-  @return {Ember.ComputedProperty} the filtered array
+  @return {Ngular.ComputedProperty} the filtered array
 */
 export function filterBy(dependentKey, propertyKey, value) {
   var callback;
@@ -349,11 +349,11 @@ export function filterBy(dependentKey, propertyKey, value) {
 
 /**
   @method filterProperty
-  @for Ember.computed
+  @for Ngular.computed
   @param dependentKey
   @param propertyKey
   @param value
-  @deprecated Use `Ember.computed.filterBy` instead
+  @deprecated Use `Ngular.computed.filterBy` instead
 */
 export var filterProperty = filterBy;
 
@@ -364,8 +364,8 @@ export var filterProperty = filterBy;
   Example
 
   ```javascript
-  var Hamster = Ember.Object.extend({
-    uniqueFruits: Ember.computed.uniq('fruits')
+  var Hamster = Ngular.Object.extend({
+    uniqueFruits: Ngular.computed.uniq('fruits')
   });
 
   var hamster = Hamster.create({
@@ -381,9 +381,9 @@ export var filterProperty = filterBy;
   ```
 
   @method uniq
-  @for Ember.computed
+  @for Ngular.computed
   @param {String} propertyKey*
-  @return {Ember.ComputedProperty} computes a new array with all the
+  @return {Ngular.ComputedProperty} computes a new array with all the
   unique elements from the dependent array
 */
 export function uniq() {
@@ -422,12 +422,12 @@ export function uniq() {
 }
 
 /**
-  Alias for [Ember.computed.uniq](/api/#method_computed_uniq).
+  Alias for [Ngular.computed.uniq](/api/#method_computed_uniq).
 
   @method union
-  @for Ember.computed
+  @for Ngular.computed
   @param {String} propertyKey*
-  @return {Ember.ComputedProperty} computes a new array with all the
+  @return {Ngular.ComputedProperty} computes a new array with all the
   unique elements from the dependent array
 */
 export var union = uniq;
@@ -439,19 +439,19 @@ export var union = uniq;
   Example
 
   ```javascript
-  var obj = Ember.Object.createWithMixins({
+  var obj = Ngular.Object.createWithMixins({
     adaFriends: ['Charles Babbage', 'John Hobhouse', 'William King', 'Mary Somerville'],
     charlesFriends: ['William King', 'Mary Somerville', 'Ada Lovelace', 'George Peacock'],
-    friendsInCommon: Ember.computed.intersect('adaFriends', 'charlesFriends')
+    friendsInCommon: Ngular.computed.intersect('adaFriends', 'charlesFriends')
   });
 
   obj.get('friendsInCommon'); // ['William King', 'Mary Somerville']
   ```
 
   @method intersect
-  @for Ember.computed
+  @for Ngular.computed
   @param {String} propertyKey*
-  @return {Ember.ComputedProperty} computes a new array with all the
+  @return {Ngular.ComputedProperty} computes a new array with all the
   duplicated elements from the dependent arrays
 */
 export function intersect() {
@@ -520,9 +520,9 @@ export function intersect() {
   Example
 
   ```javascript
-  var Hamster = Ember.Object.extend({
+  var Hamster = Ngular.Object.extend({
     likes: ['banana', 'grape', 'kale'],
-    wants: Ember.computed.setDiff('likes', 'fruits')
+    wants: Ngular.computed.setDiff('likes', 'fruits')
   });
 
   var hamster = Hamster.create({
@@ -536,16 +536,16 @@ export function intersect() {
   ```
 
   @method setDiff
-  @for Ember.computed
+  @for Ngular.computed
   @param {String} setAProperty
   @param {String} setBProperty
-  @return {Ember.ComputedProperty} computes a new array with all the
+  @return {Ngular.ComputedProperty} computes a new array with all the
   items from the first dependent array that are not in the second
   dependent array
 */
 export function setDiff(setAProperty, setBProperty) {
   if (arguments.length !== 2) {
-    throw new EmberError('setDiff requires exactly two dependent arrays.');
+    throw new NgularError('setDiff requires exactly two dependent arrays.');
   }
 
   return arrayComputed(setAProperty, setBProperty, {
@@ -647,17 +647,17 @@ function binarySearch(array, item, low, high) {
   Example
 
   ```javascript
-  var ToDoList = Ember.Object.extend({
+  var ToDoList = Ngular.Object.extend({
     // using standard ascending sort
     todosSorting: ['name'],
-    sortedTodos: Ember.computed.sort('todos', 'todosSorting'),
+    sortedTodos: Ngular.computed.sort('todos', 'todosSorting'),
 
     // using descending sort
     todosSortingDesc: ['name:desc'],
-    sortedTodosDesc: Ember.computed.sort('todos', 'todosSortingDesc'),
+    sortedTodosDesc: Ngular.computed.sort('todos', 'todosSortingDesc'),
 
     // using a custom sort function
-    priorityTodos: Ember.computed.sort('todos', function(a, b){
+    priorityTodos: Ngular.computed.sort('todos', function(a, b){
       if (a.priority > b.priority) {
         return 1;
       } else if (a.priority < b.priority) {
@@ -680,15 +680,15 @@ function binarySearch(array, item, low, high) {
   ```
 
   @method sort
-  @for Ember.computed
+  @for Ngular.computed
   @param {String} dependentKey
   @param {String or Function} sortDefinition a dependent key to an
   array of sort properties (add `:desc` to the arrays sort properties to sort descending) or a function to use when sorting
-  @return {Ember.ComputedProperty} computes a new sorted array based
+  @return {Ngular.ComputedProperty} computes a new sorted array based
   on the sort property array or callback function
 */
 export function sort(itemsKey, sortDefinition) {
-  Ember.assert('Ember.computed.sort requires two arguments: an array key to sort and ' +
+  Ngular.assert('Ngular.computed.sort requires two arguments: an array key to sort and ' +
     'either a sort properties key or sort function', arguments.length === 2);
 
   if (typeof sortDefinition === 'function') {
@@ -744,7 +744,7 @@ function propertySort(itemsKey, sortPropertiesKey) {
         var sortPropertyAscending = instanceMeta.sortPropertyAscending = {};
         var sortProperty, idx, asc;
 
-        Ember.assert('Cannot sort: \'' + sortPropertiesKey + '\' is not an array.',
+        Ngular.assert('Cannot sort: \'' + sortPropertiesKey + '\' is not an array.',
                      isArray(sortPropertyDefinitions));
 
         changeMeta.property.clearItemPropertyKeys(itemsKey);

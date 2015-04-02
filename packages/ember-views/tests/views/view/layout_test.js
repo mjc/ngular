@@ -1,11 +1,11 @@
 import Registry from "container/registry";
-import { get } from "ember-metal/property_get";
-import run from "ember-metal/run_loop";
-import EmberView from "ember-views/views/view";
+import { get } from "ngular-metal/property_get";
+import run from "ngular-metal/run_loop";
+import NgularView from "ngular-views/views/view";
 
 var registry, container, view;
 
-QUnit.module("EmberView - Layout Functionality", {
+QUnit.module("NgularView - Layout Functionality", {
   setup() {
     registry = new Registry();
     container = registry.container();
@@ -22,7 +22,7 @@ QUnit.module("EmberView - Layout Functionality", {
 });
 
 QUnit.test("Layout views return throw if their layout cannot be found", function() {
-  view = EmberView.create({
+  view = NgularView.create({
     layoutName: 'cantBeFound',
     container: { lookup() { } }
   });
@@ -39,7 +39,7 @@ QUnit.test("should call the function of the associated layout", function() {
   registry.register('template:template', function() { templateCalled++; });
   registry.register('template:layout', function() { layoutCalled++; });
 
-  view = EmberView.create({
+  view = NgularView.create({
     container: container,
     layoutName: 'layout',
     templateName: 'template'
@@ -58,7 +58,7 @@ QUnit.test("should call the function of the associated template with itself as t
     return "<h1 id='twas-called'>template was called for " + get(dataSource, 'personName') + "</h1>";
   });
 
-  view = EmberView.create({
+  view = NgularView.create({
     container: container,
     layoutName: 'testTemplate',
 
@@ -77,7 +77,7 @@ QUnit.test("should call the function of the associated template with itself as t
 QUnit.test("should fall back to defaultTemplate if neither template nor templateName are provided", function() {
   var View;
 
-  View = EmberView.extend({
+  View = NgularView.extend({
     defaultLayout(dataSource) { return "<h1 id='twas-called'>template was called for " + get(dataSource, 'personName') + "</h1>"; }
   });
 
@@ -97,7 +97,7 @@ QUnit.test("should fall back to defaultTemplate if neither template nor template
 QUnit.test("should not use defaultLayout if layout is provided", function() {
   var View;
 
-  View = EmberView.extend({
+  View = NgularView.extend({
     layout() { return "foo"; },
     defaultLayout(dataSource) { return "<h1 id='twas-called'>template was called for " + get(dataSource, 'personName') + "</h1>"; }
   });
@@ -112,7 +112,7 @@ QUnit.test("should not use defaultLayout if layout is provided", function() {
 });
 
 QUnit.test("the template property is available to the layout template", function() {
-  view = EmberView.create({
+  view = NgularView.create({
     template(context, options) {
       options.data.buffer.push(" derp");
     },

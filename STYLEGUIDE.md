@@ -1,4 +1,4 @@
-# Ember.js JavaScript Style Guide
+# Ngular.js JavaScript Style Guide
 
 ## Table Of Contents
 

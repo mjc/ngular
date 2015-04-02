@@ -1,9 +1,9 @@
-import { Mixin } from "ember-metal/mixin";
-import StreamBinding from "ember-metal/streams/stream_binding";
-import KeyStream from "ember-views/streams/key_stream";
-import ContextStream from "ember-views/streams/context_stream";
-import create from 'ember-metal/platform/create';
-import { isStream } from "ember-metal/streams/utils";
+import { Mixin } from "ngular-metal/mixin";
+import StreamBinding from "ngular-metal/streams/stream_binding";
+import KeyStream from "ngular-views/streams/key_stream";
+import ContextStream from "ngular-views/streams/context_stream";
+import create from 'ngular-metal/platform/create';
+import { isStream } from "ngular-metal/streams/utils";
 
 var ViewStreamSupport = Mixin.create({
   init() {

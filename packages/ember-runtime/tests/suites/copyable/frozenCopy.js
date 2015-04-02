@@ -1,6 +1,6 @@
-import {SuiteModuleBuilder} from 'ember-runtime/tests/suites/suite';
-import {Freezable} from 'ember-runtime/mixins/freezable';
-import {get} from 'ember-metal/property_get';
+import {SuiteModuleBuilder} from 'ngular-runtime/tests/suites/suite';
+import {Freezable} from 'ngular-runtime/mixins/freezable';
+import {get} from 'ngular-metal/property_get';
 
 var suite = SuiteModuleBuilder.create();
 

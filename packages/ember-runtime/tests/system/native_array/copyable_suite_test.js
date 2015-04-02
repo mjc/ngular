@@ -1,11 +1,11 @@
-import CopyableTests from 'ember-runtime/tests/suites/copyable';
-import {generateGuid} from 'ember-metal/utils';
+import CopyableTests from 'ngular-runtime/tests/suites/copyable';
+import {generateGuid} from 'ngular-metal/utils';
 
 CopyableTests.extend({
   name: 'NativeArray Copyable',
 
   newObject() {
-    return Ember.A([generateGuid()]);
+    return Ngular.A([generateGuid()]);
   },
 
   isEqual(a, b) {
@@ -30,7 +30,7 @@ CopyableTests.extend({
 QUnit.module("NativeArray Copyable");
 
 QUnit.test("deep copy is respected", function() {
-  var array = Ember.A([{ id: 1 }, { id: 2 }, { id: 3 }]);
+  var array = Ngular.A([{ id: 1 }, { id: 2 }, { id: 3 }]);
 
   var copiedArray = array.copy(true);
 

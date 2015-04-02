@@ -1,4 +1,4 @@
-import { canDefineNonEnumerableProperties } from 'ember-metal/platform/define_property';
+import { canDefineNonEnumerableProperties } from 'ngular-metal/platform/define_property';
 
 /**
   Returns all of the keys defined on an object or hash. This is useful
@@ -6,7 +6,7 @@ import { canDefineNonEnumerableProperties } from 'ember-metal/platform/define_pr
   uses the native `Object.keys` implementation.
 
   @method keys
-  @for Ember
+  @for Ngular
   @param {Object} obj
   @return {Array} Array containing keys of obj
 */

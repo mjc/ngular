@@ -5,18 +5,18 @@
 
   CHANGES FROM 1.6:
 
-  * Create ObservableObject which includes Ember.Observable
+  * Create ObservableObject which includes Ngular.Observable
 */
 
 // ========================================================================
-// Ember.Observable Tests
+// Ngular.Observable Tests
 // ========================================================================
 
-import {get} from 'ember-metal/property_get';
-import EmberObject from 'ember-runtime/system/object';
-import Observable from 'ember-runtime/mixins/observable';
+import {get} from 'ngular-metal/property_get';
+import NgularObject from 'ngular-runtime/system/object';
+import Observable from 'ngular-runtime/mixins/observable';
 
-var ObservableObject = EmberObject.extend(Observable);
+var ObservableObject = NgularObject.extend(Observable);
 
 // ..........................................................
 // GET()

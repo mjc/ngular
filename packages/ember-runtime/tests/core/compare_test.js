@@ -1,10 +1,10 @@
-import {typeOf} from 'ember-metal/utils';
-import EmberObject from 'ember-runtime/system/object';
-import compare from 'ember-runtime/compare';
-import Comparable from 'ember-runtime/mixins/comparable';
+import {typeOf} from 'ngular-metal/utils';
+import NgularObject from 'ngular-runtime/system/object';
+import compare from 'ngular-runtime/compare';
+import Comparable from 'ngular-runtime/mixins/comparable';
 
 var data = [];
-var Comp = EmberObject.extend(Comparable);
+var Comp = NgularObject.extend(Comparable);
 
 Comp.reopenClass({
   compare(obj) {
@@ -12,7 +12,7 @@ Comp.reopenClass({
   }
 });
 
-QUnit.module('Ember.compare()', {
+QUnit.module('Ngular.compare()', {
   setup() {
     data[0]  = null;
     data[1]  = false;
@@ -26,7 +26,7 @@ QUnit.module('Ember.compare()', {
     data[9]  = [1, 2, 3];
     data[10] = [1, 3];
     data[11] = { a: 'hash' };
-    data[12] = EmberObject.create();
+    data[12] = NgularObject.create();
     data[13] = function (a) {return a;};
     data[14] = new Date('2012/01/01');
     data[15] = new Date('2012/06/06');

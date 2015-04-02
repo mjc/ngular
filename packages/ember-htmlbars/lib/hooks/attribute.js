@@ -1,16 +1,16 @@
 /**
-@module ember
-@submodule ember-htmlbars
+@module ngular
+@submodule ngular-htmlbars
 */
 
-import AttrNode from "ember-views/attr_nodes/attr_node";
-import EmberError from "ember-metal/error";
-import { isStream } from "ember-metal/streams/utils";
+import AttrNode from "ngular-views/attr_nodes/attr_node";
+import NgularError from "ngular-metal/error";
+import { isStream } from "ngular-metal/streams/utils";
 import sanitizeAttributeValue from "morph-attr/sanitize-attribute-value";
 
 var boundAttributesEnabled = false;
 
-if (Ember.FEATURES.isEnabled('ember-htmlbars-attribute-syntax')) {
+if (Ngular.FEATURES.isEnabled('ngular-htmlbars-attribute-syntax')) {
   boundAttributesEnabled = true;
 }
 
@@ -21,7 +21,7 @@ export default function attribute(env, morph, element, attrName, attrValue) {
     env.data.view.appendChild(attrNode);
   } else {
     if (isStream(attrValue)) {
-      throw new EmberError('Bound attributes are not yet supported in Ember.js');
+      throw new NgularError('Bound attributes are not yet supported in Ngular.js');
     } else {
       var sanitizedValue = sanitizeAttributeValue(env.dom, element, attrName, attrValue);
       env.dom.setProperty(element, attrName, sanitizedValue);

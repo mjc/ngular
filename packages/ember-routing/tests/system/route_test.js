@@ -1,21 +1,21 @@
-import { runDestroy } from "ember-runtime/tests/utils";
+import { runDestroy } from "ngular-runtime/tests/utils";
 import Registry from "container/registry";
-import Service from "ember-runtime/system/service";
-import EmberObject from "ember-runtime/system/object";
-import EmberRoute from "ember-routing/system/route";
-import inject from "ember-runtime/inject";
+import Service from "ngular-runtime/system/service";
+import NgularObject from "ngular-runtime/system/object";
+import NgularRoute from "ngular-routing/system/route";
+import inject from "ngular-runtime/inject";
 
 var route, routeOne, routeTwo, lookupHash;
 
 function setup() {
-  route = EmberRoute.create();
+  route = NgularRoute.create();
 }
 
 function teardown() {
   runDestroy(route);
 }
 
-QUnit.module("Ember.Route", {
+QUnit.module("Ngular.Route", {
   setup: setup,
   teardown: teardown
 });
@@ -23,7 +23,7 @@ QUnit.module("Ember.Route", {
 QUnit.test("default store utilizes the container to acquire the model factory", function() {
   expect(4);
 
-  var Post = EmberObject.extend();
+  var Post = NgularObject.extend();
   var post = {};
 
   Post.reopenClass({
@@ -60,7 +60,7 @@ QUnit.test("'store' can be injected by data persistence frameworks", function() 
     id: 1
   };
 
-  var Store = EmberObject.extend({
+  var Store = NgularObject.extend({
     find(type, value) {
       ok(true, 'injected model was called');
       equal(type, 'post', 'correct type was called');
@@ -69,7 +69,7 @@ QUnit.test("'store' can be injected by data persistence frameworks", function() 
     }
   });
 
-  registry.register('route:index', EmberRoute);
+  registry.register('route:index', NgularRoute);
   registry.register('store:main', Store);
 
   registry.injection('route', 'store', 'store:main');
@@ -86,9 +86,9 @@ QUnit.test("assert if 'store.find' method is not found", function() {
 
   var registry = new Registry();
   var container = registry.container();
-  var Post = EmberObject.extend();
+  var Post = NgularObject.extend();
 
-  registry.register('route:index', EmberRoute);
+  registry.register('route:index', NgularRoute);
   registry.register('model:post', Post);
 
   route = container.lookup('route:index');
@@ -104,7 +104,7 @@ QUnit.test("asserts if model class is not found", function() {
 
   var registry = new Registry();
   var container = registry.container();
-  registry.register('route:index', EmberRoute);
+  registry.register('route:index', NgularRoute);
 
   route = container.lookup('route:index');
 
@@ -121,7 +121,7 @@ QUnit.test("'store' does not need to be injected", function() {
   var registry = new Registry();
   var container = registry.container();
 
-  registry.register('route:index', EmberRoute);
+  registry.register('route:index', NgularRoute);
 
   route = container.lookup('route:index');
 
@@ -139,7 +139,7 @@ QUnit.test("modelFor doesn't require the router", function() {
 
   var foo = { name: 'foo' };
 
-  var fooRoute = EmberRoute.extend({
+  var fooRoute = NgularRoute.extend({
     container: container,
     currentModel: foo
   });
@@ -152,7 +152,7 @@ QUnit.test("modelFor doesn't require the router", function() {
 
 QUnit.test(".send just calls an action if the router is absent", function() {
   expect(7);
-  var route = EmberRoute.createWithMixins({
+  var route = NgularRoute.createWithMixins({
     actions: {
       returnsTrue(foo, bar) {
         equal(foo, 1);
@@ -174,7 +174,7 @@ QUnit.test(".send just calls an action if the router is absent", function() {
 });
 
 
-QUnit.module("Ember.Route serialize", {
+QUnit.module("Ngular.Route serialize", {
   setup: setup,
   teardown: teardown
 });
@@ -201,7 +201,7 @@ QUnit.test("returns undefined if model is not set", function() {
   equal(route.serialize(undefined, ['post_id']), undefined, "serialized correctly");
 });
 
-QUnit.module("Ember.Route interaction", {
+QUnit.module("Ngular.Route interaction", {
   setup() {
     var container = {
       lookup(fullName) {
@@ -209,8 +209,8 @@ QUnit.module("Ember.Route interaction", {
       }
     };
 
-    routeOne = EmberRoute.create({ container: container, routeName: 'one' });
-    routeTwo = EmberRoute.create({ container: container, routeName: 'two' });
+    routeOne = NgularRoute.create({ container: container, routeName: 'one' });
+    routeTwo = NgularRoute.create({ container: container, routeName: 'two' });
 
     lookupHash = {
       'route:one': routeOne,
@@ -239,7 +239,7 @@ QUnit.test("services can be injected into routes", function() {
   var registry = new Registry();
   var container = registry.container();
 
-  registry.register('route:application', EmberRoute.extend({
+  registry.register('route:application', NgularRoute.extend({
     authService: inject.service('auth')
   }));
 

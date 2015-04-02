@@ -1,18 +1,18 @@
-import Ember from "ember-metal/core"; // Ember.deprecate;
+import Ngular from "ngular-metal/core"; // Ngular.deprecate;
 
 /**
-@module ember
-@submodule ember-htmlbars
+@module ngular
+@submodule ngular-htmlbars
 */
 
 /**
   @deprecated
   @method template
-  @for Ember.Handlebars.helpers
+  @for Ngular.Handlebars.helpers
   @param {String} templateName the template to render
 */
 export function templateHelper(params, hash, options, env) {
-  Ember.deprecate("The `template` helper has been deprecated in favor of the `partial` helper." +
+  Ngular.deprecate("The `template` helper has been deprecated in favor of the `partial` helper." +
                   " Please use `partial` instead, which will work the same way.");
 
   options.helperName = options.helperName || 'template';

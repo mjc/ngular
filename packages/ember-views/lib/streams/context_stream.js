@@ -1,13 +1,13 @@
-import Ember from 'ember-metal/core';
+import Ngular from 'ngular-metal/core';
 
-import merge from "ember-metal/merge";
-import create from 'ember-metal/platform/create';
-import { isGlobal } from "ember-metal/path_cache";
-import Stream from "ember-metal/streams/stream";
-import SimpleStream from "ember-metal/streams/simple";
+import merge from "ngular-metal/merge";
+import create from 'ngular-metal/platform/create';
+import { isGlobal } from "ngular-metal/path_cache";
+import Stream from "ngular-metal/streams/stream";
+import SimpleStream from "ngular-metal/streams/simple";
 
 function ContextStream(view) {
-  Ember.assert("ContextStream error: the argument is not a view", view && view.isView);
+  Ngular.assert("ContextStream error: the argument is not a view", view && view.isView);
 
   this.init();
   this.view = view;
@@ -23,9 +23,9 @@ merge(ContextStream.prototype, {
 
     if (key === '' || key === 'this') {
       stream = this.view._baseContext;
-    } else if (isGlobal(key) && Ember.lookup[key]) {
-      Ember.deprecate("Global lookup of " + _fullPath + " from a Handlebars template is deprecated.");
-      stream = new SimpleStream(Ember.lookup[key]);
+    } else if (isGlobal(key) && Ngular.lookup[key]) {
+      Ngular.deprecate("Global lookup of " + _fullPath + " from a Handlebars template is deprecated.");
+      stream = new SimpleStream(Ngular.lookup[key]);
       stream._isGlobal = true;
     } else if (key in this.view._keywords) {
       stream = new SimpleStream(this.view._keywords[key]);

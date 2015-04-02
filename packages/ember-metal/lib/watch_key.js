@@ -1,16 +1,16 @@
-import Ember from "ember-metal/core";
+import Ngular from "ngular-metal/core";
 import {
   meta as metaFor,
   typeOf
-} from "ember-metal/utils";
+} from "ngular-metal/utils";
 import {
   defineProperty as o_defineProperty,
   hasPropertyAccessors
-} from "ember-metal/platform/define_property";
+} from "ngular-metal/platform/define_property";
 import {
   MANDATORY_SETTER_FUNCTION,
   DEFAULT_GETTER_FUNCTION
-} from "ember-metal/properties";
+} from "ngular-metal/properties";
 
 export function watchKey(obj, keyName, meta) {
   // can't watch length on Array - it is special...
@@ -31,7 +31,7 @@ export function watchKey(obj, keyName, meta) {
       obj.willWatchProperty(keyName);
     }
 
-    if (Ember.FEATURES.isEnabled('mandatory-setter')) {
+    if (Ngular.FEATURES.isEnabled('mandatory-setter')) {
       if (hasPropertyAccessors) {
         handleMandatorySetter(m, obj, keyName);
       }
@@ -42,7 +42,7 @@ export function watchKey(obj, keyName, meta) {
 }
 
 
-if (Ember.FEATURES.isEnabled('mandatory-setter')) {
+if (Ngular.FEATURES.isEnabled('mandatory-setter')) {
   var handleMandatorySetter = function handleMandatorySetter(m, obj, keyName) {
     var descriptor = Object.getOwnPropertyDescriptor && Object.getOwnPropertyDescriptor(obj, keyName);
     var configurable = descriptor ? descriptor.configurable : true;
@@ -85,7 +85,7 @@ export function unwatchKey(obj, keyName, meta) {
       obj.didUnwatchProperty(keyName);
     }
 
-    if (Ember.FEATURES.isEnabled('mandatory-setter')) {
+    if (Ngular.FEATURES.isEnabled('mandatory-setter')) {
       if (!desc && hasPropertyAccessors && keyName in obj) {
         o_defineProperty(obj, keyName, {
           configurable: true,

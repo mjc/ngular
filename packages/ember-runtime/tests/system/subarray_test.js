@@ -1,5 +1,5 @@
-import { forEach } from "ember-metal/enumerable_utils";
-import SubArray from "ember-runtime/system/subarray";
+import { forEach } from "ngular-metal/enumerable_utils";
+import SubArray from "ngular-runtime/system/subarray";
 
 var subarray;
 

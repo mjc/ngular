@@ -1,6 +1,6 @@
-import { changeProperties } from "ember-metal/property_events";
-import { set } from "ember-metal/property_set";
-import keys from "ember-metal/keys";
+import { changeProperties } from "ngular-metal/property_events";
+import { set } from "ngular-metal/property_set";
+import keys from "ngular-metal/keys";
 
 /**
   Set a list of properties on an object. These properties are set inside
@@ -8,7 +8,7 @@ import keys from "ember-metal/keys";
   observers will be buffered.
 
   ```javascript
-  var anObject = Ember.Object.create();
+  var anObject = Ngular.Object.create();
 
   anObject.setProperties({
     firstName: 'Stanley',

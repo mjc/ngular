@@ -1,8 +1,8 @@
-import { tryFinally } from 'ember-metal/utils';
+import { tryFinally } from 'ngular-metal/utils';
 
 var tryCount, finalizeCount, tryable, finalizer, error, tryableResult, finalizerResult;
 
-QUnit.module("Ember.tryFinally", {
+QUnit.module("Ngular.tryFinally", {
   setup() {
     error = new Error('Test Error');
     tryCount = 0;

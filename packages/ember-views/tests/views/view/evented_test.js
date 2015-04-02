@@ -1,10 +1,10 @@
-import run from "ember-metal/run_loop";
-import EmberObject from "ember-runtime/system/object";
-import EmberView from "ember-views/views/view";
+import run from "ngular-metal/run_loop";
+import NgularObject from "ngular-runtime/system/object";
+import NgularView from "ngular-views/views/view";
 
 var view;
 
-QUnit.module("EmberView evented helpers", {
+QUnit.module("NgularView evented helpers", {
   teardown() {
     run(function() {
       view.destroy();
@@ -15,7 +15,7 @@ QUnit.module("EmberView evented helpers", {
 QUnit.test("fire should call method sharing event name if it exists on the view", function() {
   var eventFired = false;
 
-  view = EmberView.create({
+  view = NgularView.create({
     fireMyEvent() {
       this.trigger('myEvent');
     },
@@ -35,13 +35,13 @@ QUnit.test("fire should call method sharing event name if it exists on the view"
 QUnit.test("fire does not require a view method with the same name", function() {
   var eventFired = false;
 
-  view = EmberView.create({
+  view = NgularView.create({
     fireMyEvent() {
       this.trigger('myEvent');
     }
   });
 
-  var listenObject = EmberObject.create({
+  var listenObject = NgularObject.create({
     onMyEvent() {
       eventFired = true;
     }

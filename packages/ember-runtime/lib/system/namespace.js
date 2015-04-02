@@ -1,19 +1,19 @@
 /**
-@module ember
-@submodule ember-runtime
+@module ngular
+@submodule ngular-runtime
 */
 
-// Ember.lookup, Ember.BOOTED, Ember.deprecate, Ember.NAME_KEY, Ember.anyUnprocessedMixins
-import Ember from "ember-metal/core";
-import { get } from "ember-metal/property_get";
-import { indexOf } from "ember-metal/array";
+// Ngular.lookup, Ngular.BOOTED, Ngular.deprecate, Ngular.NAME_KEY, Ngular.anyUnprocessedMixins
+import Ngular from "ngular-metal/core";
+import { get } from "ngular-metal/property_get";
+import { indexOf } from "ngular-metal/array";
 import {
   GUID_KEY,
   guidFor
-} from "ember-metal/utils";
-import { Mixin } from "ember-metal/mixin";
+} from "ngular-metal/utils";
+import { Mixin } from "ngular-metal/mixin";
 
-import EmberObject from "ember-runtime/system/object";
+import NgularObject from "ngular-runtime/system/object";
 
 /**
   A Namespace is an object usually used to contain other objects or methods
@@ -23,16 +23,16 @@ import EmberObject from "ember-runtime/system/object";
   # Example Usage
 
   ```javascript
-  MyFramework = Ember.Namespace.create({
+  MyFramework = Ngular.Namespace.create({
     VERSION: '1.0.0'
   });
   ```
 
   @class Namespace
-  @namespace Ember
-  @extends Ember.Object
+  @namespace Ngular
+  @extends Ngular.Object
 */
-var Namespace = EmberObject.extend({
+var Namespace = NgularObject.extend({
   isNamespace: true,
 
   init() {
@@ -57,7 +57,7 @@ var Namespace = EmberObject.extend({
     var toString = this.toString();
 
     if (toString) {
-      Ember.lookup[toString] = undefined;
+      Ngular.lookup[toString] = undefined;
       delete Namespace.NAMESPACES_BY_ID[toString];
     }
     namespaces.splice(indexOf.call(namespaces, this), 1);
@@ -66,12 +66,12 @@ var Namespace = EmberObject.extend({
 });
 
 Namespace.reopenClass({
-  NAMESPACES: [Ember],
+  NAMESPACES: [Ngular],
   NAMESPACES_BY_ID: {},
   PROCESSED: false,
   processAll: processAllNamespaces,
   byName(name) {
-    if (!Ember.BOOTED) {
+    if (!Ngular.BOOTED) {
       processAllNamespaces();
     }
 
@@ -93,11 +93,11 @@ function processNamespace(paths, root, seen) {
     if (!hasOwnProp.call(root, key)) { continue; }
     var obj = root[key];
 
-    // If we are processing the `Ember` namespace, for example, the
-    // `paths` will start with `["Ember"]`. Every iteration through
+    // If we are processing the `Ngular` namespace, for example, the
+    // `paths` will start with `["Ngular"]`. Every iteration through
     // the loop will update the **second** element of this list with
-    // the key, so processing `Ember.View` will make the Array
-    // `['Ember', 'View']`.
+    // the key, so processing `Ngular.View` will make the Array
+    // `['Ngular', 'View']`.
     paths[idx] = key;
 
     // If we have found an unprocessed class
@@ -133,7 +133,7 @@ function tryIsNamespace(lookup, prop) {
 }
 
 function findNamespaces() {
-  var lookup = Ember.lookup;
+  var lookup = Ngular.lookup;
   var obj;
 
   if (Namespace.PROCESSED) { return; }
@@ -154,7 +154,7 @@ function findNamespaces() {
   }
 }
 
-var NAME_KEY = Ember.NAME_KEY = GUID_KEY + '_name';
+var NAME_KEY = Ngular.NAME_KEY = GUID_KEY + '_name';
 
 function superClassString(mixin) {
   var superclass = mixin.superclass;
@@ -170,7 +170,7 @@ function superClassString(mixin) {
 }
 
 function classToString() {
-  if (!Ember.BOOTED && !this[NAME_KEY]) {
+  if (!Ngular.BOOTED && !this[NAME_KEY]) {
     processAllNamespaces();
   }
 
@@ -195,7 +195,7 @@ function classToString() {
 
 function processAllNamespaces() {
   var unprocessedNamespaces = !Namespace.PROCESSED;
-  var unprocessedMixins = Ember.anyUnprocessedMixins;
+  var unprocessedMixins = Ngular.anyUnprocessedMixins;
 
   if (unprocessedNamespaces) {
     findNamespaces();
@@ -211,7 +211,7 @@ function processAllNamespaces() {
       processNamespace([namespace.toString()], namespace, {});
     }
 
-    Ember.anyUnprocessedMixins = false;
+    Ngular.anyUnprocessedMixins = false;
   }
 }
 

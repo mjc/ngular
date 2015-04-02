@@ -1,37 +1,37 @@
 /**
-@module ember-metal
+@module ngular-metal
 */
 
 import {
   typeOf
-} from "ember-metal/utils";
+} from "ngular-metal/utils";
 import {
   removeChainWatcher,
   flushPendingChains
-} from "ember-metal/chains";
+} from "ngular-metal/chains";
 import {
   watchKey,
   unwatchKey
-} from "ember-metal/watch_key";
+} from "ngular-metal/watch_key";
 import {
   watchPath,
   unwatchPath
-} from "ember-metal/watch_path";
+} from "ngular-metal/watch_path";
 
 import {
   isPath
-} from "ember-metal/path_cache";
+} from "ngular-metal/path_cache";
 
 /**
   Starts watching a property on an object. Whenever the property changes,
-  invokes `Ember.propertyWillChange` and `Ember.propertyDidChange`. This is the
+  invokes `Ngular.propertyWillChange` and `Ngular.propertyDidChange`. This is the
   primitive used by observers and dependent keys; usually you will never call
   this method directly but instead use higher level methods like
-  `Ember.addObserver()`
+  `Ngular.addObserver()`
 
   @private
   @method watch
-  @for Ember
+  @for Ngular
   @param obj
   @param {String} keyName
 */
@@ -49,7 +49,7 @@ function watch(obj, _keyPath, m) {
 export { watch };
 
 export function isWatching(obj, key) {
-  var meta = obj['__ember_meta__'];
+  var meta = obj['__ngular_meta__'];
   return (meta && meta.watching[key]) > 0;
 }
 
@@ -73,16 +73,16 @@ var NODE_STACK = [];
   Multiple calls will have no effect.
 
   @method destroy
-  @for Ember
+  @for Ngular
   @param {Object} obj  the object to destroy
   @return {void}
 */
 export function destroy(obj) {
-  var meta = obj['__ember_meta__'];
+  var meta = obj['__ngular_meta__'];
   var node, nodes, key, nodeObject;
 
   if (meta) {
-    obj['__ember_meta__'] = null;
+    obj['__ngular_meta__'] = null;
     // remove chainWatchers to remove circular references that would prevent GC
     node = meta.chains;
     if (node) {

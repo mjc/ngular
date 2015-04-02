@@ -1,14 +1,14 @@
-import Ember from "ember-metal/core"; // deprecate, assert
-import environment from "ember-metal/environment";
-import { getHash } from "ember-routing/location/util";
+import Ngular from "ngular-metal/core"; // deprecate, assert
+import environment from "ngular-metal/environment";
+import { getHash } from "ngular-routing/location/util";
 
 /**
-@module ember
-@submodule ember-routing
+@module ngular
+@submodule ngular-routing
 */
 
 /**
-  Ember.Location returns an instance of the correct implementation of
+  Ngular.Location returns an instance of the correct implementation of
   the `location` API.
 
   ## Implementations
@@ -19,7 +19,7 @@ import { getHash } from "ember-routing/location/util";
   ### HashLocation
 
   Using `HashLocation` results in URLs with a `#` (hash sign) separating the
-  server side URL portion of the URL from the portion that is used by Ember.
+  server side URL portion of the URL from the portion that is used by Ngular.
   This relies upon the `hashchange` event existing in the browser.
 
   Example:
@@ -59,7 +59,7 @@ import { getHash } from "ember-routing/location/util";
 
   This will result in a posts.new url of `/posts/new`.
 
-  Keep in mind that your server must serve the Ember app at all the routes you
+  Keep in mind that your server must serve the Ngular app at all the routes you
   define.
 
   ### AutoLocation
@@ -94,11 +94,11 @@ import { getHash } from "ember-routing/location/util";
   transformed accordingly, if needed.
 
   Keep in mind that since some of your users will use `HistoryLocation`, your
-  server must serve the Ember app at all the routes you define.
+  server must serve the Ngular app at all the routes you define.
 
   ### NoneLocation
 
-  Using `NoneLocation` causes Ember to not store the applications URL state
+  Using `NoneLocation` causes Ngular to not store the applications URL state
   in the actual URL. This is generally used for testing purposes, and is one
   of the changes made when calling `App.setupForTesting()`.
 
@@ -120,7 +120,7 @@ import { getHash } from "ember-routing/location/util";
   Calling setURL or replaceURL will not trigger onUpdateURL callbacks.
 
   @class Location
-  @namespace Ember
+  @namespace Ngular
   @static
 */
 export default {
@@ -146,10 +146,10 @@ export default {
   */
   create(options) {
     var implementation = options && options.implementation;
-    Ember.assert("Ember.Location.create: you must specify a 'implementation' option", !!implementation);
+    Ngular.assert("Ngular.Location.create: you must specify a 'implementation' option", !!implementation);
 
     var implementationClass = this.implementations[implementation];
-    Ember.assert(`Ember.Location.create: ${implementation} is not a valid implementation`, !!implementationClass);
+    Ngular.assert(`Ngular.Location.create: ${implementation} is not a valid implementation`, !!implementationClass);
 
     return implementationClass.create(...arguments);
   },
@@ -177,7 +177,7 @@ export default {
    container directly.
   */
   registerImplementation(name, implementation) {
-    Ember.deprecate(`Using the Ember.Location.registerImplementation is no longer supported. Register your custom location implementation with the container instead.`, false);
+    Ngular.deprecate(`Using the Ngular.Location.registerImplementation is no longer supported. Register your custom location implementation with the container instead.`, false);
 
     this.implementations[name] = implementation;
   },

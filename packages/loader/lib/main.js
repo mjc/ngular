@@ -1,12 +1,12 @@
-var define, requireModule, require, requirejs, Ember;
+var define, requireModule, require, requirejs, Ngular;
 var mainContext = this;
 
 (function() {
 
-  Ember = this.Ember = this.Ember || {};
-  if (typeof Ember === 'undefined') { Ember = {}; };
+  Ngular = this.Ngular = this.Ngular || {};
+  if (typeof Ngular === 'undefined') { Ngular = {}; };
 
-  if (typeof Ember.__loader === 'undefined') {
+  if (typeof Ngular.__loader === 'undefined') {
     var registry = {};
     var seen = {};
 
@@ -88,13 +88,13 @@ var mainContext = this;
 
     requirejs._eak_seen = registry;
 
-    Ember.__loader = {
+    Ngular.__loader = {
       define: define,
       require: require,
       registry: registry
     };
   } else {
-    define = Ember.__loader.define;
-    requirejs = require = requireModule = Ember.__loader.require;
+    define = Ngular.__loader.define;
+    requirejs = require = requireModule = Ngular.__loader.require;
   }
 })();

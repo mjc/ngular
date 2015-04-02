@@ -1,37 +1,37 @@
 /**
-@module ember
-@submodule ember-runtime
+@module ngular
+@submodule ngular-runtime
 */
 
-import Ember from "ember-metal/core"; // Ember.assert
+import Ngular from "ngular-metal/core"; // Ngular.assert
 
-import { get } from "ember-metal/property_get";
+import { get } from "ngular-metal/property_get";
 import {
   guidFor,
   typeOf
-} from "ember-metal/utils";
-import { forEach } from "ember-metal/enumerable_utils";
-import { indexOf } from "ember-metal/array";
-import EmberArray from "ember-runtime/mixins/array"; // ES6TODO: WAT? Circular dep?
-import EmberObject from "ember-runtime/system/object";
-import { computed } from "ember-metal/computed";
+} from "ngular-metal/utils";
+import { forEach } from "ngular-metal/enumerable_utils";
+import { indexOf } from "ngular-metal/array";
+import NgularArray from "ngular-runtime/mixins/array"; // ES6TODO: WAT? Circular dep?
+import NgularObject from "ngular-runtime/system/object";
+import { computed } from "ngular-metal/computed";
 import {
   addObserver,
   addBeforeObserver,
   removeBeforeObserver,
   removeObserver
-} from "ember-metal/observer";
-import { watchedEvents } from "ember-metal/events";
-import { defineProperty } from "ember-metal/properties";
+} from "ngular-metal/observer";
+import { watchedEvents } from "ngular-metal/events";
+import { defineProperty } from "ngular-metal/properties";
 import {
   beginPropertyChanges,
   propertyDidChange,
   propertyWillChange,
   endPropertyChanges,
   changeProperties
-} from "ember-metal/property_events";
+} from "ngular-metal/property_events";
 
-var EachArray = EmberObject.extend(EmberArray, {
+var EachArray = NgularObject.extend(NgularArray, {
 
   init(content, keyName, owner) {
     this._super(...arguments);
@@ -64,7 +64,7 @@ function addObserverForContentKey(content, keyName, proxy, idx, loc) {
   while (--loc >= idx) {
     var item = content.objectAt(loc);
     if (item) {
-      Ember.assert('When using @each to observe the array ' + content + ', the array must return an object', typeOf(item) === 'instance' || typeOf(item) === 'object');
+      Ngular.assert('When using @each to observe the array ' + content + ', the array must return an object', typeOf(item) === 'instance' || typeOf(item) === 'object');
       addBeforeObserver(item, keyName, proxy, 'contentKeyWillChange');
       addObserver(item, keyName, proxy, 'contentKeyDidChange');
 
@@ -106,7 +106,7 @@ function removeObserverForContentKey(content, keyName, proxy, idx, loc) {
   array. It uses the unknownProperty handler to automatically create
   EachArray instances for property names.
 */
-var EachProxy = EmberObject.extend({
+var EachProxy = NgularObject.extend({
 
   init(content) {
     this._super(...arguments);

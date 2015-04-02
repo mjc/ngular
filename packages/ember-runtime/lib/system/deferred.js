@@ -1,10 +1,10 @@
-import Ember from 'ember-metal/core';
-import DeferredMixin from "ember-runtime/mixins/deferred";
-import EmberObject from "ember-runtime/system/object";
+import Ngular from 'ngular-metal/core';
+import DeferredMixin from "ngular-runtime/mixins/deferred";
+import NgularObject from "ngular-runtime/system/object";
 
-var Deferred = EmberObject.extend(DeferredMixin, {
+var Deferred = NgularObject.extend(DeferredMixin, {
   init() {
-    Ember.deprecate('Usage of Ember.Deferred is deprecated.', false, { url: 'http://emberjs.com/guides/deprecations/#toc_deprecate-ember-deferredmixin-and-ember-deferred' });
+    Ngular.deprecate('Usage of Ngular.Deferred is deprecated.', false, { url: 'http://github.com/mjc/ngular/guides/deprecations/#toc_deprecate-ngular-deferredmixin-and-ngular-deferred' });
     this._super(...arguments);
   }
 });

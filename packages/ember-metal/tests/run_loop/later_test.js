@@ -1,5 +1,5 @@
-import isNone from 'ember-metal/is_none';
-import run from 'ember-metal/run_loop';
+import isNone from 'ngular-metal/is_none';
+import run from 'ngular-metal/run_loop';
 
 var originalSetTimeout = window.setTimeout;
 var originalDateValueOf = Date.prototype.valueOf;
@@ -109,7 +109,7 @@ asyncTest('should always invoke within a separate runloop', function() {
 
 // Our current implementation doesn't allow us to correctly enforce this ordering.
 // We should probably implement a queue to provide this guarantee.
-// See https://github.com/emberjs/ember.js/issues/3526 for more information.
+// See https://github.com/ngularjs/ngular.js/issues/3526 for more information.
 
 // asyncTest('callback order', function() {
 //   var array = [];
@@ -134,7 +134,7 @@ asyncTest('should always invoke within a separate runloop', function() {
 
 // Out current implementation doesn't allow us to properly enforce what is tested here.
 // We should probably fix it, but it's not technically a bug right now.
-// See https://github.com/emberjs/ember.js/issues/3522 for more information.
+// See https://github.com/ngularjs/ngular.js/issues/3522 for more information.
 
 // asyncTest('callbacks coalesce into same run loop if expiring at the same time', function() {
 //   var array = [];

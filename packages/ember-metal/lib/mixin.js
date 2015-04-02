@@ -4,45 +4,45 @@
 "REMOVE_USE_STRICT: true";
 
 /**
-@module ember
-@submodule ember-metal
+@module ngular
+@submodule ngular-metal
 */
 
-import Ember from "ember-metal/core"; // warn, assert, wrap, et;
-import merge from "ember-metal/merge";
+import Ngular from "ngular-metal/core"; // warn, assert, wrap, et;
+import merge from "ngular-metal/merge";
 import {
   indexOf as a_indexOf,
   forEach as a_forEach
-} from "ember-metal/array";
-import o_create from "ember-metal/platform/create";
-import { get } from "ember-metal/property_get";
-import { set, trySet } from "ember-metal/property_set";
+} from "ngular-metal/array";
+import o_create from "ngular-metal/platform/create";
+import { get } from "ngular-metal/property_get";
+import { set, trySet } from "ngular-metal/property_set";
 import {
   guidFor,
   meta as metaFor,
   wrap,
   makeArray,
   isArray
-} from "ember-metal/utils";
-import expandProperties from "ember-metal/expand_properties";
+} from "ngular-metal/utils";
+import expandProperties from "ngular-metal/expand_properties";
 import {
   Descriptor,
   defineProperty
-} from "ember-metal/properties";
-import { ComputedProperty } from "ember-metal/computed";
-import { Binding } from "ember-metal/binding";
+} from "ngular-metal/properties";
+import { ComputedProperty } from "ngular-metal/computed";
+import { Binding } from "ngular-metal/binding";
 import {
   addObserver,
   removeObserver,
   addBeforeObserver,
   removeBeforeObserver,
   _suspendObserver
-} from "ember-metal/observer";
+} from "ngular-metal/observer";
 import {
   addListener,
   removeListener
-} from "ember-metal/events";
-import { isStream } from "ember-metal/streams/utils";
+} from "ngular-metal/events";
+import { isStream } from "ngular-metal/streams/utils";
 
 var REQUIRED;
 var a_slice = [].slice;
@@ -226,7 +226,7 @@ function applyConcatenatedProperties(obj, key, value, values) {
 function applyMergedProperties(obj, key, value, values) {
   var baseValue = values[key] || obj[key];
 
-  Ember.assert(`You passed in \`${JSON.stringify(value)}\` as the value for \`${key}\` but \`${key}\` cannot be an Array`, !isArray(value));
+  Ngular.assert(`You passed in \`${JSON.stringify(value)}\` as the value for \`${key}\` but \`${key}\` cannot be an Array`, !isArray(value));
 
   if (!baseValue) { return value; }
 
@@ -291,7 +291,7 @@ function mergeMixins(mixins, m, descs, values, base, keys) {
 
   for (var i=0, l=mixins.length; i<l; i++) {
     currentMixin = mixins[i];
-    Ember.assert(`Expected hash or Mixin instance, got ${Object.prototype.toString.call(currentMixin)}`,
+    Ngular.assert(`Expected hash or Mixin instance, got ${Object.prototype.toString.call(currentMixin)}`,
                  typeof currentMixin === 'object' && currentMixin !== null && Object.prototype.toString.call(currentMixin) !== '[object Array]');
 
     props = mixinProperties(m, currentMixin);
@@ -421,15 +421,15 @@ function replaceObserversAndListeners(obj, key, observerOrListener) {
   var prev = obj[key];
 
   if ('function' === typeof prev) {
-    updateObserversAndListeners(obj, key, prev, '__ember_observesBefore__', removeBeforeObserver);
-    updateObserversAndListeners(obj, key, prev, '__ember_observes__', removeObserver);
-    updateObserversAndListeners(obj, key, prev, '__ember_listens__', removeListener);
+    updateObserversAndListeners(obj, key, prev, '__ngular_observesBefore__', removeBeforeObserver);
+    updateObserversAndListeners(obj, key, prev, '__ngular_observes__', removeObserver);
+    updateObserversAndListeners(obj, key, prev, '__ngular_listens__', removeListener);
   }
 
   if ('function' === typeof observerOrListener) {
-    updateObserversAndListeners(obj, key, observerOrListener, '__ember_observesBefore__', addBeforeObserver);
-    updateObserversAndListeners(obj, key, observerOrListener, '__ember_observes__', addObserver);
-    updateObserversAndListeners(obj, key, observerOrListener, '__ember_listens__', addListener);
+    updateObserversAndListeners(obj, key, observerOrListener, '__ngular_observesBefore__', addBeforeObserver);
+    updateObserversAndListeners(obj, key, observerOrListener, '__ngular_observes__', addObserver);
+    updateObserversAndListeners(obj, key, observerOrListener, '__ngular_listens__', addListener);
   }
 }
 
@@ -482,7 +482,7 @@ function applyMixin(obj, mixins, partial) {
 
 /**
   @method mixin
-  @for Ember
+  @for Ngular
   @param obj
   @param mixins*
   @return obj
@@ -493,11 +493,11 @@ export function mixin(obj, ...args) {
 }
 
 /**
-  The `Ember.Mixin` class allows you to create mixins, whose properties can be
+  The `Ngular.Mixin` class allows you to create mixins, whose properties can be
   added to other classes. For instance,
 
   ```javascript
-  App.Editable = Ember.Mixin.create({
+  App.Editable = Ngular.Mixin.create({
     edit: function() {
       console.log('starting to edit');
       this.set('isEditing', true);
@@ -507,16 +507,16 @@ export function mixin(obj, ...args) {
 
   // Mix mixins into classes by passing them as the first arguments to
   // .extend.
-  App.CommentView = Ember.View.extend(App.Editable, {
-    template: Ember.Handlebars.compile('{{#if view.isEditing}}...{{else}}...{{/if}}')
+  App.CommentView = Ngular.View.extend(App.Editable, {
+    template: Ngular.Handlebars.compile('{{#if view.isEditing}}...{{else}}...{{/if}}')
   });
 
   commentView = App.CommentView.create();
   commentView.edit(); // outputs 'starting to edit'
   ```
 
-  Note that Mixins are created with `Ember.Mixin.create`, not
-  `Ember.Mixin.extend`.
+  Note that Mixins are created with `Ngular.Mixin.create`, not
+  `Ngular.Mixin.extend`.
 
   Note that mixins extend a constructor's prototype so arrays and object literals
   defined as properties will be shared amongst objects that implement the mixin.
@@ -525,26 +525,26 @@ export function mixin(obj, ...args) {
 
   ```javascript
   //filters array will be shared amongst any object implementing mixin
-  App.Filterable = Ember.Mixin.create({
-    filters: Ember.A()
+  App.Filterable = Ngular.Mixin.create({
+    filters: Ngular.A()
   });
 
   //filters will be a separate  array for every object implementing the mixin
-  App.Filterable = Ember.Mixin.create({
-    filters: Ember.computed(function() {return Ember.A();})
+  App.Filterable = Ngular.Mixin.create({
+    filters: Ngular.computed(function() {return Ngular.A();})
   });
 
   //filters will be created as a separate array during the object's initialization
-  App.Filterable = Ember.Mixin.create({
+  App.Filterable = Ngular.Mixin.create({
     init: function() {
       this._super.apply(this, arguments);
-      this.set("filters", Ember.A());
+      this.set("filters", Ngular.A());
     }
   });
   ```
 
   @class Mixin
-  @namespace Ember
+  @namespace Ngular
 */
 export default Mixin;
 function Mixin(args, properties) {
@@ -581,7 +581,7 @@ Mixin.applyPartial = function(obj) {
 Mixin.finishPartial = finishPartial;
 
 // ES6TODO: this relies on a global state?
-Ember.anyUnprocessedMixins = false;
+Ngular.anyUnprocessedMixins = false;
 
 /**
   @method create
@@ -590,7 +590,7 @@ Ember.anyUnprocessedMixins = false;
 */
 Mixin.create = function(...args) {
   // ES6TODO: this relies on a global state?
-  Ember.anyUnprocessedMixins = true;
+  Ngular.anyUnprocessedMixins = true;
   var M = this;
   return new M(args, undefined);
 };
@@ -618,7 +618,7 @@ MixinPrototype.reopen = function() {
 
   for (idx=0; idx < len; idx++) {
     currentMixin = arguments[idx];
-    Ember.assert(`Expected hash or Mixin instance, got ${Object.prototype.toString.call(currentMixin)}`,
+    Ngular.assert(`Expected hash or Mixin instance, got ${Object.prototype.toString.call(currentMixin)}`,
                  typeof currentMixin === 'object' && currentMixin !== null &&
                    Object.prototype.toString.call(currentMixin) !== '[object Array]');
 
@@ -668,7 +668,7 @@ function _detect(curMixin, targetMixin, seen) {
 MixinPrototype.detect = function(obj) {
   if (!obj) { return false; }
   if (obj instanceof Mixin) { return _detect(obj, this, {}); }
-  var m = obj['__ember_meta__'];
+  var m = obj['__ngular_meta__'];
   var mixins = m && m.mixins;
   if (mixins) {
     return !!mixins[guidFor(this)];
@@ -712,9 +712,9 @@ MixinPrototype.keys = function() {
 };
 
 // returns the mixins currently applied to the specified object
-// TODO: Make Ember.mixin
+// TODO: Make Ngular.mixin
 Mixin.mixins = function(obj) {
-  var m = obj['__ember_meta__'];
+  var m = obj['__ngular_meta__'];
   var mixins = m && m.mixins;
   var ret = [];
 
@@ -737,10 +737,10 @@ REQUIRED.toString = function() { return '(Required Property)'; };
   Denotes a required property for a mixin
 
   @method required
-  @for Ember
+  @for Ngular
 */
 export function required() {
-  Ember.deprecate('Ember.required is deprecated as its behavior is inconsistent and unreliable.', false);
+  Ngular.deprecate('Ngular.required is deprecated as its behavior is inconsistent and unreliable.', false);
   return REQUIRED;
 }
 
@@ -755,11 +755,11 @@ Alias.prototype = new Descriptor();
   Makes a method available via an additional name.
 
   ```javascript
-  App.Person = Ember.Object.extend({
+  App.Person = Ngular.Object.extend({
     name: function() {
       return 'Tomhuda Katzdale';
     },
-    moniker: Ember.aliasMethod('name')
+    moniker: Ngular.aliasMethod('name')
   });
 
   var goodGuy = App.Person.create();
@@ -769,7 +769,7 @@ Alias.prototype = new Descriptor();
   ```
 
   @method aliasMethod
-  @for Ember
+  @for Ngular
   @param {String} methodName name of the method to alias
 */
 export function aliasMethod(methodName) {
@@ -784,8 +784,8 @@ export function aliasMethod(methodName) {
   Specify a method that observes property changes.
 
   ```javascript
-  Ember.Object.extend({
-    valueObserver: Ember.observer('value', function() {
+  Ngular.Object.extend({
+    valueObserver: Ngular.observer('value', function() {
       // Executes whenever the "value" property changes
     })
   });
@@ -798,7 +798,7 @@ export function aliasMethod(methodName) {
   enabled.
 
   @method observer
-  @for Ember
+  @for Ngular
   @param {String} propertyNames*
   @param {Function} func
   @return func
@@ -824,10 +824,10 @@ export function observer(...args) {
   }
 
   if (typeof func !== "function") {
-    throw new Ember.Error("Ember.observer called without a function");
+    throw new Ngular.Error("Ngular.observer called without a function");
   }
 
-  func.__ember_observes__ = paths;
+  func.__ngular_observes__ = paths;
   return func;
 }
 
@@ -835,21 +835,21 @@ export function observer(...args) {
   Specify a method that observes property changes.
 
   ```javascript
-  Ember.Object.extend({
-    valueObserver: Ember.immediateObserver('value', function() {
+  Ngular.Object.extend({
+    valueObserver: Ngular.immediateObserver('value', function() {
       // Executes whenever the "value" property changes
     })
   });
   ```
 
-  In the future, `Ember.observer` may become asynchronous. In this event,
-  `Ember.immediateObserver` will maintain the synchronous behavior.
+  In the future, `Ngular.observer` may become asynchronous. In this event,
+  `Ngular.immediateObserver` will maintain the synchronous behavior.
 
   Also available as `Function.prototype.observesImmediately` if prototype extensions are
   enabled.
 
   @method immediateObserver
-  @for Ember
+  @for Ngular
   @param {String} propertyNames*
   @param {Function} func
   @return func
@@ -857,7 +857,7 @@ export function observer(...args) {
 export function immediateObserver() {
   for (var i=0, l=arguments.length; i<l; i++) {
     var arg = arguments[i];
-    Ember.assert("Immediate observers must observe internal properties only, not properties on other objects.",
+    Ngular.assert("Immediate observers must observe internal properties only, not properties on other objects.",
                  typeof arg !== "string" || arg.indexOf('.') === -1);
   }
 
@@ -875,14 +875,14 @@ export function immediateObserver() {
   A `beforeObserver` is an alternative form of `.observesBefore()`.
 
   ```javascript
-  App.PersonView = Ember.View.extend({
+  App.PersonView = Ngular.View.extend({
     friends: [{ name: 'Tom' }, { name: 'Stefan' }, { name: 'Kris' }],
 
-    valueWillChange: Ember.beforeObserver('content.value', function(obj, keyName) {
+    valueWillChange: Ngular.beforeObserver('content.value', function(obj, keyName) {
       this.changingFrom = obj.get(keyName);
     }),
 
-    valueDidChange: Ember.observer('content.value', function(obj, keyName) {
+    valueDidChange: Ngular.observer('content.value', function(obj, keyName) {
         // only run if updating a value already in the DOM
         if (this.get('state') === 'inDOM') {
           var color = obj.get(keyName) > this.changingFrom ? 'green' : 'red';
@@ -890,7 +890,7 @@ export function immediateObserver() {
         }
     }),
 
-    friendsDidChange: Ember.observer('friends.@each.name', function(obj, keyName) {
+    friendsDidChange: Ngular.observer('friends.@each.name', function(obj, keyName) {
       // some logic
       // obj.get(keyName) returns friends array
     })
@@ -901,7 +901,7 @@ export function immediateObserver() {
   enabled.
 
   @method beforeObserver
-  @for Ember
+  @for Ngular
   @param {String} propertyNames*
   @param {Function} func
   @return func
@@ -928,10 +928,10 @@ export function beforeObserver(...args) {
   }
 
   if (typeof func !== "function") {
-    throw new Ember.Error("Ember.beforeObserver called without a function");
+    throw new Ngular.Error("Ngular.beforeObserver called without a function");
   }
 
-  func.__ember_observesBefore__ = paths;
+  func.__ngular_observesBefore__ = paths;
   return func;
 }
 

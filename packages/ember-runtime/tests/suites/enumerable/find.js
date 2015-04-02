@@ -1,5 +1,5 @@
-import EmberObject from 'ember-runtime/system/object';
-import {SuiteModuleBuilder} from 'ember-runtime/tests/suites/suite';
+import NgularObject from 'ngular-runtime/system/object';
+import {SuiteModuleBuilder} from 'ngular-runtime/tests/suites/suite';
 
 var suite = SuiteModuleBuilder.create();
 // ..........................................................
@@ -50,7 +50,7 @@ suite.test('should return first object of property matches', function() {
 
   ary = [
     { foo: 'foo', bar: 'BAZ' },
-    EmberObject.create({ foo: 'foo', bar: 'bar' })
+    NgularObject.create({ foo: 'foo', bar: 'bar' })
   ];
 
   obj = this.newObject(ary);
@@ -64,7 +64,7 @@ suite.test('should return first object with truthy prop', function() {
 
   ary = [
     { foo: 'foo', bar: false },
-    EmberObject.create({ foo: 'bar', bar: true })
+    NgularObject.create({ foo: 'bar', bar: true })
   ];
 
   obj = this.newObject(ary);
@@ -79,7 +79,7 @@ suite.test('should return first null property match', function() {
 
   ary = [
     { foo: null, bar: 'BAZ' },
-    EmberObject.create({ foo: null, bar: null })
+    NgularObject.create({ foo: null, bar: null })
   ];
 
   obj = this.newObject(ary);
@@ -93,7 +93,7 @@ suite.test('should return first undefined property match', function() {
 
   ary = [
     { foo: undefined, bar: 'BAZ' },
-    EmberObject.create({ })
+    NgularObject.create({ })
   ];
 
   obj = this.newObject(ary);

@@ -1,11 +1,11 @@
-import { testBoth } from 'ember-metal/tests/props_helper';
-import run from 'ember-metal/run_loop';
+import { testBoth } from 'ngular-metal/tests/props_helper';
+import run from 'ngular-metal/run_loop';
 import {
   addObserver
-} from "ember-metal/observer";
-import { bind } from "ember-metal/binding";
-import { computed } from "ember-metal/computed";
-import { defineProperty } from "ember-metal/properties";
+} from "ngular-metal/observer";
+import { bind } from "ngular-metal/binding";
+import { computed } from "ngular-metal/computed";
+import { defineProperty } from "ngular-metal/properties";
 
 QUnit.module("system/binding/sync_test.js");
 

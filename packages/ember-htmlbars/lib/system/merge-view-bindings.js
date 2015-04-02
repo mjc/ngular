@@ -1,10 +1,10 @@
-import Ember from "ember-metal/core"; // Ember.warn, Ember.assert
-import { IS_BINDING } from "ember-metal/mixin";
-import SimpleStream from "ember-metal/streams/simple";
-import { read, isStream } from "ember-metal/streams/utils";
+import Ngular from "ngular-metal/core"; // Ngular.warn, Ngular.assert
+import { IS_BINDING } from "ngular-metal/mixin";
+import SimpleStream from "ngular-metal/streams/simple";
+import { read, isStream } from "ngular-metal/streams/utils";
 import {
   streamifyClassNameBinding
-} from "ember-views/streams/class_name_binding";
+} from "ngular-views/streams/class_name_binding";
 
 var a_push = Array.prototype.push;
 
@@ -29,7 +29,7 @@ function mergeGenericViewBindings(view, props, hash) {
 
     if (IS_BINDING.test(key)) {
       if (typeof value === 'string') {
-        Ember.deprecate(
+        Ngular.deprecate(
           "You're attempting to render a view by passing " + key + " " +
           "to a view helper, but this syntax is deprecated. You should use `" +
           key.slice(0, -7) + "=someValue` instead."
@@ -37,7 +37,7 @@ function mergeGenericViewBindings(view, props, hash) {
 
         props[key] = view._getBindingForStream(value);
       } else if (isStream(value)) {
-        Ember.deprecate(
+        Ngular.deprecate(
           "You're attempting to render a view by passing " + key + " " +
           "to a view helper without a quoted value, but this syntax is " +
           "ambiguous. You should either surround " + key + "'s value in " +
@@ -59,9 +59,9 @@ function mergeGenericViewBindings(view, props, hash) {
 }
 
 function mergeDOMViewBindings(view, props, hash) {
-  Ember.assert(
+  Ngular.assert(
     "Setting 'attributeBindings' via template helpers is not allowed. " +
-    "Please subclass Ember.View and set it there instead.",
+    "Please subclass Ngular.View and set it there instead.",
     !hash.attributeBindings
   );
 

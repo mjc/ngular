@@ -1,25 +1,25 @@
 /*jshint newcap:false*/
-import CollectionView from "ember-views/views/collection_view";
-import EmberObject from "ember-runtime/system/object";
-import EmberView from "ember-views/views/view";
-import ArrayProxy from "ember-runtime/system/array_proxy";
-import Namespace from "ember-runtime/system/namespace";
-import { Registry } from "ember-runtime/system/container";
-import { A } from "ember-runtime/system/native_array";
-import run from "ember-metal/run_loop";
-import { get } from "ember-metal/property_get";
-import { set } from "ember-metal/property_set";
-import jQuery from "ember-views/system/jquery";
-import { computed } from "ember-metal/computed";
-import { runAppend, runDestroy } from "ember-runtime/tests/utils";
-import compile from "ember-template-compiler/system/compile";
+import CollectionView from "ngular-views/views/collection_view";
+import NgularObject from "ngular-runtime/system/object";
+import NgularView from "ngular-views/views/view";
+import ArrayProxy from "ngular-runtime/system/array_proxy";
+import Namespace from "ngular-runtime/system/namespace";
+import { Registry } from "ngular-runtime/system/container";
+import { A } from "ngular-runtime/system/native_array";
+import run from "ngular-metal/run_loop";
+import { get } from "ngular-metal/property_get";
+import { set } from "ngular-metal/property_set";
+import jQuery from "ngular-views/system/jquery";
+import { computed } from "ngular-metal/computed";
+import { runAppend, runDestroy } from "ngular-runtime/tests/utils";
+import compile from "ngular-template-compiler/system/compile";
 
 var trim = jQuery.trim;
 
 
 var view;
 
-var originalLookup = Ember.lookup;
+var originalLookup = Ngular.lookup;
 var TemplateTests, registry, container, lookup;
 
 
@@ -35,14 +35,14 @@ function firstGrandchild(view) {
 
 QUnit.module("collection helper", {
   setup() {
-    Ember.lookup = lookup = {};
+    Ngular.lookup = lookup = {};
     lookup.TemplateTests = TemplateTests = Namespace.create();
     registry = new Registry();
     container = registry.container();
 
     registry.optionsForType('template', { instantiate: false });
     // registry.register('view:default', _MetamorphView);
-    registry.register('view:toplevel', EmberView.extend());
+    registry.register('view:toplevel', NgularView.extend());
   },
 
   teardown() {
@@ -50,21 +50,21 @@ QUnit.module("collection helper", {
     runDestroy(view);
     registry = container = view = null;
 
-    Ember.lookup = lookup = originalLookup;
+    Ngular.lookup = lookup = originalLookup;
     TemplateTests = null;
   }
 });
 
 QUnit.test("Collection views that specify an example view class have their children be of that class", function() {
   var ExampleViewCollection = CollectionView.extend({
-    itemViewClass: EmberView.extend({
+    itemViewClass: NgularView.extend({
       isCustom: true
     }),
 
     content: A(['foo'])
   });
 
-  view = EmberView.create({
+  view = NgularView.create({
     exampleViewCollection: ExampleViewCollection,
     template: compile('{{#collection view.exampleViewCollection}}OHAI{{/collection}}')
   });
@@ -75,11 +75,11 @@ QUnit.test("Collection views that specify an example view class have their child
 });
 
 QUnit.test("itemViewClass works in the #collection helper with a global (DEPRECATED)", function() {
-  TemplateTests.ExampleItemView = EmberView.extend({
+  TemplateTests.ExampleItemView = NgularView.extend({
     isAlsoCustom: true
   });
 
-  view = EmberView.create({
+  view = NgularView.create({
     exampleController: ArrayProxy.create({
       content: A(['alpha'])
     }),
@@ -95,13 +95,13 @@ QUnit.test("itemViewClass works in the #collection helper with a global (DEPRECA
 });
 
 QUnit.test("itemViewClass works in the #collection helper with a property", function() {
-  var ExampleItemView = EmberView.extend({
+  var ExampleItemView = NgularView.extend({
     isAlsoCustom: true
   });
 
   var ExampleCollectionView = CollectionView;
 
-  view = EmberView.create({
+  view = NgularView.create({
     possibleItemView: ExampleItemView,
     exampleCollectionView: ExampleCollectionView,
     exampleController: ArrayProxy.create({
@@ -116,11 +116,11 @@ QUnit.test("itemViewClass works in the #collection helper with a property", func
 });
 
 QUnit.test("itemViewClass works in the #collection via container", function() {
-  registry.register('view:example-item', EmberView.extend({
+  registry.register('view:example-item', NgularView.extend({
     isAlsoCustom: true
   }));
 
-  view = EmberView.create({
+  view = NgularView.create({
     container: container,
     exampleCollectionView: CollectionView.extend(),
     exampleController: ArrayProxy.create({
@@ -141,7 +141,7 @@ QUnit.test("passing a block to the collection helper sets it as the template for
     content: A(['foo', 'bar', 'baz'])
   });
 
-  view = EmberView.create({
+  view = NgularView.create({
     collectionTestView: CollectionTestView,
     template: compile('{{#collection view.collectionTestView}} <label></label> {{/collection}}')
   });
@@ -163,7 +163,7 @@ QUnit.test("collection helper should try to use container to resolve view", func
   registry.register('view:collectionTest', ACollectionView);
 
   var controller = { container: container };
-  view = EmberView.create({
+  view = NgularView.create({
     controller: controller,
     template: compile('{{#collection "collectionTest"}} <label></label> {{/collection}}')
   });
@@ -174,7 +174,7 @@ QUnit.test("collection helper should try to use container to resolve view", func
 });
 
 QUnit.test("collection helper should accept relative paths", function() {
-  view = EmberView.create({
+  view = NgularView.create({
     template: compile('{{#collection view.collection}} <label></label> {{/collection}}'),
     collection: CollectionView.extend({
       tagName: 'ul',
@@ -188,7 +188,7 @@ QUnit.test("collection helper should accept relative paths", function() {
 });
 
 QUnit.test("empty views should be removed when content is added to the collection (regression, ht: msofaer)", function() {
-  var EmptyView = EmberView.extend({
+  var EmptyView = NgularView.extend({
     template : compile("<td>No Rows Yet</td>")
   });
 
@@ -200,7 +200,7 @@ QUnit.test("empty views should be removed when content is added to the collectio
     content : A()
   });
 
-  view = EmberView.create({
+  view = NgularView.create({
     listView: ListView,
     listController: listController,
     template: compile('{{#collection view.listView content=view.listController tagName="table"}} <td>{{view.content.title}}</td> {{/collection}}')
@@ -225,11 +225,11 @@ QUnit.test("should be able to specify which class should be used for the empty v
     lookup.App = App = Namespace.create();
   });
 
-  var EmptyView = EmberView.extend({
+  var EmptyView = NgularView.extend({
     template: compile('This is an empty view')
   });
 
-  view = EmberView.create({
+  view = NgularView.create({
     container: {
       lookupFactory() {
         return EmptyView;
@@ -251,7 +251,7 @@ QUnit.test("if no content is passed, and no 'else' is specified, nothing is rend
     content: A()
   });
 
-  view = EmberView.create({
+  view = NgularView.create({
     collectionTestView: CollectionTestView,
     template: compile('{{#collection view.collectionTestView}} <aside></aside> {{/collection}}')
   });
@@ -267,7 +267,7 @@ QUnit.test("if no content is passed, and 'else' is specified, the else block is 
     content: A()
   });
 
-  view = EmberView.create({
+  view = NgularView.create({
     collectionTestView: CollectionTestView,
     template: compile('{{#collection view.collectionTestView}} <aside></aside> {{ else }} <del></del> {{/collection}}')
   });
@@ -283,7 +283,7 @@ QUnit.test("a block passed to a collection helper defaults to the content proper
     content: A(['foo', 'bar', 'baz'])
   });
 
-  view = EmberView.create({
+  view = NgularView.create({
     collectionTestView: CollectionTestView,
     template: compile('{{#collection view.collectionTestView}} <label>{{view.content}}</label> {{/collection}}')
   });
@@ -304,7 +304,7 @@ QUnit.test("a block passed to a collection helper defaults to the view", functio
     content: A(['foo', 'bar', 'baz'])
   });
 
-  view = EmberView.create({
+  view = NgularView.create({
     collectionTestView: CollectionTestView,
     template: compile('{{#collection view.collectionTestView}} <label>{{view.content}}</label> {{/collection}}')
   });
@@ -331,7 +331,7 @@ QUnit.test("should include an id attribute if id is set in the options hash", fu
     content: A(['foo', 'bar', 'baz'])
   });
 
-  view = EmberView.create({
+  view = NgularView.create({
     collectionTestView: CollectionTestView,
     template: compile('{{#collection view.collectionTestView id="baz"}}foo{{/collection}}')
   });
@@ -346,7 +346,7 @@ QUnit.test("should give its item views the class specified by itemClass", functi
     tagName: 'ul',
     content: A(['foo', 'bar', 'baz'])
   });
-  view = EmberView.create({
+  view = NgularView.create({
     itemClassTestCollectionView: ItemClassTestCollectionView,
     template: compile('{{#collection view.itemClassTestCollectionView itemClass="baz"}}foo{{/collection}}')
   });
@@ -359,10 +359,10 @@ QUnit.test("should give its item views the class specified by itemClass", functi
 QUnit.test("should give its item views the class specified by itemClass", function() {
   var ItemClassBindingTestCollectionView = CollectionView.extend({
     tagName: 'ul',
-    content: A([EmberObject.create({ isBaz: false }), EmberObject.create({ isBaz: true }), EmberObject.create({ isBaz: true })])
+    content: A([NgularObject.create({ isBaz: false }), NgularObject.create({ isBaz: true }), NgularObject.create({ isBaz: true })])
   });
 
-  view = EmberView.create({
+  view = NgularView.create({
     itemClassBindingTestCollectionView: ItemClassBindingTestCollectionView,
     isBar: true,
     template: compile('{{#collection view.itemClassBindingTestCollectionView itemClass=view.isBar}}foo{{/collection}}')
@@ -377,15 +377,15 @@ QUnit.test("should give its item views the class specified by itemClass", functi
 });
 
 QUnit.test("should give its item views the property specified by itemProperty", function() {
-  var ItemPropertyBindingTestItemView = EmberView.extend({
+  var ItemPropertyBindingTestItemView = NgularView.extend({
     tagName: 'li'
   });
 
   // Use preserveContext=false so the itemView handlebars context is the view context
   // Set itemView bindings using item*
-  view = EmberView.create({
+  view = NgularView.create({
     baz: "baz",
-    content: A([EmberObject.create(), EmberObject.create(), EmberObject.create()]),
+    content: A([NgularObject.create(), NgularObject.create(), NgularObject.create()]),
     container: {
       lookupFactory() {
         return ItemPropertyBindingTestItemView;
@@ -410,9 +410,9 @@ QUnit.test("should give its item views the property specified by itemProperty", 
 });
 
 QUnit.test("should unsubscribe stream bindings", function() {
-  view = EmberView.create({
+  view = NgularView.create({
     baz: "baz",
-    content: A([EmberObject.create(), EmberObject.create(), EmberObject.create()]),
+    content: A([NgularObject.create(), NgularObject.create(), NgularObject.create()]),
     template: compile('{{#collection content=view.content itemProperty=view.baz}}{{view.property}}{{/collection}}')
   });
 
@@ -442,13 +442,13 @@ function countSubscribers(stream) {
 }
 
 QUnit.test("should work inside a bound {{#if}}", function() {
-  var testData = A([EmberObject.create({ isBaz: false }), EmberObject.create({ isBaz: true }), EmberObject.create({ isBaz: true })]);
+  var testData = A([NgularObject.create({ isBaz: false }), NgularObject.create({ isBaz: true }), NgularObject.create({ isBaz: true })]);
   var IfTestCollectionView = CollectionView.extend({
     tagName: 'ul',
     content: testData
   });
 
-  view = EmberView.create({
+  view = NgularView.create({
     ifTestCollectionView: IfTestCollectionView,
     template: compile('{{#if view.shouldDisplay}}{{#collection view.ifTestCollectionView}}{{content.isBaz}}{{/collection}}{{/if}}'),
     shouldDisplay: true
@@ -466,7 +466,7 @@ QUnit.test("should work inside a bound {{#if}}", function() {
 });
 
 QUnit.test("should pass content as context when using {{#each}} helper [DEPRECATED]", function() {
-  view = EmberView.create({
+  view = NgularView.create({
     template: compile('{{#each view.releases}}Mac OS X {{version}}: {{name}} {{/each}}'),
 
     releases: A([
@@ -492,7 +492,7 @@ QUnit.test("should re-render when the content object changes", function() {
     content: A()
   });
 
-  view = EmberView.create({
+  view = NgularView.create({
     rerenderTestView: RerenderTest,
     template: compile('{{#collection view.rerenderTestView}}{{view.content}}{{/collection}}')
   });
@@ -516,7 +516,7 @@ QUnit.test("select tagName on collection helper automatically sets child tagName
     content: A(['foo'])
   });
 
-  view = EmberView.create({
+  view = NgularView.create({
     rerenderTestView: RerenderTest,
     template: compile('{{#collection view.rerenderTestView tagName="select"}}{{view.content}}{{/collection}}')
   });
@@ -531,7 +531,7 @@ QUnit.test("tagName works in the #collection helper", function() {
     content: A(['foo', 'bar'])
   });
 
-  view = EmberView.create({
+  view = NgularView.create({
     rerenderTestView: RerenderTest,
     template: compile('{{#collection view.rerenderTestView tagName="ol"}}{{view.content}}{{/collection}}')
   });
@@ -562,7 +562,7 @@ QUnit.test("should render nested collections", function() {
     content: A(['foo'])
   }));
 
-  view = EmberView.create({
+  view = NgularView.create({
     container: container,
     template: compile('{{#collection "outer-list" class="outer"}}{{content}}{{#collection "inner-list" class="inner"}}{{content}}{{/collection}}{{/collection}}')
   });
@@ -588,7 +588,7 @@ QUnit.test("should render multiple, bound nested collections (#68)", function() 
       contentBinding: 'parentView.innerListContent'
     });
 
-    var OuterListItem = EmberView.extend({
+    var OuterListItem = NgularView.extend({
       innerListView: InnerList,
       template: compile('{{#collection view.innerListView class="inner"}}{{content}}{{/collection}}{{content}}'),
       innerListContent: computed(function() {
@@ -602,7 +602,7 @@ QUnit.test("should render multiple, bound nested collections (#68)", function() 
       itemViewClass: OuterListItem
     });
 
-    view = EmberView.create({
+    view = NgularView.create({
       outerListView: OuterList,
       template: compile('{{collection view.outerListView class="outer"}}')
     });
@@ -622,7 +622,7 @@ QUnit.test("should allow view objects to be swapped out without throwing an erro
   var view, dataset, secondDataset;
 
   run(function() {
-    TemplateTests.datasetController = EmberObject.create();
+    TemplateTests.datasetController = NgularObject.create();
 
     var ExampleCollectionView = CollectionView.extend({
       contentBinding: 'parentView.items',
@@ -630,7 +630,7 @@ QUnit.test("should allow view objects to be swapped out without throwing an erro
       template: compile("{{view.content}}")
     });
 
-    var ReportingView = EmberView.extend({
+    var ReportingView = NgularView.extend({
       exampleCollectionView: ExampleCollectionView,
       datasetBinding: 'TemplateTests.datasetController.dataset',
       readyBinding: 'dataset.ready',
@@ -646,7 +646,7 @@ QUnit.test("should allow view objects to be swapped out without throwing an erro
   equal(view.$().text(), "Loading", "renders the loading text when the dataset is not ready");
 
   run(function() {
-    dataset = EmberObject.create({
+    dataset = NgularObject.create({
       ready: true,
       items: A([1,2,3])
     });
@@ -656,7 +656,7 @@ QUnit.test("should allow view objects to be swapped out without throwing an erro
   equal(view.$('ul > li').length, 3, "renders the collection with the correct number of items when the dataset is ready");
 
   run(function() {
-    secondDataset = EmberObject.create({ ready: false });
+    secondDataset = NgularObject.create({ ready: false });
     TemplateTests.datasetController.set('dataset', secondDataset);
   });
 
@@ -672,16 +672,16 @@ QUnit.test("context should be content", function() {
   container = registry.container();
 
   var items = A([
-    EmberObject.create({ name: 'Dave' }),
-    EmberObject.create({ name: 'Mary' }),
-    EmberObject.create({ name: 'Sara' })
+    NgularObject.create({ name: 'Dave' }),
+    NgularObject.create({ name: 'Mary' }),
+    NgularObject.create({ name: 'Sara' })
   ]);
 
-  registry.register('view:an-item', EmberView.extend({
+  registry.register('view:an-item', NgularView.extend({
     template: compile("Greetings {{name}}")
   }));
 
-  view = EmberView.create({
+  view = NgularView.create({
     container: container,
     controller: {
       items: items

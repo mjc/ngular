@@ -3,9 +3,9 @@ import {
   subscribe,
   unsubscribe,
   reset
-} from "ember-metal/instrumentation";
+} from "ngular-metal/instrumentation";
 
-QUnit.module("Ember Instrumentation", {
+QUnit.module("Ngular Instrumentation", {
   setup() {
 
   },

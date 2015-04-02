@@ -1,9 +1,9 @@
-import { set } from "ember-metal/property_set";
-import keys from "ember-metal/keys";
+import { set } from "ngular-metal/property_set";
+import keys from "ngular-metal/keys";
 import {
   addObserver,
   removeObserver
-} from "ember-metal/observer";
+} from "ngular-metal/observer";
 
 function K() { return this; }
 

@@ -1,16 +1,16 @@
-import _default from "ember-views/views/states/default";
-import run from "ember-metal/run_loop";
-import merge from "ember-metal/merge";
-import create from 'ember-metal/platform/create';
-import jQuery from "ember-views/system/jquery";
-import EmberError from "ember-metal/error";
+import _default from "ngular-views/views/states/default";
+import run from "ngular-metal/run_loop";
+import merge from "ngular-metal/merge";
+import create from 'ngular-metal/platform/create';
+import jQuery from "ngular-views/system/jquery";
+import NgularError from "ngular-metal/error";
 
 /**
-@module ember
-@submodule ember-views
+@module ngular
+@submodule ngular-views
 */
 
-import { get } from "ember-metal/property_get";
+import { get } from "ngular-metal/property_get";
 
 var hasElement = create(_default);
 
@@ -31,7 +31,7 @@ merge(hasElement, {
   // deferred to allow bindings to synchronize.
   rerender(view) {
     if (view._root._morph && !view._elementInserted) {
-      throw new EmberError("Something you did caused a view to re-render after it rendered but before it was inserted into the DOM.");
+      throw new NgularError("Something you did caused a view to re-render after it rendered but before it was inserted into the DOM.");
     }
     // TODO: should be scheduled with renderer
     run.scheduleOnce('render', function () {
@@ -52,7 +52,7 @@ merge(hasElement, {
     return view;
   },
 
-  // Handle events from `Ember.EventDispatcher`
+  // Handle events from `Ngular.EventDispatcher`
   handleEvent(view, eventName, evt) {
     if (view.has(eventName)) {
       // Handler should be able to re-dispatch events, so we don't

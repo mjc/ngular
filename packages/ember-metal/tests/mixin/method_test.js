@@ -1,8 +1,8 @@
-import create from 'ember-metal/platform/create';
+import create from 'ngular-metal/platform/create';
 import {
   mixin,
   Mixin
-} from 'ember-metal/mixin';
+} from 'ngular-metal/mixin';
 
 QUnit.module('Mixin Methods');
 

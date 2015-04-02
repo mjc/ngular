@@ -1,23 +1,23 @@
 /**
-Ember Routing Views
+Ngular Routing Views
 
-@module ember
-@submodule ember-routing-views
-@requires ember-routing
+@module ngular
+@submodule ngular-routing-views
+@requires ngular-routing
 */
 
-import Ember from "ember-metal/core";
+import Ngular from "ngular-metal/core";
 
-import { LinkView } from "ember-routing-views/views/link";
+import { LinkView } from "ngular-routing-views/views/link";
 import {
   OutletView,
   CoreOutletView
-} from "ember-routing-views/views/outlet";
+} from "ngular-routing-views/views/outlet";
 
-Ember.LinkView = LinkView;
-Ember.OutletView = OutletView;
-if (Ember.FEATURES.isEnabled('ember-routing-core-outlet')) {
-  Ember.CoreOutletView = CoreOutletView;
+Ngular.LinkView = LinkView;
+Ngular.OutletView = OutletView;
+if (Ngular.FEATURES.isEnabled('ngular-routing-core-outlet')) {
+  Ngular.CoreOutletView = CoreOutletView;
 }
 
-export default Ember;
+export default Ngular;

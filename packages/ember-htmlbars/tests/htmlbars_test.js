@@ -1,10 +1,10 @@
-import compile from "ember-template-compiler/system/compile";
-import defaultEnv from "ember-htmlbars/env";
-import { domHelper } from "ember-htmlbars/env";
+import compile from "ngular-template-compiler/system/compile";
+import defaultEnv from "ngular-htmlbars/env";
+import { domHelper } from "ngular-htmlbars/env";
 import { equalHTML } from "htmlbars-test-helpers";
-import merge from "ember-metal/merge";
+import merge from "ngular-metal/merge";
 
-QUnit.module("ember-htmlbars: main");
+QUnit.module("ngular-htmlbars: main");
 
 QUnit.test("HTMLBars is present and can be executed", function() {
   var template = compile("ohai");

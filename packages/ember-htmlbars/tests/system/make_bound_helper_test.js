@@ -1,14 +1,14 @@
-import EmberView from "ember-views/views/view";
-import run from "ember-metal/run_loop";
+import NgularView from "ngular-views/views/view";
+import run from "ngular-metal/run_loop";
 import Registry from "container/registry";
-import makeBoundHelper from "ember-htmlbars/system/make_bound_helper";
-import compile from "ember-template-compiler/system/compile";
-import { runAppend, runDestroy } from "ember-runtime/tests/utils";
+import makeBoundHelper from "ngular-htmlbars/system/make_bound_helper";
+import compile from "ngular-template-compiler/system/compile";
+import { runAppend, runDestroy } from "ngular-runtime/tests/utils";
 import {
   dasherize
-} from 'ember-runtime/system/string';
-import SimpleBoundView from "ember-views/views/simple_bound_view";
-import EmberObject from "ember-runtime/system/object";
+} from 'ngular-runtime/system/string';
+import SimpleBoundView from "ngular-views/views/simple_bound_view";
+import NgularObject from "ngular-runtime/system/object";
 
 var view, registry, container;
 
@@ -19,7 +19,7 @@ function registerRepeatHelper() {
   }));
 }
 
-QUnit.module("ember-htmlbars: makeBoundHelper", {
+QUnit.module("ngular-htmlbars: makeBoundHelper", {
   setup() {
     registry = new Registry();
     container = registry.container();
@@ -38,7 +38,7 @@ QUnit.test("should update bound helpers in a subexpression when properties chang
     return dasherize(params[0]);
   }));
 
-  view = EmberView.create({
+  view = NgularView.create({
     container: container,
     controller: { prop: "isThing" },
     template: compile("<div {{bind-attr data-foo=(x-dasherize prop)}}>{{prop}}</div>")
@@ -58,7 +58,7 @@ QUnit.test("should update bound helpers when properties change", function() {
     return params[0].toUpperCase();
   }));
 
-  view = EmberView.create({
+  view = NgularView.create({
     container: container,
     controller: { name: "Brogrammer" },
     template: compile("{{x-capitalize name}}")
@@ -76,7 +76,7 @@ QUnit.test("should update bound helpers when properties change", function() {
 QUnit.test("should update bound helpers when hash properties change", function() {
   registerRepeatHelper();
 
-  view = EmberView.create({
+  view = NgularView.create({
     container: container,
     controller: {
       phrase: "Yo",
@@ -99,7 +99,7 @@ QUnit.test("bound helpers should support keywords", function() {
     return params[0].toUpperCase();
   }));
 
-  view = EmberView.create({
+  view = NgularView.create({
     container: container,
     text: 'ab',
     template: compile("{{x-capitalize view.text}}")
@@ -115,7 +115,7 @@ QUnit.test("bound helpers should not process `fooBinding` style hash properties"
     equal(hash.timesBinding, "numRepeats");
   }));
 
-  view = EmberView.create({
+  view = NgularView.create({
     container: container,
     controller: {
       text: 'ab',
@@ -133,7 +133,7 @@ QUnit.test("bound helpers should support multiple bound properties", function() 
     return params.join('');
   }));
 
-  view = EmberView.create({
+  view = NgularView.create({
     container: container,
     controller: {
       thing1: 'ZOID',
@@ -163,7 +163,7 @@ QUnit.test("bound helpers can be invoked with zero args", function() {
     return hash.text || "TROLOLOL";
   }));
 
-  view = EmberView.create({
+  view = NgularView.create({
     container: container,
     controller: {
       trollText: "yumad"
@@ -178,7 +178,7 @@ QUnit.test("bound helpers can be invoked with zero args", function() {
 
 QUnit.test("bound helpers should not be invoked with blocks", function() {
   registerRepeatHelper();
-  view = EmberView.create({
+  view = NgularView.create({
     container: container,
     controller: {},
     template: compile("{{#x-repeat}}Sorry, Charlie{{/x-repeat}}")
@@ -194,7 +194,7 @@ QUnit.test("shouldn't treat raw numbers as bound paths", function() {
     return params[0] + params[1];
   }));
 
-  view = EmberView.create({
+  view = NgularView.create({
     container: container,
     controller: { aNumber: 1 },
     template: compile("{{x-sum aNumber 1}} {{x-sum 0 aNumber}} {{x-sum 5 6}}")
@@ -214,7 +214,7 @@ QUnit.test("should have correct argument types", function() {
     return typeof params[0];
   }));
 
-  view = EmberView.create({
+  view = NgularView.create({
     container: container,
     controller: {},
     template: compile('{{get-type null}}, {{get-type undefProp}}, {{get-type "string"}}, {{get-type 1}}, {{get-type this}}')
@@ -235,9 +235,9 @@ QUnit.test("when no parameters are bound, no new views are created", function() 
   };
 
   try {
-    view = EmberView.create({
+    view = NgularView.create({
       template: compile('{{x-repeat "a"}}'),
-      controller: EmberObject.create(),
+      controller: NgularObject.create(),
       container: container
     });
     runAppend(view);
@@ -260,9 +260,9 @@ QUnit.test('when no hash parameters are bound, no new views are created', functi
   };
 
   try {
-    view = EmberView.create({
+    view = NgularView.create({
       template: compile('{{x-repeat "a" times=3}}'),
-      controller: EmberObject.create(),
+      controller: NgularObject.create(),
       container: container
     });
     runAppend(view);

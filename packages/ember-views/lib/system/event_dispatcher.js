@@ -1,41 +1,41 @@
 /**
-@module ember
-@submodule ember-views
+@module ngular
+@submodule ngular-views
 */
-import Ember from "ember-metal/core"; // Ember.assert
+import Ngular from "ngular-metal/core"; // Ngular.assert
 
-import { get } from "ember-metal/property_get";
-import { set } from "ember-metal/property_set";
-import isNone from 'ember-metal/is_none';
-import run from "ember-metal/run_loop";
-import { typeOf } from "ember-metal/utils";
-import { fmt } from "ember-runtime/system/string";
-import EmberObject from "ember-runtime/system/object";
-import jQuery from "ember-views/system/jquery";
-import ActionManager from "ember-views/system/action_manager";
-import View from "ember-views/views/view";
-import merge from "ember-metal/merge";
+import { get } from "ngular-metal/property_get";
+import { set } from "ngular-metal/property_set";
+import isNone from 'ngular-metal/is_none';
+import run from "ngular-metal/run_loop";
+import { typeOf } from "ngular-metal/utils";
+import { fmt } from "ngular-runtime/system/string";
+import NgularObject from "ngular-runtime/system/object";
+import jQuery from "ngular-views/system/jquery";
+import ActionManager from "ngular-views/system/action_manager";
+import View from "ngular-views/views/view";
+import merge from "ngular-metal/merge";
 
 //ES6TODO:
-// find a better way to do Ember.View.views without global state
+// find a better way to do Ngular.View.views without global state
 
 /**
-  `Ember.EventDispatcher` handles delegating browser events to their
-  corresponding `Ember.Views.` For example, when you click on a view,
-  `Ember.EventDispatcher` ensures that that view's `mouseDown` method gets
+  `Ngular.EventDispatcher` handles delegating browser events to their
+  corresponding `Ngular.Views.` For example, when you click on a view,
+  `Ngular.EventDispatcher` ensures that that view's `mouseDown` method gets
   called.
 
   @class EventDispatcher
-  @namespace Ember
+  @namespace Ngular
   @private
-  @extends Ember.Object
+  @extends Ngular.Object
 */
-export default EmberObject.extend({
+export default NgularObject.extend({
 
   /**
     The set of events names (and associated handler function names) to be setup
     and dispatched by the `EventDispatcher`. Custom events can added to this list at setup
-    time, generally via the `Ember.Application.customEvents` hash. Only override this
+    time, generally via the `Ngular.Application.customEvents` hash. Only override this
     default set to prevent the EventDispatcher from listening on some events all together.
 
     This set will be modified by `setup` to also include any events added at that time.
@@ -93,7 +93,7 @@ export default EmberObject.extend({
     It enables events to be dispatched to the view's `eventManager.` When present,
     this object takes precedence over handling of events on the view itself.
 
-    Note that most Ember applications do not use this feature. If your app also
+    Note that most Ngular applications do not use this feature. If your app also
     does not use it, consider setting this property to false to gain some performance
     improvement by allowing the EventDispatcher to skip the search for the
     `eventManager` on the view tree.
@@ -142,13 +142,13 @@ export default EmberObject.extend({
 
     rootElement = jQuery(get(this, 'rootElement'));
 
-    Ember.assert(fmt('You cannot use the same root element (%@) multiple times in an Ember.Application', [rootElement.selector || rootElement[0].tagName]), !rootElement.is('.ember-application'));
-    Ember.assert('You cannot make a new Ember.Application using a root element that is a descendent of an existing Ember.Application', !rootElement.closest('.ember-application').length);
-    Ember.assert('You cannot make a new Ember.Application using a root element that is an ancestor of an existing Ember.Application', !rootElement.find('.ember-application').length);
+    Ngular.assert(fmt('You cannot use the same root element (%@) multiple times in an Ngular.Application', [rootElement.selector || rootElement[0].tagName]), !rootElement.is('.ngular-application'));
+    Ngular.assert('You cannot make a new Ngular.Application using a root element that is a descendent of an existing Ngular.Application', !rootElement.closest('.ngular-application').length);
+    Ngular.assert('You cannot make a new Ngular.Application using a root element that is an ancestor of an existing Ngular.Application', !rootElement.find('.ngular-application').length);
 
-    rootElement.addClass('ember-application');
+    rootElement.addClass('ngular-application');
 
-    Ember.assert('Unable to add "ember-application" class to rootElement. Make sure you set rootElement to the body or an element in the body.', rootElement.is('.ember-application'));
+    Ngular.assert('Unable to add "ngular-application" class to rootElement. Make sure you set rootElement to the body or an element in the body.', rootElement.is('.ngular-application'));
 
     for (event in events) {
       if (events.hasOwnProperty(event)) {
@@ -174,7 +174,7 @@ export default EmberObject.extend({
   setupHandler(rootElement, event, eventName) {
     var self = this;
 
-    rootElement.on(event + '.ember', '.ember-view', function(evt, triggeringManager) {
+    rootElement.on(event + '.ngular', '.ngular-view', function(evt, triggeringManager) {
       var view = View.views[this.id];
       var result = true;
 
@@ -189,8 +189,8 @@ export default EmberObject.extend({
       return result;
     });
 
-    rootElement.on(event + '.ember', '[data-ember-action]', function(evt) {
-      var actionId = jQuery(evt.currentTarget).attr('data-ember-action');
+    rootElement.on(event + '.ngular', '[data-ngular-action]', function(evt) {
+      var actionId = jQuery(evt.currentTarget).attr('data-ngular-action');
       var action   = ActionManager.registeredActions[actionId];
 
       // We have to check for action here since in some cases, jQuery will trigger
@@ -236,7 +236,7 @@ export default EmberObject.extend({
 
   destroy() {
     var rootElement = get(this, 'rootElement');
-    jQuery(rootElement).off('.ember', '**').removeClass('ember-application');
+    jQuery(rootElement).off('.ngular', '**').removeClass('ngular-application');
     return this._super(...arguments);
   },
 

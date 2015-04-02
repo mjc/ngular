@@ -1,14 +1,14 @@
-import Ember from "ember-metal/core";
-import {set} from "ember-metal/property_set";
-import run from "ember-metal/run_loop";
-import ArrayProxy from "ember-runtime/system/array_proxy";
-import ArrayController from "ember-runtime/controllers/array_controller";
+import Ngular from "ngular-metal/core";
+import {set} from "ngular-metal/property_set";
+import run from "ngular-metal/run_loop";
+import ArrayProxy from "ngular-runtime/system/array_proxy";
+import ArrayController from "ngular-runtime/controllers/array_controller";
 
 QUnit.module("ArrayProxy - content change");
 
 QUnit.test("should update length for null content", function() {
   var proxy = ArrayProxy.create({
-        content: Ember.A([1,2,3])
+        content: Ngular.A([1,2,3])
       });
 
   equal(proxy.get('length'), 3, "precond - length is 3");
@@ -23,7 +23,7 @@ QUnit.test("The `arrangedContentWillChange` method is invoked before `content` i
   var expectedLength;
 
   var proxy = ArrayProxy.extend({
-    content: Ember.A([1, 2, 3]),
+    content: Ngular.A([1, 2, 3]),
 
     arrangedContentWillChange() {
       equal(this.get('arrangedContent.length'), expectedLength, "hook should be invoked before array has changed");
@@ -38,7 +38,7 @@ QUnit.test("The `arrangedContentWillChange` method is invoked before `content` i
   equal(callCount, 0, "pushing content onto the content array doesn't trigger it");
 
   expectedLength = 5;
-  proxy.set('content', Ember.A(['a', 'b']));
+  proxy.set('content', Ngular.A(['a', 'b']));
   equal(callCount, 1, "replacing the content array triggers the hook");
 });
 
@@ -47,7 +47,7 @@ QUnit.test("The `arrangedContentDidChange` method is invoked after `content` is 
   var expectedLength;
 
   var proxy = ArrayProxy.extend({
-    content: Ember.A([1, 2, 3]),
+    content: Ngular.A([1, 2, 3]),
 
     arrangedContentDidChange() {
       equal(this.get('arrangedContent.length'), expectedLength, "hook should be invoked after array has changed");
@@ -64,7 +64,7 @@ QUnit.test("The `arrangedContentDidChange` method is invoked after `content` is 
   equal(callCount, 0, "pushing content onto the content array doesn't trigger it");
 
   expectedLength = 2;
-  proxy.set('content', Ember.A(['a', 'b']));
+  proxy.set('content', Ngular.A(['a', 'b']));
   equal(callCount, 1, "replacing the content array triggers the hook");
 });
 

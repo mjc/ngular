@@ -1,20 +1,20 @@
-import Ember from "ember-metal/core";
-import { get } from "ember-metal/property_get";
-import { set } from "ember-metal/property_set";
-import run from "ember-metal/run_loop";
+import Ngular from "ngular-metal/core";
+import { get } from "ngular-metal/property_get";
+import { set } from "ngular-metal/property_set";
+import run from "ngular-metal/run_loop";
 import {
   addObserver,
   removeObserver
-} from "ember-metal/observer";
-import EmberObject from "ember-runtime/system/object";
-import EmberDataAdapter from "ember-extension-support/data_adapter";
-import EmberApplication from "ember-application/system/application";
-import DefaultResolver from "ember-application/system/resolver";
+} from "ngular-metal/observer";
+import NgularObject from "ngular-runtime/system/object";
+import NgularDataAdapter from "ngular-extension-support/data_adapter";
+import NgularApplication from "ngular-application/system/application";
+import DefaultResolver from "ngular-application/system/resolver";
 
 var adapter, App;
-var Model = EmberObject.extend();
+var Model = NgularObject.extend();
 
-var DataAdapter = EmberDataAdapter.extend({
+var DataAdapter = NgularDataAdapter.extend({
   detect(klass) {
     return klass !== Model && Model.detect(klass);
   }
@@ -23,7 +23,7 @@ var DataAdapter = EmberDataAdapter.extend({
 QUnit.module("Data Adapter", {
   setup() {
     run(function() {
-      App = EmberApplication.create();
+      App = NgularApplication.create();
       App.toString = function() { return 'App'; };
       App.deferReadiness();
       App.registry.register('data-adapter:main', DataAdapter);
@@ -43,7 +43,7 @@ QUnit.test("Model types added with DefaultResolver", function() {
   adapter = App.__container__.lookup('data-adapter:main');
   adapter.reopen({
     getRecords() {
-      return Ember.A([1,2,3]);
+      return Ngular.A([1,2,3]);
     },
     columnsForType() {
       return [{ name: 'title', desc: 'Title' }];
@@ -80,7 +80,7 @@ QUnit.test("Model types added with custom container-debug-adapter", function() {
   adapter = App.__container__.lookup('data-adapter:main');
   adapter.reopen({
     getRecords() {
-      return Ember.A([1,2,3]);
+      return Ngular.A([1,2,3]);
     },
     columnsForType() {
       return [{ name: 'title', desc: 'Title' }];
@@ -107,7 +107,7 @@ QUnit.test("Model Types Updated", function() {
   App.Post = Model.extend();
 
   adapter = App.__container__.lookup('data-adapter:main');
-  var records = Ember.A([1,2,3]);
+  var records = Ngular.A([1,2,3]);
   adapter.reopen({
     getRecords() {
       return records;
@@ -139,7 +139,7 @@ QUnit.test("Records Added", function() {
   App.Post = Model.extend();
 
   var post = App.Post.create();
-  var recordList = Ember.A([post]);
+  var recordList = Ngular.A([post]);
 
   adapter = App.__container__.lookup('data-adapter:main');
   adapter.reopen({
@@ -176,7 +176,7 @@ QUnit.test("Observes and releases a record correctly", function() {
   App.Post = Model.extend();
 
   var post = App.Post.create({ title: 'Post' });
-  var recordList = Ember.A([post]);
+  var recordList = Ngular.A([post]);
 
   adapter = App.__container__.lookup('data-adapter:main');
   adapter.reopen({

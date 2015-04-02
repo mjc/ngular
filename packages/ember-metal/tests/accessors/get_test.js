@@ -1,16 +1,16 @@
-import { testBoth } from 'ember-metal/tests/props_helper';
+import { testBoth } from 'ngular-metal/tests/props_helper';
 import {
   get,
   getWithDefault
-} from 'ember-metal/property_get';
+} from 'ngular-metal/property_get';
 import {
   Mixin,
   observer
-} from 'ember-metal/mixin';
-import { addObserver } from "ember-metal/observer";
-import create from 'ember-metal/platform/create';
+} from 'ngular-metal/mixin';
+import { addObserver } from "ngular-metal/observer";
+import create from 'ngular-metal/platform/create';
 
-QUnit.module('Ember.get');
+QUnit.module('Ngular.get');
 
 QUnit.test('should get arbitrary properties on an object', function() {
   var obj = {
@@ -103,7 +103,7 @@ QUnit.test('(regression) watched properties on unmodified inherited objects shou
   equal(get(theRealObject, 'someProperty'), 'foo', 'should return the set value, not false');
 });
 
-QUnit.module("Ember.getWithDefault");
+QUnit.module("Ngular.getWithDefault");
 
 QUnit.test('should get arbitrary properties on an object', function() {
   var obj = {

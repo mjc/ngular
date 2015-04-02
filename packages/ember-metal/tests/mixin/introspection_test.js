@@ -2,12 +2,12 @@
 // as well as methods vs props.  We are just keeping these for testing; the
 // current impl doesn't care about the differences as much...
 
-import { guidFor } from 'ember-metal/utils';
+import { guidFor } from 'ngular-metal/utils';
 import {
   mixin,
   Mixin
-} from 'ember-metal/mixin';
-import EnumerableUtils from 'ember-metal/enumerable_utils';
+} from 'ngular-metal/mixin';
+import EnumerableUtils from 'ngular-metal/enumerable_utils';
 
 var PrivateProperty = Mixin.create({
   _foo: '_FOO'
@@ -46,7 +46,7 @@ QUnit.module('Basic introspection', {
   }
 });
 
-QUnit.test('Ember.mixins()', function() {
+QUnit.test('Ngular.mixins()', function() {
 
   function mapGuids(ary) {
     return EnumerableUtils.map(ary, function(x) { return guidFor(x); });

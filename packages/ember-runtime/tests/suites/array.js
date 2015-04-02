@@ -1,10 +1,10 @@
 import {
   EnumerableTests,
   ObserverClass as EnumerableTestsObserverClass
-} from 'ember-runtime/tests/suites/enumerable';
-import indexOfTests from 'ember-runtime/tests/suites/array/indexOf';
-import lastIndexOfTests from 'ember-runtime/tests/suites/array/lastIndexOf';
-import objectAtTests from 'ember-runtime/tests/suites/array/objectAt';
+} from 'ngular-runtime/tests/suites/enumerable';
+import indexOfTests from 'ngular-runtime/tests/suites/array/indexOf';
+import lastIndexOfTests from 'ngular-runtime/tests/suites/array/lastIndexOf';
+import objectAtTests from 'ngular-runtime/tests/suites/array/objectAt';
 
 var ObserverClass = EnumerableTestsObserverClass.extend({
 

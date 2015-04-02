@@ -1,9 +1,9 @@
-import Ember from "ember-metal/core";
-import {get} from "ember-metal/property_get";
-import {set} from "ember-metal/property_set";
-import run from "ember-metal/run_loop";
-import EmberObject from "ember-runtime/system/object";
-import {addObserver}  from "ember-metal/observer";
+import Ngular from "ngular-metal/core";
+import {get} from "ngular-metal/property_get";
+import {set} from "ngular-metal/property_set";
+import run from "ngular-metal/run_loop";
+import NgularObject from "ngular-runtime/system/object";
+import {addObserver}  from "ngular-metal/observer";
 
 /*
   NOTE: This test is adapted from the 1.x series of unit tests.  The tests
@@ -12,23 +12,23 @@ import {addObserver}  from "ember-metal/observer";
 
   CHANGES FROM 1.6:
 
-  * changed obj.set() and obj.get() to Ember.set() and Ember.get()
+  * changed obj.set() and obj.get() to Ngular.set() and Ngular.get()
   * changed obj.addObserver() to addObserver()
 */
 
-QUnit.module("Ember.Observable - Observing with @each");
+QUnit.module("Ngular.Observable - Observing with @each");
 
 QUnit.test("chained observers on enumerable properties are triggered when the observed property of any item changes", function() {
-  var family = EmberObject.create({ momma: null });
-  var momma = EmberObject.create({ children: [] });
+  var family = NgularObject.create({ momma: null });
+  var momma = NgularObject.create({ children: [] });
 
-  var child1 = EmberObject.create({ name: "Bartholomew" });
-  var child2 = EmberObject.create({ name: "Agnes" });
-  var child3 = EmberObject.create({ name: "Dan" });
-  var child4 = EmberObject.create({ name: "Nancy" });
+  var child1 = NgularObject.create({ name: "Bartholomew" });
+  var child2 = NgularObject.create({ name: "Agnes" });
+  var child3 = NgularObject.create({ name: "Dan" });
+  var child4 = NgularObject.create({ name: "Nancy" });
 
   set(family, 'momma', momma);
-  set(momma, 'children', Ember.A([child1, child2, child3]));
+  set(momma, 'children', Ngular.A([child1, child2, child3]));
 
   var observerFiredCount = 0;
   addObserver(family, 'momma.children.@each.name', this, function() {

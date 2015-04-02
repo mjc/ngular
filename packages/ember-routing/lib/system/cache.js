@@ -1,6 +1,6 @@
-import EmberObject from "ember-runtime/system/object";
+import NgularObject from "ngular-runtime/system/object";
 
-export default EmberObject.extend({
+export default NgularObject.extend({
   init() {
     this.cache = {};
   },

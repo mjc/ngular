@@ -1,6 +1,6 @@
-import EmberObject from "ember-runtime/system/object";
+import NgularObject from "ngular-runtime/system/object";
 
-export default EmberObject.extend({
+export default NgularObject.extend({
   lookupFactory(name, container) {
 
     container = container || this.container;
@@ -19,7 +19,7 @@ export default EmberObject.extend({
     // or a template has been registered.
     if (templateRegistered || Component) {
       if (!Component) {
-        container._registry.register(fullName, Ember.Component);
+        container._registry.register(fullName, Ngular.Component);
         Component = container.lookupFactory(fullName);
       }
       return Component;

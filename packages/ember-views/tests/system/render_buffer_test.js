@@ -1,5 +1,5 @@
-import jQuery from "ember-views/system/jquery";
-import RenderBuffer from "ember-views/system/render_buffer";
+import jQuery from "ngular-views/system/jquery";
+import RenderBuffer from "ngular-views/system/render_buffer";
 import DOMHelper from "dom-helper";
 
 var svgNamespace = "http://www.w3.org/2000/svg";

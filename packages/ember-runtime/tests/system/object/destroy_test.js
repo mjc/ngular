@@ -1,42 +1,42 @@
-import run from "ember-metal/run_loop";
-import { hasPropertyAccessors } from "ember-metal/platform/define_property";
-import { observer } from "ember-metal/mixin";
-import { set } from "ember-metal/property_set";
-import { bind } from "ember-metal/binding";
+import run from "ngular-metal/run_loop";
+import { hasPropertyAccessors } from "ngular-metal/platform/define_property";
+import { observer } from "ngular-metal/mixin";
+import { set } from "ngular-metal/property_set";
+import { bind } from "ngular-metal/binding";
 import {
   beginPropertyChanges,
   endPropertyChanges
-} from "ember-metal/property_events";
-import objectKeys from "ember-metal/keys";
-import { testBoth } from "ember-metal/tests/props_helper";
-import EmberObject from "ember-runtime/system/object";
+} from "ngular-metal/property_events";
+import objectKeys from "ngular-metal/keys";
+import { testBoth } from "ngular-metal/tests/props_helper";
+import NgularObject from "ngular-runtime/system/object";
 
-QUnit.module('ember-runtime/system/object/destroy_test');
+QUnit.module('ngular-runtime/system/object/destroy_test');
 
 testBoth("should schedule objects to be destroyed at the end of the run loop", function(get, set) {
-  var obj = EmberObject.create();
+  var obj = NgularObject.create();
   var meta;
 
   run(function() {
     obj.destroy();
-    meta = obj['__ember_meta__'];
+    meta = obj['__ngular_meta__'];
     ok(meta, "meta is not destroyed immediately");
     ok(get(obj, 'isDestroying'), "object is marked as destroying immediately");
     ok(!get(obj, 'isDestroyed'), "object is not destroyed immediately");
   });
 
-  meta = obj['__ember_meta__'];
+  meta = obj['__ngular_meta__'];
   ok(!meta, "meta is destroyed after run loop finishes");
   ok(get(obj, 'isDestroyed'), "object is destroyed after run loop finishes");
 });
 
-if (Ember.FEATURES.isEnabled('mandatory-setter')) {
+if (Ngular.FEATURES.isEnabled('mandatory-setter')) {
   if (hasPropertyAccessors) {
     // MANDATORY_SETTER moves value to meta.values
     // a destroyed object removes meta but leaves the accessor
     // that looks it up
     QUnit.test("should raise an exception when modifying watched properties on a destroyed object", function() {
-      var obj = EmberObject.createWithMixins({
+      var obj = NgularObject.createWithMixins({
         foo: "bar",
         fooDidChange: observer('foo', function() { })
       });
@@ -54,7 +54,7 @@ if (Ember.FEATURES.isEnabled('mandatory-setter')) {
 
 QUnit.test("observers should not fire after an object has been destroyed", function() {
   var count = 0;
-  var obj = EmberObject.createWithMixins({
+  var obj = NgularObject.createWithMixins({
     fooDidChange: observer('foo', function() {
       count++;
     })
@@ -80,7 +80,7 @@ QUnit.test("destroyed objects should not see each others changes during teardown
 
   var objs = {};
 
-  var A = EmberObject.extend({
+  var A = NgularObject.extend({
     objs: objs,
     isAlive: true,
     willDestroy() {
@@ -94,7 +94,7 @@ QUnit.test("destroyed objects should not see each others changes during teardown
     })
   });
 
-  var B = EmberObject.extend({
+  var B = NgularObject.extend({
     objs: objs,
     isAlive: true,
     willDestroy() {
@@ -108,7 +108,7 @@ QUnit.test("destroyed objects should not see each others changes during teardown
     })
   });
 
-  var C = EmberObject.extend({
+  var C = NgularObject.extend({
     objs: objs,
     isAlive: true,
     willDestroy() {
@@ -122,7 +122,7 @@ QUnit.test("destroyed objects should not see each others changes during teardown
     })
   });
 
-  var LongLivedObject =  EmberObject.extend({
+  var LongLivedObject =  NgularObject.extend({
     objs: objs,
     isAliveDidChange: observer('objs.a.isAlive', function () {
       shouldChange++;
@@ -149,14 +149,14 @@ QUnit.test("destroyed objects should not see each others changes during teardown
 });
 
 QUnit.test("bindings should be synced when are updated in the willDestroy hook", function() {
-  var bar = EmberObject.create({
+  var bar = NgularObject.create({
     value: false,
     willDestroy() {
       this.set('value', true);
     }
   });
 
-  var foo = EmberObject.create({
+  var foo = NgularObject.create({
     value: null,
     bar: bar
   });

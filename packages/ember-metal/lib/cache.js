@@ -1,4 +1,4 @@
-import dictionary from 'ember-metal/dictionary';
+import dictionary from 'ngular-metal/dictionary';
 export default Cache;
 
 function Cache(limit, func) {

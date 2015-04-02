@@ -1,29 +1,29 @@
 /**
-@module ember
-@submodule ember-views
+@module ngular
+@submodule ngular-views
 */
-import Ember from 'ember-metal/core';
-import { Mixin } from "ember-metal/mixin";
-import { A as emberA } from "ember-runtime/system/native_array";
+import Ngular from 'ngular-metal/core';
+import { Mixin } from "ngular-metal/mixin";
+import { A as ngularA } from "ngular-runtime/system/native_array";
 import {
   forEach,
   addObject
-} from "ember-metal/enumerable_utils";
+} from "ngular-metal/enumerable_utils";
 import {
   subscribe,
   read,
   isStream
-} from "ember-metal/streams/utils";
-import { streamifyClassNameBinding } from "ember-views/streams/class_name_binding";
+} from "ngular-metal/streams/utils";
+import { streamifyClassNameBinding } from "ngular-views/streams/class_name_binding";
 import {
   typeOf
-} from "ember-metal/utils";
+} from "ngular-metal/utils";
 
 var EMPTY_ARRAY = [];
 
 /**
   @class ClassNamesSupport
-  @namespace Ember
+  @namespace Ngular
 */
 var ClassNamesSupport = Mixin.create({
   concatenatedProperties: ['classNames', 'classNameBindings'],
@@ -31,11 +31,11 @@ var ClassNamesSupport = Mixin.create({
   init() {
     this._super(...arguments);
 
-    Ember.assert("Only arrays are allowed for 'classNameBindings'", typeOf(this.classNameBindings) === 'array');
-    this.classNameBindings = emberA(this.classNameBindings.slice());
+    Ngular.assert("Only arrays are allowed for 'classNameBindings'", typeOf(this.classNameBindings) === 'array');
+    this.classNameBindings = ngularA(this.classNameBindings.slice());
 
-    Ember.assert("Only arrays of static class strings are allowed for 'classNames'. For dynamic classes, use 'classNameBindings'.", typeOf(this.classNames) === 'array');
-    this.classNames = emberA(this.classNames.slice());
+    Ngular.assert("Only arrays of static class strings are allowed for 'classNames'. For dynamic classes, use 'classNameBindings'.", typeOf(this.classNames) === 'array');
+    this.classNames = ngularA(this.classNames.slice());
   },
 
   /**
@@ -45,9 +45,9 @@ var ClassNamesSupport = Mixin.create({
 
     @property classNames
     @type Array
-    @default ['ember-view']
+    @default ['ngular-view']
   */
-  classNames: ['ember-view'],
+  classNames: ['ngular-view'],
 
   /**
     A list of properties of the view to apply as class names. If the property
@@ -56,7 +56,7 @@ var ClassNamesSupport = Mixin.create({
 
     ```javascript
     // Applies the 'high' class to the view element
-    Ember.View.extend({
+    Ngular.View.extend({
       classNameBindings: ['priority']
       priority: 'high'
     });
@@ -67,7 +67,7 @@ var ClassNamesSupport = Mixin.create({
 
     ```javascript
     // Applies the 'is-urgent' class to the view element
-    Ember.View.extend({
+    Ngular.View.extend({
       classNameBindings: ['isUrgent']
       isUrgent: true
     });
@@ -78,7 +78,7 @@ var ClassNamesSupport = Mixin.create({
 
     ```javascript
     // Applies the 'urgent' class to the view element
-    Ember.View.extend({
+    Ngular.View.extend({
       classNameBindings: ['isUrgent:urgent']
       isUrgent: true
     });
@@ -160,7 +160,7 @@ var ClassNamesSupport = Mixin.create({
         addObject(classNames, dasherizedClass);
 
         // Save a reference to the class name so we can remove it
-        // if the observer fires. Remember that this variable has
+        // if the observer fires. Remngular that this variable has
         // been closed over by the observer.
         oldClass = dasherizedClass;
       }

@@ -2,11 +2,11 @@ import {
   Map,
   MapWithDefault,
   OrderedSet
-} from "ember-metal/map";
+} from "ngular-metal/map";
 
 import {
   hasPropertyAccessors
-} from "ember-metal/platform/define_property";
+} from "ngular-metal/platform/define_property";
 
 var object, number, string, map, variety;
 var varieties = [['Map', Map], ['MapWithDefault', MapWithDefault]];
@@ -14,7 +14,7 @@ var varieties = [['Map', Map], ['MapWithDefault', MapWithDefault]];
 function testMap(nameAndFunc) {
   variety = nameAndFunc[0];
 
-  QUnit.module("Ember." + variety + " (forEach and get are implicitly tested)", {
+  QUnit.module("Ngular." + variety + " (forEach and get are implicitly tested)", {
     setup() {
       object = {};
       number = 42;

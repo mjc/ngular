@@ -1,15 +1,15 @@
 /**
-@module ember
-@submodule ember-htmlbars
+@module ngular
+@submodule ngular-htmlbars
 */
 
-import Ember from "ember-metal/core"; // Ember.assert
-import Helper from "ember-htmlbars/system/helper";
+import Ngular from "ngular-metal/core"; // Ngular.assert
+import Helper from "ngular-htmlbars/system/helper";
 
 /**
   Returns a helper function that renders the provided ViewClass.
 
-  Used internally by Ember.Handlebars.helper and other methods
+  Used internally by Ngular.Handlebars.helper and other methods
   involving helper/component registration.
 
   @private
@@ -19,7 +19,7 @@ import Helper from "ember-htmlbars/system/helper";
 */
 export default function makeViewHelper(ViewClass) {
   function helperFunc(params, hash, options, env) {
-    Ember.assert("You can only pass attributes (such as name=value) not bare " +
+    Ngular.assert("You can only pass attributes (such as name=value) not bare " +
                  "values to a helper for a View found in '" + ViewClass.toString() + "'", params.length === 0);
 
     return env.helpers.view.helperFunction.call(this, [ViewClass], hash, options, env);

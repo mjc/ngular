@@ -1,6 +1,6 @@
 /**
-@module ember
-@submodule ember-template-compiler
+@module ngular
+@submodule ngular-template-compiler
 */
 
 /**
@@ -12,7 +12,7 @@ var plugins = {
 };
 
 /**
-  Adds an AST plugin to be used by Ember.HTMLBars.compile.
+  Adds an AST plugin to be used by Ngular.HTMLBars.compile.
 
   @private
   @method registerASTPlugin

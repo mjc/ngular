@@ -1,9 +1,9 @@
-import Checkbox from "ember-views/views/checkbox";
+import Checkbox from "ngular-views/views/checkbox";
 
-import { get } from "ember-metal/property_get";
-import { set as o_set } from "ember-metal/property_set";
-import run from "ember-metal/run_loop";
-import EventDispatcher from "ember-views/system/event_dispatcher";
+import { get } from "ngular-metal/property_get";
+import { set as o_set } from "ngular-metal/property_set";
+import run from "ngular-metal/run_loop";
+import EventDispatcher from "ngular-views/system/event_dispatcher";
 
 function set(obj, key, value) {
   run(function() { o_set(obj, key, value); });
@@ -18,7 +18,7 @@ function append() {
 
 var checkboxView, dispatcher;
 
-QUnit.module("Ember.Checkbox", {
+QUnit.module("Ngular.Checkbox", {
   setup() {
     dispatcher = EventDispatcher.create();
     dispatcher.setup();

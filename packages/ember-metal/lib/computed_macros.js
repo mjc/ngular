@@ -1,13 +1,13 @@
-import Ember from "ember-metal/core";
-import { get } from "ember-metal/property_get";
-import { set } from "ember-metal/property_set";
-import { computed } from "ember-metal/computed";
-import isEmpty from 'ember-metal/is_empty';
-import isNone from 'ember-metal/is_none';
-import alias from 'ember-metal/alias';
+import Ngular from "ngular-metal/core";
+import { get } from "ngular-metal/property_get";
+import { set } from "ngular-metal/property_set";
+import { computed } from "ngular-metal/computed";
+import isEmpty from 'ngular-metal/is_empty';
+import isNone from 'ngular-metal/is_none';
+import alias from 'ngular-metal/alias';
 
 /**
-@module ember-metal
+@module ngular-metal
 */
 
 function getProperties(self, propertyNames) {
@@ -35,8 +35,8 @@ function generateComputedWithProperties(macro) {
   Example
 
   ```javascript
-  var ToDoList = Ember.Object.extend({
-    isDone: Ember.computed.empty('todos')
+  var ToDoList = Ngular.Object.extend({
+    isDone: Ngular.computed.empty('todos')
   });
 
   var todoList = ToDoList.create({
@@ -50,9 +50,9 @@ function generateComputedWithProperties(macro) {
 
   @since 1.6.0
   @method empty
-  @for Ember.computed
+  @for Ngular.computed
   @param {String} dependentKey
-  @return {Ember.ComputedProperty} computed property which negate
+  @return {Ngular.ComputedProperty} computed property which negate
   the original value for property
 */
 export function empty(dependentKey) {
@@ -68,8 +68,8 @@ export function empty(dependentKey) {
   Example
 
   ```javascript
-  var Hamster = Ember.Object.extend({
-    hasStuff: Ember.computed.notEmpty('backpack')
+  var Hamster = Ngular.Object.extend({
+    hasStuff: Ngular.computed.notEmpty('backpack')
   });
 
   var hamster = Hamster.create({ backpack: ['Food', 'Sleeping Bag', 'Tent'] });
@@ -80,9 +80,9 @@ export function empty(dependentKey) {
   ```
 
   @method notEmpty
-  @for Ember.computed
+  @for Ngular.computed
   @param {String} dependentKey
-  @return {Ember.ComputedProperty} computed property which returns true if
+  @return {Ngular.ComputedProperty} computed property which returns true if
   original value for property is not empty.
 */
 export function notEmpty(dependentKey) {
@@ -99,8 +99,8 @@ export function notEmpty(dependentKey) {
   Example
 
   ```javascript
-  var Hamster = Ember.Object.extend({
-    isHungry: Ember.computed.none('food')
+  var Hamster = Ngular.Object.extend({
+    isHungry: Ngular.computed.none('food')
   });
 
   var hamster = Hamster.create();
@@ -113,9 +113,9 @@ export function notEmpty(dependentKey) {
   ```
 
   @method none
-  @for Ember.computed
+  @for Ngular.computed
   @param {String} dependentKey
-  @return {Ember.ComputedProperty} computed property which
+  @return {Ngular.ComputedProperty} computed property which
   returns true if original value for property is null or undefined.
 */
 export function none(dependentKey) {
@@ -131,8 +131,8 @@ export function none(dependentKey) {
   Example
 
   ```javascript
-  var User = Ember.Object.extend({
-    isAnonymous: Ember.computed.not('loggedIn')
+  var User = Ngular.Object.extend({
+    isAnonymous: Ngular.computed.not('loggedIn')
   });
 
   var user = User.create({loggedIn: false});
@@ -143,9 +143,9 @@ export function none(dependentKey) {
   ```
 
   @method not
-  @for Ember.computed
+  @for Ngular.computed
   @param {String} dependentKey
-  @return {Ember.ComputedProperty} computed property which returns
+  @return {Ngular.ComputedProperty} computed property which returns
   inverse of the original value for property
 */
 export function not(dependentKey) {
@@ -159,8 +159,8 @@ export function not(dependentKey) {
   into a boolean value.
 
   ```javascript
-  var Hamster = Ember.Object.extend({
-    hasBananas: Ember.computed.bool('numBananas')
+  var Hamster = Ngular.Object.extend({
+    hasBananas: Ngular.computed.bool('numBananas')
   });
 
   var hamster = Hamster.create();
@@ -175,9 +175,9 @@ export function not(dependentKey) {
   ```
 
   @method bool
-  @for Ember.computed
+  @for Ngular.computed
   @param {String} dependentKey
-  @return {Ember.ComputedProperty} computed property which converts
+  @return {Ngular.ComputedProperty} computed property which converts
   to boolean the original value for property
 */
 export function bool(dependentKey) {
@@ -194,8 +194,8 @@ export function bool(dependentKey) {
   Example
 
   ```javascript
-  var User = Ember.Object.extend({
-    hasValidEmail: Ember.computed.match('email', /^.+@.+\..+$/)
+  var User = Ngular.Object.extend({
+    hasValidEmail: Ngular.computed.match('email', /^.+@.+\..+$/)
   });
 
   var user = User.create({loggedIn: false});
@@ -203,15 +203,15 @@ export function bool(dependentKey) {
   user.get('hasValidEmail'); // false
   user.set('email', '');
   user.get('hasValidEmail'); // false
-  user.set('email', 'ember_hamster@example.com');
+  user.set('email', 'ngular_hamster@example.com');
   user.get('hasValidEmail'); // true
   ```
 
   @method match
-  @for Ember.computed
+  @for Ngular.computed
   @param {String} dependentKey
   @param {RegExp} regexp
-  @return {Ember.ComputedProperty} computed property which match
+  @return {Ngular.ComputedProperty} computed property which match
   the original value for property against a given RegExp
 */
 export function match(dependentKey, regexp) {
@@ -229,8 +229,8 @@ export function match(dependentKey, regexp) {
   Example
 
   ```javascript
-  var Hamster = Ember.Object.extend({
-    napTime: Ember.computed.equal('state', 'sleepy')
+  var Hamster = Ngular.Object.extend({
+    napTime: Ngular.computed.equal('state', 'sleepy')
   });
 
   var hamster = Hamster.create();
@@ -243,10 +243,10 @@ export function match(dependentKey, regexp) {
   ```
 
   @method equal
-  @for Ember.computed
+  @for Ngular.computed
   @param {String} dependentKey
   @param {String|Number|Object} value
-  @return {Ember.ComputedProperty} computed property which returns true if
+  @return {Ngular.ComputedProperty} computed property which returns true if
   the original value for property is equal to the given value.
 */
 export function equal(dependentKey, value) {
@@ -262,8 +262,8 @@ export function equal(dependentKey, value) {
   Example
 
   ```javascript
-  var Hamster = Ember.Object.extend({
-    hasTooManyBananas: Ember.computed.gt('numBananas', 10)
+  var Hamster = Ngular.Object.extend({
+    hasTooManyBananas: Ngular.computed.gt('numBananas', 10)
   });
 
   var hamster = Hamster.create();
@@ -276,10 +276,10 @@ export function equal(dependentKey, value) {
   ```
 
   @method gt
-  @for Ember.computed
+  @for Ngular.computed
   @param {String} dependentKey
   @param {Number} value
-  @return {Ember.ComputedProperty} computed property which returns true if
+  @return {Ngular.ComputedProperty} computed property which returns true if
   the original value for property is greater than given value.
 */
 export function gt(dependentKey, value) {
@@ -295,8 +295,8 @@ export function gt(dependentKey, value) {
   Example
 
   ```javascript
-  var Hamster = Ember.Object.extend({
-    hasTooManyBananas: Ember.computed.gte('numBananas', 10)
+  var Hamster = Ngular.Object.extend({
+    hasTooManyBananas: Ngular.computed.gte('numBananas', 10)
   });
 
   var hamster = Hamster.create();
@@ -309,10 +309,10 @@ export function gt(dependentKey, value) {
   ```
 
   @method gte
-  @for Ember.computed
+  @for Ngular.computed
   @param {String} dependentKey
   @param {Number} value
-  @return {Ember.ComputedProperty} computed property which returns true if
+  @return {Ngular.ComputedProperty} computed property which returns true if
   the original value for property is greater or equal then given value.
 */
 export function gte(dependentKey, value) {
@@ -328,8 +328,8 @@ export function gte(dependentKey, value) {
   Example
 
   ```javascript
-  var Hamster = Ember.Object.extend({
-    needsMoreBananas: Ember.computed.lt('numBananas', 3)
+  var Hamster = Ngular.Object.extend({
+    needsMoreBananas: Ngular.computed.lt('numBananas', 3)
   });
 
   var hamster = Hamster.create();
@@ -342,10 +342,10 @@ export function gte(dependentKey, value) {
   ```
 
   @method lt
-  @for Ember.computed
+  @for Ngular.computed
   @param {String} dependentKey
   @param {Number} value
-  @return {Ember.ComputedProperty} computed property which returns true if
+  @return {Ngular.ComputedProperty} computed property which returns true if
   the original value for property is less then given value.
 */
 export function lt(dependentKey, value) {
@@ -361,8 +361,8 @@ export function lt(dependentKey, value) {
   Example
 
   ```javascript
-  var Hamster = Ember.Object.extend({
-    needsMoreBananas: Ember.computed.lte('numBananas', 3)
+  var Hamster = Ngular.Object.extend({
+    needsMoreBananas: Ngular.computed.lte('numBananas', 3)
   });
 
   var hamster = Hamster.create();
@@ -375,10 +375,10 @@ export function lt(dependentKey, value) {
   ```
 
   @method lte
-  @for Ember.computed
+  @for Ngular.computed
   @param {String} dependentKey
   @param {Number} value
-  @return {Ember.ComputedProperty} computed property which returns true if
+  @return {Ngular.ComputedProperty} computed property which returns true if
   the original value for property is less or equal than given value.
 */
 export function lte(dependentKey, value) {
@@ -394,8 +394,8 @@ export function lte(dependentKey, value) {
   Example
 
   ```javascript
-  var Hamster = Ember.Object.extend({
-    readyForCamp: Ember.computed.and('hasTent', 'hasBackpack')
+  var Hamster = Ngular.Object.extend({
+    readyForCamp: Ngular.computed.and('hasTent', 'hasBackpack')
   });
 
   var hamster = Hamster.create();
@@ -410,9 +410,9 @@ export function lte(dependentKey, value) {
   ```
 
   @method and
-  @for Ember.computed
+  @for Ngular.computed
   @param {String} dependentKey*
-  @return {Ember.ComputedProperty} computed property which performs
+  @return {Ngular.ComputedProperty} computed property which performs
   a logical `and` on the values of all the original values for properties.
 */
 export var and = generateComputedWithProperties(function(properties) {
@@ -433,8 +433,8 @@ export var and = generateComputedWithProperties(function(properties) {
   Example
 
   ```javascript
-  var Hamster = Ember.Object.extend({
-    readyForRain: Ember.computed.or('hasJacket', 'hasUmbrella')
+  var Hamster = Ngular.Object.extend({
+    readyForRain: Ngular.computed.or('hasJacket', 'hasUmbrella')
   });
 
   var hamster = Hamster.create();
@@ -447,9 +447,9 @@ export var and = generateComputedWithProperties(function(properties) {
   ```
 
   @method or
-  @for Ember.computed
+  @for Ngular.computed
   @param {String} dependentKey*
-  @return {Ember.ComputedProperty} computed property which performs
+  @return {Ngular.ComputedProperty} computed property which performs
   a logical `or` on the values of all the original values for properties.
 */
 export var or = generateComputedWithProperties(function(properties) {
@@ -468,8 +468,8 @@ export var or = generateComputedWithProperties(function(properties) {
   Example
 
   ```javascript
-  var Hamster = Ember.Object.extend({
-    hasClothes: Ember.computed.any('hat', 'shirt')
+  var Hamster = Ngular.Object.extend({
+    hasClothes: Ngular.computed.any('hat', 'shirt')
   });
 
   var hamster = Hamster.create();
@@ -480,11 +480,11 @@ export var or = generateComputedWithProperties(function(properties) {
   ```
 
   @method any
-  @for Ember.computed
+  @for Ngular.computed
   @param {String} dependentKey*
-  @return {Ember.ComputedProperty} computed property which returns
+  @return {Ngular.ComputedProperty} computed property which returns
   the first truthy value of given list of properties.
-  @deprecated Use `Ember.computed.or` instead.
+  @deprecated Use `Ngular.computed.or` instead.
 */
 export var any = generateComputedWithProperties(function(properties) {
   for (var key in properties) {
@@ -502,8 +502,8 @@ export var any = generateComputedWithProperties(function(properties) {
   Example
 
   ```javascript
-  var Hamster = Ember.Object.extend({
-    clothes: Ember.computed.collect('hat', 'shirt')
+  var Hamster = Ngular.Object.extend({
+    clothes: Ngular.computed.collect('hat', 'shirt')
   });
 
   var hamster = Hamster.create();
@@ -515,13 +515,13 @@ export var any = generateComputedWithProperties(function(properties) {
   ```
 
   @method collect
-  @for Ember.computed
+  @for Ngular.computed
   @param {String} dependentKey*
-  @return {Ember.ComputedProperty} computed property which maps
+  @return {Ngular.ComputedProperty} computed property which maps
   values of all passed in properties to an array.
 */
 export var collect = generateComputedWithProperties(function(properties) {
-  var res = Ember.A();
+  var res = Ngular.A();
   for (var key in properties) {
     if (properties.hasOwnProperty(key)) {
       if (isNone(properties[key])) {
@@ -540,9 +540,9 @@ export var collect = generateComputedWithProperties(function(properties) {
   though they were called on the original property.
 
   ```javascript
-  var Person = Ember.Object.extend({
+  var Person = Ngular.Object.extend({
     name: 'Alex Matchneer',
-    nomen: Ember.computed.alias('name')
+    nomen: Ngular.computed.alias('name')
   });
 
   var alex = Person.create();
@@ -555,9 +555,9 @@ export var collect = generateComputedWithProperties(function(properties) {
   ```
 
   @method alias
-  @for Ember.computed
+  @for Ngular.computed
   @param {String} dependentKey
-  @return {Ember.ComputedProperty} computed property which creates an
+  @return {Ngular.ComputedProperty} computed property which creates an
   alias to the original value for property.
 */
 
@@ -571,10 +571,10 @@ export var collect = generateComputedWithProperties(function(properties) {
   Example
 
   ```javascript
-  var User = Ember.Object.extend({
+  var User = Ngular.Object.extend({
     firstName: null,
     lastName: null,
-    nickName: Ember.computed.oneWay('firstName')
+    nickName: Ngular.computed.oneWay('firstName')
   });
 
   var teddy = User.create({
@@ -588,9 +588,9 @@ export var collect = generateComputedWithProperties(function(properties) {
   ```
 
   @method oneWay
-  @for Ember.computed
+  @for Ngular.computed
   @param {String} dependentKey
-  @return {Ember.ComputedProperty} computed property which creates a
+  @return {Ngular.ComputedProperty} computed property which creates a
   one way computed property to the original value for property.
 */
 export function oneWay(dependentKey) {
@@ -602,9 +602,9 @@ export function oneWay(dependentKey) {
   whose name is somewhat ambiguous as to which direction the data flows.
 
   @method reads
-  @for Ember.computed
+  @for Ngular.computed
   @param {String} dependentKey
-  @return {Ember.ComputedProperty} computed property which creates a
+  @return {Ngular.ComputedProperty} computed property which creates a
     one way computed property to the original value for property.
  */
 
@@ -618,10 +618,10 @@ export function oneWay(dependentKey) {
   Example
 
   ```javascript
-  var User = Ember.Object.extend({
+  var User = Ngular.Object.extend({
     firstName: null,
     lastName: null,
-    nickName: Ember.computed.readOnly('firstName')
+    nickName: Ngular.computed.readOnly('firstName')
   });
 
   var teddy = User.create({
@@ -631,14 +631,14 @@ export function oneWay(dependentKey) {
 
   teddy.get('nickName');              // 'Teddy'
   teddy.set('nickName', 'TeddyBear'); // throws Exception
-  // throw new Ember.Error('Cannot Set: nickName on: <User:ember27288>' );`
+  // throw new Ngular.Error('Cannot Set: nickName on: <User:ngular27288>' );`
   teddy.get('firstName');             // 'Teddy'
   ```
 
   @method readOnly
-  @for Ember.computed
+  @for Ngular.computed
   @param {String} dependentKey
-  @return {Ember.ComputedProperty} computed property which creates a
+  @return {Ngular.ComputedProperty} computed property which creates a
   one way computed property to the original value for property.
   @since 1.5.0
 */
@@ -654,8 +654,8 @@ export function readOnly(dependentKey) {
   Example
 
   ```javascript
-  var Hamster = Ember.Object.extend({
-    wishList: Ember.computed.defaultTo('favoriteFood')
+  var Hamster = Ngular.Object.extend({
+    wishList: Ngular.computed.defaultTo('favoriteFood')
   });
 
   var hamster = Hamster.create({ favoriteFood: 'Banana' });
@@ -667,21 +667,21 @@ export function readOnly(dependentKey) {
   ```
 
   @method defaultTo
-  @for Ember.computed
+  @for Ngular.computed
   @param {String} defaultPath
-  @return {Ember.ComputedProperty} computed property which acts like
+  @return {Ngular.ComputedProperty} computed property which acts like
   a standard getter and setter, but defaults to the value from `defaultPath`.
-  @deprecated Use `Ember.computed.oneWay` or custom CP with default instead.
+  @deprecated Use `Ngular.computed.oneWay` or custom CP with default instead.
 */
 export function defaultTo(defaultPath) {
   return computed({
     get: function(key) {
-      Ember.deprecate('Usage of Ember.computed.defaultTo is deprecated, use `Ember.computed.oneWay` instead.');
+      Ngular.deprecate('Usage of Ngular.computed.defaultTo is deprecated, use `Ngular.computed.oneWay` instead.');
       return get(this, defaultPath);
     },
 
     set: function(key, newValue, cachedValue) {
-      Ember.deprecate('Usage of Ember.computed.defaultTo is deprecated, use `Ember.computed.oneWay` instead.');
+      Ngular.deprecate('Usage of Ngular.computed.defaultTo is deprecated, use `Ngular.computed.oneWay` instead.');
       return newValue != null ? newValue : get(this, defaultPath);
     }
   });
@@ -694,20 +694,20 @@ export function defaultTo(defaultPath) {
   print a deprecation warning.
 
   @method deprecatingAlias
-  @for Ember.computed
+  @for Ngular.computed
   @param {String} dependentKey
-  @return {Ember.ComputedProperty} computed property which creates an
+  @return {Ngular.ComputedProperty} computed property which creates an
   alias with a deprecation to the original value for property.
   @since 1.7.0
 */
 export function deprecatingAlias(dependentKey) {
   return computed(dependentKey, {
     get: function(key) {
-      Ember.deprecate(`Usage of \`${key}\` is deprecated, use \`${dependentKey}\` instead.`);
+      Ngular.deprecate(`Usage of \`${key}\` is deprecated, use \`${dependentKey}\` instead.`);
       return get(this, dependentKey);
     },
     set: function(key, value) {
-      Ember.deprecate(`Usage of \`${key}\` is deprecated, use \`${dependentKey}\` instead.`);
+      Ngular.deprecate(`Usage of \`${key}\` is deprecated, use \`${dependentKey}\` instead.`);
       set(this, dependentKey, value);
       return value;
     }

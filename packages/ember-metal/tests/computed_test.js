@@ -1,11 +1,11 @@
-import Ember from 'ember-metal/core';
-import { testBoth } from 'ember-metal/tests/props_helper';
-import create from 'ember-metal/platform/create';
+import Ngular from 'ngular-metal/core';
+import { testBoth } from 'ngular-metal/tests/props_helper';
+import create from 'ngular-metal/platform/create';
 import {
   ComputedProperty,
   computed,
   cacheFor
-} from "ember-metal/computed";
+} from "ngular-metal/computed";
 
 import {
   empty,
@@ -26,23 +26,23 @@ import {
   or,
   any,
   collect
-} from "ember-metal/computed_macros";
-import alias from 'ember-metal/alias';
+} from "ngular-metal/computed_macros";
+import alias from 'ngular-metal/alias';
 
 import {
   Descriptor,
   defineProperty
-} from "ember-metal/properties";
-import { get } from 'ember-metal/property_get';
-import { set } from 'ember-metal/property_set';
-import { isWatching } from "ember-metal/watching";
+} from "ngular-metal/properties";
+import { get } from 'ngular-metal/property_get';
+import { set } from 'ngular-metal/property_set';
+import { isWatching } from "ngular-metal/watching";
 import {
   addObserver,
   addBeforeObserver
-} from "ember-metal/observer";
-import { indexOf } from 'ember-metal/enumerable_utils';
+} from "ngular-metal/observer";
+import { indexOf } from 'ngular-metal/enumerable_utils';
 
-var originalLookup = Ember.lookup;
+var originalLookup = Ngular.lookup;
 var obj, count, Global, lookup;
 
 QUnit.module('computed');
@@ -516,8 +516,8 @@ testBoth('throws assertion if brace expansion notation has spaces', function (ge
 var func;
 var moduleOpts = {
   setup() {
-    originalLookup = Ember.lookup;
-    lookup = Ember.lookup = {};
+    originalLookup = Ngular.lookup;
+    lookup = Ngular.lookup = {};
 
     obj = {
       foo: {
@@ -550,7 +550,7 @@ var moduleOpts = {
 
   teardown() {
     obj = count = func = Global = null;
-    Ember.lookup = originalLookup;
+    Ngular.lookup = originalLookup;
   }
 };
 
@@ -660,11 +660,11 @@ testBoth('chained dependent keys should evaluate computed properties lazily', fu
 // improved-cp-syntax
 //
 
-if (Ember.FEATURES.isEnabled("new-computed-syntax")) {
+if (Ngular.FEATURES.isEnabled("new-computed-syntax")) {
   QUnit.module('computed - improved cp syntax');
 
   QUnit.test('setter and getters are passed using an object', function() {
-    var testObj = Ember.Object.extend({
+    var testObj = Ngular.Object.extend({
       a: '1',
       b: '2',
       aInt: computed('a', {
@@ -689,7 +689,7 @@ if (Ember.FEATURES.isEnabled("new-computed-syntax")) {
   });
 
   QUnit.test('setter can be omited', function() {
-    var testObj = Ember.Object.extend({
+    var testObj = Ngular.Object.extend({
       a: '1',
       b: '2',
       aInt: computed('a', {
@@ -707,7 +707,7 @@ if (Ember.FEATURES.isEnabled("new-computed-syntax")) {
   });
 
   QUnit.test('the return value of the setter gets cached', function() {
-    var testObj = Ember.Object.extend({
+    var testObj = Ngular.Object.extend({
       a: '1',
       sampleCP: computed('a', {
         get(keyName) {
@@ -727,7 +727,7 @@ if (Ember.FEATURES.isEnabled("new-computed-syntax")) {
   QUnit.test('Passing a function that acts both as getter and setter is deprecated', function() {
     var regex = /Using the same function as getter and setter is deprecated/;
     expectDeprecation(function() {
-      Ember.Object.extend({
+      Ngular.Object.extend({
         aInt: computed('a', function(keyName, value, oldValue) {})
       });
     }, regex);
@@ -1039,7 +1039,7 @@ testBoth('computed.defaultTo', function(get, set) {
     defineProperty(obj, 'copy', defaultTo('source'));
 
     get(obj, 'copy');
-  }, 'Usage of Ember.computed.defaultTo is deprecated, use `Ember.computed.oneWay` instead.');
+  }, 'Usage of Ngular.computed.defaultTo is deprecated, use `Ngular.computed.oneWay` instead.');
 });
 
 testBoth('computed.match', function(get, set) {

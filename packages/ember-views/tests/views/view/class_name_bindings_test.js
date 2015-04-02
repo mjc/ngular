@@ -1,13 +1,13 @@
-import { set } from "ember-metal/property_set";
-import run from "ember-metal/run_loop";
-import { changeProperties } from "ember-metal/property_events";
-import { isWatching } from "ember-metal/watching";
-import EmberObject from "ember-runtime/system/object";
-import EmberView from "ember-views/views/view";
+import { set } from "ngular-metal/property_set";
+import run from "ngular-metal/run_loop";
+import { changeProperties } from "ngular-metal/property_events";
+import { isWatching } from "ngular-metal/watching";
+import NgularObject from "ngular-runtime/system/object";
+import NgularView from "ngular-views/views/view";
 
 var view;
 
-QUnit.module("EmberView - Class Name Bindings", {
+QUnit.module("NgularView - Class Name Bindings", {
   teardown() {
     run(function() {
       view.destroy();
@@ -16,7 +16,7 @@ QUnit.module("EmberView - Class Name Bindings", {
 });
 
 QUnit.test("should apply bound class names to the element", function() {
-  view = EmberView.create({
+  view = NgularView.create({
     classNameBindings: ['priority', 'isUrgent', 'isClassified:classified',
                         'canIgnore', 'messages.count', 'messages.resent:is-resent',
                         'isNumber:is-number', 'isFalsy::is-falsy', 'isTruthy::is-not-truthy',
@@ -56,7 +56,7 @@ QUnit.test("should apply bound class names to the element", function() {
 });
 
 QUnit.test("should add, remove, or change class names if changed after element is created", function() {
-  view = EmberView.create({
+  view = NgularView.create({
     classNameBindings: ['priority', 'isUrgent', 'isClassified:classified',
                         'canIgnore', 'messages.count', 'messages.resent:is-resent',
                         'isEnabled:enabled:disabled'],
@@ -67,7 +67,7 @@ QUnit.test("should add, remove, or change class names if changed after element i
     canIgnore: false,
     isEnabled: true,
 
-    messages: EmberObject.create({
+    messages: NgularObject.create({
       count: 'five-messages',
       resent: false
     })
@@ -99,23 +99,23 @@ QUnit.test("should add, remove, or change class names if changed after element i
 });
 
 QUnit.test(":: class name syntax works with an empty true class", function() {
-  view = EmberView.create({
+  view = NgularView.create({
     isEnabled: false,
     classNameBindings: ['isEnabled::not-enabled']
   });
 
   run(function() { view.createElement(); });
 
-  equal(view.$().attr('class'), 'ember-view not-enabled', "false class is rendered when property is false");
+  equal(view.$().attr('class'), 'ngular-view not-enabled', "false class is rendered when property is false");
 
   run(function() { view.set('isEnabled', true); });
 
-  equal(view.$().attr('class'), 'ember-view', "no class is added when property is true and the class is empty");
+  equal(view.$().attr('class'), 'ngular-view', "no class is added when property is true and the class is empty");
 });
 
 QUnit.test("classNames should not be duplicated on rerender", function() {
   run(function() {
-    view = EmberView.create({
+    view = NgularView.create({
       classNameBindings: ['priority'],
       priority: 'high'
     });
@@ -126,18 +126,18 @@ QUnit.test("classNames should not be duplicated on rerender", function() {
     view.createElement();
   });
 
-  equal(view.$().attr('class'), 'ember-view high');
+  equal(view.$().attr('class'), 'ngular-view high');
 
   run(function() {
     view.rerender();
   });
 
-  equal(view.$().attr('class'), 'ember-view high');
+  equal(view.$().attr('class'), 'ngular-view high');
 });
 
 QUnit.test("classNameBindings should work when the binding property is updated and the view has been removed of the DOM", function() {
   run(function() {
-    view = EmberView.create({
+    view = NgularView.create({
       classNameBindings: ['priority'],
       priority: 'high'
     });
@@ -148,7 +148,7 @@ QUnit.test("classNameBindings should work when the binding property is updated a
     view.createElement();
   });
 
-  equal(view.$().attr('class'), 'ember-view high');
+  equal(view.$().attr('class'), 'ngular-view high');
 
   run(function() {
     view.remove();
@@ -160,12 +160,12 @@ QUnit.test("classNameBindings should work when the binding property is updated a
     view.append();
   });
 
-  equal(view.$().attr('class'), 'ember-view low');
+  equal(view.$().attr('class'), 'ngular-view low');
 
 });
 
 QUnit.test("classNames removed by a classNameBindings observer should not re-appear on rerender", function() {
-  view = EmberView.create({
+  view = NgularView.create({
     classNameBindings: ['isUrgent'],
     isUrgent: true
   });
@@ -174,24 +174,24 @@ QUnit.test("classNames removed by a classNameBindings observer should not re-app
     view.createElement();
   });
 
-  equal(view.$().attr('class'), 'ember-view is-urgent');
+  equal(view.$().attr('class'), 'ngular-view is-urgent');
 
   run(function() {
     view.set('isUrgent', false);
   });
 
-  equal(view.$().attr('class'), 'ember-view');
+  equal(view.$().attr('class'), 'ngular-view');
 
   run(function() {
     view.rerender();
   });
 
-  equal(view.$().attr('class'), 'ember-view');
+  equal(view.$().attr('class'), 'ngular-view');
 });
 
 QUnit.test("classNameBindings lifecycle test", function() {
   run(function() {
-    view = EmberView.create({
+    view = NgularView.create({
       classNameBindings: ['priority'],
       priority: 'high'
     });
@@ -203,7 +203,7 @@ QUnit.test("classNameBindings lifecycle test", function() {
     view.createElement();
   });
 
-  equal(view.$().attr('class'), 'ember-view high');
+  equal(view.$().attr('class'), 'ngular-view high');
   equal(isWatching(view, 'priority'), true);
 
   run(function() {
@@ -216,7 +216,7 @@ QUnit.test("classNameBindings lifecycle test", function() {
 
 QUnit.test("classNameBindings should not fail if view has been removed", function() {
   run(function() {
-    view = EmberView.create({
+    view = NgularView.create({
       classNameBindings: ['priority'],
       priority: 'high'
     });
@@ -240,7 +240,7 @@ QUnit.test("classNameBindings should not fail if view has been removed", functio
 
 QUnit.test("classNameBindings should not fail if view has been destroyed", function() {
   run(function() {
-    view = EmberView.create({
+    view = NgularView.create({
       classNameBindings: ['priority'],
       priority: 'high'
     });
@@ -263,7 +263,7 @@ QUnit.test("classNameBindings should not fail if view has been destroyed", funct
 });
 
 QUnit.test("Providing a binding with a space in it asserts", function() {
-  view = EmberView.create({
+  view = NgularView.create({
     classNameBindings: 'i:think:i am:so:clever'
   });
 

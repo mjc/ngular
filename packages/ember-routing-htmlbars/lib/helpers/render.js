@@ -1,19 +1,19 @@
 /**
-@module ember
-@submodule ember-routing-htmlbars
+@module ngular
+@submodule ngular-routing-htmlbars
 */
 
-import Ember from "ember-metal/core"; // assert, deprecate
-import EmberError from "ember-metal/error";
-import { camelize } from "ember-runtime/system/string";
-import generateController from "ember-routing/system/generate_controller";
+import Ngular from "ngular-metal/core"; // assert, deprecate
+import NgularError from "ngular-metal/error";
+import { camelize } from "ngular-runtime/system/string";
+import generateController from "ngular-routing/system/generate_controller";
 import {
   generateControllerFactory
-} from "ember-routing/system/generate_controller";
-import { isStream } from "ember-metal/streams/utils";
-import mergeViewBindings from "ember-htmlbars/system/merge-view-bindings";
-import appendTemplatedView from "ember-htmlbars/system/append-templated-view";
-import create from 'ember-metal/platform/create';
+} from "ngular-routing/system/generate_controller";
+import { isStream } from "ngular-metal/streams/utils";
+import mergeViewBindings from "ngular-htmlbars/system/merge-view-bindings";
+import appendTemplatedView from "ngular-htmlbars/system/append-templated-view";
+import create from 'ngular-metal/platform/create';
 
 /**
   Calling ``{{render}}`` from within a template will insert another
@@ -29,7 +29,7 @@ import create from 'ember-metal/platform/create';
   Example:
 
   ```javascript
-  App.NavigationController = Ember.Controller.extend({
+  App.NavigationController = Ngular.Controller.extend({
     who: "world"
   });
   ```
@@ -47,7 +47,7 @@ import create from 'ember-metal/platform/create';
 
   ```html
   <h1>My great app</h1>
-  <div class='ember-view'>
+  <div class='ngular-view'>
     Hello, world.
   </div>
   ```
@@ -79,7 +79,7 @@ You could render it inside the `post` template using the `render` helper.
  ```
 
   @method render
-  @for Ember.Handlebars.helpers
+  @for Ngular.Handlebars.helpers
   @param {String} name
   @param {Object?} context
   @param {Hash} options
@@ -95,12 +95,12 @@ export function renderHelper(params, hash, options, env) {
   container = currentView._keywords.controller.value().container;
   router = container.lookup('router:main');
 
-  Ember.assert(
+  Ngular.assert(
     "The first argument of {{render}} must be quoted, e.g. {{render \"sidebar\"}}.",
     typeof name === 'string'
   );
 
-  Ember.assert(
+  Ngular.assert(
     "The second argument of {{render}} must be a path, e.g. {{render \"post\" post}}.",
     params.length < 2 || isStream(params[1])
   );
@@ -108,7 +108,7 @@ export function renderHelper(params, hash, options, env) {
 
   if (params.length === 1) {
     // use the singleton controller
-    Ember.assert(
+    Ngular.assert(
       "You can only use the {{render}} helper once without a model object as " +
       "its second argument, as in {{render \"post\" post}}.",
       !router || !router._lookupActiveView(name)
@@ -117,7 +117,7 @@ export function renderHelper(params, hash, options, env) {
     // create a new controller
     initialContext = context.value();
   } else {
-    throw new EmberError("You must pass a templateName to render");
+    throw new NgularError("You must pass a templateName to render");
   }
 
   // # legacy namespace
@@ -125,7 +125,7 @@ export function renderHelper(params, hash, options, env) {
   // \ legacy slash as namespace support
 
   var templateName = 'template:' + name;
-  Ember.assert(
+  Ngular.assert(
     "You used `{{render '" + name + "'}}`, but '" + name + "' can not be " +
     "found as either a template or a view.",
     container._registry.has("view:" + name) || container._registry.has(templateName) || !!options.template
@@ -147,7 +147,7 @@ export function renderHelper(params, hash, options, env) {
     controllerFullName = 'controller:' + controllerName;
     delete hash.controller;
 
-    Ember.assert(
+    Ngular.assert(
       "The controller name you supplied '" + controllerName + "' " +
       "did not resolve to a controller.",
       container._registry.has(controllerFullName)
@@ -203,9 +203,9 @@ export function renderHelper(params, hash, options, env) {
 // Megahax to make outlets inside the render helper work, until we
 // can kill that behavior at 2.0.
 function impersonateAnOutlet(currentView, view, name) {
-  view._childOutlets = Ember.A();
+  view._childOutlets = Ngular.A();
   view._isOutlet = true;
-  view._outletName = '__ember_orphans__';
+  view._outletName = '__ngular_orphans__';
   view._matchOutletName = name;
   view.setOutletState = function(state) {
     var ownState;
@@ -235,7 +235,7 @@ function impersonateAnOutlet(currentView, view, name) {
   }
   if (pointer) {
     // we've found the toplevel outlet. Subscribe to its
-    // __ember_orphan__ child outlet, which is our hack convention for
+    // __ngular_orphan__ child outlet, which is our hack convention for
     // stashing outlet state that may target the render helper.
     pointer._childOutlets.push(view);
     if (pointer._outletState) {

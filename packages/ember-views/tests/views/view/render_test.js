@@ -1,18 +1,18 @@
-import { get } from "ember-metal/property_get";
-import run from "ember-metal/run_loop";
-import jQuery from "ember-views/system/jquery";
-import EmberView from "ember-views/views/view";
-import ContainerView from "ember-views/views/container_view";
-import { computed } from "ember-metal/computed";
+import { get } from "ngular-metal/property_get";
+import run from "ngular-metal/run_loop";
+import jQuery from "ngular-views/system/jquery";
+import NgularView from "ngular-views/views/view";
+import ContainerView from "ngular-views/views/container_view";
+import { computed } from "ngular-metal/computed";
 
-import compile from "ember-template-compiler/system/compile";
+import compile from "ngular-template-compiler/system/compile";
 
 var view;
 
 // .......................................................
 //  render()
 //
-QUnit.module("EmberView#render", {
+QUnit.module("NgularView#render", {
   teardown() {
     run(function() {
       view.destroy();
@@ -34,7 +34,7 @@ QUnit.test("default implementation does not render child views", function() {
       this._super(buffer);
     },
 
-    child: EmberView.createWithMixins({
+    child: NgularView.createWithMixins({
       render(buffer) {
         rendered++;
         this._super(buffer);
@@ -65,7 +65,7 @@ QUnit.test("should invoke renderChildViews if layer is destroyed then re-rendere
       this._super(buffer);
     },
 
-    child: EmberView.createWithMixins({
+    child: NgularView.createWithMixins({
       render(buffer) {
         rendered++;
         this._super(buffer);
@@ -100,7 +100,7 @@ QUnit.test("should render child views with a different tagName", function() {
   view = ContainerView.create({
     childViews: ["child"],
 
-    child: EmberView.create({
+    child: NgularView.create({
       tagName: 'aside'
     })
   });
@@ -112,18 +112,18 @@ QUnit.test("should render child views with a different tagName", function() {
   equal(view.$('aside').length, 1);
 });
 
-QUnit.test("should add ember-view to views", function() {
-  view = EmberView.create();
+QUnit.test("should add ngular-view to views", function() {
+  view = NgularView.create();
 
   run(function() {
     view.createElement();
   });
 
-  ok(view.$().hasClass('ember-view'), "the view has ember-view");
+  ok(view.$().hasClass('ngular-view'), "the view has ngular-view");
 });
 
 QUnit.test("should allow tagName to be a computed property [DEPRECATED]", function() {
-  view = EmberView.extend({
+  view = NgularView.extend({
     tagName: computed(function() {
       return 'span';
     })
@@ -150,7 +150,7 @@ QUnit.test("should allow hX tags as tagName", function() {
   view = ContainerView.create({
     childViews: ["child"],
 
-    child: EmberView.create({
+    child: NgularView.create({
       tagName: 'h3'
     })
   });
@@ -163,7 +163,7 @@ QUnit.test("should allow hX tags as tagName", function() {
 });
 
 QUnit.test("should not add role attribute unless one is specified", function() {
-  view = EmberView.create();
+  view = NgularView.create();
 
   run(function() {
     view.createElement();
@@ -173,7 +173,7 @@ QUnit.test("should not add role attribute unless one is specified", function() {
 });
 
 QUnit.test("should re-render if the context is changed", function() {
-  view = EmberView.create({
+  view = NgularView.create({
     elementId: 'template-context-test',
     context: { foo: "bar" },
     render(buffer) {
@@ -203,7 +203,7 @@ QUnit.test("renders contained view with omitted start tag and parent view contex
   view = ContainerView.createWithMixins({
     tagName: 'table',
     childViews: ["row"],
-    row: EmberView.createWithMixins({
+    row: NgularView.createWithMixins({
       tagName: 'tr'
     })
   });
@@ -220,13 +220,13 @@ QUnit.test("renders contained view with omitted start tag and parent view contex
 });
 
 QUnit.test("renders a contained view with omitted start tag and tagless parent view context", function() {
-  view = EmberView.createWithMixins({
+  view = NgularView.createWithMixins({
     tagName: 'table',
     template: compile("{{view view.pivot}}"),
-    pivot: EmberView.extend({
+    pivot: NgularView.extend({
       tagName: '',
       template: compile("{{view view.row}}"),
-      row: EmberView.extend({
+      row: NgularView.extend({
         tagName: 'tr'
       })
     })

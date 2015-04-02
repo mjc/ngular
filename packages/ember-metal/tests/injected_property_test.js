@@ -1,10 +1,10 @@
 import {
   Descriptor,
   defineProperty
-} from "ember-metal/properties";
-import { get } from 'ember-metal/property_get';
-import { set } from 'ember-metal/property_set';
-import InjectedProperty from "ember-metal/injected_property";
+} from "ngular-metal/properties";
+import { get } from 'ngular-metal/property_get';
+import { set } from 'ngular-metal/property_set';
+import InjectedProperty from "ngular-metal/injected_property";
 
 QUnit.module('InjectedProperty');
 

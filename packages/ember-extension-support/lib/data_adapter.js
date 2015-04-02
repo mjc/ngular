@@ -1,20 +1,20 @@
-import { get } from "ember-metal/property_get";
-import run from "ember-metal/run_loop";
-import { dasherize } from "ember-runtime/system/string";
-import Namespace from "ember-runtime/system/namespace";
-import EmberObject from "ember-runtime/system/object";
-import { A as emberA } from "ember-runtime/system/native_array";
-import Application from "ember-application/system/application";
+import { get } from "ngular-metal/property_get";
+import run from "ngular-metal/run_loop";
+import { dasherize } from "ngular-runtime/system/string";
+import Namespace from "ngular-runtime/system/namespace";
+import NgularObject from "ngular-runtime/system/object";
+import { A as ngularA } from "ngular-runtime/system/native_array";
+import Application from "ngular-application/system/application";
 
 /**
-@module ember
-@submodule ember-extension-support
+@module ngular
+@submodule ngular-extension-support
 */
 
 /**
   The `DataAdapter` helps a data persistence library
-  interface with tools that debug Ember such
-  as the [Ember Extension](https://github.com/tildeio/ember-extension)
+  interface with tools that debug Ngular such
+  as the [Ngular Extension](https://github.com/tildeio/ngular-extension)
   for Chrome and Firefox.
 
   This class will be extended by a persistence library
@@ -49,13 +49,13 @@ import Application from "ember-application/system/application";
   ```
 
   @class DataAdapter
-  @namespace Ember
-  @extends EmberObject
+  @namespace Ngular
+  @extends NgularObject
 */
-export default EmberObject.extend({
+export default NgularObject.extend({
   init() {
     this._super(...arguments);
-    this.releaseMethods = emberA();
+    this.releaseMethods = ngularA();
   },
 
   /**
@@ -100,7 +100,7 @@ export default EmberObject.extend({
     @property releaseMethods
     @since 1.3.0
   */
-  releaseMethods: emberA(),
+  releaseMethods: ngularA(),
 
   /**
     Specifies how records can be filtered.
@@ -113,7 +113,7 @@ export default EmberObject.extend({
      The object should have a `name` and `desc` property.
   */
   getFilters() {
-    return emberA();
+    return ngularA();
   },
 
   /**
@@ -132,7 +132,7 @@ export default EmberObject.extend({
   */
   watchModelTypes(typesAdded, typesUpdated) {
     var modelTypes = this.getModelTypes();
-    var releaseMethods = emberA();
+    var releaseMethods = ngularA();
     var typesToSend;
 
     typesToSend = modelTypes.map((type) => {
@@ -182,7 +182,7 @@ export default EmberObject.extend({
     @return {Function} Method to call to remove all observers
   */
   watchRecords(type, recordsAdded, recordsUpdated, recordsRemoved) {
-    var releaseMethods = emberA();
+    var releaseMethods = ngularA();
     var records = this.getRecords(type);
     var release;
 
@@ -262,7 +262,7 @@ export default EmberObject.extend({
      desc: {String} Humanized description (what would show in a table column name)
   */
   columnsForType(type) {
-    return emberA();
+    return ngularA();
   },
 
   /**
@@ -349,17 +349,17 @@ export default EmberObject.extend({
     }
 
     // New adapters return strings instead of classes
-    types = emberA(types).map((name) => {
+    types = ngularA(types).map((name) => {
       return {
         klass: this._nameToClass(name),
         name: name
       };
     });
-    types = emberA(types).filter((type) => {
+    types = ngularA(types).filter((type) => {
       return this.detect(type.klass);
     });
 
-    return emberA(types);
+    return ngularA(types);
   },
 
   /**
@@ -371,15 +371,15 @@ export default EmberObject.extend({
     @return {Array} Array of model type strings
   */
   _getObjectsOnNamespaces() {
-    var namespaces = emberA(Namespace.NAMESPACES);
-    var types = emberA();
+    var namespaces = ngularA(Namespace.NAMESPACES);
+    var types = ngularA();
 
     namespaces.forEach((namespace) => {
       for (var key in namespace) {
         if (!namespace.hasOwnProperty(key)) { continue; }
         // Even though we will filter again in `getModelTypes`,
         // we should not call `lookupContainer` on non-models
-        // (especially when `Ember.MODEL_FACTORY_INJECTIONS` is `true`)
+        // (especially when `Ngular.MODEL_FACTORY_INJECTIONS` is `true`)
         if (!this.detect(namespace[key])) { continue; }
         var name = dasherize(key);
         if (!(namespace instanceof Application) && namespace.toString()) {
@@ -401,7 +401,7 @@ export default EmberObject.extend({
      so it should update when new records are added/removed.
   */
   getRecords(type) {
-    return emberA();
+    return ngularA();
   },
 
   /**
@@ -445,7 +445,7 @@ export default EmberObject.extend({
     @return {Array} Relevant keywords for search.
   */
   getRecordKeywords(record) {
-    return emberA();
+    return ngularA();
   },
 
   /**

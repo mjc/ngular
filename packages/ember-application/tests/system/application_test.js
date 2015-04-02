@@ -1,25 +1,25 @@
-/*globals EmberDev */
+/*globals NgularDev */
 
-import Ember from "ember-metal/core";
-import run from "ember-metal/run_loop";
-import Application from "ember-application/system/application";
-import DefaultResolver from "ember-application/system/resolver";
-import Router from "ember-routing/system/router";
-import View from "ember-views/views/view";
-import Controller from "ember-runtime/controllers/controller";
-import NoneLocation from "ember-routing/location/none_location";
-import EmberObject from "ember-runtime/system/object";
-import jQuery from "ember-views/system/jquery";
-import compile from "ember-template-compiler/system/compile";
+import Ngular from "ngular-metal/core";
+import run from "ngular-metal/run_loop";
+import Application from "ngular-application/system/application";
+import DefaultResolver from "ngular-application/system/resolver";
+import Router from "ngular-routing/system/router";
+import View from "ngular-views/views/view";
+import Controller from "ngular-runtime/controllers/controller";
+import NoneLocation from "ngular-routing/location/none_location";
+import NgularObject from "ngular-runtime/system/object";
+import jQuery from "ngular-views/system/jquery";
+import compile from "ngular-template-compiler/system/compile";
 
 var trim = jQuery.trim;
 
 var app, application, originalLookup, originalDebug;
 
-QUnit.module("Ember.Application", {
+QUnit.module("Ngular.Application", {
   setup() {
-    originalLookup = Ember.lookup;
-    originalDebug = Ember.debug;
+    originalLookup = Ngular.lookup;
+    originalDebug = Ngular.debug;
 
     jQuery("#qunit-fixture").html("<div id='one'><div id='one-child'>HI</div></div><div id='two'>HI</div>");
     run(function() {
@@ -29,9 +29,9 @@ QUnit.module("Ember.Application", {
 
   teardown() {
     jQuery("#qunit-fixture").empty();
-    Ember.debug = originalDebug;
+    Ngular.debug = originalDebug;
 
-    Ember.lookup = originalLookup;
+    Ngular.lookup = originalLookup;
 
     if (application) {
       run(application, 'destroy');
@@ -85,24 +85,24 @@ QUnit.test("you cannot make two default applications without a rootElement error
 });
 
 QUnit.test("acts like a namespace", function() {
-  var lookup = Ember.lookup = {};
+  var lookup = Ngular.lookup = {};
   var app;
 
   run(function() {
     app = lookup.TestApp = Application.create({ rootElement: '#two', router: false });
   });
 
-  Ember.BOOTED = false;
-  app.Foo = EmberObject.extend();
+  Ngular.BOOTED = false;
+  app.Foo = NgularObject.extend();
   equal(app.Foo.toString(), "TestApp.Foo", "Classes pick up their parent namespace");
 });
 
-QUnit.module("Ember.Application initialization", {
+QUnit.module("Ngular.Application initialization", {
   teardown() {
     if (app) {
       run(app, 'destroy');
     }
-    Ember.TEMPLATES = {};
+    Ngular.TEMPLATES = {};
   }
 });
 
@@ -120,7 +120,7 @@ QUnit.test('initialized application go to initial route', function() {
       compile("{{outlet}}")
     );
 
-    Ember.TEMPLATES.index = compile(
+    Ngular.TEMPLATES.index = compile(
       "<h1>Hi from index</h1>"
     );
   });
@@ -204,21 +204,21 @@ QUnit.test("Minimal Application initialized with just an application template", 
 });
 
 QUnit.test('enable log of libraries with an ENV var', function() {
-  if (EmberDev && EmberDev.runningProdBuild) {
+  if (NgularDev && NgularDev.runningProdBuild) {
     ok(true, 'Logging does not occur in production builds');
     return;
   }
 
-  var debug = Ember.debug;
+  var debug = Ngular.debug;
   var messages = [];
 
-  Ember.LOG_VERSION = true;
+  Ngular.LOG_VERSION = true;
 
-  Ember.debug = function(message) {
+  Ngular.debug = function(message) {
     messages.push(message);
   };
 
-  Ember.libraries.register("my-lib", "2.0.0a");
+  Ngular.libraries.register("my-lib", "2.0.0a");
 
   run(function() {
     app = Application.create({
@@ -226,21 +226,21 @@ QUnit.test('enable log of libraries with an ENV var', function() {
     });
   });
 
-  equal(messages[1], "Ember  : " + Ember.VERSION);
+  equal(messages[1], "Ngular  : " + Ngular.VERSION);
   equal(messages[2], "jQuery : " + jQuery().jquery);
   equal(messages[3], "my-lib : " + "2.0.0a");
 
-  Ember.libraries.deRegister("my-lib");
-  Ember.LOG_VERSION = false;
-  Ember.debug = debug;
+  Ngular.libraries.deRegister("my-lib");
+  Ngular.LOG_VERSION = false;
+  Ngular.debug = debug;
 });
 
 QUnit.test('disable log version of libraries with an ENV var', function() {
   var logged = false;
 
-  Ember.LOG_VERSION = false;
+  Ngular.LOG_VERSION = false;
 
-  Ember.debug = function(message) {
+  Ngular.debug = function(message) {
     logged = true;
   };
 
@@ -302,7 +302,7 @@ QUnit.test("throws helpful error if `app.then` is used", function() {
 
   expectDeprecation(function() {
     run(app, 'then', function() { return this; });
-  }, /Do not use `.then` on an instance of Ember.Application.  Please use the `.ready` hook instead./);
+  }, /Do not use `.then` on an instance of Ngular.Application.  Please use the `.ready` hook instead./);
 });
 
 QUnit.test("registers controls onto to container", function() {

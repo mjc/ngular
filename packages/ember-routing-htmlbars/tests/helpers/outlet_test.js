@@ -1,23 +1,23 @@
-import run from "ember-metal/run_loop";
+import run from "ngular-metal/run_loop";
 
-import Namespace from "ember-runtime/system/namespace";
+import Namespace from "ngular-runtime/system/namespace";
 
-import EmberView from "ember-views/views/view";
-import jQuery from "ember-views/system/jquery";
+import NgularView from "ngular-views/views/view";
+import jQuery from "ngular-views/system/jquery";
 
-import { outletHelper } from "ember-routing-htmlbars/helpers/outlet";
+import { outletHelper } from "ngular-routing-htmlbars/helpers/outlet";
 
-import compile from "ember-template-compiler/system/compile";
-import { registerHelper } from "ember-htmlbars/helpers";
-import helpers from "ember-htmlbars/helpers";
-import { runAppend, runDestroy } from "ember-runtime/tests/utils";
-import { buildRegistry } from "ember-routing-htmlbars/tests/utils";
+import compile from "ngular-template-compiler/system/compile";
+import { registerHelper } from "ngular-htmlbars/helpers";
+import helpers from "ngular-htmlbars/helpers";
+import { runAppend, runDestroy } from "ngular-runtime/tests/utils";
+import { buildRegistry } from "ngular-routing-htmlbars/tests/utils";
 
 var trim = jQuery.trim;
 
 var registry, container, originalOutletHelper, top;
 
-QUnit.module("ember-routing-htmlbars: {{outlet}} helper", {
+QUnit.module("ngular-routing-htmlbars: {{outlet}} helper", {
   setup() {
     originalOutletHelper = helpers['outlet'];
     registerHelper('outlet', outletHelper);
@@ -135,7 +135,7 @@ QUnit.test("outlet should support an optional view class", function() {
   });
   var routerState = {
     render: {
-      ViewClass: EmberView.extend({
+      ViewClass: NgularView.extend({
         template: compile("<h1>HI</h1>{{outlet viewClass=view.outletView}}"),
         outletView: SpecialOutlet
       })
@@ -183,7 +183,7 @@ QUnit.test("Outlets bind to the current template's view, not inner contexts [DEP
 
   var routerState = {
     render: {
-      ViewClass: EmberView.extend({
+      ViewClass: NgularView.extend({
         alwaysTrue: true,
         template: compile(parentTemplate)
       })
@@ -210,7 +210,7 @@ QUnit.test("should support layouts", function() {
   var layout = "<h1>HI</h1>{{yield}}";
   var routerState = {
     render: {
-      ViewClass: EmberView.extend({
+      ViewClass: NgularView.extend({
         template: compile(template),
         layout: compile(layout)
       })

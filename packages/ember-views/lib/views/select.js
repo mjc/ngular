@@ -1,6 +1,6 @@
 /**
-@module ember
-@submodule ember-views
+@module ngular
+@submodule ngular-views
 */
 
 import {
@@ -9,27 +9,27 @@ import {
   indexesOf,
   replace,
   map
-} from "ember-metal/enumerable_utils";
+} from "ngular-metal/enumerable_utils";
 
-import { get } from "ember-metal/property_get";
-import { set } from "ember-metal/property_set";
-import View from "ember-views/views/view";
-import CollectionView from "ember-views/views/collection_view";
-import { isArray } from "ember-metal/utils";
-import isNone from 'ember-metal/is_none';
-import { computed } from "ember-metal/computed";
-import { A as emberA } from "ember-runtime/system/native_array";
-import { observer } from "ember-metal/mixin";
-import { defineProperty } from "ember-metal/properties";
-import run from "ember-metal/run_loop";
+import { get } from "ngular-metal/property_get";
+import { set } from "ngular-metal/property_set";
+import View from "ngular-views/views/view";
+import CollectionView from "ngular-views/views/collection_view";
+import { isArray } from "ngular-metal/utils";
+import isNone from 'ngular-metal/is_none';
+import { computed } from "ngular-metal/computed";
+import { A as ngularA } from "ngular-runtime/system/native_array";
+import { observer } from "ngular-metal/mixin";
+import { defineProperty } from "ngular-metal/properties";
+import run from "ngular-metal/run_loop";
 
-import htmlbarsTemplate from "ember-htmlbars/templates/select";
+import htmlbarsTemplate from "ngular-htmlbars/templates/select";
 
 var defaultTemplate = htmlbarsTemplate;
 
 var selectOptionDefaultTemplate = {
   isHTMLBars: true,
-  revision: 'Ember@VERSION_STRING_PLACEHOLDER',
+  revision: 'Ngular@VERSION_STRING_PLACEHOLDER',
   render(context, env, contextualElement) {
     var lazyValue = context.getStream('view.label');
 
@@ -42,7 +42,7 @@ var selectOptionDefaultTemplate = {
 };
 
 var SelectOption = View.extend({
-  instrumentDisplay: 'Ember.SelectOption',
+  instrumentDisplay: 'Ngular.SelectOption',
 
   tagName: 'option',
   attributeBindings: ['value', 'selected'],
@@ -80,7 +80,7 @@ var SelectOption = View.extend({
 });
 
 var SelectOptgroup = CollectionView.extend({
-  instrumentDisplay: 'Ember.SelectOptgroup',
+  instrumentDisplay: 'Ngular.SelectOptgroup',
 
   tagName: 'optgroup',
   attributeBindings: ['label'],
@@ -94,7 +94,7 @@ var SelectOptgroup = CollectionView.extend({
 });
 
 /**
-  The `Ember.Select` view class renders a
+  The `Ngular.Select` view class renders a
   [select](https://developer.mozilla.org/en/HTML/Element/select) HTML element,
   allowing the user to choose from a list of options.
 
@@ -105,14 +105,14 @@ var SelectOptgroup = CollectionView.extend({
 
   ## The Content Property (array of strings)
 
-  The simplest version of an `Ember.Select` takes an array of strings as its
+  The simplest version of an `Ngular.Select` takes an array of strings as its
   `content` property. The string will be used as both the `value` property and
   the inner text of each `<option>` element inside the rendered `<select>`.
 
   Example:
 
   ```javascript
-  App.ApplicationController = Ember.ObjectController.extend({
+  App.ApplicationController = Ngular.ObjectController.extend({
     names: ["Yehuda", "Tom"]
   });
   ```
@@ -124,17 +124,17 @@ var SelectOptgroup = CollectionView.extend({
   Would result in the following HTML:
 
   ```html
-  <select class="ember-select">
+  <select class="ngular-select">
     <option value="Yehuda">Yehuda</option>
     <option value="Tom">Tom</option>
   </select>
   ```
 
-  You can control which `<option>` is selected through the `Ember.Select`'s
+  You can control which `<option>` is selected through the `Ngular.Select`'s
   `value` property:
 
   ```javascript
-  App.ApplicationController = Ember.ObjectController.extend({
+  App.ApplicationController = Ngular.ObjectController.extend({
     selectedName: 'Tom',
     names: ["Yehuda", "Tom"]
   });
@@ -147,7 +147,7 @@ var SelectOptgroup = CollectionView.extend({
   Would result in the following HTML with the `<option>` for 'Tom' selected:
 
   ```html
-  <select class="ember-select">
+  <select class="ngular-select">
     <option value="Yehuda">Yehuda</option>
     <option value="Tom" selected="selected">Tom</option>
   </select>
@@ -158,10 +158,10 @@ var SelectOptgroup = CollectionView.extend({
 
   ## The Content Property (array of Objects)
 
-  An `Ember.Select` can also take an array of JavaScript or Ember objects as
+  An `Ngular.Select` can also take an array of JavaScript or Ngular objects as
   its `content` property.
 
-  When using objects you need to tell the `Ember.Select` which property should
+  When using objects you need to tell the `Ngular.Select` which property should
   be accessed on each object to supply the `value` attribute of the `<option>`
   and which property should be used to supply the element text.
 
@@ -171,7 +171,7 @@ var SelectOptgroup = CollectionView.extend({
   element's text. Both paths must reference each object itself as `content`:
 
   ```javascript
-  App.ApplicationController = Ember.ObjectController.extend({
+  App.ApplicationController = Ngular.ObjectController.extend({
     programmers: [
       {firstName: "Yehuda", id: 1},
       {firstName: "Tom",    id: 2}
@@ -189,17 +189,17 @@ var SelectOptgroup = CollectionView.extend({
   Would result in the following HTML:
 
   ```html
-  <select class="ember-select">
+  <select class="ngular-select">
     <option value="1">Yehuda</option>
     <option value="2">Tom</option>
   </select>
   ```
 
-  The `value` attribute of the selected `<option>` within an `Ember.Select`
+  The `value` attribute of the selected `<option>` within an `Ngular.Select`
   can be bound to a property on another object:
 
   ```javascript
-  App.ApplicationController = Ember.ObjectController.extend({
+  App.ApplicationController = Ngular.ObjectController.extend({
     programmers: [
       {firstName: "Yehuda", id: 1},
       {firstName: "Tom",    id: 2}
@@ -221,7 +221,7 @@ var SelectOptgroup = CollectionView.extend({
   Would result in the following HTML with a selected option:
 
   ```html
-  <select class="ember-select">
+  <select class="ngular-select">
     <option value="1">Yehuda</option>
     <option value="2" selected="selected">Tom</option>
   </select>
@@ -242,7 +242,7 @@ var SelectOptgroup = CollectionView.extend({
   var yehuda = {firstName: "Yehuda", id: 1, bff4eva: 'tom'}
   var tom = {firstName: "Tom", id: 2, bff4eva: 'yehuda'};
 
-  App.ApplicationController = Ember.ObjectController.extend({
+  App.ApplicationController = Ngular.ObjectController.extend({
     selectedPerson: tom,
     programmers: [ yehuda, tom ]
   });
@@ -259,7 +259,7 @@ var SelectOptgroup = CollectionView.extend({
   Would result in the following HTML with a selected option:
 
   ```html
-  <select class="ember-select">
+  <select class="ngular-select">
     <option value="1">Yehuda</option>
     <option value="2" selected="selected">Tom</option>
   </select>
@@ -272,11 +272,11 @@ var SelectOptgroup = CollectionView.extend({
 
   ## Supplying a Prompt
 
-  A `null` value for the `Ember.Select`'s `value` or `selection` property
+  A `null` value for the `Ngular.Select`'s `value` or `selection` property
   results in there being no `<option>` with a `selected` attribute:
 
   ```javascript
-  App.ApplicationController = Ember.ObjectController.extend({
+  App.ApplicationController = Ngular.ObjectController.extend({
     selectedProgrammer: null,
     programmers: ["Yehuda", "Tom"]
   });
@@ -292,7 +292,7 @@ var SelectOptgroup = CollectionView.extend({
   Would result in the following HTML:
 
   ```html
-  <select class="ember-select">
+  <select class="ngular-select">
     <option value="Yehuda">Yehuda</option>
     <option value="Tom">Tom</option>
   </select>
@@ -301,11 +301,11 @@ var SelectOptgroup = CollectionView.extend({
   Although `selectedProgrammer` is `null` and no `<option>`
   has a `selected` attribute the rendered HTML will display the
   first item as though it were selected. You can supply a string
-  value for the `Ember.Select` to display when there is no selection
+  value for the `Ngular.Select` to display when there is no selection
   with the `prompt` option:
 
   ```javascript
-  App.ApplicationController = Ember.ObjectController.extend({
+  App.ApplicationController = Ngular.ObjectController.extend({
     selectedProgrammer: null,
     programmers: [ "Yehuda", "Tom" ]
   });
@@ -322,7 +322,7 @@ var SelectOptgroup = CollectionView.extend({
   Would result in the following HTML:
 
   ```html
-  <select class="ember-select">
+  <select class="ngular-select">
     <option>Please select a name</option>
     <option value="Yehuda">Yehuda</option>
     <option value="Tom">Tom</option>
@@ -330,14 +330,14 @@ var SelectOptgroup = CollectionView.extend({
   ```
 
   @class Select
-  @namespace Ember
-  @extends Ember.View
+  @namespace Ngular
+  @extends Ngular.View
 */
 var Select = View.extend({
-  instrumentDisplay: 'Ember.Select',
+  instrumentDisplay: 'Ngular.Select',
 
   tagName: 'select',
-  classNames: ['ember-select'],
+  classNames: ['ngular-select'],
   defaultTemplate: defaultTemplate,
   attributeBindings: [
     'autofocus',
@@ -391,9 +391,9 @@ var Select = View.extend({
     Otherwise, this should be a list of objects. For instance:
 
     ```javascript
-    var App = Ember.Application.create();
-    var App.MySelect = Ember.Select.extend({
-      content: Ember.A([
+    var App = Ngular.Application.create();
+    var App.MySelect = Ngular.Select.extend({
+      content: Ngular.A([
           { id: 1, firstName: 'Yehuda' },
           { id: 2, firstName: 'Tom' }
         ]),
@@ -451,7 +451,7 @@ var Select = View.extend({
   prompt: null,
 
   /**
-    The path of the option labels. See [content](/api/classes/Ember.Select.html#property_content).
+    The path of the option labels. See [content](/api/classes/Ngular.Select.html#property_content).
 
     @property optionLabelPath
     @type String
@@ -460,7 +460,7 @@ var Select = View.extend({
   optionLabelPath: 'content',
 
   /**
-    The path of the option values. See [content](/api/classes/Ember.Select.html#property_content).
+    The path of the option values. See [content](/api/classes/Ngular.Select.html#property_content).
 
     @property optionValuePath
     @type String
@@ -482,14 +482,14 @@ var Select = View.extend({
     The view class for optgroup.
 
     @property groupView
-    @type Ember.View
-    @default Ember.SelectOptgroup
+    @type Ngular.View
+    @default Ngular.SelectOptgroup
   */
   groupView: SelectOptgroup,
 
   groupedContent: computed(function() {
     var groupPath = get(this, 'optionGroupPath');
-    var groupedContent = emberA();
+    var groupedContent = ngularA();
     var content = get(this, 'content') || [];
 
     forEach(content, function(item) {
@@ -498,7 +498,7 @@ var Select = View.extend({
       if (get(groupedContent, 'lastObject.label') !== label) {
         groupedContent.pushObject({
           label: label,
-          content: emberA()
+          content: ngularA()
         });
       }
 
@@ -512,8 +512,8 @@ var Select = View.extend({
     The view class for option.
 
     @property optionView
-    @type Ember.View
-    @default Ember.SelectOption
+    @type Ngular.View
+    @default Ngular.SelectOption
   */
   optionView: SelectOption,
 
@@ -529,7 +529,7 @@ var Select = View.extend({
     var selection = get(this, 'selection');
     if (get(this, 'multiple')) {
       if (!isArray(selection)) {
-        set(this, 'selection', emberA([selection]));
+        set(this, 'selection', ngularA([selection]));
         return;
       }
       this._selectionDidChangeMultiple();

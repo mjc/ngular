@@ -1,5 +1,5 @@
-import run from 'ember-metal/run_loop';
-import {onLoad, runLoadHooks} from "ember-runtime/system/lazy_load";
+import run from 'ngular-metal/run_loop';
+import {onLoad, runLoadHooks} from "ngular-runtime/system/lazy_load";
 
 QUnit.module("Lazy Loading");
 
@@ -41,13 +41,13 @@ QUnit.test("if runLoadHooks was already run, it executes newly added hooks immed
   equal(count, 1, "the original object was passed into the load hook");
 });
 
-QUnit.test("hooks in ENV.EMBER_LOAD_HOOKS['hookName'] get executed", function() {
+QUnit.test("hooks in ENV.NGULAR_LOAD_HOOKS['hookName'] get executed", function() {
 
   // Note that the necessary code to perform this test is run before
-  // the Ember lib is loaded in tests/index.html
+  // the Ngular lib is loaded in tests/index.html
 
   run(function() {
-    runLoadHooks("__before_ember_test_hook__", 1);
+    runLoadHooks("__before_ngular_test_hook__", 1);
   });
 
   equal(window.ENV.__test_hook_count__, 1, "the object was passed into the load hook");

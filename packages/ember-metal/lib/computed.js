@@ -1,25 +1,25 @@
-import { set } from "ember-metal/property_set";
+import { set } from "ngular-metal/property_set";
 import {
   meta,
   inspect
-} from "ember-metal/utils";
-import expandProperties from "ember-metal/expand_properties";
-import EmberError from "ember-metal/error";
+} from "ngular-metal/utils";
+import expandProperties from "ngular-metal/expand_properties";
+import NgularError from "ngular-metal/error";
 import {
   Descriptor,
   defineProperty
-} from "ember-metal/properties";
+} from "ngular-metal/properties";
 import {
   propertyWillChange,
   propertyDidChange
-} from "ember-metal/property_events";
+} from "ngular-metal/property_events";
 import {
   addDependentKeys,
   removeDependentKeys
-} from "ember-metal/dependent_keys";
+} from "ngular-metal/dependent_keys";
 
 /**
-@module ember-metal
+@module ngular-metal
 */
 
 var metaFor = meta;
@@ -47,7 +47,7 @@ function UNDEFINED() { }
   values.
 
   ```javascript
-  var Person = Ember.Object.extend({
+  var Person = Ngular.Object.extend({
     // these will be supplied by `create`
     firstName: null,
     lastName: null,
@@ -68,13 +68,13 @@ function UNDEFINED() { }
   tom.get('fullName') // 'Tom Dale'
   ```
 
-  You can also define what Ember should do when setting a computed property.
+  You can also define what Ngular should do when setting a computed property.
   If you try to set a computed property, it will be invoked with the key and
   value you want to set it to. You can also accept the previous value as the
   third parameter.
 
   ```javascript
-  var Person = Ember.Object.extend({
+  var Person = Ngular.Object.extend({
     // these will be supplied by `create`
     firstName: null,
     lastName: null,
@@ -107,32 +107,32 @@ function UNDEFINED() { }
   ```
 
   @class ComputedProperty
-  @namespace Ember
+  @namespace Ngular
   @constructor
 */
 function ComputedProperty(config, opts) {
   this.isDescriptor = true;
-  if (Ember.FEATURES.isEnabled("new-computed-syntax")) {
+  if (Ngular.FEATURES.isEnabled("new-computed-syntax")) {
     if (typeof config === "function") {
-      config.__ember_arity = config.length;
+      config.__ngular_arity = config.length;
       this._getter = config;
-      if (config.__ember_arity > 1) {
-        Ember.deprecate("Using the same function as getter and setter is deprecated.", false, {
-          url: "http://emberjs.com/deprecations/v1.x/#toc_computed-properties-with-a-shared-getter-and-setter"
+      if (config.__ngular_arity > 1) {
+        Ngular.deprecate("Using the same function as getter and setter is deprecated.", false, {
+          url: "http://github.com/mjc/ngular/deprecations/v1.x/#toc_computed-properties-with-a-shared-getter-and-setter"
         });
         this._setter = config;
       }
     } else {
       this._getter = config.get;
       this._setter = config.set;
-      if (this._setter && this._setter.__ember_arity === undefined) {
-        this._setter.__ember_arity = this._setter.length;
+      if (this._setter && this._setter.__ngular_arity === undefined) {
+        this._setter.__ngular_arity = this._setter.length;
       }
     }
   } else {
-    config.__ember_arity = config.length;
+    config.__ngular_arity = config.length;
     this._getter = config;
-    if (config.__ember_arity > 1) {
+    if (config.__ngular_arity > 1) {
       this._setter = config;
     }
   }
@@ -141,10 +141,10 @@ function ComputedProperty(config, opts) {
   this._suspended = undefined;
   this._meta = undefined;
 
-  Ember.deprecate("Passing opts.cacheable to the CP constructor is deprecated. Invoke `volatile()` on the CP instead.", !opts || !opts.hasOwnProperty('cacheable'));
+  Ngular.deprecate("Passing opts.cacheable to the CP constructor is deprecated. Invoke `volatile()` on the CP instead.", !opts || !opts.hasOwnProperty('cacheable'));
   this._cacheable = (opts && opts.cacheable !== undefined) ? opts.cacheable : true;   // TODO: Set always to `true` once this deprecation is gone.
   this._dependentKeys = opts && opts.dependentKeys;
-  Ember.deprecate("Passing opts.readOnly to the CP constructor is deprecated. All CPs are writable by default. You can invoke `readOnly()` on the CP to change this.", !opts || !opts.hasOwnProperty('readOnly'));
+  Ngular.deprecate("Passing opts.readOnly to the CP constructor is deprecated. All CPs are writable by default. You can invoke `readOnly()` on the CP to change this.", !opts || !opts.hasOwnProperty('readOnly'));
   this._readOnly = opts && (opts.readOnly !== undefined || !!opts.readOnly) || false; // TODO: Set always to `false` once this deprecation is gone.
 }
 
@@ -164,12 +164,12 @@ var ComputedPropertyPrototype = ComputedProperty.prototype;
 
   @method cacheable
   @param {Boolean} aFlag optional set to `false` to disable caching
-  @return {Ember.ComputedProperty} this
+  @return {Ngular.ComputedProperty} this
   @chainable
   @deprecated All computed properties are cacheble by default. Use `volatile()` instead to opt-out to caching.
 */
 ComputedPropertyPrototype.cacheable = function(aFlag) {
-  Ember.deprecate('ComputedProperty.cacheable() is deprecated. All computed properties are cacheable by default.');
+  Ngular.deprecate('ComputedProperty.cacheable() is deprecated. All computed properties are cacheable by default.');
   this._cacheable = aFlag !== false;
   return this;
 };
@@ -179,7 +179,7 @@ ComputedPropertyPrototype.cacheable = function(aFlag) {
   mode the computed property will not automatically cache the return value.
 
   ```javascript
-  var outsideService = Ember.Object.extend({
+  var outsideService = Ngular.Object.extend({
     value: function() {
       return OutsideService.getValue();
     }.property().volatile()
@@ -187,7 +187,7 @@ ComputedPropertyPrototype.cacheable = function(aFlag) {
   ```
 
   @method volatile
-  @return {Ember.ComputedProperty} this
+  @return {Ngular.ComputedProperty} this
   @chainable
 */
 ComputedPropertyPrototype.volatile = function() {
@@ -200,7 +200,7 @@ ComputedPropertyPrototype.volatile = function() {
   mode the computed property will throw an error when set.
 
   ```javascript
-  var Person = Ember.Object.extend({
+  var Person = Ngular.Object.extend({
     guid: function() {
       return 'guid-guid-guid';
     }.property().readOnly()
@@ -212,13 +212,13 @@ ComputedPropertyPrototype.volatile = function() {
   ```
 
   @method readOnly
-  @return {Ember.ComputedProperty} this
+  @return {Ngular.ComputedProperty} this
   @chainable
 */
 ComputedPropertyPrototype.readOnly = function(readOnly) {
-  Ember.deprecate('Passing arguments to ComputedProperty.readOnly() is deprecated.', arguments.length === 0);
+  Ngular.deprecate('Passing arguments to ComputedProperty.readOnly() is deprecated.', arguments.length === 0);
   this._readOnly = readOnly === undefined || !!readOnly; // Force to true once this deprecation is gone
-  Ember.assert("Computed properties that define a setter cannot be read-only", !(this._readOnly && this._setter));
+  Ngular.assert("Computed properties that define a setter cannot be read-only", !(this._readOnly && this._setter));
   return this;
 };
 
@@ -227,11 +227,11 @@ ComputedPropertyPrototype.readOnly = function(readOnly) {
   arguments containing key paths that this computed property depends on.
 
   ```javascript
-  var President = Ember.Object.extend({
+  var President = Ngular.Object.extend({
     fullName: computed(function() {
       return this.get('firstName') + ' ' + this.get('lastName');
 
-      // Tell Ember that this computed property depends on firstName
+      // Tell Ngular that this computed property depends on firstName
       // and lastName
     }).property('firstName', 'lastName')
   });
@@ -246,7 +246,7 @@ ComputedPropertyPrototype.readOnly = function(readOnly) {
 
   @method property
   @param {String} path* zero or more property paths
-  @return {Ember.ComputedProperty} this
+  @return {Ngular.ComputedProperty} this
   @chainable
 */
 ComputedPropertyPrototype.property = function() {
@@ -281,7 +281,7 @@ ComputedPropertyPrototype.property = function() {
   ```
 
   The hash that you pass to the `meta()` function will be saved on the
-  computed property descriptor under the `_meta` key. Ember runtime
+  computed property descriptor under the `_meta` key. Ngular runtime
   exposes a public API for retrieving these values from classes,
   via the `metaForProperty()` function.
 
@@ -324,7 +324,7 @@ function finishChains(chainNodes) {
   Otherwise, call the function passing the property name as an argument.
 
   ```javascript
-  var Person = Ember.Object.extend({
+  var Person = Ngular.Object.extend({
     fullName: function(keyName) {
       // the keyName parameter is 'fullName' in this case.
       return this.get('firstName') + ' ' + this.get('lastName');
@@ -390,7 +390,7 @@ ComputedPropertyPrototype.get = function(obj, keyName) {
   your backing function should accept either two or three arguments.
 
   ```javascript
-  var Person = Ember.Object.extend({
+  var Person = Ngular.Object.extend({
     // these will be supplied by `create`
     firstName: null,
     lastName: null,
@@ -450,7 +450,7 @@ ComputedPropertyPrototype._set = function computedPropertySet(obj, keyName, valu
   var cachedValue, ret;
 
   if (this._readOnly) {
-    throw new EmberError(`Cannot set read-only property "${keyName}" on object: ${inspect(obj)}`);
+    throw new NgularError(`Cannot set read-only property "${keyName}" on object: ${inspect(obj)}`);
   }
 
   if (cacheable && cache && cache[keyName] !== undefined) {
@@ -465,7 +465,7 @@ ComputedPropertyPrototype._set = function computedPropertySet(obj, keyName, valu
     defineProperty(obj, keyName, null, cachedValue);
     set(obj, keyName, value);
     return;
-  } else if (setter.__ember_arity === 2) {
+  } else if (setter.__ngular_arity === 2) {
     // Is there any way of deprecate this in a sensitive way?
     // Maybe now that getters and setters are the prefered options we can....
     ret = setter.call(obj, keyName, value);
@@ -524,7 +524,7 @@ ComputedPropertyPrototype.teardown = function(obj, keyName) {
 /**
   This helper returns a new property descriptor that wraps the passed
   computed property function. You can use this helper to define properties
-  with mixins or via `Ember.defineProperty()`.
+  with mixins or via `Ngular.defineProperty()`.
 
   The function you pass will be used to both get and set property values.
   The function should accept two parameters, key and value. If value is not
@@ -534,11 +534,11 @@ ComputedPropertyPrototype.teardown = function(obj, keyName) {
   A computed property defined in this way might look like this:
 
   ```js
-  var Person = Ember.Object.extend({
+  var Person = Ngular.Object.extend({
     firstName: 'Betty',
     lastName: 'Jones',
 
-    fullName: Ember.computed('firstName', 'lastName', function(key, value) {
+    fullName: Ngular.computed('firstName', 'lastName', function(key, value) {
       return this.get('firstName') + ' ' + this.get('lastName');
     })
   });
@@ -552,11 +552,11 @@ ComputedPropertyPrototype.teardown = function(obj, keyName) {
   ```
 
   _Note: This is the preferred way to define computed properties when writing third-party
-  libraries that depend on or use Ember, since there is no guarantee that the user
+  libraries that depend on or use Ngular, since there is no guarantee that the user
   will have prototype extensions enabled._
 
   You might use this method if you disabled
-  [Prototype Extensions](http://emberjs.com/guides/configuring-ember/disabling-prototype-extensions/).
+  [Prototype Extensions](http://github.com/mjc/ngular/guides/configuring-ngular/disabling-prototype-extensions/).
   The alternative syntax might look like this
   (if prototype extensions are enabled, which is the default behavior):
 
@@ -567,12 +567,12 @@ ComputedPropertyPrototype.teardown = function(obj, keyName) {
   ```
 
   @class computed
-  @namespace Ember
+  @namespace Ngular
   @constructor
   @static
   @param {String} [dependentKeys*] Optional dependent keys that trigger this computed property.
   @param {Function} func The computed property function.
-  @return {Ember.ComputedProperty} property descriptor instance
+  @return {Ngular.ComputedProperty} property descriptor instance
 */
 function computed(func) {
   var args;
@@ -584,12 +584,12 @@ function computed(func) {
 
   var cp = new ComputedProperty(func);
   // jscs:disable
-  if (Ember.FEATURES.isEnabled("new-computed-syntax")) {
+  if (Ngular.FEATURES.isEnabled("new-computed-syntax")) {
     // Empty block on purpose
   } else {
     // jscs:enable
     if (typeof func !== "function") {
-      throw new EmberError("Computed Property declared without a property function");
+      throw new NgularError("Computed Property declared without a property function");
     }
   }
 
@@ -607,14 +607,14 @@ function computed(func) {
   it to be created.
 
   @method cacheFor
-  @for Ember
+  @for Ngular
   @param {Object} obj the object whose property you want to check
   @param {String} key the name of the property whose cached value you want
     to return
   @return {Object} the cached value
 */
 function cacheFor(obj, key) {
-  var meta = obj['__ember_meta__'];
+  var meta = obj['__ngular_meta__'];
   var cache = meta && meta.cache;
   var ret = cache && cache[key];
 

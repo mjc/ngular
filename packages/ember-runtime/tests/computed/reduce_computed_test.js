@@ -1,23 +1,23 @@
-import Ember from 'ember-metal/core';
-import { map } from 'ember-metal/enumerable_utils';
+import Ngular from 'ngular-metal/core';
+import { map } from 'ngular-metal/enumerable_utils';
 import {
   get,
   getWithDefault
-} from 'ember-metal/property_get';
-import { set } from 'ember-metal/property_set';
-import { meta as metaFor } from 'ember-metal/utils';
-import run from 'ember-metal/run_loop';
-import { observer } from 'ember-metal/mixin';
-import keys from "ember-metal/keys";
-import EmberObject from "ember-runtime/system/object";
+} from 'ngular-metal/property_get';
+import { set } from 'ngular-metal/property_set';
+import { meta as metaFor } from 'ngular-metal/utils';
+import run from 'ngular-metal/run_loop';
+import { observer } from 'ngular-metal/mixin';
+import keys from "ngular-metal/keys";
+import NgularObject from "ngular-runtime/system/object";
 import {
   ComputedProperty,
   computed
-} from "ember-metal/computed";
-import { arrayComputed } from "ember-runtime/computed/array_computed";
-import { reduceComputed } from "ember-runtime/computed/reduce_computed";
-import ArrayProxy from "ember-runtime/system/array_proxy";
-import SubArray from "ember-runtime/system/subarray";
+} from "ngular-metal/computed";
+import { arrayComputed } from "ngular-runtime/computed/array_computed";
+import { reduceComputed } from "ngular-runtime/computed/reduce_computed";
+import ArrayProxy from "ngular-runtime/system/array_proxy";
+import SubArray from "ngular-runtime/system/subarray";
 
 var obj, addCalls, removeCalls, callbackItems, shared;
 
@@ -25,11 +25,11 @@ QUnit.module('arrayComputed', {
   setup() {
     addCalls = removeCalls = 0;
 
-    obj = EmberObject.createWithMixins({
-      numbers:  Ember.A([1, 2, 3, 4, 5, 6]),
-      otherNumbers: Ember.A([7, 8, 9]),
+    obj = NgularObject.createWithMixins({
+      numbers:  Ngular.A([1, 2, 3, 4, 5, 6]),
+      otherNumbers: Ngular.A([7, 8, 9]),
 
-      // Users would obviously just use `Ember.computed.map`
+      // Users would obviously just use `Ngular.computed.map`
       // This implementation is fine for these tests, but doesn't properly work as
       // it's not index based.
       evenNumbers: arrayComputed('numbers', {
@@ -56,8 +56,8 @@ QUnit.module('arrayComputed', {
         }
       }),
 
-      nestedNumbers:  Ember.A(map([1,2,3,4,5,6], function (n) {
-                        return EmberObject.create({ p: 'otherProperty', v: n });
+      nestedNumbers:  Ngular.A(map([1,2,3,4,5,6], function (n) {
+                        return NgularObject.create({ p: 'otherProperty', v: n });
                       })),
 
       evenNestedNumbers: arrayComputed({
@@ -89,7 +89,7 @@ QUnit.test("array computed properties are instances of ComputedProperty", functi
 });
 
 QUnit.test("when the dependent array is null or undefined, `addedItem` is not called and only the initial value is returned", function() {
-  obj = EmberObject.createWithMixins({
+  obj = NgularObject.createWithMixins({
     numbers: null,
     doubledNumbers: arrayComputed('numbers', {
       addedItem(array, n) {
@@ -104,7 +104,7 @@ QUnit.test("when the dependent array is null or undefined, `addedItem` is not ca
   equal(addCalls, 0, "`addedItem` is not called when the dependent array is null");
 
   run(function() {
-    set(obj, 'numbers', Ember.A([1,2]));
+    set(obj, 'numbers', Ngular.A([1,2]));
   });
 
   deepEqual(get(obj, 'doubledNumbers'), [2,4], "An initially null dependent array can still be set later");
@@ -175,11 +175,11 @@ QUnit.test("changes to array computed properties happen synchronously", function
 });
 
 QUnit.test("multiple dependent keys can be specified via brace expansion", function() {
-  var obj = EmberObject.createWithMixins({
-    bar: Ember.A(),
-    baz: Ember.A(),
+  var obj = NgularObject.createWithMixins({
+    bar: Ngular.A(),
+    baz: Ngular.A(),
     foo: reduceComputed({
-      initialValue: Ember.A(),
+      initialValue: Ngular.A(),
       addedItem(array, item) {
         array.pushObject('a:' + item);
         return array;
@@ -211,12 +211,12 @@ QUnit.test("multiple dependent keys can be specified via brace expansion", funct
 });
 
 QUnit.test("multiple item property keys can be specified via brace expansion", function() {
-  var expected = Ember.A();
+  var expected = Ngular.A();
   var item = { propA: 'A', propB: 'B', propC: 'C' };
-  var obj = EmberObject.createWithMixins({
-    bar: Ember.A([item]),
+  var obj = NgularObject.createWithMixins({
+    bar: Ngular.A([item]),
     foo: reduceComputed({
-      initialValue: Ember.A(),
+      initialValue: Ngular.A(),
       addedItem(array, item, changeMeta) {
         array.pushObject('a:' + get(item, 'propA') + ':' + get(item, 'propB') + ':' + get(item, 'propC'));
         return array;
@@ -248,8 +248,8 @@ QUnit.test("multiple item property keys can be specified via brace expansion", f
 
 QUnit.test("doubly nested item property keys (@each.foo.@each) are not supported", function() {
   run(function() {
-    obj = EmberObject.createWithMixins({
-      peopleByOrdinalPosition: Ember.A([{ first: Ember.A([EmberObject.create({ name: "Jaime Lannister" })]) }]),
+    obj = NgularObject.createWithMixins({
+      peopleByOrdinalPosition: Ngular.A([{ first: Ngular.A([NgularObject.create({ name: "Jaime Lannister" })]) }]),
       people: arrayComputed({
         addedItem(array, item) {
           array.pushObject(get(item, 'first.firstObject'));
@@ -269,8 +269,8 @@ QUnit.test("doubly nested item property keys (@each.foo.@each) are not supported
   equal(obj.get('names.firstObject'), 'Jaime Lannister', "Doubly nested item properties can be retrieved manually");
 
   throws(function() {
-    obj = EmberObject.createWithMixins({
-      people: [{ first: Ember.A([EmberObject.create({ name: "Jaime Lannister" })]) }],
+    obj = NgularObject.createWithMixins({
+      people: [{ first: Ngular.A([NgularObject.create({ name: "Jaime Lannister" })]) }],
       names: arrayComputed({
         addedItem(array, item) {
           array.pushObject(item);
@@ -288,7 +288,7 @@ QUnit.test("after the first retrieval, array computed properties observe depende
   deepEqual(evenNumbers, [2, 4, 6], 'precond -- starts off with correct values');
 
   run(function() {
-    set(obj, 'numbers', Ember.A([20, 23, 28]));
+    set(obj, 'numbers', Ngular.A([20, 23, 28]));
   });
 
   deepEqual(evenNumbers, [20, 28], "array computed properties watch dependent arrays");
@@ -302,13 +302,13 @@ QUnit.test("array observers are torn down when dependent arrays change", functio
   equal(removeCalls, 0, 'precond - removed has not been called');
 
   run(function() {
-    set(obj, 'numbers', Ember.A([20, 23, 28]));
+    set(obj, 'numbers', Ngular.A([20, 23, 28]));
   });
 
   equal(addCalls, 9, 'add is called for each item in the new array');
   equal(removeCalls, 0, 'remove is not called when the array is reset');
 
-  numbers.replace(0, numbers.get('length'), Ember.A([7,8,9,10]));
+  numbers.replace(0, numbers.get('length'), Ngular.A([7,8,9,10]));
 
   equal(addCalls, 9, 'add is not called');
   equal(removeCalls, 0, 'remove is not called');
@@ -348,8 +348,8 @@ QUnit.test("multiple array computed properties on the same object can observe de
 
 QUnit.test("an error is thrown when a reduceComputed is defined without an initialValue property", function() {
   var defineExploder = function() {
-    EmberObject.createWithMixins({
-      collection: Ember.A(),
+    NgularObject.createWithMixins({
+      collection: Ngular.A(),
       exploder: reduceComputed('collection', {
         initialize(initialValue, changeMeta, instanceMeta) {},
 
@@ -368,8 +368,8 @@ QUnit.test("an error is thrown when a reduceComputed is defined without an initi
 });
 
 QUnit.test("dependent arrays with multiple item properties are not double-counted", function() {
-  var obj = EmberObject.extend({
-    items: Ember.A([{ foo: true }, { bar: false }, { bar: true }]),
+  var obj = NgularObject.extend({
+    items: Ngular.A([{ foo: true }, { bar: false }, { bar: true }]),
     countFooOrBar: reduceComputed({
       initialValue: 0,
       addedItem(acc) {
@@ -394,10 +394,10 @@ QUnit.test("dependent arrays with multiple item properties are not double-counte
 });
 
 QUnit.test("dependent arrays can use `replace` with an out of bounds index to add items", function() {
-  var dependentArray = Ember.A();
+  var dependentArray = Ngular.A();
   var array;
 
-  obj = EmberObject.extend({
+  obj = NgularObject.extend({
     dependentArray: dependentArray,
     computed: arrayComputed('dependentArray', {
       addedItem(acc, item, changeMeta) {
@@ -422,10 +422,10 @@ QUnit.test("dependent arrays can use `replace` with an out of bounds index to ad
 });
 
 QUnit.test("dependent arrays can use `replace` with a negative index to remove items indexed from the right", function() {
-  var dependentArray = Ember.A([1,2,3,4,5]);
+  var dependentArray = Ngular.A([1,2,3,4,5]);
   var array;
 
-  obj = EmberObject.extend({
+  obj = NgularObject.extend({
     dependentArray: dependentArray,
     computed: arrayComputed('dependentArray', {
       addedItem(acc, item) { return acc; },
@@ -446,10 +446,10 @@ QUnit.test("dependent arrays can use `replace` with a negative index to remove i
 });
 
 QUnit.test("dependent arrays that call `replace` with an out of bounds index to remove items is a no-op", function() {
-  var dependentArray = Ember.A([1, 2]);
+  var dependentArray = Ngular.A([1, 2]);
   var array;
 
-  obj = EmberObject.extend({
+  obj = NgularObject.extend({
     dependentArray: dependentArray,
     computed: arrayComputed('dependentArray', {
       addedItem(acc, item, changeMeta) { return acc; },
@@ -467,10 +467,10 @@ QUnit.test("dependent arrays that call `replace` with an out of bounds index to 
 });
 
 QUnit.test("dependent arrays that call `replace` with a too-large removedCount a) works and b) still right-truncates", function() {
-  var dependentArray = Ember.A([1, 2]);
+  var dependentArray = Ngular.A([1, 2]);
   var array;
 
-  obj = EmberObject.extend({
+  obj = NgularObject.extend({
     dependentArray: dependentArray,
     computed: arrayComputed('dependentArray', {
       addedItem(acc, item) { return acc; },
@@ -507,8 +507,8 @@ QUnit.test("removedItem is not erroneously called for dependent arrays during a 
         removedItem: removedItem
       };
 
-  obj = EmberObject.extend({
-    dependentArray: Ember.A([1, 2]),
+  obj = NgularObject.extend({
+    dependentArray: Ngular.A([1, 2]),
     identity0: arrayComputed('dependentArray', options),
     identity1: arrayComputed('identity0', options)
   }).create();
@@ -523,8 +523,8 @@ QUnit.test("removedItem is not erroneously called for dependent arrays during a 
 
 QUnit.module('arrayComputed - recomputation DKs', {
   setup() {
-    obj = EmberObject.extend({
-      people: Ember.A([{
+    obj = NgularObject.extend({
+      people: Ngular.A([{
         name: 'Jaime Lannister',
         title: 'Kingsguard'
       }, {
@@ -565,7 +565,7 @@ QUnit.test("recomputations from `arrayComputed` observers add back dependent key
   equal(meta.watching.people, 2, "people has two watchers: the array listener and titles");
 
   run(function() {
-    set(obj, 'people', Ember.A());
+    set(obj, 'people', Ngular.A());
   });
 
   // Regular CPs are invalidated when their dependent keys change, but array
@@ -578,13 +578,13 @@ QUnit.test("recomputations from `arrayComputed` observers add back dependent key
   equal(meta.watching.people, 2, "watching.people is unchanged");
 });
 
-QUnit.module('Ember.arryComputed - self chains', {
+QUnit.module('Ngular.arryComputed - self chains', {
   setup() {
-    var a = EmberObject.create({ name: 'a' });
-    var b = EmberObject.create({ name: 'b' });
+    var a = NgularObject.create({ name: 'a' });
+    var b = NgularObject.create({ name: 'b' });
 
     obj = ArrayProxy.createWithMixins({
-      content: Ember.A([a, b]),
+      content: Ngular.A([a, b]),
       names: arrayComputed('@this.@each.name', {
         addedItem(array, item, changeMeta, instanceMeta) {
           var mapped = get(item, 'name');
@@ -627,8 +627,8 @@ QUnit.module('arrayComputed - changeMeta property observers', {
   setup() {
     callbackItems = [];
     run(function() {
-      obj = EmberObject.createWithMixins({
-        items: Ember.A([EmberObject.create({ n: 'zero' }), EmberObject.create({ n: 'one' })]),
+      obj = NgularObject.createWithMixins({
+        items: Ngular.A([NgularObject.create({ n: 'zero' }), NgularObject.create({ n: 'one' })]),
         itemsN: arrayComputed('items.@each.n', {
           addedItem(array, item, changeMeta, instanceMeta) {
             callbackItems.push('add:' + changeMeta.index + ":" + get(changeMeta.item, 'n'));
@@ -659,7 +659,7 @@ QUnit.test("changeMeta includes item and index", function() {
 
   // add2
   run(function() {
-    items.pushObject(EmberObject.create({ n: 'two' }));
+    items.pushObject(NgularObject.create({ n: 'two' }));
   });
 
   // remove2
@@ -678,8 +678,8 @@ QUnit.test("changeMeta includes item and index", function() {
   // [zero', one] -> [zero', one, five, six]
   // add2 add3
   run(function() {
-    items.pushObject(EmberObject.create({ n: 'five' }));
-    items.pushObject(EmberObject.create({ n: 'six' }));
+    items.pushObject(NgularObject.create({ n: 'five' }));
+    items.pushObject(NgularObject.create({ n: 'six' }));
   });
 
   // remove0 add0
@@ -715,7 +715,7 @@ QUnit.test("changeMeta includes item and index", function() {
   // reset (does not call remove)
   run(function() {
     item = items.objectAt(1);
-    set(obj, 'items', Ember.A([]));
+    set(obj, 'items', Ngular.A([]));
   });
 
   run(function() {
@@ -727,8 +727,8 @@ QUnit.test("changeMeta includes item and index", function() {
 });
 
 QUnit.test("changeMeta includes changedCount and arrayChanged", function() {
-  var obj = EmberObject.createWithMixins({
-    letters: Ember.A(['a', 'b']),
+  var obj = NgularObject.createWithMixins({
+    letters: Ngular.A(['a', 'b']),
     lettersArrayComputed: arrayComputed('letters', {
       addedItem(array, item, changeMeta, instanceMeta) {
         callbackItems.push('add:' + changeMeta.changedCount + ":" + changeMeta.arrayChanged.join(''));
@@ -752,9 +752,9 @@ QUnit.test("changeMeta includes changedCount and arrayChanged", function() {
 });
 
 QUnit.test("`updateIndexes` is not over-eager about skipping retain:n (#4620)", function() {
-  var tracked = Ember.A();
-  obj = EmberObject.extend({
-    content: Ember.A([{ n: "one" }, { n: "two" }]),
+  var tracked = Ngular.A();
+  obj = NgularObject.extend({
+    content: Ngular.A([{ n: "one" }, { n: "two" }]),
     items: arrayComputed('content.@each.n', {
       addedItem(array, item, changeMeta) {
         tracked.push('+' + get(item, 'n') + '@' + changeMeta.index);
@@ -789,13 +789,13 @@ QUnit.test("`updateIndexes` is not over-eager about skipping retain:n (#4620)", 
 });
 
 QUnit.test("when initialValue is undefined, everything works as advertised", function() {
-  var chars = EmberObject.createWithMixins({
-    letters: Ember.A(),
+  var chars = NgularObject.createWithMixins({
+    letters: Ngular.A(),
     firstUpper: reduceComputed('letters', {
       initialValue: undefined,
 
       initialize(initialValue, changeMeta, instanceMeta) {
-        instanceMeta.matchingItems = Ember.A();
+        instanceMeta.matchingItems = Ngular.A();
         instanceMeta.subArray = new SubArray();
         instanceMeta.firstMatch = function() {
           return getWithDefault(instanceMeta.matchingItems, 'firstObject', initialValue);
@@ -842,9 +842,9 @@ QUnit.module('arrayComputed - completely invalidating dependencies', {
 });
 
 QUnit.test("non-array dependencies completely invalidate a reduceComputed CP", function() {
-  var dependentArray = Ember.A();
+  var dependentArray = Ngular.A();
 
-  obj = EmberObject.extend({
+  obj = NgularObject.extend({
     nonArray: 'v0',
     dependentArray: dependentArray,
 
@@ -880,10 +880,10 @@ QUnit.test("non-array dependencies completely invalidate a reduceComputed CP", f
 });
 
 QUnit.test("array dependencies specified with `.[]` completely invalidate a reduceComputed CP", function() {
-  var dependentArray = Ember.A();
-  var totallyInvalidatingDependentArray = Ember.A();
+  var dependentArray = Ngular.A();
+  var totallyInvalidatingDependentArray = Ngular.A();
 
-  obj = EmberObject.extend({
+  obj = NgularObject.extend({
     totallyInvalidatingDependentArray: totallyInvalidatingDependentArray,
     dependentArray: dependentArray,
 
@@ -921,10 +921,10 @@ QUnit.test("array dependencies specified with `.[]` completely invalidate a redu
 });
 
 QUnit.test("returning undefined in addedItem/removedItem completely invalidates a reduceComputed CP", function() {
-  var dependentArray = Ember.A([3,2,1]);
+  var dependentArray = Ngular.A([3,2,1]);
   var counter = 0;
 
-  obj = EmberObject.extend({
+  obj = NgularObject.extend({
     dependentArray: dependentArray,
 
     computed: reduceComputed('dependentArray', {
@@ -963,9 +963,9 @@ QUnit.test("returning undefined in addedItem/removedItem completely invalidates 
   equal(counter, 1);
 });
 
-if (!Ember.EXTEND_PROTOTYPES && !Ember.EXTEND_PROTOTYPES.Array) {
-  QUnit.test("reduceComputed complains about array dependencies that are not `Ember.Array`s", function() {
-    var Type = EmberObject.extend({
+if (!Ngular.EXTEND_PROTOTYPES && !Ngular.EXTEND_PROTOTYPES.Array) {
+  QUnit.test("reduceComputed complains about array dependencies that are not `Ngular.Array`s", function() {
+    var Type = NgularObject.extend({
       rc: reduceComputed('array', {
         initialValue: 0,
         addedItem(v) {
@@ -980,7 +980,7 @@ if (!Ember.EXTEND_PROTOTYPES && !Ember.EXTEND_PROTOTYPES.Array) {
     expectAssertion(function() {
       obj = Type.create({ array: [] });
       get(obj, 'rc');
-    }, /must be an `Ember.Array`/, "Ember.reduceComputed complains about dependent non-extended native arrays");
+    }, /must be an `Ngular.Array`/, "Ngular.reduceComputed complains about dependent non-extended native arrays");
   });
 }
 
@@ -988,19 +988,19 @@ QUnit.module('arrayComputed - misc', {
   setup() {
     callbackItems = [];
 
-    shared = Ember.Object.create({
+    shared = Ngular.Object.create({
       flag: false
     });
 
-    var Item = Ember.Object.extend({
+    var Item = Ngular.Object.extend({
       shared: shared,
       flag: computed('shared.flag', function () {
         return this.get('shared.flag');
       })
     });
 
-    obj = Ember.Object.extend({
-      upstream: Ember.A([
+    obj = Ngular.Object.extend({
+      upstream: Ngular.A([
         Item.create(),
         Item.create()
       ]),

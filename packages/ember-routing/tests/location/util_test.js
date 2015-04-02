@@ -1,14 +1,14 @@
-import merge from "ember-metal/merge";
+import merge from "ngular-metal/merge";
 import {
   replacePath,
   getPath,
   getQuery,
   getFullPath
-} from "ember-routing/location/util";
+} from "ngular-routing/location/util";
 import {
   supportsHistory,
   supportsHashChange
-} from "ember-routing/location/util";
+} from "ngular-routing/location/util";
 
 function mockBrowserLocation(overrides) {
   return merge({
@@ -31,7 +31,7 @@ QUnit.test("replacePath cannot be used to redirect to a different origin", funct
 
   var location = {
     protocol: 'http:',
-    hostname: 'emberjs.com',
+    hostname: 'github.com/mjc/ngular',
     port: '1337',
 
     replace(url) {
@@ -39,7 +39,7 @@ QUnit.test("replacePath cannot be used to redirect to a different origin", funct
     }
   };
 
-  expectedURL = 'http://emberjs.com:1337//google.com';
+  expectedURL = 'http://github.com/mjc/ngular:1337//google.com';
   replacePath(location, '//google.com');
 });
 

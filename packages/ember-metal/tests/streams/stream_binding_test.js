@@ -1,9 +1,9 @@
-import { get } from "ember-metal/property_get";
-import { set } from "ember-metal/property_set";
-import { mixin } from "ember-metal/mixin";
-import run from 'ember-metal/run_loop';
-import Stream from "ember-metal/streams/stream";
-import StreamBinding from "ember-metal/streams/stream_binding";
+import { get } from "ngular-metal/property_get";
+import { set } from "ngular-metal/property_set";
+import { mixin } from "ngular-metal/mixin";
+import run from 'ngular-metal/run_loop';
+import Stream from "ngular-metal/streams/stream";
+import StreamBinding from "ngular-metal/streams/stream_binding";
 
 var source, value;
 

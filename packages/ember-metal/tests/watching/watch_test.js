@@ -1,12 +1,12 @@
-import Ember from 'ember-metal/core';
-import { testBoth } from 'ember-metal/tests/props_helper';
-import { indexOf } from 'ember-metal/enumerable_utils';
-import { addListener } from "ember-metal/events";
+import Ngular from 'ngular-metal/core';
+import { testBoth } from 'ngular-metal/tests/props_helper';
+import { indexOf } from 'ngular-metal/enumerable_utils';
+import { addListener } from "ngular-metal/events";
 import {
   watch,
   unwatch,
   destroy
-} from "ember-metal/watching";
+} from "ngular-metal/watching";
 
 var willCount, didCount,
     willKeys, didKeys,
@@ -18,12 +18,12 @@ QUnit.module('watch', {
     willKeys = [];
     didKeys = [];
 
-    originalLookup = Ember.lookup;
-    Ember.lookup = lookup = {};
+    originalLookup = Ngular.lookup;
+    Ngular.lookup = lookup = {};
   },
 
   teardown() {
-    Ember.lookup = originalLookup;
+    Ngular.lookup = originalLookup;
   }
 });
 
@@ -40,7 +40,7 @@ function addListeners(obj, keyPath) {
 
 testBoth('watching a computed property', function(get, set) {
   var obj = {};
-  Ember.defineProperty(obj, 'foo', Ember.computed({
+  Ngular.defineProperty(obj, 'foo', Ngular.computed({
     get: function() {
       return this.__foo;
     },
@@ -93,7 +93,7 @@ testBoth('watching a regular undefined property', function(get, set) {
 
 testBoth('watches should inherit', function(get, set) {
   var obj = { foo: 'baz' };
-  var objB = Ember.create(obj);
+  var objB = Ngular.create(obj);
 
   addListeners(obj, 'foo');
   watch(obj, 'foo');
@@ -111,10 +111,10 @@ QUnit.test("watching an object THEN defining it should work also", function() {
 
   watch(obj, 'foo');
 
-  Ember.defineProperty(obj, 'foo');
-  Ember.set(obj, 'foo', 'bar');
+  Ngular.defineProperty(obj, 'foo');
+  Ngular.set(obj, 'foo', 'bar');
 
-  equal(Ember.get(obj, 'foo'), 'bar', 'should have set');
+  equal(Ngular.get(obj, 'foo'), 'bar', 'should have set');
   equal(willCount, 1, 'should have invoked willChange once');
   equal(didCount, 1, 'should have invoked didChange once');
 
@@ -128,8 +128,8 @@ QUnit.test("watching a chain then defining the property", function () {
 
   watch(obj, 'foo.bar');
 
-  Ember.defineProperty(obj, 'foo', undefined, foo);
-  Ember.set(foo, 'bar', 'baz');
+  Ngular.defineProperty(obj, 'foo', undefined, foo);
+  Ngular.set(foo, 'bar', 'baz');
 
   deepEqual(willKeys, ['foo.bar', 'bar'], 'should have invoked willChange with bar, foo.bar');
   deepEqual(didKeys, ['foo.bar', 'bar'], 'should have invoked didChange with bar, foo.bar');
@@ -146,8 +146,8 @@ QUnit.test("watching a chain then defining the nested property", function () {
 
   watch(obj, 'foo.bar.baz');
 
-  Ember.defineProperty(bar, 'bar', undefined, baz);
-  Ember.set(baz, 'baz', 'BOO');
+  Ngular.defineProperty(bar, 'bar', undefined, baz);
+  Ngular.set(baz, 'baz', 'BOO');
 
   deepEqual(willKeys, ['foo.bar.baz', 'baz'], 'should have invoked willChange with bar, foo.bar');
   deepEqual(didKeys, ['foo.bar.baz', 'baz'], 'should have invoked didChange with bar, foo.bar');
@@ -161,7 +161,7 @@ testBoth('watching an object value then unwatching should restore old value', fu
 
   watch(obj, 'foo.bar.baz.biff');
 
-  var foo = Ember.get(obj, 'foo');
+  var foo = Ngular.get(obj, 'foo');
   equal(get(get(get(foo, 'bar'), 'baz'), 'biff'), 'BIFF', 'biff should exist');
 
   unwatch(obj, 'foo.bar.baz.biff');
@@ -204,8 +204,8 @@ QUnit.test('when watching a global object, destroy should remove chain watchers 
 
   watch(obj, 'Global.foo');
 
-  var meta_Global = Ember.meta(Global);
-  var chainNode = Ember.meta(obj).chains._chains.Global._chains.foo;
+  var meta_Global = Ngular.meta(Global);
+  var chainNode = Ngular.meta(obj).chains._chains.Global._chains.foo;
   var index = indexOf(meta_Global.chainWatchers.foo, chainNode);
 
   equal(meta_Global.watching.foo, 1, 'should be watching foo');
@@ -228,8 +228,8 @@ QUnit.test('when watching another object, destroy should remove chain watchers f
 
   watch(objA, 'b.foo');
 
-  var meta_objB = Ember.meta(objB);
-  var chainNode = Ember.meta(objA).chains._chains.b._chains.foo;
+  var meta_objB = Ngular.meta(objB);
+  var chainNode = Ngular.meta(objA).chains._chains.b._chains.foo;
   var index = indexOf(meta_objB.chainWatchers.foo, chainNode);
 
   equal(meta_objB.watching.foo, 1, 'should be watching foo');

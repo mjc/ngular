@@ -1,6 +1,6 @@
-import { classStringForValue } from "ember-views/streams/class_name_binding";
+import { classStringForValue } from "ngular-views/streams/class_name_binding";
 
-QUnit.module("EmberView - classStringForValue");
+QUnit.module("NgularView - classStringForValue");
 
 QUnit.test("returns dasherized version of last path part if value is true", function() {
   equal(classStringForValue("propertyName", true), "property-name", "class is dasherized");
@@ -46,6 +46,6 @@ QUnit.test("treat empty array as falsy value and return null", function() {
 });
 
 QUnit.test("treat non-empty array as truthy value and return the className if specified", function() {
-  equal(classStringForValue("propertyName", ['emberjs'], "truthyClass"), "truthyClass", "returns className if given");
-  equal(classStringForValue("content.propertyName", ['emberjs'], "truthyClass"), "truthyClass", "returns className if given");
+  equal(classStringForValue("propertyName", ['ngularjs'], "truthyClass"), "truthyClass", "returns className if given");
+  equal(classStringForValue("content.propertyName", ['ngularjs'], "truthyClass"), "truthyClass", "returns className if given");
 });

@@ -1,15 +1,15 @@
 /**
-@module ember
-@submodule ember-htmlbars
+@module ngular
+@submodule ngular-htmlbars
 */
 
-import merge from "ember-metal/merge";
-import helpers from "ember-htmlbars/helpers";
-import View from "ember-views/views/view";
-import Component from "ember-views/views/component";
-import makeViewHelper from "ember-htmlbars/system/make-view-helper";
-import makeBoundHelper from "ember-htmlbars/compat/make-bound-helper";
-import { isStream } from "ember-metal/streams/utils";
+import merge from "ngular-metal/merge";
+import helpers from "ngular-htmlbars/helpers";
+import View from "ngular-views/views/view";
+import Component from "ngular-views/views/component";
+import makeViewHelper from "ngular-htmlbars/system/make-view-helper";
+import makeBoundHelper from "ngular-htmlbars/compat/make-bound-helper";
+import { isStream } from "ngular-metal/streams/utils";
 
 var slice = [].slice;
 
@@ -108,7 +108,7 @@ export function registerHandlebarsCompatibleHelper(name, value) {
 }
 
 export function handlebarsHelper(name, value) {
-  Ember.assert("You tried to register a component named '" + name +
+  Ngular.assert("You tried to register a component named '" + name +
                "', but component names must include a '-'", !Component.detect(value) || name.match(/-/));
 
   if (View.detect(value)) {

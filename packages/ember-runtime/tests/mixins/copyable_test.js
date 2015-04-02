@@ -1,11 +1,11 @@
-import CopyableTests from 'ember-runtime/tests/suites/copyable';
-import Copyable from 'ember-runtime/mixins/copyable';
-import EmberObject from 'ember-runtime/system/object';
-import {generateGuid} from 'ember-metal/utils';
-import {set} from 'ember-metal/property_set';
-import {get} from 'ember-metal/property_get';
+import CopyableTests from 'ngular-runtime/tests/suites/copyable';
+import Copyable from 'ngular-runtime/mixins/copyable';
+import NgularObject from 'ngular-runtime/system/object';
+import {generateGuid} from 'ngular-metal/utils';
+import {set} from 'ngular-metal/property_set';
+import {get} from 'ngular-metal/property_get';
 
-var CopyableObject = EmberObject.extend(Copyable, {
+var CopyableObject = NgularObject.extend(Copyable, {
 
   id: null,
 

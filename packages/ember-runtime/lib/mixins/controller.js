@@ -1,16 +1,16 @@
-import { Mixin } from "ember-metal/mixin";
-import alias from 'ember-metal/alias';
-import ActionHandler from "ember-runtime/mixins/action_handler";
-import ControllerContentModelAliasDeprecation from "ember-runtime/mixins/controller_content_model_alias_deprecation";
+import { Mixin } from "ngular-metal/mixin";
+import alias from 'ngular-metal/alias';
+import ActionHandler from "ngular-runtime/mixins/action_handler";
+import ControllerContentModelAliasDeprecation from "ngular-runtime/mixins/controller_content_model_alias_deprecation";
 
 /**
-  `Ember.ControllerMixin` provides a standard interface for all classes that
-  compose Ember's controller layer: `Ember.Controller`,
-  `Ember.ArrayController`, and `Ember.ObjectController`.
+  `Ngular.ControllerMixin` provides a standard interface for all classes that
+  compose Ngular's controller layer: `Ngular.Controller`,
+  `Ngular.ArrayController`, and `Ngular.ObjectController`.
 
   @class ControllerMixin
-  @namespace Ember
-  @uses Ember.ActionHandler
+  @namespace Ngular
+  @uses Ngular.ActionHandler
 */
 export default Mixin.create(ActionHandler, ControllerContentModelAliasDeprecation, {
   /* ducktype as a controller */
@@ -24,7 +24,7 @@ export default Mixin.create(ActionHandler, ControllerContentModelAliasDeprecatio
 
     By default, the value of the target property is set to the router, and
     is injected when a controller is instantiated. This injection is defined
-    in Ember.Application#buildContainer, and is applied as part of the
+    in Ngular.Application#buildContainer, and is applied as part of the
     applications initialization process. It can also be set after a controller
     has been instantiated, for instance when using the render helper in a
     template, or when a controller is used as an `itemController`. In most

@@ -1,5 +1,5 @@
 require 'bundler/setup'
-require './lib/ember/version'
+require './lib/ngular/version'
 require 'zlib'
 require 'fileutils'
 require 'pathname'
@@ -15,12 +15,12 @@ namespace :release do
 
   task :gem do
     sh 'npm run-script build'
-    sh 'gem build ember-source.gemspec'
-    sh "gem push ember-source-#{Ember::VERSION.gsub('-','.')}.gem"
+    sh 'gem build ngular-source.gemspec'
+    sh "gem push ngular-source-#{Ngular::VERSION.gsub('-','.')}.gem"
   end
 
   namespace :starter_kit do
-    ember_output = "tmp/starter-kit/js/libs/ember-#{Ember::VERSION}.js"
+    ngular_output = "tmp/starter-kit/js/libs/ngular-#{Ngular::VERSION}.js"
 
     task :pull => "tmp/starter-kit" do
       cd("tmp/starter-kit") do
@@ -30,37 +30,37 @@ namespace :release do
 
     task :clean => :pull do
       cd("tmp/starter-kit") do
-        rm_rf Dir["js/libs/ember*.js"]
+        rm_rf Dir["js/libs/ngular*.js"]
       end
     end
 
-    file "dist/ember.js" => :dist
-    file "dist/ember.min.js" => :dist
+    file "dist/ngular.js" => :dist
+    file "dist/ngular.min.js" => :dist
 
-    task "dist/starter-kit.#{Ember::VERSION}.zip" => ["tmp/starter-kit/index.html"] do
+    task "dist/starter-kit.#{Ngular::VERSION}.zip" => ["tmp/starter-kit/index.html"] do
       mkdir_p "dist"
 
       cd("tmp") do
-        sh %{zip -r ../dist/starter-kit.#{Ember::VERSION}.zip starter-kit -x "starter-kit/.git/*"}
+        sh %{zip -r ../dist/starter-kit.#{Ngular::VERSION}.zip starter-kit -x "starter-kit/.git/*"}
       end
     end
 
-    file ember_output => [:clean, "tmp/starter-kit", "dist/ember.js"] do
-      sh "cp dist/ember.js #{ember_output}"
+    file ngular_output => [:clean, "tmp/starter-kit", "dist/ngular.js"] do
+      sh "cp dist/ngular.js #{ngular_output}"
     end
 
     file "tmp/starter-kit" do
       mkdir_p "tmp"
 
       cd("tmp") do
-        sh "git clone git@github.com:emberjs/starter-kit.git"
+        sh "git clone git@github.com:ngularjs/starter-kit.git"
       end
     end
 
-    file "tmp/starter-kit/index.html" => [ember_output] do
+    file "tmp/starter-kit/index.html" => [ngular_output] do
       index = File.read("tmp/starter-kit/index.html")
-      index.gsub! %r{<script src="js/libs/ember-\d\.\d.*</script>},
-        %{<script src="js/libs/ember-#{Ember::VERSION}.js"></script>}
+      index.gsub! %r{<script src="js/libs/ngular-\d\.\d.*</script>},
+        %{<script src="js/libs/ngular-#{Ngular::VERSION}.js"></script>}
 
       open("tmp/starter-kit/index.html", "w") { |f| f.write index }
     end
@@ -73,8 +73,8 @@ namespace :release do
       unless pretend?
         cd("tmp/starter-kit") do
           sh "git add -A"
-          sh "git commit -m 'Updated to #{Ember::VERSION}'"
-          sh "git tag v#{Ember::VERSION}"
+          sh "git commit -m 'Updated to #{Ngular::VERSION}'"
+          sh "git tag v#{Ngular::VERSION}"
 
           print "Are you sure you want to push the starter-kit repo to github? (y/N) "
           res = STDIN.gets.chomp
@@ -88,8 +88,8 @@ namespace :release do
       end
     end
 
-    desc "Build the Ember.js starter kit"
-    task :build => "dist/starter-kit.#{Ember::VERSION}.zip"
+    desc "Build the Ngular.js starter kit"
+    task :build => "dist/starter-kit.#{Ngular::VERSION}.zip"
 
     desc "Prepare starter-kit for release"
     task :prepare => [:clean, :build]
@@ -103,7 +103,7 @@ namespace :release do
       mkdir_p "tmp"
 
       cd("tmp") do
-        sh "git clone https://github.com/emberjs/website.git"
+        sh "git clone https://github.com/ngularjs/website.git"
       end
     end
 
@@ -115,9 +115,9 @@ namespace :release do
 
     task :about => [:pull, :dist] do
       about = File.read("tmp/website/source/about.html.erb")
-      min_gz = Zlib::Deflate.deflate(File.read("dist/ember.min.js")).bytes.count / 1024
+      min_gz = Zlib::Deflate.deflate(File.read("dist/ngular.min.js")).bytes.count / 1024
 
-      about.gsub!(/(\d+\.\d+\.\d+-rc(?:\.?\d+)?)/, Ember::VERSION)
+      about.gsub!(/(\d+\.\d+\.\d+-rc(?:\.?\d+)?)/, Ngular::VERSION)
       about.gsub!(/min \+ gzip \d+kb/, "min + gzip  #{min_gz}kb")
 
       open("tmp/website/source/about.html.erb", "w") { |f| f.write about }
@@ -129,7 +129,7 @@ namespace :release do
       unless pretend?
         cd("tmp/website") do
           sh "git add -A"
-          sh "git commit -m 'Updated to #{Ember::VERSION}'"
+          sh "git commit -m 'Updated to #{Ngular::VERSION}'"
 
           print "Are you sure you want to push the website repo to github? (y/N) "
           res = STDIN.gets.chomp
@@ -151,9 +151,9 @@ namespace :release do
     task :deploy => [:update]
   end
 
-  desc "Prepare Ember for new release"
-  task :prepare => ['ember:clean', 'ember:release:prepare', 'starter_kit:prepare', 'website:prepare']
+  desc "Prepare Ngular for new release"
+  task :prepare => ['ngular:clean', 'ngular:release:prepare', 'starter_kit:prepare', 'website:prepare']
 
-  desc "Deploy a new Ember release"
-  task :deploy => ['ember:release:deploy', 'starter_kit:deploy', 'website:deploy']
+  desc "Deploy a new Ngular release"
+  task :deploy => ['ngular:release:deploy', 'starter_kit:deploy', 'website:deploy']
 end

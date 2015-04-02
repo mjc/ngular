@@ -1,13 +1,13 @@
-import ComponentLookup from "ember-views/component_lookup";
+import ComponentLookup from "ngular-views/component_lookup";
 import Registry from "container/registry";
-import EmberView from "ember-views/views/view";
-import compile from "ember-template-compiler/system/compile";
-import { runAppend, runDestroy } from "ember-runtime/tests/utils";
+import NgularView from "ngular-views/views/view";
+import compile from "ngular-template-compiler/system/compile";
+import { runAppend, runDestroy } from "ngular-runtime/tests/utils";
 
 var view, registry, container;
 
-if (Ember.FEATURES.isEnabled('ember-htmlbars-component-generation')) {
-  QUnit.module("ember-htmlbars: component hook", {
+if (Ngular.FEATURES.isEnabled('ngular-htmlbars-component-generation')) {
+  QUnit.module("ngular-htmlbars: component hook", {
     setup() {
       registry = new Registry();
       container = registry.container();
@@ -26,7 +26,7 @@ if (Ember.FEATURES.isEnabled('ember-htmlbars-component-generation')) {
   QUnit.test("component is looked up from the container", function() {
     registry.register('template:components/foo-bar', compile('yippie!'));
 
-    view = EmberView.create({
+    view = NgularView.create({
       container: container,
       template: compile("<foo-bar />")
     });
@@ -37,7 +37,7 @@ if (Ember.FEATURES.isEnabled('ember-htmlbars-component-generation')) {
   });
 
   QUnit.test("asserts if component is not found", function() {
-    view = EmberView.create({
+    view = NgularView.create({
       container: container,
       template: compile("<foo-bar />")
     });

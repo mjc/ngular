@@ -1,14 +1,14 @@
 /**
-@module ember
-@submodule ember-runtime
+@module ngular
+@submodule ngular-runtime
 */
 
-import { Mixin } from "ember-metal/mixin";
-import { get } from "ember-metal/property_get";
-import { set } from "ember-metal/property_set";
+import { Mixin } from "ngular-metal/mixin";
+import { get } from "ngular-metal/property_get";
+import { set } from "ngular-metal/property_set";
 
 /**
-  The `Ember.Freezable` mixin implements some basic methods for marking an
+  The `Ngular.Freezable` mixin implements some basic methods for marking an
   object as frozen. Once an object is frozen it should be read only. No changes
   may be made the internal state of the object.
 
@@ -28,17 +28,17 @@ import { set } from "ember-metal/property_set";
 
   ## Example Usage
 
-  The example below shows a simple object that implement the `Ember.Freezable`
+  The example below shows a simple object that implement the `Ngular.Freezable`
   protocol.
 
   ```javascript
-  Contact = Ember.Object.extend(Ember.Freezable, {
+  Contact = Ngular.Object.extend(Ngular.Freezable, {
     firstName: null,
     lastName: null,
 
     // swaps the names
     swapNames: function() {
-      if (this.get('isFrozen')) throw Ember.FROZEN_ERROR;
+      if (this.get('isFrozen')) throw Ngular.FROZEN_ERROR;
       var tmp = this.get('firstName');
       this.set('firstName', this.get('lastName'));
       this.set('lastName', tmp);
@@ -55,13 +55,13 @@ import { set } from "ember-metal/property_set";
 
   ## Copying
 
-  Usually the `Ember.Freezable` protocol is implemented in cooperation with the
-  `Ember.Copyable` protocol, which defines a `frozenCopy()` method that will
+  Usually the `Ngular.Freezable` protocol is implemented in cooperation with the
+  `Ngular.Copyable` protocol, which defines a `frozenCopy()` method that will
   return a frozen object, if the object implements this method as well.
 
   @class Freezable
-  @namespace Ember
-  @since Ember 0.9
+  @namespace Ngular
+  @since Ngular 0.9
 */
 export var Freezable = Mixin.create({
 

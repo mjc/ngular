@@ -1,7 +1,7 @@
-import run from "ember-metal/run_loop";
-import EventDispatcher from "ember-views/system/event_dispatcher";
-import jQuery from "ember-views/system/jquery";
-import View from "ember-views/views/view";
+import run from "ngular-metal/run_loop";
+import EventDispatcher from "ngular-views/system/event_dispatcher";
+import jQuery from "ngular-views/system/jquery";
+import View from "ngular-views/views/view";
 
 var view, dispatcher;
 

@@ -1,19 +1,19 @@
-import Ember from 'ember-metal/core'; // Ember.deprecate
-import { Mixin } from 'ember-metal/mixin';
+import Ngular from 'ngular-metal/core'; // Ngular.deprecate
+import { Mixin } from 'ngular-metal/mixin';
 
 /*
   The ControllerContentModelAliasDeprecation mixin is used to provide a useful
-  deprecation warning when specifying `content` directly on a `Ember.Controller`
+  deprecation warning when specifying `content` directly on a `Ngular.Controller`
   (without also specifying `model`).
 
-  Ember versions prior to 1.7 used `model` as an alias of `content`, but due to
+  Ngular versions prior to 1.7 used `model` as an alias of `content`, but due to
   much confusion this alias was reversed (so `content` is now an alias of `model).
 
   This change reduces many caveats with model/content, and also sets a
   simple ground rule: Never set a controllers content, rather always set
-  its model and ember will do the right thing.
+  its model and ngular will do the right thing.
 
-  Used internally by Ember in `Ember.Controller`.
+  Used internally by Ngular in `Ngular.Controller`.
 */
 export default Mixin.create({
   /**
@@ -39,7 +39,7 @@ export default Mixin.create({
       props.model = props.content;
       delete props['content'];
 
-      Ember.deprecate('Do not specify `content` on a Controller, use `model` instead.', false);
+      Ngular.deprecate('Do not specify `content` on a Controller, use `model` instead.', false);
     }
   }
 });

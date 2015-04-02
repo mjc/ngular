@@ -1,11 +1,11 @@
 /**
-@module ember
-@submodule ember-htmlbars
+@module ngular
+@submodule ngular-htmlbars
 */
 
-import Ember from "ember-metal/core"; // Ember.assert
-import { get } from "ember-metal/property_get";
-import View from "ember-views/views/view";
+import Ngular from "ngular-metal/core"; // Ngular.assert
+import { get } from "ngular-metal/property_get";
+import View from "ngular-views/views/view";
 
 export default function appendTemplatedView(parentView, morph, viewClassOrInstance, props) {
   var viewProto;
@@ -15,7 +15,7 @@ export default function appendTemplatedView(parentView, morph, viewClassOrInstan
     viewProto = viewClassOrInstance.proto();
   }
 
-  Ember.assert(
+  Ngular.assert(
     "You cannot provide a template block if you also specified a templateName",
     !props.template || (!get(props, 'templateName') && !get(viewProto, 'templateName'))
   );

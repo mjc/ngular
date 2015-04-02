@@ -1,10 +1,10 @@
-import Ember from "ember-metal/core"; // warn, assert, etc;
-import { get, normalizeTuple } from "ember-metal/property_get";
-import { meta as metaFor } from "ember-metal/utils";
-import { forEach } from "ember-metal/array";
-import { watchKey, unwatchKey } from "ember-metal/watch_key";
+import Ngular from "ngular-metal/core"; // warn, assert, etc;
+import { get, normalizeTuple } from "ngular-metal/property_get";
+import { meta as metaFor } from "ngular-metal/utils";
+import { forEach } from "ngular-metal/array";
+import { watchKey, unwatchKey } from "ngular-metal/watch_key";
 
-var warn = Ember.warn;
+var warn = Ngular.warn;
 var FIRST_KEY = /^([^\.]+)/;
 
 function firstKey(path) {
@@ -32,7 +32,7 @@ export function flushPendingChains() {
     q[0].add(q[1]);
   });
 
-  warn('Watching an undefined global, Ember expects watched globals to be' +
+  warn('Watching an undefined global, Ngular expects watched globals to be' +
        ' setup by the time the run loop is flushed, check for typos', pendingQueue.length === 0);
 }
 
@@ -60,7 +60,7 @@ function removeChainWatcher(obj, keyName, node) {
     return;
   }
 
-  var m = obj['__ember_meta__'];
+  var m = obj['__ngular_meta__'];
   if (m && !m.hasOwnProperty('chainWatchers')) {
     return;
   }
@@ -118,7 +118,7 @@ function lazyGet(obj, key) {
     return;
   }
 
-  var meta = obj['__ember_meta__'];
+  var meta = obj['__ngular_meta__'];
   // check if object meant only to be a prototype
   if (meta && meta.proto === obj) {
     return;
@@ -375,7 +375,7 @@ ChainNode.prototype = {
 
 export function finishChains(obj) {
   // We only create meta if we really have to
-  var m = obj['__ember_meta__'];
+  var m = obj['__ngular_meta__'];
   var chains, chainWatchers, chainNodes;
 
   if (m) {

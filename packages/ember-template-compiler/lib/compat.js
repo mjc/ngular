@@ -1,10 +1,10 @@
-import Ember from "ember-metal/core";
-import precompile from "ember-template-compiler/compat/precompile";
-import compile from "ember-template-compiler/system/compile";
-import template from "ember-template-compiler/system/template";
+import Ngular from "ngular-metal/core";
+import precompile from "ngular-template-compiler/compat/precompile";
+import compile from "ngular-template-compiler/system/compile";
+import template from "ngular-template-compiler/system/template";
 
-var EmberHandlebars = Ember.Handlebars = Ember.Handlebars || {};
+var NgularHandlebars = Ngular.Handlebars = Ngular.Handlebars || {};
 
-EmberHandlebars.precompile = precompile;
-EmberHandlebars.compile = compile;
-EmberHandlebars.template = template;
+NgularHandlebars.precompile = precompile;
+NgularHandlebars.compile = compile;
+NgularHandlebars.template = template;

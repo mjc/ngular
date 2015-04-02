@@ -1,5 +1,5 @@
-/* globals EmberDev */
-import Libraries from "ember-metal/libraries";
+/* globals NgularDev */
+import Libraries from "ngular-metal/libraries";
 
 var libs, registry;
 
@@ -36,7 +36,7 @@ QUnit.test('only the first registration of a library is stored', function() {
   equal(registry.length, 1);
 });
 
-if (Ember.FEATURES.isEnabled('ember-libraries-isregistered')) {
+if (Ngular.FEATURES.isEnabled('ngular-libraries-isregistered')) {
   QUnit.test('isRegistered returns correct value', function() {
     expect(3);
 
@@ -51,26 +51,26 @@ if (Ember.FEATURES.isEnabled('ember-libraries-isregistered')) {
 }
 
 QUnit.test('attempting to register a library that is already registered warns you', function() {
-  if (EmberDev && EmberDev.runningProdBuild) {
+  if (NgularDev && NgularDev.runningProdBuild) {
     ok(true, 'Logging does not occur in production builds');
     return;
   }
 
   expect(1);
 
-  var oldWarn = Ember.warn;
+  var oldWarn = Ngular.warn;
   libs.register('magic', 1.23);
 
-  Ember.warn = function(msg, test) {
+  Ngular.warn = function(msg, test) {
     if (!test) {
-      equal(msg, 'Library "magic" is already registered with Ember.');
+      equal(msg, 'Library "magic" is already registered with Ngular.');
     }
   };
 
   // Should warn us
   libs.register('magic', 2.23);
 
-  Ember.warn = oldWarn;
+  Ngular.warn = oldWarn;
 });
 
 QUnit.test('libraries can be de-registered', function() {
@@ -103,5 +103,5 @@ QUnit.test('Libraries#each allows us to loop through each registered library (bu
       equal(expectedLib.name, name);
       equal(expectedLib.version, version);
     });
-  }, 'Using Ember.libraries.each() is deprecated. Access to a list of registered libraries is currently a private API. If you are not knowingly accessing this method, your out-of-date Ember Inspector may be doing so.');
+  }, 'Using Ngular.libraries.each() is deprecated. Access to a list of registered libraries is currently a private API. If you are not knowingly accessing this method, your out-of-date Ngular Inspector may be doing so.');
 });

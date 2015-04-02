@@ -1,11 +1,11 @@
-import jQuery from "ember-views/system/jquery";
-import run from "ember-metal/run_loop";
-import Application from "ember-application/system/application";
-import DefaultResolver from "ember-application/system/resolver";
+import jQuery from "ngular-views/system/jquery";
+import run from "ngular-metal/run_loop";
+import Application from "ngular-application/system/application";
+import DefaultResolver from "ngular-application/system/resolver";
 
 var application;
 
-QUnit.module("Ember.Application Dependency Injection – customResolver", {
+QUnit.module("Ngular.Application Dependency Injection – customResolver", {
   setup() {
     function fallbackTemplate() { return "<h1>Fallback</h1>"; }
 

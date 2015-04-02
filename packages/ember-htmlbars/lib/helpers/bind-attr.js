@@ -1,27 +1,27 @@
 /**
-@module ember
-@submodule ember-htmlbars
+@module ngular
+@submodule ngular-htmlbars
 */
 
-import Ember from "ember-metal/core"; // Ember.assert
+import Ngular from "ngular-metal/core"; // Ngular.assert
 
-import { fmt } from "ember-runtime/system/string";
-import AttrNode from "ember-views/attr_nodes/attr_node";
-import LegacyBindAttrNode from "ember-views/attr_nodes/legacy_bind";
-import keys from "ember-metal/keys";
-import helpers from "ember-htmlbars/helpers";
-import { map } from 'ember-metal/enumerable_utils';
+import { fmt } from "ngular-runtime/system/string";
+import AttrNode from "ngular-views/attr_nodes/attr_node";
+import LegacyBindAttrNode from "ngular-views/attr_nodes/legacy_bind";
+import keys from "ngular-metal/keys";
+import helpers from "ngular-htmlbars/helpers";
+import { map } from 'ngular-metal/enumerable_utils';
 import {
   isStream,
   concat
-} from "ember-metal/streams/utils";
+} from "ngular-metal/streams/utils";
 import {
   streamifyClassNameBinding
-} from "ember-views/streams/class_name_binding";
+} from "ngular-views/streams/class_name_binding";
 
 /**
   `bind-attr` allows you to create a binding between DOM element attributes and
-  Ember objects. For example:
+  Ngular objects. For example:
 
   ```handlebars
   <img {{bind-attr src=imageUrl alt=imageTitle}}>
@@ -138,14 +138,14 @@ import {
   ```
 
   @method bind-attr
-  @for Ember.Handlebars.helpers
+  @for Ngular.Handlebars.helpers
   @param {Hash} options
   @return {String} HTML string
 */
 function bindAttrHelper(params, hash, options, env) {
   var element = options.element;
 
-  Ember.assert("You must specify at least one hash argument to bind-attr", !!keys(hash).length);
+  Ngular.assert("You must specify at least one hash argument to bind-attr", !!keys(hash).length);
 
   var view = env.data.view;
 
@@ -159,7 +159,7 @@ function bindAttrHelper(params, hash, options, env) {
     var classView = new AttrNode('class', classNameBindings);
     classView._morph = env.dom.createAttrMorph(element, 'class');
 
-    Ember.assert(
+    Ngular.assert(
       'You cannot set `class` manually and via `{{bind-attr}}` helper on the same element. ' +
       'Please use `{{bind-attr}}`\'s `:static-class` syntax instead.',
       !element.getAttribute('class')
@@ -180,7 +180,7 @@ function bindAttrHelper(params, hash, options, env) {
     if (isStream(path)) {
       lazyValue = path;
     } else {
-      Ember.assert(
+      Ngular.assert(
         fmt("You must provide an expression as the value of bound attribute." +
             " You specified: %@=%@", [attr, path]),
         typeof path === 'string'
@@ -191,7 +191,7 @@ function bindAttrHelper(params, hash, options, env) {
     attrView = new LegacyBindAttrNode(attr, lazyValue);
     attrView._morph = env.dom.createAttrMorph(element, attr);
 
-    Ember.assert(
+    Ngular.assert(
       'You cannot set `' + attr + '` manually and via `{{bind-attr}}` helper on the same element.',
       !element.getAttribute(attr)
     );
@@ -213,14 +213,14 @@ function applyClassNameBindings(classNameBindings, view) {
   See `bind-attr`
 
   @method bindAttr
-  @for Ember.Handlebars.helpers
+  @for Ngular.Handlebars.helpers
   @deprecated
   @param {Function} context
   @param {Hash} options
   @return {String} HTML string
 */
 function bindAttrHelperDeprecated() {
-  Ember.deprecate("The 'bindAttr' view helper is deprecated in favor of 'bind-attr'");
+  Ngular.deprecate("The 'bindAttr' view helper is deprecated in favor of 'bind-attr'");
 
   return helpers['bind-attr'].helperFunction.apply(this, arguments);
 }

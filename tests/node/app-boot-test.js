@@ -7,39 +7,39 @@ var defeatureifyConfig = require(path.join(__dirname, '../../features.json'));
 
 var canUseInstanceInitializers, canUseApplicationVisit;
 
-if (defeatureifyConfig.features['ember-application-instance-initializers'] !== false) {
+if (defeatureifyConfig.features['ngular-application-instance-initializers'] !== false) {
   canUseInstanceInitializers = true;
 }
 
-if (defeatureifyConfig.features['ember-application-visit'] !== false) {
+if (defeatureifyConfig.features['ngular-application-visit'] !== false) {
   canUseApplicationVisit = true;
 }
 
 /*jshint -W079 */
-global.EmberENV = {
+global.NgularENV = {
   FEATURES: {
-    'ember-application-instance-initializers': true,
-    'ember-application-visit': true
+    'ngular-application-instance-initializers': true,
+    'ngular-application-visit': true
   }
 };
 
-var Ember = require(path.join(distPath, 'ember.debug.cjs'));
-var compile = require(path.join(distPath, 'ember-template-compiler')).compile;
-Ember.testing = true;
-var DOMHelper = Ember.View.DOMHelper;
+var Ngular = require(path.join(distPath, 'ngular.debug.cjs'));
+var compile = require(path.join(distPath, 'ngular-template-compiler')).compile;
+Ngular.testing = true;
+var DOMHelper = Ngular.View.DOMHelper;
 var SimpleDOM = require('simple-dom');
 var URL = require('url');
 
-var run = Ember.run;
+var run = Ngular.run;
 
 var domHelper = createDOMHelper();
 
 function createApplication() {
-  var App = Ember.Application.extend().create({
+  var App = Ngular.Application.extend().create({
     autoboot: false
   });
 
-  App.Router = Ember.Router.extend({
+  App.Router = Ngular.Router.extend({
     location: 'none'
   });
 
@@ -64,7 +64,7 @@ function registerDOMHelper(app) {
     initialize: function(app) {
       app.registry.register('renderer:-dom', {
         create: function() {
-          return new Ember.View._Renderer(domHelper, false);
+          return new Ngular.View._Renderer(domHelper, false);
         }
       });
     }
@@ -84,7 +84,7 @@ function registerTemplates(app, templates) {
 
 function renderToElement(instance) {
   var element;
-  Ember.run(function() {
+  Ngular.run(function() {
     element = instance.view.renderToElement();
   });
 
@@ -104,7 +104,7 @@ if (canUseInstanceInitializers && canUseApplicationVisit) {
   QUnit.test("App is created without throwing an exception", function() {
     var app;
 
-    Ember.run(function() {
+    Ngular.run(function() {
       app = createApplication();
       registerDOMHelper(app);
 
@@ -115,8 +115,8 @@ if (canUseInstanceInitializers && canUseApplicationVisit) {
   });
 
   QUnit.test("It is possible to render a view in Node", function() {
-    var View = Ember.View.extend({
-      renderer: new Ember.View._Renderer(new DOMHelper(new SimpleDOM.Document())),
+    var View = Ngular.View.extend({
+      renderer: new Ngular.View._Renderer(new DOMHelper(new SimpleDOM.Document())),
       template: compile("<h1>Hello</h1>")
     });
 
@@ -131,8 +131,8 @@ if (canUseInstanceInitializers && canUseApplicationVisit) {
   });
 
   QUnit.test("It is possible to render a view with curlies in Node", function() {
-    var View = Ember.Component.extend({
-      renderer: new Ember.View._Renderer(new DOMHelper(new SimpleDOM.Document())),
+    var View = Ngular.Component.extend({
+      renderer: new Ngular.View._Renderer(new DOMHelper(new SimpleDOM.Document())),
       layout: compile("<h1>Hello {{location}}</h1>"),
       location: "World"
     });
@@ -148,12 +148,12 @@ if (canUseInstanceInitializers && canUseApplicationVisit) {
   });
 
   QUnit.test("It is possible to render a view with a nested {{view}} helper in Node", function() {
-    var View = Ember.Component.extend({
-      renderer: new Ember.View._Renderer(new DOMHelper(new SimpleDOM.Document())),
+    var View = Ngular.Component.extend({
+      renderer: new Ngular.View._Renderer(new DOMHelper(new SimpleDOM.Document())),
       layout: compile("<h1>Hello {{#if hasExistence}}{{location}}{{/if}}</h1> <div>{{view bar}}</div>"),
       location: "World",
       hasExistence: true,
-      bar: Ember.View.extend({
+      bar: Ngular.View.extend({
         template: compile("<p>The files are *inside* the computer?!</p>")
       })
     });
@@ -165,7 +165,7 @@ if (canUseInstanceInitializers && canUseApplicationVisit) {
     run(view, view.createElement);
 
     var serializer = new SimpleDOM.HTMLSerializer(SimpleDOM.voidMap);
-    ok(serializer.serialize(view.element).match(/<h1>Hello World<\/h1> <div><div id="(.*)" class="ember-view"><p>The files are \*inside\* the computer\?\!<\/p><\/div><\/div>/));
+    ok(serializer.serialize(view.element).match(/<h1>Hello World<\/h1> <div><div id="(.*)" class="ngular-view"><p>The files are \*inside\* the computer\?\!<\/p><\/div><\/div>/));
   });
 
   QUnit.test("It is possible to render a view with {{link-to}} in Node", function() {
@@ -191,7 +191,7 @@ if (canUseInstanceInitializers && canUseApplicationVisit) {
 
       var element = renderToElement(instance);
 
-      assertHTMLMatches(element.firstChild, /^<div id="ember\d+" class="ember-view"><h1><a id="ember\d+" class="ember-view" href="\/photos">Go to photos<\/a><\/h1><\/div>$/);
+      assertHTMLMatches(element.firstChild, /^<div id="ngular\d+" class="ngular-view"><h1><a id="ngular\d+" class="ngular-view" href="\/photos">Go to photos<\/a><\/h1><\/div>$/);
     });
   });
 
@@ -199,7 +199,7 @@ if (canUseInstanceInitializers && canUseApplicationVisit) {
     QUnit.stop();
     QUnit.stop();
 
-    var run = Ember.run;
+    var run = Ngular.run;
     var app;
 
     run(function() {
@@ -222,7 +222,7 @@ if (canUseInstanceInitializers && canUseApplicationVisit) {
 
       var element = renderToElement(instance);
 
-      assertHTMLMatches(element.firstChild, /<div id="ember(.*)" class="ember-view"><p><span>index<\/span><\/p><\/div>/);
+      assertHTMLMatches(element.firstChild, /<div id="ngular(.*)" class="ngular-view"><p><span>index<\/span><\/p><\/div>/);
     });
 
     app.visit('/photos').then(function(instance) {
@@ -230,7 +230,7 @@ if (canUseInstanceInitializers && canUseApplicationVisit) {
 
       var element = renderToElement(instance);
 
-      assertHTMLMatches(element.firstChild, /<div id="ember(.*)" class="ember-view"><p><em>photos<\/em><\/p><\/div>/);
+      assertHTMLMatches(element.firstChild, /<div id="ngular(.*)" class="ngular-view"><p><em>photos<\/em><\/p><\/div>/);
     });
   });
 }

@@ -1,18 +1,18 @@
 import {
   registerHandlebarsCompatibleHelper
-} from "ember-htmlbars/compat/helper";
+} from "ngular-htmlbars/compat/helper";
 
-import EmberView from "ember-views/views/view";
-import Component from "ember-views/views/component";
+import NgularView from "ngular-views/views/view";
+import Component from "ngular-views/views/component";
 
-import makeViewHelper from "ember-htmlbars/system/make-view-helper";
-import helpers from "ember-htmlbars/helpers";
-import compile from "ember-template-compiler/system/compile";
-import { runAppend, runDestroy } from "ember-runtime/tests/utils";
+import makeViewHelper from "ngular-htmlbars/system/make-view-helper";
+import helpers from "ngular-htmlbars/helpers";
+import compile from "ngular-template-compiler/system/compile";
+import { runAppend, runDestroy } from "ngular-runtime/tests/utils";
 
 var view;
 
-QUnit.module('ember-htmlbars: Handlebars compatible helpers', {
+QUnit.module('ngular-htmlbars: Handlebars compatible helpers', {
   teardown() {
     runDestroy(view);
 
@@ -31,7 +31,7 @@ QUnit.test('wraps provided function so that original path params are provided to
 
   registerHandlebarsCompatibleHelper('test', someHelper);
 
-  view = EmberView.create({
+  view = NgularView.create({
     controller: {
       value: 'foo'
     },
@@ -50,7 +50,7 @@ QUnit.test('combines `env` and `options` for the wrapped helper', function() {
 
   registerHandlebarsCompatibleHelper('test', someHelper);
 
-  view = EmberView.create({
+  view = NgularView.create({
     controller: {
       value: 'foo'
     },
@@ -69,7 +69,7 @@ QUnit.test('adds `hash` into options `options` for the wrapped helper', function
 
   registerHandlebarsCompatibleHelper('test', someHelper);
 
-  view = EmberView.create({
+  view = NgularView.create({
     controller: {
       value: 'foo'
     },
@@ -88,7 +88,7 @@ QUnit.test('bound `hash` params are provided with their original paths', functio
 
   registerHandlebarsCompatibleHelper('test', someHelper);
 
-  view = EmberView.create({
+  view = NgularView.create({
     controller: {
       value: 'Jacquie'
     },
@@ -108,7 +108,7 @@ QUnit.test('bound ordered params are provided with their original paths', functi
 
   registerHandlebarsCompatibleHelper('test', someHelper);
 
-  view = EmberView.create({
+  view = NgularView.create({
     controller: {
       first: 'blammo',
       second: 'blazzico'
@@ -131,7 +131,7 @@ QUnit.test('allows unbound usage within an element', function() {
 
   registerHandlebarsCompatibleHelper('test', someHelper);
 
-  view = EmberView.create({
+  view = NgularView.create({
     controller: {
       value: 'foo'
     },
@@ -145,7 +145,7 @@ QUnit.test('allows unbound usage within an element', function() {
   equal(view.$('.foo').length, 1, 'class attribute was added by helper');
 });
 
-QUnit.test('registering a helper created from `Ember.Handlebars.makeViewHelper` does not double wrap the helper', function() {
+QUnit.test('registering a helper created from `Ngular.Handlebars.makeViewHelper` does not double wrap the helper', function() {
   expect(1);
 
   var ViewHelperComponent = Component.extend({
@@ -155,7 +155,7 @@ QUnit.test('registering a helper created from `Ember.Handlebars.makeViewHelper` 
   var helper = makeViewHelper(ViewHelperComponent);
   registerHandlebarsCompatibleHelper('view-helper', helper);
 
-  view = EmberView.extend({
+  view = NgularView.extend({
     template: compile('{{view-helper}}')
   }).create();
 
@@ -173,7 +173,7 @@ QUnit.test('does not add `options.fn` if no block was specified', function() {
 
   registerHandlebarsCompatibleHelper('test', someHelper);
 
-  view = EmberView.create({
+  view = NgularView.create({
     controller: {
       value: 'foo'
     },
@@ -192,7 +192,7 @@ QUnit.test('does not return helper result if block was specified', function() {
 
   registerHandlebarsCompatibleHelper('test', someHelper);
 
-  view = EmberView.create({
+  view = NgularView.create({
     controller: {
       value: 'foo'
     },
@@ -213,7 +213,7 @@ QUnit.test('allows usage of the template fn', function() {
 
   registerHandlebarsCompatibleHelper('test', someHelper);
 
-  view = EmberView.create({
+  view = NgularView.create({
     controller: {
       value: 'foo'
     },
@@ -234,7 +234,7 @@ QUnit.test('allows usage of the template inverse', function() {
 
   registerHandlebarsCompatibleHelper('test', someHelper);
 
-  view = EmberView.create({
+  view = NgularView.create({
     controller: {
       value: 'foo'
     },
@@ -257,7 +257,7 @@ QUnit.test('ordered param types are added to options.types', function() {
 
   registerHandlebarsCompatibleHelper('test', someHelper);
 
-  view = EmberView.create({
+  view = NgularView.create({
     controller: {
       first: 'blammo',
       second: 'blazzico'
@@ -279,7 +279,7 @@ QUnit.test('`hash` params are to options.hashTypes', function() {
 
   registerHandlebarsCompatibleHelper('test', someHelper);
 
-  view = EmberView.create({
+  view = NgularView.create({
     controller: {
       value: 'Jacquie'
     },

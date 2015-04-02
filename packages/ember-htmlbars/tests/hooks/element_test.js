@@ -1,14 +1,14 @@
-import EmberView from "ember-views/views/view";
-import helpers from "ember-htmlbars/helpers";
+import NgularView from "ngular-views/views/view";
+import helpers from "ngular-htmlbars/helpers";
 import {
   registerHelper
-} from "ember-htmlbars/helpers";
-import { runAppend, runDestroy } from "ember-runtime/tests/utils";
-import compile from "ember-template-compiler/system/compile";
+} from "ngular-htmlbars/helpers";
+import { runAppend, runDestroy } from "ngular-runtime/tests/utils";
+import compile from "ngular-template-compiler/system/compile";
 
 var view;
 
-QUnit.module('ember-htmlbars: element hook', {
+QUnit.module('ngular-htmlbars: element hook', {
   teardown() {
     runDestroy(view);
     delete helpers.test;
@@ -27,7 +27,7 @@ QUnit.test('allows unbound usage within an element', function() {
 
   registerHelper('test', someHelper);
 
-  view = EmberView.create({
+  view = NgularView.create({
     controller: {
       value: 'foo'
     },
@@ -44,7 +44,7 @@ QUnit.test('allows unbound usage within an element', function() {
 QUnit.test('allows unbound usage within an element from property', function() {
   expect(2);
 
-  view = EmberView.create({
+  view = NgularView.create({
     controller: {
       someProp: 'class="foo"'
     },
@@ -61,7 +61,7 @@ QUnit.test('allows unbound usage within an element from property', function() {
 QUnit.test('allows unbound usage within an element creating multiple attributes', function() {
   expect(2);
 
-  view = EmberView.create({
+  view = NgularView.create({
     controller: {
       someProp: 'class="foo" data-foo="bar"'
     },

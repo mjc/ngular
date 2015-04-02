@@ -1,7 +1,7 @@
-import {SuiteModuleBuilder} from 'ember-runtime/tests/suites/suite';
-import EnumerableUtils from 'ember-metal/enumerable_utils';
-import {get} from 'ember-metal/property_get';
-import {guidFor} from "ember-metal/utils";
+import {SuiteModuleBuilder} from 'ngular-runtime/tests/suites/suite';
+import EnumerableUtils from 'ngular-metal/enumerable_utils';
+import {get} from 'ngular-metal/property_get';
+import {guidFor} from "ngular-metal/utils";
 
 var suite = SuiteModuleBuilder.create();
 
@@ -46,7 +46,7 @@ suite.test('2nd target parameter', function() {
   obj.map(function() {
     // ES6TODO: When transpiled we will end up with "use strict" which disables automatically binding to the global context.
     // Therefore, the following test can never pass in strict mode unless we modify the `map` function implementation to
-    // use `Ember.lookup` if target is not specified.
+    // use `Ngular.lookup` if target is not specified.
     //
     // equal(guidFor(this), guidFor(global), 'should pass the global object as this if no context');
   });

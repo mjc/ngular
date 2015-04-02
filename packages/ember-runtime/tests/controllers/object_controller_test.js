@@ -1,10 +1,10 @@
-import ObjectController from "ember-runtime/controllers/object_controller";
+import ObjectController from "ngular-runtime/controllers/object_controller";
 import {
   objectControllerDeprecation
-} from "ember-runtime/controllers/object_controller";
-import { observer } from 'ember-metal/mixin';
+} from "ngular-runtime/controllers/object_controller";
+import { observer } from 'ngular-metal/mixin';
 
-QUnit.module("Ember.ObjectController");
+QUnit.module("Ngular.ObjectController");
 
 QUnit.test("should be able to set the target property of an ObjectController", function() {
   expectDeprecation(objectControllerDeprecation);
@@ -16,7 +16,7 @@ QUnit.test("should be able to set the target property of an ObjectController", f
   equal(controller.get('target'), target, "able to set the target property");
 });
 
-// See https://github.com/emberjs/ember.js/issues/5112
+// See https://github.com/ngularjs/ngular.js/issues/5112
 QUnit.test("can observe a path on an ObjectController", function() {
   expectDeprecation(objectControllerDeprecation);
 

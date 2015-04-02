@@ -3,22 +3,22 @@ import {
   forEach as a_forEach,
   indexOf as _indexOf,
   map as _map
-} from 'ember-metal/array';
+} from 'ngular-metal/array';
 
 var splice = Array.prototype.splice;
 
 /**
  * Defines some convenience methods for working with Enumerables.
- * `Ember.EnumerableUtils` uses `Ember.ArrayPolyfills` when necessary.
+ * `Ngular.EnumerableUtils` uses `Ngular.ArrayPolyfills` when necessary.
  *
  * @class EnumerableUtils
- * @namespace Ember
+ * @namespace Ngular
  * @static
  * */
 
 /**
  * Calls the map function on the passed object with a specified callback. This
- * uses `Ember.ArrayPolyfill`'s-map method when necessary.
+ * uses `Ngular.ArrayPolyfill`'s-map method when necessary.
  *
  * @method map
  * @param {Object} obj The object that should be mapped
@@ -33,7 +33,7 @@ export function map(obj, callback, thisArg) {
 
 /**
  * Calls the forEach function on the passed object with a specified callback. This
- * uses `Ember.ArrayPolyfill`'s-forEach method when necessary.
+ * uses `Ngular.ArrayPolyfill`'s-forEach method when necessary.
  *
  * @method forEach
  * @param {Object} obj The object to call forEach on
@@ -47,7 +47,7 @@ export function forEach(obj, callback, thisArg) {
 
 /**
  * Calls the filter function on the passed object with a specified callback. This
- * uses `Ember.ArrayPolyfill`'s-filter method when necessary.
+ * uses `Ngular.ArrayPolyfill`'s-filter method when necessary.
  *
  * @method filter
  * @param {Object} obj The object to call filter on
@@ -63,7 +63,7 @@ export function filter(obj, callback, thisArg) {
 
 /**
  * Calls the indexOf function on the passed object with a specified callback. This
- * uses `Ember.ArrayPolyfill`'s-indexOf method when necessary.
+ * uses `Ngular.ArrayPolyfill`'s-indexOf method when necessary.
  *
  * @method indexOf
  * @param {Object} obj The object to call indexOn on
@@ -81,10 +81,10 @@ export function indexOf(obj, element, index) {
  *
  * ```javascript
  *  var array = [1, 2, 3, 4, 5];
- *  Ember.EnumerableUtils.indexesOf(array, [2, 5]); // [1, 4]
+ *  Ngular.EnumerableUtils.indexesOf(array, [2, 5]); // [1, 4]
  *
  *  var fubar = "Fubarr";
- *  Ember.EnumerableUtils.indexesOf(fubar, ['b', 'r']); // [2, 4]
+ *  Ngular.EnumerableUtils.indexesOf(fubar, ['b', 'r']); // [2, 4]
  * ```
  *
  * @method indexesOf
@@ -159,13 +159,13 @@ export function _replace(array, idx, amt, objects) {
  *
  * ```javascript
  *   var array = [1,2,3];
- *   Ember.EnumerableUtils.replace(array, 1, 2, [4, 5]); // [1, 4, 5]
+ *   Ngular.EnumerableUtils.replace(array, 1, 2, [4, 5]); // [1, 4, 5]
  *
  *   var array = [1,2,3];
- *   Ember.EnumerableUtils.replace(array, 1, 1, [4, 5]); // [1, 4, 5, 3]
+ *   Ngular.EnumerableUtils.replace(array, 1, 1, [4, 5]); // [1, 4, 5, 3]
  *
  *   var array = [1,2,3];
- *   Ember.EnumerableUtils.replace(array, 10, 1, [4, 5]); // [1, 2, 3, 4, 5]
+ *   Ngular.EnumerableUtils.replace(array, 10, 1, [4, 5]); // [1, 2, 3, 4, 5]
  * ```
  *
  * @method replace
@@ -196,12 +196,12 @@ export function replace(array, idx, amt, objects) {
  * var array1 = [1, 2, 3, 4, 5];
  * var array2 = [1, 3, 5, 6, 7];
  *
- * Ember.EnumerableUtils.intersection(array1, array2); // [1, 3, 5]
+ * Ngular.EnumerableUtils.intersection(array1, array2); // [1, 3, 5]
  *
  * var array1 = [1, 2, 3];
  * var array2 = [4, 5, 6];
  *
- * Ember.EnumerableUtils.intersection(array1, array2); // []
+ * Ngular.EnumerableUtils.intersection(array1, array2); // []
  * ```
  *
  * @method intersection

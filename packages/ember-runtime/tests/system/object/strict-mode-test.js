@@ -1,9 +1,9 @@
-import EmberObject from "ember-runtime/system/object";
+import NgularObject from "ngular-runtime/system/object";
 
 QUnit.module('strict mode tests');
 
 QUnit.test('__superWrapper does not throw errors in strict mode', function() {
-  var Foo = EmberObject.extend({
+  var Foo = NgularObject.extend({
     blah() {
       return 'foo';
     }

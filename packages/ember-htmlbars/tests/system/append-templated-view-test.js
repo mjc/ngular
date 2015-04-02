@@ -1,10 +1,10 @@
-import { runAppend, runDestroy } from "ember-runtime/tests/utils";
-import EmberView from 'ember-views/views/view';
-import EmberComponent from 'ember-views/views/component';
-import compile from "ember-template-compiler/system/compile";
+import { runAppend, runDestroy } from "ngular-runtime/tests/utils";
+import NgularView from 'ngular-views/views/view';
+import NgularComponent from 'ngular-views/views/component';
+import compile from "ngular-template-compiler/system/compile";
 
 var view;
-QUnit.module('ember-htmlbars: appendTemplatedView', {
+QUnit.module('ngular-htmlbars: appendTemplatedView', {
   teardown() {
     runDestroy(view);
   }
@@ -13,12 +13,12 @@ QUnit.module('ember-htmlbars: appendTemplatedView', {
 QUnit.test('can accept a view instance', function() {
   var controller = {
     someProp: 'controller context',
-    someView: EmberView.create({
+    someView: NgularView.create({
       template: compile('{{someProp}}')
     })
   };
 
-  view = EmberView.create({
+  view = NgularView.create({
     controller: controller,
     template: compile('{{someProp}} - {{view someView}}')
   });
@@ -31,12 +31,12 @@ QUnit.test('can accept a view instance', function() {
 QUnit.test('can accept a view factory', function() {
   var controller = {
     someProp: 'controller context',
-    someView: EmberView.extend({
+    someView: NgularView.extend({
       template: compile('{{someProp}}')
     })
   };
 
-  view = EmberView.create({
+  view = NgularView.create({
     controller: controller,
     template: compile('{{someProp}} - {{view someView}}')
   });
@@ -49,7 +49,7 @@ QUnit.test('can accept a view factory', function() {
 QUnit.test('does change the context if the view factory has a controller specified', function() {
   var controller = {
     someProp: 'controller context',
-    someView: EmberView.extend({
+    someView: NgularView.extend({
       controller: {
         someProp: 'view local controller context'
       },
@@ -57,7 +57,7 @@ QUnit.test('does change the context if the view factory has a controller specifi
     })
   };
 
-  view = EmberView.create({
+  view = NgularView.create({
     controller: controller,
     template: compile('{{someProp}} - {{view someView}}')
   });
@@ -70,13 +70,13 @@ QUnit.test('does change the context if the view factory has a controller specifi
 QUnit.test('does change the context if a component factory is used', function() {
   var controller = {
     someProp: 'controller context',
-    someView: EmberComponent.extend({
+    someView: NgularComponent.extend({
       someProp: 'view local controller context',
       layout: compile('{{someProp}}')
     })
   };
 
-  view = EmberView.create({
+  view = NgularView.create({
     controller: controller,
     template: compile('{{someProp}} - {{view someView}}')
   });
@@ -89,13 +89,13 @@ QUnit.test('does change the context if a component factory is used', function() 
 QUnit.test('does change the context if a component instanced is used', function() {
   var controller = {
     someProp: 'controller context',
-    someView: EmberComponent.create({
+    someView: NgularComponent.create({
       someProp: 'view local controller context',
       layout: compile('{{someProp}}')
     })
   };
 
-  view = EmberView.create({
+  view = NgularView.create({
     controller: controller,
     template: compile('{{someProp}} - {{view someView}}')
   });

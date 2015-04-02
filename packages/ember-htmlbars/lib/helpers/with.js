@@ -1,10 +1,10 @@
 /**
-@module ember
-@submodule ember-htmlbars
+@module ngular
+@submodule ngular-htmlbars
 */
 
-import Ember from "ember-metal/core"; // Ember.assert
-import WithView from "ember-views/views/with_view";
+import Ngular from "ngular-metal/core"; // Ngular.assert
+import WithView from "ngular-views/views/with_view";
 
 /**
   Use the `{{with}}` helper when you want to aliases the to a new name. It's helpful
@@ -48,18 +48,18 @@ import WithView from "ember-views/views/with_view";
   functions/properties.
 
   @method with
-  @for Ember.Handlebars.helpers
+  @for Ngular.Handlebars.helpers
   @param {Function} context
   @param {Hash} options
   @return {String} HTML string
 */
 export function withHelper(params, hash, options, env) {
-  Ember.assert(
+  Ngular.assert(
     "{{#with}} must be called with an argument. For example, `{{#with foo as |bar|}}{{/with}}`",
     params.length === 1
   );
 
-  Ember.assert(
+  Ngular.assert(
     "The {{#with}} helper must be called with a block",
     !!options.template
   );
@@ -70,11 +70,11 @@ export function withHelper(params, hash, options, env) {
   if (options.template.blockParams) {
     preserveContext = true;
   } else {
-    Ember.deprecate(
+    Ngular.deprecate(
       "Using the context switching form of `{{with}}` is deprecated. " +
       "Please use the block param form (`{{#with bar as |foo|}}`) instead.",
       false,
-      { url: 'http://emberjs.com/guides/deprecations/#toc_more-consistent-handlebars-scope' }
+      { url: 'http://github.com/mjc/ngular/guides/deprecations/#toc_more-consistent-handlebars-scope' }
     );
     preserveContext = false;
   }

@@ -1,96 +1,96 @@
 /**
-Ember Views
+Ngular Views
 
-@module ember
-@submodule ember-views
-@requires ember-runtime
-@main ember-views
+@module ngular
+@submodule ngular-views
+@requires ngular-runtime
+@main ngular-views
 */
 
 // BEGIN IMPORTS
-import Ember from "ember-runtime";
-import jQuery from "ember-views/system/jquery";
+import Ngular from "ngular-runtime";
+import jQuery from "ngular-views/system/jquery";
 import {
   isSimpleClick,
   getViewClientRects,
   getViewBoundingClientRect
-} from "ember-views/system/utils";
-import RenderBuffer from "ember-views/system/render_buffer";
-import Renderer from "ember-views/system/renderer";
+} from "ngular-views/system/utils";
+import RenderBuffer from "ngular-views/system/render_buffer";
+import Renderer from "ngular-views/system/renderer";
 import DOMHelper from "dom-helper";
-import "ember-views/system/ext";  // for the side effect of extending Ember.run.queues
+import "ngular-views/system/ext";  // for the side effect of extending Ngular.run.queues
 import {
   cloneStates,
   states
-} from "ember-views/views/states";
+} from "ngular-views/views/states";
 
-import { DeprecatedCoreView } from "ember-views/views/core_view";
-import View from "ember-views/views/view";
-import ContainerView from "ember-views/views/container_view";
-import CollectionView from "ember-views/views/collection_view";
-import Component from "ember-views/views/component";
+import { DeprecatedCoreView } from "ngular-views/views/core_view";
+import View from "ngular-views/views/view";
+import ContainerView from "ngular-views/views/container_view";
+import CollectionView from "ngular-views/views/collection_view";
+import Component from "ngular-views/views/component";
 
-import EventDispatcher from "ember-views/system/event_dispatcher";
-import ViewTargetActionSupport from "ember-views/mixins/view_target_action_support";
-import ComponentLookup from "ember-views/component_lookup";
-import Checkbox from "ember-views/views/checkbox";
-import TextSupport from "ember-views/mixins/text_support";
-import TextField from "ember-views/views/text_field";
-import TextArea from "ember-views/views/text_area";
+import EventDispatcher from "ngular-views/system/event_dispatcher";
+import ViewTargetActionSupport from "ngular-views/mixins/view_target_action_support";
+import ComponentLookup from "ngular-views/component_lookup";
+import Checkbox from "ngular-views/views/checkbox";
+import TextSupport from "ngular-views/mixins/text_support";
+import TextField from "ngular-views/views/text_field";
+import TextArea from "ngular-views/views/text_area";
 
-import SimpleBoundView from "ember-views/views/simple_bound_view";
-import _MetamorphView from "ember-views/views/metamorph_view";
+import SimpleBoundView from "ngular-views/views/simple_bound_view";
+import _MetamorphView from "ngular-views/views/metamorph_view";
 import {
   _Metamorph
-} from "ember-views/views/metamorph_view";
+} from "ngular-views/views/metamorph_view";
 import {
   Select,
   SelectOption,
   SelectOptgroup
-} from "ember-views/views/select";
+} from "ngular-views/views/select";
 // END IMPORTS
 
 /**
   Alias for jQuery
 
   @method $
-  @for Ember
+  @for Ngular
 */
 
 // BEGIN EXPORTS
-Ember.$ = jQuery;
+Ngular.$ = jQuery;
 
-Ember.ViewTargetActionSupport = ViewTargetActionSupport;
-Ember.RenderBuffer = RenderBuffer;
+Ngular.ViewTargetActionSupport = ViewTargetActionSupport;
+Ngular.RenderBuffer = RenderBuffer;
 
-var ViewUtils = Ember.ViewUtils = {};
+var ViewUtils = Ngular.ViewUtils = {};
 ViewUtils.isSimpleClick = isSimpleClick;
 ViewUtils.getViewClientRects = getViewClientRects;
 ViewUtils.getViewBoundingClientRect = getViewBoundingClientRect;
 
-Ember.CoreView = DeprecatedCoreView;
-Ember.View = View;
-Ember.View.states = states;
-Ember.View.cloneStates = cloneStates;
-Ember.View.DOMHelper = DOMHelper;
-Ember.View._Renderer = Renderer;
-Ember.Checkbox = Checkbox;
-Ember.TextField = TextField;
-Ember.TextArea = TextArea;
+Ngular.CoreView = DeprecatedCoreView;
+Ngular.View = View;
+Ngular.View.states = states;
+Ngular.View.cloneStates = cloneStates;
+Ngular.View.DOMHelper = DOMHelper;
+Ngular.View._Renderer = Renderer;
+Ngular.Checkbox = Checkbox;
+Ngular.TextField = TextField;
+Ngular.TextArea = TextArea;
 
-Ember._SimpleBoundView = SimpleBoundView;
-Ember._MetamorphView = _MetamorphView;
-Ember._Metamorph = _Metamorph;
-Ember.Select = Select;
-Ember.SelectOption = SelectOption;
-Ember.SelectOptgroup = SelectOptgroup;
+Ngular._SimpleBoundView = SimpleBoundView;
+Ngular._MetamorphView = _MetamorphView;
+Ngular._Metamorph = _Metamorph;
+Ngular.Select = Select;
+Ngular.SelectOption = SelectOption;
+Ngular.SelectOptgroup = SelectOptgroup;
 
-Ember.TextSupport = TextSupport;
-Ember.ComponentLookup = ComponentLookup;
-Ember.ContainerView = ContainerView;
-Ember.CollectionView = CollectionView;
-Ember.Component = Component;
-Ember.EventDispatcher = EventDispatcher;
+Ngular.TextSupport = TextSupport;
+Ngular.ComponentLookup = ComponentLookup;
+Ngular.ContainerView = ContainerView;
+Ngular.CollectionView = CollectionView;
+Ngular.Component = Component;
+Ngular.EventDispatcher = EventDispatcher;
 // END EXPORTS
 
-export default Ember;
+export default Ngular;

@@ -1,27 +1,27 @@
-import { get } from "ember-metal/property_get";
-import { set } from "ember-metal/property_set";
-import { guidFor } from "ember-metal/utils";
+import { get } from "ngular-metal/property_get";
+import { set } from "ngular-metal/property_set";
+import { guidFor } from "ngular-metal/utils";
 
-import EmberObject from "ember-runtime/system/object";
-import EmberLocation from "ember-routing/location/api";
-import jQuery from "ember-views/system/jquery";
+import NgularObject from "ngular-runtime/system/object";
+import NgularLocation from "ngular-routing/location/api";
+import jQuery from "ngular-views/system/jquery";
 
 /**
-@module ember
-@submodule ember-routing
+@module ngular
+@submodule ngular-routing
 */
 
 var popstateFired = false;
 
 /**
-  Ember.HistoryLocation implements the location API using the browser's
+  Ngular.HistoryLocation implements the location API using the browser's
   history.pushState API.
 
   @class HistoryLocation
-  @namespace Ember
-  @extends Ember.Object
+  @namespace Ngular
+  @extends Ngular.Object
 */
-export default EmberObject.extend({
+export default NgularObject.extend({
   implementation: 'history',
 
   init() {
@@ -177,7 +177,7 @@ export default EmberObject.extend({
   onUpdateURL(callback) {
     var guid = guidFor(this);
 
-    jQuery(window).on(`popstate.ember-location-${guid}`, (e) => {
+    jQuery(window).on(`popstate.ngular-location-${guid}`, (e) => {
       // Ignore initial page load popstate event in Chrome
       if (!popstateFired) {
         popstateFired = true;
@@ -218,7 +218,7 @@ export default EmberObject.extend({
   willDestroy() {
     var guid = guidFor(this);
 
-    jQuery(window).off(`popstate.ember-location-${guid}`);
+    jQuery(window).off(`popstate.ngular-location-${guid}`);
   },
 
   /**
@@ -228,5 +228,5 @@ export default EmberObject.extend({
 
     @method getHash
   */
-  getHash: EmberLocation._getHash
+  getHash: NgularLocation._getHash
 });

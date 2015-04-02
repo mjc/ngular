@@ -1,24 +1,24 @@
 {
-  "name": "components-ember",
+  "name": "components-ngular",
   "version": "VERSION_STRING_PLACEHOLDER",
-  "description": "Ember Application Framework",
+  "description": "Ngular Application Framework",
   "keywords": [
-    "ember"
+    "ngular"
   ],
-  "main": "./ember.debug.js",
+  "main": "./ngular.debug.js",
   "dependencies": {
     "jquery": ">=1.7.0 < 2.2.0"
   },
   "jspm": {
-    "main": "ember.debug",
+    "main": "ngular.debug",
     "shim": {
-      "ember.prod": { "deps": ["jquery"], "exports": "Ember" },
-      "ember.debug": { "deps": ["jquery"], "exports": "Ember" }
+      "ngular.prod": { "deps": ["jquery"], "exports": "Ngular" },
+      "ngular.debug": { "deps": ["jquery"], "exports": "Ngular" }
     },
     "registry": "jspm",
     "dependencies": {
       "jquery": "github:components/jquery@^2.1.3"
     },
-    "files": ["ember.debug.js", "ember.prod.js", "ember-template-compiler.js"]
+    "files": ["ngular.debug.js", "ngular.prod.js", "ngular-template-compiler.js"]
   }
 }

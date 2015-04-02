@@ -1,38 +1,38 @@
-import Ember from "ember-metal/core";
-import { get } from "ember-metal/property_get";
-import run from "ember-metal/run_loop";
-import { computed } from "ember-metal/computed";
-import EmberView from "ember-views/views/view";
+import Ngular from "ngular-metal/core";
+import { get } from "ngular-metal/property_get";
+import run from "ngular-metal/run_loop";
+import { computed } from "ngular-metal/computed";
+import NgularView from "ngular-views/views/view";
 
-var originalLookup = Ember.lookup;
+var originalLookup = Ngular.lookup;
 var lookup, view;
 
-QUnit.module("EmberView.create", {
+QUnit.module("NgularView.create", {
   setup() {
-    Ember.lookup = lookup = {};
+    Ngular.lookup = lookup = {};
   },
   teardown() {
     run(function() {
       view.destroy();
     });
 
-    Ember.lookup = originalLookup;
+    Ngular.lookup = originalLookup;
   }
 });
 
 QUnit.test("registers view in the global views hash using layerId for event targeted", function() {
-  view = EmberView.create();
+  view = NgularView.create();
   run(function() {
     view.appendTo('#qunit-fixture');
   });
-  equal(EmberView.views[get(view, 'elementId')], view, 'registers view');
+  equal(NgularView.views[get(view, 'elementId')], view, 'registers view');
 });
 
-QUnit.module("EmberView.createWithMixins");
+QUnit.module("NgularView.createWithMixins");
 
 QUnit.test("should warn if a computed property is used for classNames", function() {
   expectAssertion(function() {
-    EmberView.createWithMixins({
+    NgularView.createWithMixins({
       elementId: 'test',
       classNames: computed(function() {
         return ['className'];
@@ -43,7 +43,7 @@ QUnit.test("should warn if a computed property is used for classNames", function
 
 QUnit.test("should warn if a non-array is used for classNameBindings", function() {
   expectAssertion(function() {
-    EmberView.createWithMixins({
+    NgularView.createWithMixins({
       elementId: 'test',
       classNameBindings: computed(function() {
         return ['className'];
@@ -55,14 +55,14 @@ QUnit.test("should warn if a non-array is used for classNameBindings", function(
 QUnit.test("creates a renderer if one is not provided", function() {
   var childView;
 
-  view = EmberView.create({
+  view = NgularView.create({
     render(buffer) {
       buffer.push('Em');
       this.appendChild(childView);
     }
   });
 
-  childView = EmberView.create({
+  childView = NgularView.create({
     template() { return 'ber'; }
   });
 

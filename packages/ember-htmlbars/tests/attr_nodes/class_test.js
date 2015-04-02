@@ -1,6 +1,6 @@
-import EmberView from "ember-views/views/view";
-import run from "ember-metal/run_loop";
-import compile from "ember-template-compiler/system/compile";
+import NgularView from "ngular-views/views/view";
+import run from "ngular-metal/run_loop";
+import compile from "ngular-template-compiler/system/compile";
 import { equalInnerHTML } from "htmlbars-test-helpers";
 
 var view;
@@ -10,14 +10,14 @@ function appendView(view) {
 }
 
 var isInlineIfEnabled = false;
-if (Ember.FEATURES.isEnabled('ember-htmlbars-inline-if-helper')) {
+if (Ngular.FEATURES.isEnabled('ngular-htmlbars-inline-if-helper')) {
   isInlineIfEnabled = true;
 }
 
 // jscs:disable validateIndentation
-if (Ember.FEATURES.isEnabled('ember-htmlbars-attribute-syntax')) {
+if (Ngular.FEATURES.isEnabled('ngular-htmlbars-attribute-syntax')) {
 
-QUnit.module("ember-htmlbars: class attribute", {
+QUnit.module("ngular-htmlbars: class attribute", {
   teardown() {
     if (view) {
       run(view, view.destroy);
@@ -27,7 +27,7 @@ QUnit.module("ember-htmlbars: class attribute", {
 
 QUnit.test("class renders before didInsertElement", function() {
   var matchingElement;
-  view = EmberView.create({
+  view = NgularView.create({
     didInsertElement() {
       matchingElement = this.$('div.blue');
     },
@@ -41,7 +41,7 @@ QUnit.test("class renders before didInsertElement", function() {
 });
 
 QUnit.test("class property can contain multiple classes", function() {
-  view = EmberView.create({
+  view = NgularView.create({
     context: { classes: 'large blue' },
     template: compile("<div class={{classes}}></div>")
   });
@@ -54,7 +54,7 @@ QUnit.test("class property can contain multiple classes", function() {
 });
 
 QUnit.test("class property is removed when updated with a null value", function() {
-  view = EmberView.create({
+  view = NgularView.create({
     context: { class: 'large' },
     template: compile("<div class={{class}}></div>")
   });
@@ -68,7 +68,7 @@ QUnit.test("class property is removed when updated with a null value", function(
 });
 
 QUnit.test("class attribute concats bound values", function() {
-  view = EmberView.create({
+  view = NgularView.create({
     context: { size: 'large', color: 'blue' },
     template: compile("<div class='{{size}} {{color}} round'></div>")
   });
@@ -80,7 +80,7 @@ QUnit.test("class attribute concats bound values", function() {
 if (isInlineIfEnabled) {
 
 QUnit.test("class attribute accepts nested helpers, and updates", function() {
-  view = EmberView.create({
+  view = NgularView.create({
     context: {
       size: 'large',
       hasColor: true,
@@ -102,7 +102,7 @@ QUnit.test("class attribute accepts nested helpers, and updates", function() {
 }
 
 QUnit.test("class attribute can accept multiple classes from a single value, and update", function() {
-  view = EmberView.create({
+  view = NgularView.create({
     context: {
       size: 'large small'
     },
@@ -118,7 +118,7 @@ QUnit.test("class attribute can accept multiple classes from a single value, and
 });
 
 QUnit.test("class attribute can grok concatted classes, and update", function() {
-  view = EmberView.create({
+  view = NgularView.create({
     context: {
       size: 'large',
       prefix: 'pre-pre pre',
@@ -136,7 +136,7 @@ QUnit.test("class attribute can grok concatted classes, and update", function() 
 });
 
 QUnit.test("class attribute stays in order", function() {
-  view = EmberView.create({
+  view = NgularView.create({
     context: {
       showA: 'a',
       showB: 'b'

@@ -1,14 +1,14 @@
-import { get } from "ember-metal/property_get";
-import run from "ember-metal/run_loop";
-import EmberView from "ember-views/views/view";
+import { get } from "ngular-metal/property_get";
+import run from "ngular-metal/run_loop";
+import NgularView from "ngular-views/views/view";
 
-import compile from "ember-template-compiler/system/compile";
+import compile from "ngular-template-compiler/system/compile";
 
 var View, view;
 
-QUnit.module("EmberView - renderToElement()", {
+QUnit.module("NgularView - renderToElement()", {
   setup() {
-    View = EmberView.extend({
+    View = NgularView.extend({
       template: compile('<h1>hello world</h1> goodbye world')
     });
   },

@@ -1,16 +1,16 @@
 /**
-@module ember
-@submodule ember-views
+@module ngular
+@submodule ngular-views
 */
 
-import { get } from "ember-metal/property_get";
-import { set } from "ember-metal/property_set";
-import { Mixin } from "ember-metal/mixin";
-import TargetActionSupport from "ember-runtime/mixins/target_action_support";
+import { get } from "ngular-metal/property_get";
+import { set } from "ngular-metal/property_set";
+import { Mixin } from "ngular-metal/mixin";
+import TargetActionSupport from "ngular-runtime/mixins/target_action_support";
 
 /**
-  `TextSupport` is a shared mixin used by both `Ember.TextField` and
-  `Ember.TextArea`. `TextSupport` adds a number of methods that allow you to
+  `TextSupport` is a shared mixin used by both `Ngular.TextField` and
+  `Ngular.TextArea`. `TextSupport` adds a number of methods that allow you to
   specify a controller action to invoke when a certain event is fired on your
   text field or textarea. The specifed controller action would get the current
   value of the field passed in as the only argument unless the value of
@@ -28,9 +28,9 @@ import TargetActionSupport from "ember-runtime/mixins/target_action_support";
   ```
 
   ```javascript
-      App = Ember.Application.create();
+      App = Ngular.Application.create();
 
-      App.ApplicationController = Ember.Controller.extend({
+      App.ApplicationController = Ngular.Controller.extend({
         actions: {
           alertUser: function ( currentValue ) {
             alert( 'escape pressed, current value: ' + currentValue );
@@ -97,9 +97,9 @@ import TargetActionSupport from "ember-runtime/mixins/target_action_support";
   +--------------------+----------------+
 
   @class TextSupport
-  @namespace Ember
-  @uses Ember.TargetActionSupport
-  @extends Ember.Mixin
+  @namespace Ngular
+  @uses Ngular.TargetActionSupport
+  @extends Ngular.Mixin
   @private
 */
 var TextSupport = Mixin.create(TargetActionSupport, {

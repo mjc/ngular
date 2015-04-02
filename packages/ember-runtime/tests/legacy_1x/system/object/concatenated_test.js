@@ -1,6 +1,6 @@
-import {get} from 'ember-metal/property_get';
-import EmberStringUtils from 'ember-runtime/system/string';
-import EmberObject from 'ember-runtime/system/object';
+import {get} from 'ngular-metal/property_get';
+import NgularStringUtils from 'ngular-runtime/system/string';
+import NgularObject from 'ngular-runtime/system/object';
 
 /*
   NOTE: This test is adapted from the 1.x series of unit tests.  The tests
@@ -9,7 +9,7 @@ import EmberObject from 'ember-runtime/system/object';
 
   CHANGES FROM 1.6:
 
-  * changed get(obj, ) and set(obj, ) to Ember.get() and Ember.set()
+  * changed get(obj, ) and set(obj, ) to Ngular.get() and Ngular.set()
   * converted uses of obj.isEqual() to use deepEqual() test since isEqual is not
     always defined
 */
@@ -18,9 +18,9 @@ function K() { return this; }
 
 var klass;
 
-QUnit.module("EmberObject Concatenated Properties", {
+QUnit.module("NgularObject Concatenated Properties", {
   setup() {
-    klass = EmberObject.extend({
+    klass = NgularObject.extend({
       concatenatedProperties: ['values', 'functions'],
       values: ['a', 'b', 'c'],
       functions: [K]
@@ -36,7 +36,7 @@ QUnit.test("concatenates instances", function() {
   var values = get(obj, 'values');
   var expected = ['a', 'b', 'c', 'd', 'e', 'f'];
 
-  deepEqual(values, expected, EmberStringUtils.fmt("should concatenate values property (expected: %@, got: %@)", [expected, values]));
+  deepEqual(values, expected, NgularStringUtils.fmt("should concatenate values property (expected: %@, got: %@)", [expected, values]));
 });
 
 QUnit.test("concatenates subclasses", function() {
@@ -48,7 +48,7 @@ QUnit.test("concatenates subclasses", function() {
   var values = get(obj, 'values');
   var expected = ['a', 'b', 'c', 'd', 'e', 'f'];
 
-  deepEqual(values, expected, EmberStringUtils.fmt("should concatenate values property (expected: %@, got: %@)", [expected, values]));
+  deepEqual(values, expected, NgularStringUtils.fmt("should concatenate values property (expected: %@, got: %@)", [expected, values]));
 });
 
 QUnit.test("concatenates reopen", function() {
@@ -60,7 +60,7 @@ QUnit.test("concatenates reopen", function() {
   var values = get(obj, 'values');
   var expected = ['a', 'b', 'c', 'd', 'e', 'f'];
 
-  deepEqual(values, expected, EmberStringUtils.fmt("should concatenate values property (expected: %@, got: %@)", [expected, values]));
+  deepEqual(values, expected, NgularStringUtils.fmt("should concatenate values property (expected: %@, got: %@)", [expected, values]));
 });
 
 QUnit.test("concatenates mixin", function() {
@@ -75,7 +75,7 @@ QUnit.test("concatenates mixin", function() {
   var values = get(obj, 'values');
   var expected = ['a', 'b', 'c', 'd', 'e', 'f'];
 
-  deepEqual(values, expected, EmberStringUtils.fmt("should concatenate values property (expected: %@, got: %@)", [expected, values]));
+  deepEqual(values, expected, NgularStringUtils.fmt("should concatenate values property (expected: %@, got: %@)", [expected, values]));
 });
 
 QUnit.test("concatenates reopen, subclass, and instance", function() {
@@ -86,7 +86,7 @@ QUnit.test("concatenates reopen, subclass, and instance", function() {
   var values = get(obj, 'values');
   var expected = ['a', 'b', 'c', 'd', 'e', 'f'];
 
-  deepEqual(values, expected, EmberStringUtils.fmt("should concatenate values property (expected: %@, got: %@)", [expected, values]));
+  deepEqual(values, expected, NgularStringUtils.fmt("should concatenate values property (expected: %@, got: %@)", [expected, values]));
 });
 
 QUnit.test("concatenates subclasses when the values are functions", function() {
@@ -98,7 +98,7 @@ QUnit.test("concatenates subclasses when the values are functions", function() {
   var values = get(obj, 'functions');
   var expected = [K, K];
 
-  deepEqual(values, expected, EmberStringUtils.fmt("should concatenate functions property (expected: %@, got: %@)", [expected, values]));
+  deepEqual(values, expected, NgularStringUtils.fmt("should concatenate functions property (expected: %@, got: %@)", [expected, values]));
 });
 
 

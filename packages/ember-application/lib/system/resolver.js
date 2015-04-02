@@ -1,21 +1,21 @@
 /**
-@module ember
-@submodule ember-application
+@module ngular
+@submodule ngular-application
 */
 
-import Ember from 'ember-metal/core'; // Ember.TEMPLATES, Ember.assert
-import { get } from 'ember-metal/property_get';
-import Logger from 'ember-metal/logger';
+import Ngular from 'ngular-metal/core'; // Ngular.TEMPLATES, Ngular.assert
+import { get } from 'ngular-metal/property_get';
+import Logger from 'ngular-metal/logger';
 import {
   classify,
   capitalize,
   decamelize
-} from 'ember-runtime/system/string';
-import EmberObject from 'ember-runtime/system/object';
-import Namespace from 'ember-runtime/system/namespace';
-import helpers from 'ember-htmlbars/helpers';
+} from 'ngular-runtime/system/string';
+import NgularObject from 'ngular-runtime/system/object';
+import Namespace from 'ngular-runtime/system/namespace';
+import helpers from 'ngular-htmlbars/helpers';
 
-export var Resolver = EmberObject.extend({
+export var Resolver = NgularObject.extend({
   /**
     This will be set to the Application instance when it is
     created.
@@ -37,7 +37,7 @@ export var Resolver = EmberObject.extend({
   container lookups before consulting the container for registered
   items:
 
-  * templates are looked up on `Ember.TEMPLATES`
+  * templates are looked up on `Ngular.TEMPLATES`
   * other names are looked up on the application after converting
     the name. For example, `controller:post` looks up
     `App.PostController` by default.
@@ -62,12 +62,12 @@ export var Resolver = EmberObject.extend({
   is resolved like so:
 
   ```javascript
-  App = Ember.Application.create({
-    Resolver: Ember.DefaultResolver.extend({
+  App = Ngular.Application.create({
+    Resolver: Ngular.DefaultResolver.extend({
       resolveTemplate: function(parsedName) {
         var resolvedTemplate = this._super(parsedName);
         if (resolvedTemplate) { return resolvedTemplate; }
-        return Ember.TEMPLATES['not_found'];
+        return Ngular.TEMPLATES['not_found'];
       }
     })
   });
@@ -76,35 +76,35 @@ export var Resolver = EmberObject.extend({
   Some examples of how names are resolved:
 
   ```
-  'template:post'           //=> Ember.TEMPLATES['post']
-  'template:posts/byline'   //=> Ember.TEMPLATES['posts/byline']
-  'template:posts.byline'   //=> Ember.TEMPLATES['posts/byline']
-  'template:blogPost'       //=> Ember.TEMPLATES['blogPost']
+  'template:post'           //=> Ngular.TEMPLATES['post']
+  'template:posts/byline'   //=> Ngular.TEMPLATES['posts/byline']
+  'template:posts.byline'   //=> Ngular.TEMPLATES['posts/byline']
+  'template:blogPost'       //=> Ngular.TEMPLATES['blogPost']
                             //   OR
-                            //   Ember.TEMPLATES['blog_post']
+                            //   Ngular.TEMPLATES['blog_post']
   'controller:post'         //=> App.PostController
   'controller:posts.index'  //=> App.PostsIndexController
   'controller:blog/post'    //=> Blog.PostController
-  'controller:basic'        //=> Ember.Controller
+  'controller:basic'        //=> Ngular.Controller
   'route:post'              //=> App.PostRoute
   'route:posts.index'       //=> App.PostsIndexRoute
   'route:blog/post'         //=> Blog.PostRoute
-  'route:basic'             //=> Ember.Route
+  'route:basic'             //=> Ngular.Route
   'view:post'               //=> App.PostView
   'view:posts.index'        //=> App.PostsIndexView
   'view:blog/post'          //=> Blog.PostView
-  'view:basic'              //=> Ember.View
+  'view:basic'              //=> Ngular.View
   'foo:post'                //=> App.PostFoo
   'model:post'              //=> App.Post
   ```
 
   @class DefaultResolver
-  @namespace Ember
-  @extends Ember.Object
+  @namespace Ngular
+  @extends Ngular.Object
 */
-import dictionary from 'ember-metal/dictionary';
+import dictionary from 'ngular-metal/dictionary';
 
-export default EmberObject.extend({
+export default NgularObject.extend({
   /**
     This will be set to the Application instance when it is
     created.
@@ -122,7 +122,7 @@ export default EmberObject.extend({
       name
     ] = fullName.split(':', 2);
 
-    Ember.assert("Tried to normalize a container name without a colon (:) in it." +
+    Ngular.assert("Tried to normalize a container name without a colon (:) in it." +
                  " You probably tried to lookup a name that did not contain a type," +
                  " a colon, and a name. A proper lookup name would be `view:post`.", fullName.split(':').length === 2);
 
@@ -207,7 +207,7 @@ export default EmberObject.extend({
       var namespaceName = capitalize(parts.slice(0, -1).join('.'));
       root = Namespace.byName(namespaceName);
 
-      Ember.assert('You are looking for a ' + name + ' ' + type +
+      Ngular.assert('You are looking for a ' + name + ' ' + type +
                    ' in the ' + namespaceName +
                    ' namespace, but the namespace could not be found', root);
     }
@@ -231,7 +231,7 @@ export default EmberObject.extend({
   /**
     Returns a human-readable description for a fullName. Used by the
     Application namespace in assertions to describe the
-    precise name of the class that Ember is looking for, rather than
+    precise name of the class that Ngular is looking for, rather than
     container keys.
 
     @protected
@@ -261,7 +261,7 @@ export default EmberObject.extend({
 
   /**
     Given a parseName object (output from `parseName`), apply
-    the conventions expected by `Ember.Router`
+    the conventions expected by `Ngular.Router`
 
     @protected
     @param {Object} parsedName a parseName object with the parsed
@@ -275,7 +275,7 @@ export default EmberObject.extend({
     }
   },
   /**
-    Look up the template in Ember.TEMPLATES
+    Look up the template in Ngular.TEMPLATES
 
     @protected
     @param {Object} parsedName a parseName object with the parsed
@@ -285,13 +285,13 @@ export default EmberObject.extend({
   resolveTemplate(parsedName) {
     var templateName = parsedName.fullNameWithoutType.replace(/\./g, '/');
 
-    if (Ember.TEMPLATES[templateName]) {
-      return Ember.TEMPLATES[templateName];
+    if (Ngular.TEMPLATES[templateName]) {
+      return Ngular.TEMPLATES[templateName];
     }
 
     templateName = decamelize(templateName);
-    if (Ember.TEMPLATES[templateName]) {
-      return Ember.TEMPLATES[templateName];
+    if (Ngular.TEMPLATES[templateName]) {
+      return Ngular.TEMPLATES[templateName];
     }
   },
 

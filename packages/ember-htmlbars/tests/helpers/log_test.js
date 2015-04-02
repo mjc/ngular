@@ -1,17 +1,17 @@
-import Ember from 'ember-metal/core';
-import EmberView from 'ember-views/views/view';
-import compile from 'ember-template-compiler/system/compile';
-import { runAppend, runDestroy } from "ember-runtime/tests/utils";
+import Ngular from 'ngular-metal/core';
+import NgularView from 'ngular-views/views/view';
+import compile from 'ngular-template-compiler/system/compile';
+import { runAppend, runDestroy } from "ngular-runtime/tests/utils";
 
 var originalLookup, originalLog, logCalls, lookup, view;
 
-QUnit.module('ember-htmlbars: {{#log}} helper', {
+QUnit.module('ngular-htmlbars: {{#log}} helper', {
   setup() {
-    Ember.lookup = lookup = { Ember: Ember };
+    Ngular.lookup = lookup = { Ngular: Ngular };
 
-    originalLog = Ember.Logger.log;
+    originalLog = Ngular.Logger.log;
     logCalls = [];
-    Ember.Logger.log = function(arg) {
+    Ngular.Logger.log = function(arg) {
       logCalls.push(arg);
     };
   },
@@ -21,8 +21,8 @@ QUnit.module('ember-htmlbars: {{#log}} helper', {
 
     view = null;
 
-    Ember.Logger.log = originalLog;
-    Ember.lookup = originalLookup;
+    Ngular.Logger.log = originalLog;
+    Ngular.lookup = originalLookup;
   }
 });
 
@@ -31,7 +31,7 @@ QUnit.test('should be able to log a property', function() {
     value: 'one'
   };
 
-  view = EmberView.create({
+  view = NgularView.create({
     context: context,
     template: compile('{{log value}}')
   });
@@ -43,7 +43,7 @@ QUnit.test('should be able to log a property', function() {
 });
 
 QUnit.test('should be able to log a view property', function() {
-  view = EmberView.create({
+  view = NgularView.create({
     template: compile('{{log view.value}}'),
     value: 'one'
   });
@@ -55,7 +55,7 @@ QUnit.test('should be able to log a view property', function() {
 });
 
 QUnit.test('should be able to log `this`', function() {
-  view = EmberView.create({
+  view = NgularView.create({
     context: 'one',
     template: compile('{{log this}}')
   });

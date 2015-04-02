@@ -1,13 +1,13 @@
-import Stream from "ember-metal/streams/stream";
+import Stream from "ngular-metal/streams/stream";
 import {
   read,
   subscribe,
   unsubscribe,
   isStream
-} from "ember-metal/streams/utils";
-import create from 'ember-metal/platform/create';
-import { get } from "ember-metal/property_get";
-import { isArray } from "ember-metal/utils";
+} from "ngular-metal/streams/utils";
+import create from 'ngular-metal/platform/create';
+import { get } from "ngular-metal/property_get";
+import { isArray } from "ngular-metal/utils";
 
 export default function shouldDisplay(predicate) {
   if (isStream(predicate)) {

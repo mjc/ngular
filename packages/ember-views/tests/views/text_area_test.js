@@ -1,9 +1,9 @@
-import EmberObject from "ember-runtime/system/object";
-import { forEach } from "ember-metal/array";
-import run from "ember-metal/run_loop";
-import TextArea from "ember-views/views/text_area";
-import { get } from "ember-metal/property_get";
-import { set as o_set } from "ember-metal/property_set";
+import NgularObject from "ngular-runtime/system/object";
+import { forEach } from "ngular-metal/array";
+import run from "ngular-metal/run_loop";
+import TextArea from "ngular-views/views/text_area";
+import { get } from "ngular-metal/property_get";
+import { set as o_set } from "ngular-metal/property_set";
 
 var textArea, TestObject;
 
@@ -19,7 +19,7 @@ function append() {
 
 QUnit.module("TextArea", {
   setup() {
-    TestObject = window.TestObject = EmberObject.create({
+    TestObject = window.TestObject = NgularObject.create({
       value: null
     });
 
@@ -186,7 +186,7 @@ forEach.call(['cut', 'paste', 'input'], function(eventName) {
     });
 
     textArea.$().val('new value');
-    textArea.trigger(eventName, EmberObject.create({
+    textArea.trigger(eventName, NgularObject.create({
       type: eventName
     }));
 
@@ -196,7 +196,7 @@ forEach.call(['cut', 'paste', 'input'], function(eventName) {
 
 QUnit.test("should call the insertNewline method when return key is pressed", function() {
   var wasCalled;
-  var event = EmberObject.create({
+  var event = NgularObject.create({
     keyCode: 13
   });
 
@@ -212,7 +212,7 @@ QUnit.test("should call the insertNewline method when return key is pressed", fu
 
 QUnit.test("should call the cancel method when escape key is pressed", function() {
   var wasCalled;
-  var event = EmberObject.create({
+  var event = NgularObject.create({
     keyCode: 27
   });
 

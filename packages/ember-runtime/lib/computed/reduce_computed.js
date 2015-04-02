@@ -1,31 +1,31 @@
-import Ember from 'ember-metal/core'; // Ember.assert
-import { get as e_get } from 'ember-metal/property_get';
+import Ngular from 'ngular-metal/core'; // Ngular.assert
+import { get as e_get } from 'ngular-metal/property_get';
 import {
   guidFor,
   meta as metaFor,
   isArray
-} from 'ember-metal/utils';
-import EmberError from 'ember-metal/error';
+} from 'ngular-metal/utils';
+import NgularError from 'ngular-metal/error';
 import {
   propertyWillChange,
   propertyDidChange
-} from 'ember-metal/property_events';
-import expandProperties from 'ember-metal/expand_properties';
+} from 'ngular-metal/property_events';
+import expandProperties from 'ngular-metal/expand_properties';
 import {
   addObserver,
   removeObserver,
   addBeforeObserver,
   removeBeforeObserver
-} from 'ember-metal/observer';
+} from 'ngular-metal/observer';
 import {
   ComputedProperty,
   cacheFor
-} from 'ember-metal/computed';
-import o_create from 'ember-metal/platform/create';
-import { forEach } from 'ember-metal/enumerable_utils';
-import TrackedArray from 'ember-runtime/system/tracked_array';
-import EmberArray from 'ember-runtime/mixins/array';
-import run from 'ember-metal/run_loop';
+} from 'ngular-metal/computed';
+import o_create from 'ngular-metal/platform/create';
+import { forEach } from 'ngular-metal/enumerable_utils';
+import TrackedArray from 'ngular-runtime/system/tracked_array';
+import NgularArray from 'ngular-runtime/mixins/array';
+import run from 'ngular-metal/run_loop';
 
 var cacheSet = cacheFor.set;
 var cacheGet = cacheFor.get;
@@ -55,7 +55,7 @@ function DependentArraysObserver(callbacks, cp, instanceMeta, context, propertyN
   // user specified callbacks for `addedItem` and `removedItem`
   this.callbacks = callbacks;
 
-  // the computed property: remember these are shared across instances
+  // the computed property: remngular these are shared across instances
   this.cp = cp;
 
   // the ReduceComputedPropertyInstanceMeta this DependentArraysObserver is
@@ -87,7 +87,7 @@ function DependentArraysObserver(callbacks, cp, instanceMeta, context, propertyN
 }
 
 function ItemPropertyObserverContext(dependentArray, index, trackedArray) {
-  Ember.assert('Internal error: trackedArray is null or undefined', trackedArray);
+  Ngular.assert('Internal error: trackedArray is null or undefined', trackedArray);
 
   this.dependentArray = dependentArray;
   this.index = index;
@@ -413,7 +413,7 @@ function partiallyRecomputeFor(obj, dependentKey) {
   }
 
   var value = get(obj, dependentKey);
-  return EmberArray.detect(value);
+  return NgularArray.detect(value);
 }
 
 function ReduceComputedPropertyInstanceMeta(context, propertyName, initialValue) {
@@ -467,8 +467,8 @@ ReduceComputedPropertyInstanceMeta.prototype = {
   "one at a time" semantics.
 
   @class ReduceComputedProperty
-  @namespace Ember
-  @extends Ember.ComputedProperty
+  @namespace Ngular
+  @extends Ngular.ComputedProperty
   @constructor
 */
 
@@ -502,10 +502,10 @@ function ReduceComputedProperty(options) {
 
     meta.dependentArraysObserver.suspendArrayObservers(function () {
       forEach(cp._dependentKeys, function (dependentKey) {
-        Ember.assert(
-          'dependent array ' + dependentKey + ' must be an `Ember.Array`.  ' +
-          'If you are not extending arrays, you will need to wrap native arrays with `Ember.A`',
-          !(isArray(get(this, dependentKey)) && !EmberArray.detect(get(this, dependentKey))));
+        Ngular.assert(
+          'dependent array ' + dependentKey + ' must be an `Ngular.Array`.  ' +
+          'If you are not extending arrays, you will need to wrap native arrays with `Ngular.A`',
+          !(isArray(get(this, dependentKey)) && !NgularArray.detect(get(this, dependentKey))));
 
         if (!partiallyRecomputeFor(this, dependentKey)) { return; }
 
@@ -548,7 +548,7 @@ function ReduceComputedProperty(options) {
 
 
   this._getter = function (propertyName) {
-    Ember.assert('Computed reduce values require at least one dependent key', cp._dependentKeys);
+    Ngular.assert('Computed reduce values require at least one dependent key', cp._dependentKeys);
 
     recompute.call(this, propertyName);
 
@@ -577,13 +577,13 @@ ReduceComputedProperty.prototype._callbacks = function () {
 };
 
 ReduceComputedProperty.prototype._hasInstanceMeta = function (context, propertyName) {
-  var contextMeta = context.__ember_meta__;
+  var contextMeta = context.__ngular_meta__;
   var cacheMeta = contextMeta && contextMeta.cacheMeta;
   return !!(cacheMeta && cacheMeta[propertyName]);
 };
 
 ReduceComputedProperty.prototype._instanceMeta = function (context, propertyName) {
-  var contextMeta = context.__ember_meta__;
+  var contextMeta = context.__ngular_meta__;
   var cacheMeta = contextMeta.cacheMeta;
   var meta = cacheMeta && cacheMeta[propertyName];
 
@@ -630,7 +630,7 @@ ReduceComputedProperty.prototype.property = function () {
 
   forEach(args, function (dependentKey) {
     if (doubleEachPropertyPattern.test(dependentKey)) {
-      throw new EmberError('Nested @each properties not supported: ' + dependentKey);
+      throw new NgularError('Nested @each properties not supported: ' + dependentKey);
     } else if (match = eachPropertyPattern.exec(dependentKey)) {
       dependentArrayKey = match[1];
 
@@ -729,8 +729,8 @@ ReduceComputedProperty.prototype.property = function () {
     - `previousValues` an object whose keys are the properties that changed on
     the item, and whose values are the item's previous values.
 
-  `previousValues` is important Ember coalesces item property changes via
-  Ember.run.once. This means that by the time removedItem gets called, item has
+  `previousValues` is important Ngular coalesces item property changes via
+  Ngular.run.once. This means that by the time removedItem gets called, item has
   the new values, but you may need the previous value (eg for sorting &
   filtering).
 
@@ -747,14 +747,14 @@ ReduceComputedProperty.prototype.property = function () {
   Note that observers will be fired if either of these functions return a value
   that differs from the accumulated value.  When returning an object that
   mutates in response to array changes, for example an array that maps
-  everything from some other array (see `Ember.computed.map`), it is usually
+  everything from some other array (see `Ngular.computed.map`), it is usually
   important that the *same* array be returned to avoid accidentally triggering observers.
 
   Example
 
   ```javascript
-  Ember.computed.max = function(dependentKey) {
-    return Ember.reduceComputed(dependentKey, {
+  Ngular.computed.max = function(dependentKey) {
+    return Ngular.reduceComputed(dependentKey, {
       initialValue: -Infinity,
 
       addedItem: function(accumulatedValue, item, changeMeta, instanceMeta) {
@@ -778,10 +778,10 @@ ReduceComputedProperty.prototype.property = function () {
   Example
 
   ```javascript
-  App.PeopleController = Ember.ArrayController.extend({
+  App.PeopleController = Ngular.ArrayController.extend({
     itemController: 'person',
 
-    sortedPeople: Ember.computed.sort('@this.@each.reversedName', function(personA, personB) {
+    sortedPeople: Ngular.computed.sort('@this.@each.reversedName', function(personA, personB) {
       // `reversedName` isn't defined on Person, but we have access to it via
       // the item controller App.PersonController.  If we'd used
       // `content.@each.reversedName` above, we would be getting the objects
@@ -790,11 +790,11 @@ ReduceComputedProperty.prototype.property = function () {
       var reversedNameA = get(personA, 'reversedName');
       var reversedNameB = get(personB, 'reversedName');
 
-      return Ember.compare(reversedNameA, reversedNameB);
+      return Ngular.compare(reversedNameA, reversedNameB);
     })
   });
 
-  App.PersonController = Ember.ObjectController.extend({
+  App.PersonController = Ngular.ObjectController.extend({
     reversedName: function() {
       return reverse(get(this, 'name'));
     }.property('name')
@@ -815,7 +815,7 @@ ReduceComputedProperty.prototype.property = function () {
   Example
 
   ```javascript
-  Ember.Object.extend({
+  Ngular.Object.extend({
     // When `string` is changed, `computed` is completely recomputed.
     string: 'a string',
 
@@ -826,7 +826,7 @@ ReduceComputedProperty.prototype.property = function () {
     // recomputed.
     anotherArray: [],
 
-    computed: Ember.reduceComputed('string', 'array', 'anotherArray.[]', {
+    computed: Ngular.reduceComputed('string', 'array', 'anotherArray.[]', {
       addedItem: addedItemCallback,
       removedItem: removedItemCallback
     })
@@ -834,10 +834,10 @@ ReduceComputedProperty.prototype.property = function () {
   ```
 
   @method reduceComputed
-  @for Ember
+  @for Ngular
   @param {String} [dependentKeys*]
   @param {Object} options
-  @return {Ember.ComputedProperty}
+  @return {Ngular.ComputedProperty}
 */
 export function reduceComputed(options) {
   var args;
@@ -848,11 +848,11 @@ export function reduceComputed(options) {
   }
 
   if (typeof options !== 'object') {
-    throw new EmberError('Reduce Computed Property declared without an options hash');
+    throw new NgularError('Reduce Computed Property declared without an options hash');
   }
 
   if (!('initialValue' in options)) {
-    throw new EmberError('Reduce Computed Property declared without an initial value');
+    throw new NgularError('Reduce Computed Property declared without an initial value');
   }
 
   var cp = new ReduceComputedProperty(options);

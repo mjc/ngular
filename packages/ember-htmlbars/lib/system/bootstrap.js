@@ -1,36 +1,36 @@
 /*globals Handlebars */
 
 /**
-@module ember
-@submodule ember-htmlbars
+@module ngular
+@submodule ngular-htmlbars
 */
 
-import Ember from "ember-metal/core";
-import ComponentLookup from "ember-views/component_lookup";
-import jQuery from "ember-views/system/jquery";
-import EmberError from "ember-metal/error";
-import { onLoad } from "ember-runtime/system/lazy_load";
-import htmlbarsCompile from "ember-template-compiler/system/compile";
-import environment from "ember-metal/environment";
+import Ngular from "ngular-metal/core";
+import ComponentLookup from "ngular-views/component_lookup";
+import jQuery from "ngular-views/system/jquery";
+import NgularError from "ngular-metal/error";
+import { onLoad } from "ngular-runtime/system/lazy_load";
+import htmlbarsCompile from "ngular-template-compiler/system/compile";
+import environment from "ngular-metal/environment";
 
 /**
-@module ember
-@submodule ember-handlebars
+@module ngular
+@submodule ngular-handlebars
 */
 
 /**
   Find templates stored in the head tag as script tags and make them available
-  to `Ember.CoreView` in the global `Ember.TEMPLATES` object. This will be run
+  to `Ngular.CoreView` in the global `Ngular.TEMPLATES` object. This will be run
   as as jQuery DOM-ready callback.
 
   Script tags with `text/x-handlebars` will be compiled
-  with Ember's Handlebars and are suitable for use as a view's template.
+  with Ngular's Handlebars and are suitable for use as a view's template.
   Those with type `text/x-raw-handlebars` will be compiled with regular
   Handlebars and are suitable for use in views' computed properties.
 
   @private
   @method bootstrap
-  @for Ember.Handlebars
+  @for Ngular.Handlebars
   @static
   @param ctx
 */
@@ -45,19 +45,19 @@ function bootstrap(ctx) {
     var compile = (script.attr('type') === 'text/x-raw-handlebars') ?
                   jQuery.proxy(Handlebars.compile, Handlebars) :
                   htmlbarsCompile;
-    // Get the name of the script, used by Ember.View's templateName property.
+    // Get the name of the script, used by Ngular.View's templateName property.
     // First look for data-template-name attribute, then fall back to its
     // id if no name is found.
     var templateName = script.attr('data-template-name') || script.attr('id') || 'application';
     var template = compile(script.html());
 
     // Check if template of same name already exists
-    if (Ember.TEMPLATES[templateName] !== undefined) {
-      throw new EmberError('Template named "' + templateName  + '" already exists.');
+    if (Ngular.TEMPLATES[templateName] !== undefined) {
+      throw new NgularError('Template named "' + templateName  + '" already exists.');
     }
 
     // For templates which have a name, we save them and then remove them from the DOM
-    Ember.TEMPLATES[templateName] = template;
+    Ngular.TEMPLATES[templateName] = template;
 
     // Remove script tag from DOM
     script.remove();
@@ -83,7 +83,7 @@ function registerComponentLookup(registry) {
   from the DOM after processing.
 */
 
-onLoad('Ember.Application', function(Application) {
+onLoad('Ngular.Application', function(Application) {
   Application.initializer({
     name: 'domTemplates',
     initialize: environment.hasDOM ? _bootstrap : function() { }

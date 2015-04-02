@@ -1,12 +1,12 @@
 import Registry from "container/registry";
-import { get } from "ember-metal/property_get";
-import run from "ember-metal/run_loop";
-import EmberObject from "ember-runtime/system/object";
-import EmberView from "ember-views/views/view";
+import { get } from "ngular-metal/property_get";
+import run from "ngular-metal/run_loop";
+import NgularObject from "ngular-runtime/system/object";
+import NgularView from "ngular-views/views/view";
 
 var registry, container, view;
 
-QUnit.module("EmberView - Template Functionality", {
+QUnit.module("NgularView - Template Functionality", {
   setup() {
     registry = new Registry();
     container = registry.container();
@@ -22,7 +22,7 @@ QUnit.module("EmberView - Template Functionality", {
 });
 
 QUnit.test("Template views return throw if their template cannot be found", function() {
-  view = EmberView.create({
+  view = NgularView.create({
     templateName: 'cantBeFound',
     container: { lookup() { } }
   });
@@ -34,7 +34,7 @@ QUnit.test("Template views return throw if their template cannot be found", func
 
 if (typeof Handlebars === "object") {
   QUnit.test("should allow standard Handlebars template usage", function() {
-    view = EmberView.create({
+    view = NgularView.create({
       context: { name: "Erik" },
       template: Handlebars.compile("Hello, {{name}}")
     });
@@ -52,7 +52,7 @@ QUnit.test("should call the function of the associated template", function() {
     return "<h1 id='twas-called'>template was called</h1>";
   });
 
-  view = EmberView.create({
+  view = NgularView.create({
     container: container,
     templateName: 'testTemplate'
   });
@@ -69,7 +69,7 @@ QUnit.test("should call the function of the associated template with itself as t
     return "<h1 id='twas-called'>template was called for " + get(dataSource, 'personName') + "</h1>";
   });
 
-  view = EmberView.create({
+  view = NgularView.create({
     container: container,
     templateName: 'testTemplate',
 
@@ -88,7 +88,7 @@ QUnit.test("should call the function of the associated template with itself as t
 QUnit.test("should fall back to defaultTemplate if neither template nor templateName are provided", function() {
   var View;
 
-  View = EmberView.extend({
+  View = NgularView.extend({
     defaultTemplate(dataSource) { return "<h1 id='twas-called'>template was called for " + get(dataSource, 'personName') + "</h1>"; }
   });
 
@@ -108,7 +108,7 @@ QUnit.test("should fall back to defaultTemplate if neither template nor template
 QUnit.test("should not use defaultTemplate if template is provided", function() {
   var View;
 
-  View = EmberView.extend({
+  View = NgularView.extend({
     template() { return "foo"; },
     defaultTemplate(dataSource) { return "<h1 id='twas-called'>template was called for " + get(dataSource, 'personName') + "</h1>"; }
   });
@@ -126,7 +126,7 @@ QUnit.test("should not use defaultTemplate if template is provided", function() 
 
   registry.register('template:foobar', function() { return 'foo'; });
 
-  View = EmberView.extend({
+  View = NgularView.extend({
     container: container,
     templateName: 'foobar',
     defaultTemplate(dataSource) { return "<h1 id='twas-called'>template was called for " + get(dataSource, 'personName') + "</h1>"; }
@@ -141,7 +141,7 @@ QUnit.test("should not use defaultTemplate if template is provided", function() 
 });
 
 QUnit.test("should render an empty element if no template is specified", function() {
-  view = EmberView.create();
+  view = NgularView.create();
   run(function() {
     view.createElement();
   });
@@ -152,11 +152,11 @@ QUnit.test("should render an empty element if no template is specified", functio
 QUnit.test("should provide a controller to the template if a controller is specified on the view", function() {
   expect(7);
 
-  var Controller1 = EmberObject.extend({
+  var Controller1 = NgularObject.extend({
     toString() { return "Controller1"; }
   });
 
-  var Controller2 = EmberObject.extend({
+  var Controller2 = NgularObject.extend({
     toString() { return "Controller2"; }
   });
 
@@ -167,7 +167,7 @@ QUnit.test("should provide a controller to the template if a controller is speci
   var contextForView;
   var contextForControllerlessView;
 
-  view = EmberView.create({
+  view = NgularView.create({
     controller: controller1,
 
     template(buffer, options) {
@@ -185,11 +185,11 @@ QUnit.test("should provide a controller to the template if a controller is speci
     view.destroy();
   });
 
-  var parentView = EmberView.create({
+  var parentView = NgularView.create({
     controller: controller1,
 
     template(buffer, options) {
-      options.data.view.appendChild(EmberView.create({
+      options.data.view.appendChild(NgularView.create({
         controller: controller2,
         template(context, options) {
           contextForView = context;
@@ -211,11 +211,11 @@ QUnit.test("should provide a controller to the template if a controller is speci
     parentView.destroy();
   });
 
-  var parentViewWithControllerlessChild = EmberView.create({
+  var parentViewWithControllerlessChild = NgularView.create({
     controller: controller1,
 
     template(buffer, options) {
-      options.data.view.appendChild(EmberView.create({
+      options.data.view.appendChild(NgularView.create({
         template(context, options) {
           contextForControllerlessView = context;
           optionsDataKeywordsControllerForChildView = options.data.view._keywords.controller.value();
@@ -244,7 +244,7 @@ QUnit.test("should throw an assertion if no container has been set", function() 
   expect(1);
   var View;
 
-  View = EmberView.extend({
+  View = NgularView.extend({
     templateName: 'foobar'
   });
 

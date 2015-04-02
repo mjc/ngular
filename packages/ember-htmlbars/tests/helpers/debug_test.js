@@ -1,30 +1,30 @@
-import Ember from "ember-metal/core"; // Ember.lookup
-import EmberLogger from "ember-metal/logger";
-import EmberView from "ember-views/views/view";
-import compile from "ember-template-compiler/system/compile";
+import Ngular from "ngular-metal/core"; // Ngular.lookup
+import NgularLogger from "ngular-metal/logger";
+import NgularView from "ngular-views/views/view";
+import compile from "ngular-template-compiler/system/compile";
 
-import { runAppend, runDestroy } from "ember-runtime/tests/utils";
+import { runAppend, runDestroy } from "ngular-runtime/tests/utils";
 
-var originalLookup = Ember.lookup;
+var originalLookup = Ngular.lookup;
 var lookup;
 var originalLog, logCalls;
 var view;
 
 QUnit.module("Handlebars {{log}} helper", {
   setup() {
-    Ember.lookup = lookup = { Ember: Ember };
+    Ngular.lookup = lookup = { Ngular: Ngular };
 
-    originalLog = EmberLogger.log;
+    originalLog = NgularLogger.log;
     logCalls = [];
-    EmberLogger.log = function() { logCalls.push.apply(logCalls, arguments); };
+    NgularLogger.log = function() { logCalls.push.apply(logCalls, arguments); };
   },
 
   teardown() {
     runDestroy(view);
     view = null;
 
-    EmberLogger.log = originalLog;
-    Ember.lookup = originalLookup;
+    NgularLogger.log = originalLog;
+    Ngular.lookup = originalLookup;
   }
 });
 
@@ -34,7 +34,7 @@ QUnit.test("should be able to log multiple properties", function() {
     valueTwo: 'two'
   };
 
-  view = EmberView.create({
+  view = NgularView.create({
     context: context,
     template: compile('{{log value valueTwo}}')
   });
@@ -52,7 +52,7 @@ QUnit.test("should be able to log primitives", function() {
     valueTwo: 'two'
   };
 
-  view = EmberView.create({
+  view = NgularView.create({
     context: context,
     template: compile('{{log value "foo" 0 valueTwo true}}')
   });

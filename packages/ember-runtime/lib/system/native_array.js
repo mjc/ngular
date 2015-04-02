@@ -1,40 +1,40 @@
 /**
-@module ember
-@submodule ember-runtime
+@module ngular
+@submodule ngular-runtime
 */
 
-import Ember from "ember-metal/core"; // Ember.EXTEND_PROTOTYPES
+import Ngular from "ngular-metal/core"; // Ngular.EXTEND_PROTOTYPES
 
-import { get } from "ember-metal/property_get";
+import { get } from "ngular-metal/property_get";
 import {
   _replace as replace,
   forEach
-} from "ember-metal/enumerable_utils";
-import { Mixin } from "ember-metal/mixin";
-import { indexOf, lastIndexOf } from "ember-metal/array";
-import EmberArray from "ember-runtime/mixins/array";
-import MutableArray from "ember-runtime/mixins/mutable_array";
-import Observable from "ember-runtime/mixins/observable";
-import Copyable from "ember-runtime/mixins/copyable";
-import { FROZEN_ERROR } from "ember-runtime/mixins/freezable";
-import copy from "ember-runtime/copy";
+} from "ngular-metal/enumerable_utils";
+import { Mixin } from "ngular-metal/mixin";
+import { indexOf, lastIndexOf } from "ngular-metal/array";
+import NgularArray from "ngular-runtime/mixins/array";
+import MutableArray from "ngular-runtime/mixins/mutable_array";
+import Observable from "ngular-runtime/mixins/observable";
+import Copyable from "ngular-runtime/mixins/copyable";
+import { FROZEN_ERROR } from "ngular-runtime/mixins/freezable";
+import copy from "ngular-runtime/copy";
 
-// Add Ember.Array to Array.prototype. Remove methods with native
+// Add Ngular.Array to Array.prototype. Remove methods with native
 // implementations and supply some more optimized versions of generic methods
 // because they are so common.
 
 /**
   The NativeArray mixin contains the properties needed to make the native
-  Array support Ember.MutableArray and all of its dependent APIs. Unless you
-  have `Ember.EXTEND_PROTOTYPES` or `Ember.EXTEND_PROTOTYPES.Array` set to
+  Array support Ngular.MutableArray and all of its dependent APIs. Unless you
+  have `Ngular.EXTEND_PROTOTYPES` or `Ngular.EXTEND_PROTOTYPES.Array` set to
   false, this will be applied automatically. Otherwise you can apply the mixin
-  at anytime by calling `Ember.NativeArray.activate`.
+  at anytime by calling `Ngular.NativeArray.activate`.
 
   @class NativeArray
-  @namespace Ember
-  @uses Ember.MutableArray
-  @uses Ember.Observable
-  @uses Ember.Copyable
+  @namespace Ngular
+  @uses Ngular.MutableArray
+  @uses Ngular.Observable
+  @uses Ngular.Copyable
 */
 var NativeArray = Mixin.create(MutableArray, Observable, Copyable, {
 
@@ -78,7 +78,7 @@ var NativeArray = Mixin.create(MutableArray, Observable, Copyable, {
   },
 
   // If you ask for an unknown property, then try to collect the value
-  // from member items.
+  // from mngular items.
   unknownProperty(key, value) {
     var ret;// = this.reducedProperty(key, value);
     if (value !== undefined && ret === undefined) {
@@ -111,54 +111,54 @@ forEach(NativeArray.keys(), function(methodName) {
 NativeArray = NativeArray.without.apply(NativeArray, ignore);
 
 /**
-  Creates an `Ember.NativeArray` from an Array like object.
-  Does not modify the original object. Ember.A is not needed if
-  `Ember.EXTEND_PROTOTYPES` is `true` (the default value). However,
-  it is recommended that you use Ember.A when creating addons for
-  ember or when you can not guarantee that `Ember.EXTEND_PROTOTYPES`
+  Creates an `Ngular.NativeArray` from an Array like object.
+  Does not modify the original object. Ngular.A is not needed if
+  `Ngular.EXTEND_PROTOTYPES` is `true` (the default value). However,
+  it is recommended that you use Ngular.A when creating addons for
+  ngular or when you can not guarantee that `Ngular.EXTEND_PROTOTYPES`
   will be `true`.
 
   Example
 
   ```js
-  var Pagination = Ember.CollectionView.extend({
+  var Pagination = Ngular.CollectionView.extend({
     tagName: 'ul',
     classNames: ['pagination'],
 
     init: function() {
       this._super.apply(this, arguments);
       if (!this.get('content')) {
-        this.set('content', Ember.A());
+        this.set('content', Ngular.A());
       }
     }
   });
   ```
 
   @method A
-  @for Ember
-  @return {Ember.NativeArray}
+  @for Ngular
+  @return {Ngular.NativeArray}
 */
 var A = function(arr) {
   if (arr === undefined) { arr = []; }
-  return EmberArray.detect(arr) ? arr : NativeArray.apply(arr);
+  return NgularArray.detect(arr) ? arr : NativeArray.apply(arr);
 };
 
 /**
   Activates the mixin on the Array.prototype if not already applied. Calling
-  this method more than once is safe. This will be called when ember is loaded
-  unless you have `Ember.EXTEND_PROTOTYPES` or `Ember.EXTEND_PROTOTYPES.Array`
+  this method more than once is safe. This will be called when ngular is loaded
+  unless you have `Ngular.EXTEND_PROTOTYPES` or `Ngular.EXTEND_PROTOTYPES.Array`
   set to `false`.
 
   Example
 
   ```js
-  if (Ember.EXTEND_PROTOTYPES === true || Ember.EXTEND_PROTOTYPES.Array) {
-    Ember.NativeArray.activate();
+  if (Ngular.EXTEND_PROTOTYPES === true || Ngular.EXTEND_PROTOTYPES.Array) {
+    Ngular.NativeArray.activate();
   }
   ```
 
   @method activate
-  @for Ember.NativeArray
+  @for Ngular.NativeArray
   @static
   @return {void}
 */
@@ -168,11 +168,11 @@ NativeArray.activate = function() {
   A = function(arr) { return arr || []; };
 };
 
-if (Ember.EXTEND_PROTOTYPES === true || Ember.EXTEND_PROTOTYPES.Array) {
+if (Ngular.EXTEND_PROTOTYPES === true || Ngular.EXTEND_PROTOTYPES.Array) {
   NativeArray.activate();
 }
 
-Ember.A = A; // ES6TODO: Setting A onto the object returned by ember-metal/core to avoid circles
+Ngular.A = A; // ES6TODO: Setting A onto the object returned by ngular-metal/core to avoid circles
 export {
   A,
   NativeArray // TODO: only use default export

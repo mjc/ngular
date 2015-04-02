@@ -1,8 +1,8 @@
-import { tryInvoke } from 'ember-metal/utils';
+import { tryInvoke } from 'ngular-metal/utils';
 
 var obj;
 
-QUnit.module("Ember.tryInvoke", {
+QUnit.module("Ngular.tryInvoke", {
   setup() {
     obj = {
       aMethodThatExists() { return true; },

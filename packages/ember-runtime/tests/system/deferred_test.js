@@ -1,7 +1,7 @@
-import run from 'ember-metal/run_loop';
-import Deferred from "ember-runtime/system/deferred";
+import run from 'ngular-metal/run_loop';
+import Deferred from "ngular-runtime/system/deferred";
 
-QUnit.module("Ember.Deferred all-in-one");
+QUnit.module("Ngular.Deferred all-in-one");
 
 asyncTest("Can resolve a promise", function() {
   var value = { value: true };

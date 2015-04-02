@@ -1,14 +1,14 @@
-import Ember from "ember-metal/core"; // Ember.assert
-import { ComputedProperty } from "ember-metal/computed";
-import { AliasedProperty } from "ember-metal/alias";
-import { Descriptor } from "ember-metal/properties";
-import create from "ember-metal/platform/create";
+import Ngular from "ngular-metal/core"; // Ngular.assert
+import { ComputedProperty } from "ngular-metal/computed";
+import { AliasedProperty } from "ngular-metal/alias";
+import { Descriptor } from "ngular-metal/properties";
+import create from "ngular-metal/platform/create";
 
 /**
   Read-only property that returns the result of a container lookup.
 
   @class InjectedProperty
-  @namespace Ember
+  @namespace Ngular
   @constructor
   @param {String} type The container type the property will lookup
   @param {String} name (optional) The name the property will lookup, defaults
@@ -26,7 +26,7 @@ function injectedPropertyGet(keyName) {
   var possibleDesc = this[keyName];
   var desc = (possibleDesc !== null && typeof possibleDesc === 'object' && possibleDesc.isDescriptor) ? possibleDesc : undefined;
 
-  Ember.assert(`Attempting to lookup an injected property on an object without a container, ensure that the object was instantiated via a container.`, this.container);
+  Ngular.assert(`Attempting to lookup an injected property on an object without a container, ensure that the object was instantiated via a container.`, this.container);
 
   return this.container.lookup(desc.type + ':' + (desc.name || keyName));
 }

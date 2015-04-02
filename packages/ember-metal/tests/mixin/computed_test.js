@@ -1,8 +1,8 @@
-import { get } from "ember-metal/property_get";
-import { set } from "ember-metal/property_set";
-import { Mixin } from "ember-metal/mixin";
-import { computed } from "ember-metal/computed";
-import { defineProperty } from "ember-metal/properties";
+import { get } from "ngular-metal/property_get";
+import { set } from "ngular-metal/property_set";
+import { Mixin } from "ngular-metal/mixin";
+import { computed } from "ngular-metal/computed";
+import { defineProperty } from "ngular-metal/properties";
 
 function K() { return this; }
 

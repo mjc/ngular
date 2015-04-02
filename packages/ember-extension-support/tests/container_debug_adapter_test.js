@@ -1,7 +1,7 @@
-import run from "ember-metal/run_loop";
-import EmberController from "ember-runtime/controllers/controller";
-import "ember-extension-support"; // Must be required to export Ember.ContainerDebugAdapter
-import Application from "ember-application/system/application";
+import run from "ngular-metal/run_loop";
+import NgularController from "ngular-runtime/controllers/controller";
+import "ngular-extension-support"; // Must be required to export Ngular.ContainerDebugAdapter
+import Application from "ngular-application/system/application";
 
 var adapter, App;
 
@@ -13,7 +13,7 @@ function boot() {
 QUnit.module("Container Debug Adapter", {
   setup() {
     run(function() {
-      App = Application.create();  // ES6TODO: this comes from the ember-application package NOT ember-runtime
+      App = Application.create();  // ES6TODO: this comes from the ngular-application package NOT ngular-runtime
       App.toString = function() { return 'App'; };
       App.deferReadiness();
 
@@ -44,7 +44,7 @@ QUnit.test("the default ContainerDebugAdapter can catalog typical entries by typ
 });
 
 QUnit.test("the default ContainerDebugAdapter catalogs controller entries", function() {
-  App.PostController = EmberController.extend();
+  App.PostController = NgularController.extend();
   var controllerClasses = adapter.catalogEntriesByType('controller');
 
   equal(controllerClasses.length, 1, "found 1 class");

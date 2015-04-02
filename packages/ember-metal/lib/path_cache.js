@@ -1,4 +1,4 @@
-import Cache from 'ember-metal/cache';
+import Cache from 'ngular-metal/cache';
 
 var IS_GLOBAL      = /^[A-Z$]/;
 var IS_GLOBAL_PATH = /^[A-Z$].*[\.]/;

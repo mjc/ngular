@@ -1,6 +1,6 @@
-import makeViewHelper from "ember-htmlbars/system/make-view-helper";
+import makeViewHelper from "ngular-htmlbars/system/make-view-helper";
 
-QUnit.module("ember-htmlbars: makeViewHelper");
+QUnit.module("ngular-htmlbars: makeViewHelper");
 
 QUnit.test("makes helpful assertion when called with invalid arguments", function() {
   var viewClass = { toString() { return 'Some Random Class'; } };

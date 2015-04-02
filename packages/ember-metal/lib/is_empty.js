@@ -1,26 +1,26 @@
-import { get } from 'ember-metal/property_get';
-import isNone from 'ember-metal/is_none';
+import { get } from 'ngular-metal/property_get';
+import isNone from 'ngular-metal/is_none';
 
 /**
   Verifies that a value is `null` or an empty string, empty array,
   or empty function.
 
-  Constrains the rules on `Ember.isNone` by returning true for empty
+  Constrains the rules on `Ngular.isNone` by returning true for empty
   string and empty arrays.
 
   ```javascript
-  Ember.isEmpty();                // true
-  Ember.isEmpty(null);            // true
-  Ember.isEmpty(undefined);       // true
-  Ember.isEmpty('');              // true
-  Ember.isEmpty([]);              // true
-  Ember.isEmpty({});              // false
-  Ember.isEmpty('Adam Hawkins');  // false
-  Ember.isEmpty([0,1,2]);         // false
+  Ngular.isEmpty();                // true
+  Ngular.isEmpty(null);            // true
+  Ngular.isEmpty(undefined);       // true
+  Ngular.isEmpty('');              // true
+  Ngular.isEmpty([]);              // true
+  Ngular.isEmpty({});              // false
+  Ngular.isEmpty('Adam Hawkins');  // false
+  Ngular.isEmpty([0,1,2]);         // false
   ```
 
   @method isEmpty
-  @for Ember
+  @for Ngular
   @param {Object} obj Value to test
   @return {Boolean}
 */

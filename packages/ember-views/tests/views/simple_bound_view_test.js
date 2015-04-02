@@ -1,5 +1,5 @@
-import Stream from "ember-metal/streams/stream";
-import SimpleBoundView from "ember-views/views/simple_bound_view";
+import Stream from "ngular-metal/streams/stream";
+import SimpleBoundView from "ngular-views/views/simple_bound_view";
 
 QUnit.module('SimpleBoundView');
 

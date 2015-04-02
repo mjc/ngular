@@ -1,11 +1,11 @@
-import Ember from 'ember-metal/core';
+import Ngular from 'ngular-metal/core';
 import {
   ReduceComputedProperty
-} from 'ember-runtime/computed/reduce_computed';
-import { forEach } from 'ember-metal/enumerable_utils';
-import o_create from 'ember-metal/platform/create';
-import { addObserver } from 'ember-metal/observer';
-import EmberError from 'ember-metal/error';
+} from 'ngular-runtime/computed/reduce_computed';
+import { forEach } from 'ngular-metal/enumerable_utils';
+import o_create from 'ngular-metal/platform/create';
+import { addObserver } from 'ngular-metal/observer';
+import NgularError from 'ngular-metal/error';
 
 var a_slice = [].slice;
 
@@ -37,7 +37,7 @@ function ArrayComputedProperty() {
 ArrayComputedProperty.prototype = o_create(ReduceComputedProperty.prototype);
 
 ArrayComputedProperty.prototype.initialValue = function () {
-  return Ember.A();
+  return Ngular.A();
 };
 
 ArrayComputedProperty.prototype.resetValue = function (array) {
@@ -57,7 +57,7 @@ ArrayComputedProperty.prototype.didChange = function (obj, keyName) {
   on the change instead of re-evaluating the entire array. This should
   return an array, if you'd like to use "one at a time" semantics and
   compute some value other then an array look at
-  `Ember.reduceComputed`.
+  `Ngular.reduceComputed`.
 
   If there are more than one arguments the first arguments are
   considered to be dependent property keys. The last argument is
@@ -123,8 +123,8 @@ ArrayComputedProperty.prototype.didChange = function (obj, keyName) {
     - `previousValues` an object whose keys are the properties that changed on
     the item, and whose values are the item's previous values.
 
-  `previousValues` is important Ember coalesces item property changes via
-  Ember.run.once. This means that by the time removedItem gets called, item has
+  `previousValues` is important Ngular coalesces item property changes via
+  Ngular.run.once. This means that by the time removedItem gets called, item has
   the new values, but you may need the previous value (eg for sorting &
   filtering).
 
@@ -141,7 +141,7 @@ ArrayComputedProperty.prototype.didChange = function (obj, keyName) {
   Example
 
   ```javascript
-  Ember.computed.map = function(dependentKey, callback) {
+  Ngular.computed.map = function(dependentKey, callback) {
     var options = {
       addedItem: function(array, item, changeMeta, instanceMeta) {
         var mapped = callback(item);
@@ -154,15 +154,15 @@ ArrayComputedProperty.prototype.didChange = function (obj, keyName) {
       }
     };
 
-    return Ember.arrayComputed(dependentKey, options);
+    return Ngular.arrayComputed(dependentKey, options);
   };
   ```
 
   @method arrayComputed
-  @for Ember
+  @for Ngular
   @param {String} [dependentKeys*]
   @param {Object} options
-  @return {Ember.ComputedProperty}
+  @return {Ngular.ComputedProperty}
 */
 function arrayComputed(options) {
   var args;
@@ -173,7 +173,7 @@ function arrayComputed(options) {
   }
 
   if (typeof options !== 'object') {
-    throw new EmberError('Array Computed Property declared without an options hash');
+    throw new NgularError('Array Computed Property declared without an options hash');
   }
 
   var cp = new ArrayComputedProperty(options);

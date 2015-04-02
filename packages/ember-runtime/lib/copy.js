@@ -1,7 +1,7 @@
-import { indexOf } from 'ember-metal/enumerable_utils';
-import { typeOf } from 'ember-metal/utils';
-import EmberObject from 'ember-runtime/system/object';
-import Copyable from 'ember-runtime/mixins/copyable';
+import { indexOf } from 'ngular-metal/enumerable_utils';
+import { typeOf } from 'ngular-metal/utils';
+import NgularObject from 'ngular-runtime/system/object';
+import Copyable from 'ngular-runtime/mixins/copyable';
 
 function _copy(obj, deep, seen, copies) {
   var ret, loc, key;
@@ -16,8 +16,8 @@ function _copy(obj, deep, seen, copies) {
     return copies[loc];
   }
 
-  Ember.assert('Cannot clone an Ember.Object that does not implement Ember.Copyable',
-    !(obj instanceof EmberObject) || (Copyable && Copyable.detect(obj)));
+  Ngular.assert('Cannot clone an Ngular.Object that does not implement Ngular.Copyable',
+    !(obj instanceof NgularObject) || (Copyable && Copyable.detect(obj)));
 
   // IMPORTANT: this specific test will detect a native array only. Any other
   // object will need to implement Copyable.
@@ -45,7 +45,7 @@ function _copy(obj, deep, seen, copies) {
       }
 
       // Prevents browsers that don't respect non-enumerability from
-      // copying internal Ember properties
+      // copying internal Ngular properties
       if (key.substring(0, 2) === '__') {
         continue;
       }
@@ -69,10 +69,10 @@ function _copy(obj, deep, seen, copies) {
 
   If the passed object implements the `copy()` method, then this function
   will simply call that method and return the result. Please see
-  `Ember.Copyable` for further details.
+  `Ngular.Copyable` for further details.
 
   @method copy
-  @for Ember
+  @for Ngular
   @param {Object} obj The object to clone
   @param {Boolean} deep If true, a deep copy of the object is made
   @return {Object} The cloned object

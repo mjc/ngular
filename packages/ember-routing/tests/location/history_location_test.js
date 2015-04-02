@@ -1,6 +1,6 @@
-import { set } from "ember-metal/property_set";
-import run from "ember-metal/run_loop";
-import HistoryLocation from "ember-routing/location/history_location";
+import { set } from "ngular-metal/property_set";
+import run from "ngular-metal/run_loop";
+import HistoryLocation from "ngular-routing/location/history_location";
 
 var FakeHistory, HistoryTestLocation, location;
 
@@ -30,7 +30,7 @@ function mockBrowserLocation(path) {
   };
 }
 
-QUnit.module("Ember.HistoryLocation", {
+QUnit.module("Ngular.HistoryLocation", {
   setup() {
     FakeHistory = {
       state: null,

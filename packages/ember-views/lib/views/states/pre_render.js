@@ -1,9 +1,9 @@
-import _default from "ember-views/views/states/default";
-import create from 'ember-metal/platform/create';
+import _default from "ngular-views/views/states/default";
+import create from 'ngular-metal/platform/create';
 
 /**
-@module ember
-@submodule ember-views
+@module ngular
+@submodule ngular-views
 */
 var preRender = create(_default);
 

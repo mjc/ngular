@@ -1,15 +1,15 @@
-import Ember from 'ember-metal/core';
-import MutableArrayTests from 'ember-runtime/tests/suites/mutable_array';
-import ArrayProxy from "ember-runtime/system/array_proxy";
-import {get} from "ember-metal/property_get";
+import Ngular from 'ngular-metal/core';
+import MutableArrayTests from 'ngular-runtime/tests/suites/mutable_array';
+import ArrayProxy from "ngular-runtime/system/array_proxy";
+import {get} from "ngular-metal/property_get";
 
 MutableArrayTests.extend({
 
-  name: 'Ember.ArrayProxy',
+  name: 'Ngular.ArrayProxy',
 
   newObject(ary) {
     var ret = ary ? ary.slice() : this.newFixture(3);
-    return ArrayProxy.create({ content: Ember.A(ret) });
+    return ArrayProxy.create({ content: Ngular.A(ret) });
   },
 
   mutate(obj) {

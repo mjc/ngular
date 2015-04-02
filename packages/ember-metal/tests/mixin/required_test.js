@@ -2,8 +2,8 @@ import {
   mixin,
   Mixin,
   required
-} from 'ember-metal/mixin';
-import { get } from 'ember-metal/property_get';
+} from 'ngular-metal/mixin';
+import { get } from 'ngular-metal/property_get';
 
 var PartialMixin, FinalMixin, obj;
 
@@ -14,7 +14,7 @@ QUnit.module('Module.required', {
         foo: required(),
         bar: 'BAR'
       });
-    }, "Ember.required is deprecated as its behavior is inconsistent and unreliable.");
+    }, "Ngular.required is deprecated as its behavior is inconsistent and unreliable.");
 
     FinalMixin = Mixin.create({
       foo: 'FOO'

@@ -1,14 +1,14 @@
-import run from 'ember-metal/run_loop';
-import EmberView from 'ember-views/views/view';
-import compile from 'ember-template-compiler/system/compile';
+import run from 'ngular-metal/run_loop';
+import NgularView from 'ngular-views/views/view';
+import compile from 'ngular-template-compiler/system/compile';
 
-import { set } from 'ember-metal/property_set';
-import o_create from 'ember-metal/platform/create';
-import { runAppend, runDestroy } from "ember-runtime/tests/utils";
+import { set } from 'ngular-metal/property_set';
+import o_create from 'ngular-metal/platform/create';
+import { runAppend, runDestroy } from "ngular-runtime/tests/utils";
 
 var view;
 
-QUnit.module('ember-htmlbars: Integration with Globals', {
+QUnit.module('ngular-htmlbars: Integration with Globals', {
   teardown() {
     runDestroy(view);
 
@@ -17,7 +17,7 @@ QUnit.module('ember-htmlbars: Integration with Globals', {
 });
 
 QUnit.test('should read from a global-ish simple local path without deprecation', function() {
-  view = EmberView.create({
+  view = NgularView.create({
     context: { NotGlobal: 'Gwar' },
     template: compile('{{NotGlobal}}')
   });
@@ -30,7 +30,7 @@ QUnit.test('should read from a global-ish simple local path without deprecation'
 
 QUnit.test('should read a number value', function() {
   var context = { aNumber: 1 };
-  view = EmberView.create({
+  view = NgularView.create({
     context: context,
     template: compile('{{aNumber}}')
   });
@@ -47,7 +47,7 @@ QUnit.test('should read a number value', function() {
 
 QUnit.test('should read an escaped number value', function() {
   var context = { aNumber: 1 };
-  view = EmberView.create({
+  view = NgularView.create({
     context: context,
     template: compile('{{{aNumber}}}')
   });
@@ -63,10 +63,10 @@ QUnit.test('should read an escaped number value', function() {
 });
 
 QUnit.test('should read from an Object.create(null)', function() {
-  // Use ember's polyfill for Object.create
+  // Use ngular's polyfill for Object.create
   var nullObject = o_create(null);
   nullObject['foo'] = 'bar';
-  view = EmberView.create({
+  view = NgularView.create({
     context: { nullObject: nullObject },
     template: compile('{{nullObject.foo}}')
   });
@@ -82,7 +82,7 @@ QUnit.test('should read from an Object.create(null)', function() {
 });
 
 QUnit.test('should escape HTML in primitive value contexts when using normal mustaches', function() {
-  view = EmberView.create({
+  view = NgularView.create({
     context: '<b>Max</b><b>James</b>',
     template: compile('{{this}}')
   });
@@ -101,7 +101,7 @@ QUnit.test('should escape HTML in primitive value contexts when using normal mus
 });
 
 QUnit.test('should not escape HTML in primitive value contexts when using triple mustaches', function() {
-  view = EmberView.create({
+  view = NgularView.create({
     context: '<b>Max</b><b>James</b>',
     template: compile('{{{this}}}')
   });

@@ -1,18 +1,18 @@
-import { get } from "ember-metal/property_get";
-import run from "ember-metal/run_loop";
-import EmberView from "ember-views/views/view";
+import { get } from "ngular-metal/property_get";
+import run from "ngular-metal/run_loop";
+import NgularView from "ngular-views/views/view";
 
 var view, myViewClass, newView, container;
 
-QUnit.module("EmberView#createChildView", {
+QUnit.module("NgularView#createChildView", {
   setup() {
     container = { };
 
-    view = EmberView.create({
+    view = NgularView.create({
       container: container
     });
 
-    myViewClass = EmberView.extend({ isMyView: true, foo: 'bar' });
+    myViewClass = NgularView.extend({ isMyView: true, foo: 'bar' });
   },
 
   teardown() {
@@ -70,7 +70,7 @@ QUnit.test("should update a view instances attributes, including the _parentView
 });
 
 QUnit.test("should create from string via container lookup", function() {
-  var ChildViewClass = EmberView.extend();
+  var ChildViewClass = NgularView.extend();
   var fullName = 'view:bro';
 
   view.container.lookupFactory = function(viewName) {

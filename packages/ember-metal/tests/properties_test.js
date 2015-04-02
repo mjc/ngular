@@ -1,9 +1,9 @@
-import { hasPropertyAccessors } from "ember-metal/platform/define_property";
-import { computed } from 'ember-metal/computed';
-import { defineProperty } from "ember-metal/properties";
-import { deprecateProperty } from "ember-metal/deprecate_property";
+import { hasPropertyAccessors } from "ngular-metal/platform/define_property";
+import { computed } from 'ngular-metal/computed';
+import { defineProperty } from "ngular-metal/properties";
+import { deprecateProperty } from "ngular-metal/deprecate_property";
 
-QUnit.module('Ember.defineProperty');
+QUnit.module('Ngular.defineProperty');
 
 QUnit.test('toString', function() {
 
@@ -42,7 +42,7 @@ QUnit.test("for descriptor properties, didDefineProperty hook should be called i
 
 if (hasPropertyAccessors) {
 
-  QUnit.module('Ember.deprecateProperty');
+  QUnit.module('Ngular.deprecateProperty');
 
   QUnit.test("enables access to deprecated property and returns the value of the new property", function() {
     expect(3);

@@ -1,15 +1,15 @@
 function fileMap(revision,tag,date) {
   return {
-    "ember.js":                   fileObject("ember",                   ".js",   "text/javascript",  revision, tag, date),
-    "ember.debug.js":             fileObject("ember.debug",             ".js",   "text/javascript",  revision, tag, date),
-    "ember-testing.js":           fileObject("ember-testing",           ".js",   "text/javascript",  revision, tag, date),
-    "ember-tests.js":             fileObject("ember-tests",             ".js",   "text/javascript",  revision, tag, date),
-    "ember-runtime.js":           fileObject("ember-runtime",           ".js",   "text/javascript",  revision, tag, date),
-    "ember-template-compiler.js": fileObject("ember-template-compiler", ".js",   "text/javascript",  revision, tag, date),
-    "ember.min.js":               fileObject("ember.min",               ".js",   "text/javascript",  revision, tag, date),
-    "ember.prod.js":              fileObject("ember.prod",              ".js",   "text/javascript",  revision, tag, date),
-    "../docs/data.json":          fileObject("ember-docs",              ".json", "application/json", revision, tag, date),
-    "ember-tests/index.html":     fileObject("ember-tests-index",       ".html", "text/html",        revision, tag, date)
+    "ngular.js":                   fileObject("ngular",                   ".js",   "text/javascript",  revision, tag, date),
+    "ngular.debug.js":             fileObject("ngular.debug",             ".js",   "text/javascript",  revision, tag, date),
+    "ngular-testing.js":           fileObject("ngular-testing",           ".js",   "text/javascript",  revision, tag, date),
+    "ngular-tests.js":             fileObject("ngular-tests",             ".js",   "text/javascript",  revision, tag, date),
+    "ngular-runtime.js":           fileObject("ngular-runtime",           ".js",   "text/javascript",  revision, tag, date),
+    "ngular-template-compiler.js": fileObject("ngular-template-compiler", ".js",   "text/javascript",  revision, tag, date),
+    "ngular.min.js":               fileObject("ngular.min",               ".js",   "text/javascript",  revision, tag, date),
+    "ngular.prod.js":              fileObject("ngular.prod",              ".js",   "text/javascript",  revision, tag, date),
+    "../docs/data.json":          fileObject("ngular-docs",              ".json", "application/json", revision, tag, date),
+    "ngular-tests/index.html":     fileObject("ngular-tests-index",       ".html", "text/html",        revision, tag, date)
   };
 };
 

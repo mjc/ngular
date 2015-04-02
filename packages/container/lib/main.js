@@ -10,10 +10,10 @@ The public api, specified on the application namespace should be considered the 
  If model factory injections are enabled, models should not be
  accessed globally (only through `container.lookupFactory('model:modelName'))`);
 */
-Ember.MODEL_FACTORY_INJECTIONS = false;
+Ngular.MODEL_FACTORY_INJECTIONS = false;
 
-if (Ember.ENV && typeof Ember.ENV.MODEL_FACTORY_INJECTIONS !== 'undefined') {
-  Ember.MODEL_FACTORY_INJECTIONS = !!Ember.ENV.MODEL_FACTORY_INJECTIONS;
+if (Ngular.ENV && typeof Ngular.ENV.MODEL_FACTORY_INJECTIONS !== 'undefined') {
+  Ngular.MODEL_FACTORY_INJECTIONS = !!Ngular.ENV.MODEL_FACTORY_INJECTIONS;
 }
 
 import Registry from 'container/registry';

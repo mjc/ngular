@@ -4,16 +4,16 @@
   confusing.
 
   ```javascript
-  Ember.isNone();              // true
-  Ember.isNone(null);          // true
-  Ember.isNone(undefined);     // true
-  Ember.isNone('');            // false
-  Ember.isNone([]);            // false
-  Ember.isNone(function() {});  // false
+  Ngular.isNone();              // true
+  Ngular.isNone(null);          // true
+  Ngular.isNone(undefined);     // true
+  Ngular.isNone('');            // false
+  Ngular.isNone([]);            // false
+  Ngular.isNone(function() {});  // false
   ```
 
   @method isNone
-  @for Ember
+  @for Ngular
   @param {Object} obj Value to test
   @return {Boolean}
 */

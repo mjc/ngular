@@ -1,17 +1,17 @@
-import Ember from "ember-metal/core";
-import EmberObject from 'ember-runtime/system/object';
-import setProperties from "ember-metal/set_properties";
-import ObjectProxy from 'ember-runtime/system/object_proxy';
-import { get } from 'ember-metal/property_get';
-import { set } from 'ember-metal/property_set';
-import run from 'ember-metal/run_loop';
-import { addObserver } from "ember-metal/observer";
+import Ngular from "ngular-metal/core";
+import NgularObject from 'ngular-runtime/system/object';
+import setProperties from "ngular-metal/set_properties";
+import ObjectProxy from 'ngular-runtime/system/object_proxy';
+import { get } from 'ngular-metal/property_get';
+import { set } from 'ngular-metal/property_set';
+import run from 'ngular-metal/run_loop';
+import { addObserver } from "ngular-metal/observer";
 import {
   beginPropertyChanges,
   endPropertyChanges
-} from "ember-metal/property_events";
-import { forEach } from "ember-metal/array";
-import { observer, Mixin } from 'ember-metal/mixin';
+} from "ngular-metal/property_events";
+import { forEach } from "ngular-metal/array";
+import { observer, Mixin } from 'ngular-metal/mixin';
 import {
   sum as computedSum,
   min as computedMin,
@@ -25,7 +25,7 @@ import {
   uniq as computedUniq,
   union as computedUnion,
   intersect as computedIntersect
-} from 'ember-runtime/computed/reduce_computed_macros';
+} from 'ngular-runtime/computed/reduce_computed_macros';
 
 var obj, sorted, sortProps, items, userFnCalls, todos, filtered, union;
 
@@ -33,17 +33,17 @@ QUnit.module('computedMap', {
   setup() {
     run(function() {
       userFnCalls = 0;
-      obj = EmberObject.createWithMixins({
-        array: Ember.A([{ v: 1 }, { v: 3 }, { v: 2 }, { v: 1 }]),
+      obj = NgularObject.createWithMixins({
+        array: Ngular.A([{ v: 1 }, { v: 3 }, { v: 2 }, { v: 1 }]),
 
         mapped: computedMap('array.@each.v', function(item) {
           ++userFnCalls;
           return item.v;
         }),
 
-        arrayObjects: Ember.A([
-          EmberObject.create({ v: { name: 'Robert' } }),
-          EmberObject.create({ v: { name: 'Leanna' } })]),
+        arrayObjects: Ngular.A([
+          NgularObject.create({ v: { name: 'Robert' } }),
+          NgularObject.create({ v: { name: 'Leanna' } })]),
         mappedObjects: computedMap('arrayObjects.@each.v', function (item) {
           return {
             name: item.v.name
@@ -93,10 +93,10 @@ QUnit.test("it caches properly", function() {
 });
 
 QUnit.test("it maps simple unshifted properties", function() {
-  var array = Ember.A([]);
+  var array = Ngular.A([]);
 
   run(function() {
-    obj = EmberObject.createWithMixins({
+    obj = NgularObject.createWithMixins({
       array: array,
       mapped: computedMap('array', function (item) { return item.toUpperCase(); })
     });
@@ -115,10 +115,10 @@ QUnit.test("it maps simple unshifted properties", function() {
 });
 
 QUnit.test("it passes the index to the callback", function() {
-  var array = Ember.A(['a', 'b', 'c']);
+  var array = Ngular.A(['a', 'b', 'c']);
 
   run(function() {
-    obj = EmberObject.createWithMixins({
+    obj = NgularObject.createWithMixins({
       array: array,
       mapped: computedMap('array', function (item, index) { return index; })
     });
@@ -151,11 +151,11 @@ QUnit.test("it maps objects", function() {
 });
 
 QUnit.test("it maps unshifted objects with property observers", function() {
-  var array = Ember.A([]);
+  var array = Ngular.A([]);
   var cObj = { v: 'c' };
 
   run(function() {
-    obj = EmberObject.createWithMixins({
+    obj = NgularObject.createWithMixins({
       array: array,
       mapped: computedMap('array.@each.v', function (item) {
         return get(item, 'v').toUpperCase();
@@ -179,8 +179,8 @@ QUnit.test("it maps unshifted objects with property observers", function() {
 QUnit.module('computedMapBy', {
   setup() {
     run(function() {
-      obj = EmberObject.createWithMixins({
-        array: Ember.A([{ v: 1 }, { v: 3 }, { v: 2 }, { v: 1 }]),
+      obj = NgularObject.createWithMixins({
+        array: Ngular.A([{ v: 1 }, { v: 3 }, { v: 2 }, { v: 1 }]),
         mapped: computedMapBy('array', 'v')
       });
     });
@@ -232,8 +232,8 @@ QUnit.module('computedFilter', {
   setup() {
     run(function() {
       userFnCalls = 0;
-      obj = EmberObject.createWithMixins({
-        array: Ember.A([1, 2, 3, 4, 5, 6, 7, 8]),
+      obj = NgularObject.createWithMixins({
+        array: Ngular.A([1, 2, 3, 4, 5, 6, 7, 8]),
         filtered: computedFilter('array', function(item) {
           ++userFnCalls;
           return item % 2 === 0;
@@ -255,10 +255,10 @@ QUnit.test("it filters according to the specified filter function", function() {
 });
 
 QUnit.test("it passes the index to the callback", function() {
-  var array = Ember.A(['a', 'b', 'c']);
+  var array = Ngular.A(['a', 'b', 'c']);
 
   run(function() {
-    obj = EmberObject.createWithMixins({
+    obj = NgularObject.createWithMixins({
       array: array,
       filtered: computedFilter('array', function (item, index) { return index === 1; })
     });
@@ -269,10 +269,10 @@ QUnit.test("it passes the index to the callback", function() {
 });
 
 QUnit.test("it passes the array to the callback", function() {
-  var array = Ember.A(['a', 'b', 'c']);
+  var array = Ngular.A(['a', 'b', 'c']);
 
   run(function() {
-    obj = EmberObject.createWithMixins({
+    obj = NgularObject.createWithMixins({
       array: array,
       filtered: computedFilter('array', function (item, index, array) { return index === array.get('length') - 2; })
     });
@@ -363,15 +363,15 @@ QUnit.test("it updates as the array is replaced", function() {
   deepEqual(filtered, [2,4,6,8], "precond - filtered array is initially correct");
 
   run(function() {
-    set(obj, 'array', Ember.A([20,21,22,23,24]));
+    set(obj, 'array', Ngular.A([20,21,22,23,24]));
   });
   deepEqual(filtered, [20,22,24], "computed array is updated when array is changed");
 });
 
 QUnit.module('computedFilterBy', {
   setup() {
-    obj = EmberObject.createWithMixins({
-      array: Ember.A([
+    obj = NgularObject.createWithMixins({
+      array: Ngular.A([
         { name: "one", a: 1, b: false },
         { name: "two", a: 2, b: false },
         { name: "three", a: 1, b: true },
@@ -420,7 +420,7 @@ QUnit.test("properties can be filtered by truthiness", function() {
   deepEqual(bs.mapBy('name'), ['one', 'three'], "arrays computed by filtered property respond to removed objects");
 
   run(function() {
-    set(obj, 'array', Ember.A([{ name: "six", a: 12, b: true }]));
+    set(obj, 'array', Ngular.A([{ name: "six", a: 12, b: true }]));
   });
   deepEqual(as.mapBy('name'), ['six'], "arrays computed by filter property respond to array changes");
   deepEqual(bs.mapBy('name'), ['six'], "arrays computed by filtered property respond to array changes");
@@ -450,8 +450,8 @@ QUnit.test("properties can be filtered by values", function() {
 });
 
 QUnit.test("properties values can be replaced", function() {
-  obj = EmberObject.createWithMixins({
-      array: Ember.A([]),
+  obj = NgularObject.createWithMixins({
+      array: Ngular.A([]),
       a1s: computedFilterBy('array', 'a', 1),
       a1bs: computedFilterBy('a1s', 'b')
     });
@@ -460,7 +460,7 @@ QUnit.test("properties values can be replaced", function() {
   deepEqual(a1bs.mapBy('name'), [], "properties can be filtered by matching value");
 
   run(function() {
-    set(obj, 'array', Ember.A([{ name: 'item1', a: 1, b: true }]));
+    set(obj, 'array', Ngular.A([{ name: 'item1', a: 1, b: true }]));
   });
 
   a1bs = get(obj, 'a1bs');
@@ -475,10 +475,10 @@ forEach.call([['uniq', computedUniq], ['union', computedUnion]], function (tuple
     setup() {
       run(function() {
         union = testedFunc('array', 'array2', 'array3');
-        obj = EmberObject.createWithMixins({
-          array: Ember.A([1,2,3,4,5,6]),
-          array2: Ember.A([4,5,6,7,8,9,4,5,6,7,8,9]),
-          array3: Ember.A([1,8,10]),
+        obj = NgularObject.createWithMixins({
+          array: Ngular.A([1,2,3,4,5,6]),
+          array2: Ngular.A([4,5,6,7,8,9,4,5,6,7,8,9]),
+          array3: Ngular.A([1,8,10]),
           union: union
         });
       });
@@ -553,10 +553,10 @@ forEach.call([['uniq', computedUniq], ['union', computedUnion]], function (tuple
       }
     });
     union.initialValue = function() {
-      return CountIndexOfCalls.apply(Ember.A([]));
+      return CountIndexOfCalls.apply(Ngular.A([]));
     };
     get(obj, 'union');
-    ok(indexOfCalls.length === 0, "Ember.computed." + alias + " should not need to query the union as it is being built");
+    ok(indexOfCalls.length === 0, "Ngular.computed." + alias + " should not need to query the union as it is being built");
   });
 
 });
@@ -564,10 +564,10 @@ forEach.call([['uniq', computedUniq], ['union', computedUnion]], function (tuple
 QUnit.module('computed.intersect', {
   setup() {
     run(function() {
-      obj = EmberObject.createWithMixins({
-        array: Ember.A([1,2,3,4,5,6]),
-        array2: Ember.A([3,3,3,4,5]),
-        array3: Ember.A([3,5,6,7,8]),
+      obj = NgularObject.createWithMixins({
+        array: Ngular.A([1,2,3,4,5,6]),
+        array2: Ngular.A([3,3,3,4,5]),
+        array3: Ngular.A([3,5,6,7,8]),
         intersection: computedIntersect('array', 'array2', 'array3')
       });
     });
@@ -617,9 +617,9 @@ QUnit.test("it has set-intersection semantics", function() {
 QUnit.module('computedSetDiff', {
   setup() {
     run(function() {
-      obj = EmberObject.createWithMixins({
-        array: Ember.A([1,2,3,4,5,6,7]),
-        array2: Ember.A([3,4,5,10]),
+      obj = NgularObject.createWithMixins({
+        array: Ngular.A([1,2,3,4,5,6,7]),
+        array2: Ngular.A([3,4,5,10]),
         diff: computedSetDiff('array', 'array2')
       });
     });
@@ -633,18 +633,18 @@ QUnit.module('computedSetDiff', {
 
 QUnit.test("it throws an error if given fewer or more than two dependent properties", function() {
   throws(function () {
-    EmberObject.createWithMixins({
-      array: Ember.A([1,2,3,4,5,6,7]),
-      array2: Ember.A([3,4,5]),
+    NgularObject.createWithMixins({
+      array: Ngular.A([1,2,3,4,5,6,7]),
+      array2: Ngular.A([3,4,5]),
       diff: computedSetDiff('array')
     });
   }, /requires exactly two dependent arrays/, "setDiff requires two dependent arrays");
 
   throws(function () {
-    EmberObject.createWithMixins({
-      array: Ember.A([1,2,3,4,5,6,7]),
-      array2: Ember.A([3,4,5]),
-      array3: Ember.A([7]),
+    NgularObject.createWithMixins({
+      array: Ngular.A([1,2,3,4,5,6,7]),
+      array2: Ngular.A([3,4,5]),
+      array3: Ngular.A([7]),
       diff: computedSetDiff('array', 'array2', 'array3')
     });
   }, /requires exactly two dependent arrays/, "setDiff requires two dependent arrays");
@@ -702,7 +702,7 @@ function commonSortTests() {
     deepEqual(sorted.mapBy('fname'), ['Cersei', 'Jaime', 'Bran', 'Robb'], "precond - array is initially sorted");
 
     run(function() {
-      set(obj, 'items', Ember.A([{
+      set(obj, 'items', Ngular.A([{
         fname: 'Roose', lname: 'Bolton'
       }, {
         fname: 'Theon', lname: 'Greyjoy'
@@ -752,10 +752,10 @@ function commonSortTests() {
     run(function() {
       // We recreate jaime and "Cersei" here only for test stability: we want
       // their guid-ordering to be deterministic
-      jaimeInDisguise = EmberObject.create({
+      jaimeInDisguise = NgularObject.create({
         fname: 'Cersei', lname: 'Lannister', age: 34
       });
-      jaime = EmberObject.create({
+      jaime = NgularObject.create({
         fname: 'Jaime', lname: 'Lannister', age: 34
       });
       items = get(obj, 'items');
@@ -812,9 +812,9 @@ function commonSortTests() {
 QUnit.module('computedSort - sortProperties', {
   setup() {
     run(function() {
-      obj = EmberObject.createWithMixins({
-        itemSorting: Ember.A(['lname', 'fname']),
-        items: Ember.A([{
+      obj = NgularObject.createWithMixins({
+        itemSorting: Ngular.A(['lname', 'fname']),
+        items: Ngular.A([{
           fname: "Jaime", lname: "Lannister", age: 34
         }, {
           fname: "Cersei", lname: "Lannister", age: 34
@@ -845,7 +845,7 @@ QUnit.test("updating sort properties updates the sorted array", function() {
   deepEqual(sorted.mapBy('fname'), ['Cersei', 'Jaime', 'Bran', 'Robb'], "precond - array is initially sorted");
 
   run(function() {
-    set(obj, 'itemSorting', Ember.A(['fname:desc']));
+    set(obj, 'itemSorting', Ngular.A(['fname:desc']));
   });
 
   deepEqual(sorted.mapBy('fname'), ['Robb', 'Jaime', 'Cersei', 'Bran'], "after updating sort properties array is updated");
@@ -875,7 +875,7 @@ QUnit.test("updating new sort properties in place updates the sorted array", fun
   deepEqual(sorted.mapBy('fname'), ['Cersei', 'Jaime', 'Bran', 'Robb'], "precond - array is initially sorted");
 
   run(function() {
-    set(obj, 'itemSorting', Ember.A(['age:desc', 'fname:asc']));
+    set(obj, 'itemSorting', Ngular.A(['age:desc', 'fname:asc']));
   });
 
   deepEqual(sorted.mapBy('fname'), ['Cersei', 'Jaime', 'Robb', 'Bran'], "precond - array is correct after item sorting is changed");
@@ -898,7 +898,7 @@ QUnit.test("sort direction defaults to ascending", function() {
   deepEqual(sorted.mapBy('fname'), ['Cersei', 'Jaime', 'Bran', 'Robb'], "precond - array is initially sorted");
 
   run(function() {
-    set(obj, 'itemSorting', Ember.A(['fname']));
+    set(obj, 'itemSorting', Ngular.A(['fname']));
   });
 
   deepEqual(sorted.mapBy('fname'), ['Bran', 'Cersei', 'Jaime', 'Robb'], "sort direction defaults to ascending");
@@ -949,18 +949,18 @@ QUnit.test("updating an item's sort properties does not error when binary search
   var jaime, cersei;
 
   run(function() {
-    jaime = EmberObject.create({
+    jaime = NgularObject.create({
       name: 'Jaime',
       status: 1
     });
-    cersei = EmberObject.create({
+    cersei = NgularObject.create({
       name: 'Cersei',
       status: 2
     });
 
-    obj = EmberObject.createWithMixins({
-      people: Ember.A([jaime, cersei]),
-      sortProps: Ember.A(['status']),
+    obj = NgularObject.createWithMixins({
+      people: Ngular.A([jaime, cersei]),
+      sortProps: Ngular.A(['status']),
       sortedPeople: computedSort('people', 'sortProps')
     });
   });
@@ -984,19 +984,19 @@ QUnit.test("property paths in sort properties update the sorted array", function
   var jaime, cersei, sansa;
 
   run(function () {
-    jaime = EmberObject.create({
-      relatedObj: EmberObject.create({ status: 1, firstName: 'Jaime', lastName: 'Lannister' })
+    jaime = NgularObject.create({
+      relatedObj: NgularObject.create({ status: 1, firstName: 'Jaime', lastName: 'Lannister' })
     });
-    cersei = EmberObject.create({
-      relatedObj: EmberObject.create({ status: 2, firstName: 'Cersei', lastName: 'Lannister' })
+    cersei = NgularObject.create({
+      relatedObj: NgularObject.create({ status: 2, firstName: 'Cersei', lastName: 'Lannister' })
     });
-    sansa = EmberObject.create({
-      relatedObj: EmberObject.create({ status: 3, firstName: 'Sansa', lastName: 'Stark' })
+    sansa = NgularObject.create({
+      relatedObj: NgularObject.create({ status: 3, firstName: 'Sansa', lastName: 'Stark' })
     });
 
-    obj = EmberObject.createWithMixins({
-      people: Ember.A([jaime, cersei, sansa]),
-      sortProps: Ember.A(['relatedObj.status']),
+    obj = NgularObject.createWithMixins({
+      people: Ngular.A([jaime, cersei, sansa]),
+      sortProps: Ngular.A(['relatedObj.status']),
       sortedPeople: computedSort('people', 'sortProps')
     });
   });
@@ -1022,7 +1022,7 @@ QUnit.test("property paths in sort properties update the sorted array", function
   deepEqual(get(obj, 'sortedPeople'), [jaime, cersei, sansa], "array is sorted correctly");
 
   run(function () {
-    obj.set('sortProps', Ember.A(['relatedObj.firstName']));
+    obj.set('sortProps', Ngular.A(['relatedObj.firstName']));
   });
 
   deepEqual(get(obj, 'sortedPeople'), [cersei, jaime, sansa], "array is sorted correctly");
@@ -1052,8 +1052,8 @@ function sortByFnameAsc(a, b) {
 QUnit.module('computedSort - sort function', {
   setup() {
     run(function() {
-      obj = EmberObject.createWithMixins({
-        items: Ember.A([{
+      obj = NgularObject.createWithMixins({
+        items: Ngular.A([{
           fname: "Jaime", lname: "Lannister", age: 34
         }, {
           fname: "Cersei", lname: "Lannister", age: 34
@@ -1120,8 +1120,8 @@ QUnit.test("changing item properties not specified via @each does not trigger a 
 QUnit.module('computedSort - stability', {
   setup() {
     run(function() {
-      obj = EmberObject.createWithMixins({
-        items: Ember.A(Ember.A([{
+      obj = NgularObject.createWithMixins({
+        items: Ngular.A(Ngular.A([{
           name: "A", count: 1
         }, {
           name: "B", count: 1
@@ -1130,10 +1130,10 @@ QUnit.module('computedSort - stability', {
         }, {
           name: "D", count: 1
         }]).map(function(elt) {
-          return EmberObject.create(elt);
+          return NgularObject.create(elt);
         })),
 
-        sortProps: Ember.A(['count', 'name']),
+        sortProps: Ngular.A(['count', 'name']),
         sortedItems: computedSort('items', 'sortProps')
       });
     });
@@ -1161,8 +1161,8 @@ QUnit.test("sorts correctly as only one property changes", function() {
 QUnit.module('computedSort - concurrency', {
   setup() {
     run(function() {
-      obj = EmberObject.createWithMixins({
-        items: Ember.A(Ember.A([{
+      obj = NgularObject.createWithMixins({
+        items: Ngular.A(Ngular.A([{
           name: "A", count: 1
         }, {
           name: "B", count: 2
@@ -1171,10 +1171,10 @@ QUnit.module('computedSort - concurrency', {
         }, {
           name: "D", count: 4
         }]).map(function(elt) {
-          return EmberObject.create(elt);
+          return NgularObject.create(elt);
         })),
 
-        sortProps: Ember.A(['count']),
+        sortProps: Ngular.A(['count']),
         sortedItems: computedSort('items', 'sortProps'),
         customSortedItems: computedSort('items.@each.count', function(a, b) {
           return get(a, 'count') - get(b, 'count');
@@ -1195,7 +1195,7 @@ QUnit.test("sorts correctly when there are concurrent changes", function() {
     sorted = obj.get('sortedItems');
   });
   deepEqual(sorted.mapBy('name'), ['A', 'B', 'C', 'D'], "initial");
-  Ember.changeProperties(function() {
+  Ngular.changeProperties(function() {
     obj.get('items').objectAt(1).set('count', 5);
     obj.get('items').objectAt(2).set('count', 6);
   });
@@ -1213,7 +1213,7 @@ QUnit.test("sorts correctly with a user-provided comparator when there are concu
   });
 
   run(function() {
-    Ember.changeProperties(function() {
+    Ngular.changeProperties(function() {
       obj.get('items').objectAt(1).set('count', 5);
       obj.get('items').objectAt(2).set('count', 6);
     });
@@ -1227,8 +1227,8 @@ QUnit.test("sorts correctly with a user-provided comparator when there are concu
 QUnit.module('computedMax', {
   setup() {
     run(function() {
-      obj = EmberObject.createWithMixins({
-        items: Ember.A([1,2,3]),
+      obj = NgularObject.createWithMixins({
+        items: Ngular.A([1,2,3]),
         max: computedMax('items')
       });
     });
@@ -1280,8 +1280,8 @@ QUnit.test("max recomputes when the current max is removed", function() {
 QUnit.module('computedMin', {
   setup() {
     run(function() {
-      obj = EmberObject.createWithMixins({
-        items: Ember.A([1,2,3]),
+      obj = NgularObject.createWithMixins({
+        items: Ngular.A([1,2,3]),
         min: computedMin('items')
       });
     });
@@ -1330,11 +1330,11 @@ QUnit.test("min recomputes when the current min is removed", function() {
   equal(get(obj, 'min'), 3, "min is recomputed when the current min is removed");
 });
 
-QUnit.module('Ember.arrayComputed - mixed sugar', {
+QUnit.module('Ngular.arrayComputed - mixed sugar', {
   setup() {
     run(function() {
-      obj = EmberObject.createWithMixins({
-        items: Ember.A([{
+      obj = NgularObject.createWithMixins({
+        items: Ngular.A([{
           fname: "Jaime", lname: "Lannister", age: 34
         }, {
           fname: "Cersei", lname: "Lannister", age: 34
@@ -1345,7 +1345,7 @@ QUnit.module('Ember.arrayComputed - mixed sugar', {
         }]),
 
         lannisters: computedFilterBy('items', 'lname', 'Lannister'),
-        lannisterSorting: Ember.A(['fname']),
+        lannisterSorting: Ngular.A(['fname']),
         sortedLannisters: computedSort('lannisters', 'lannisterSorting'),
 
 
@@ -1400,7 +1400,7 @@ QUnit.test("filtering, sorting and reduce (max) can be combined", function() {
 });
 
 function todo(name, priority) {
-  return EmberObject.create({ name: name, priority: priority });
+  return NgularObject.create({ name: name, priority: priority });
 }
 
 function priorityComparator(todoA, todoB) {
@@ -1416,10 +1416,10 @@ function evenPriorities(todo) {
   return p % 2 === 0;
 }
 
-QUnit.module('Ember.arrayComputed - chains', {
+QUnit.module('Ngular.arrayComputed - chains', {
   setup() {
-    obj = EmberObject.createWithMixins({
-      todos: Ember.A([todo('E', 4), todo('D', 3), todo('C', 2), todo('B', 1), todo('A', 0)]),
+    obj = NgularObject.createWithMixins({
+      todos: Ngular.A([todo('E', 4), todo('D', 3), todo('C', 2), todo('B', 1), todo('A', 0)]),
       sorted: computedSort('todos.@each.priority', priorityComparator),
       filtered: computedFilter('sorted.@each.priority', evenPriorities)
     });
@@ -1465,8 +1465,8 @@ QUnit.module('Chaining array and reduced CPs', {
   setup() {
     run(function() {
       userFnCalls = 0;
-      obj = EmberObject.createWithMixins({
-        array: Ember.A([{ v: 1 }, { v: 3 }, { v: 2 }, { v: 1 }]),
+      obj = NgularObject.createWithMixins({
+        array: Ngular.A([{ v: 1 }, { v: 3 }, { v: 2 }, { v: 1 }]),
         mapped: computedMapBy('array', 'v'),
         max: computedMax('mapped'),
         maxDidChange: observer('max', function() {
@@ -1505,8 +1505,8 @@ QUnit.test("it computes interdependent array computed properties", function() {
 QUnit.module('computedSum', {
   setup() {
     run(function() {
-      obj = EmberObject.createWithMixins({
-        array: Ember.A([1, 2, 3]),
+      obj = NgularObject.createWithMixins({
+        array: Ngular.A([1, 2, 3]),
         total: computedSum('array')
       });
     });

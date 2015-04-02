@@ -1,10 +1,10 @@
-import { testBoth } from 'ember-metal/tests/props_helper';
+import { testBoth } from 'ngular-metal/tests/props_helper';
 import {
   observer,
   mixin,
   Mixin
-} from 'ember-metal/mixin';
-import { isWatching } from "ember-metal/watching";
+} from 'ngular-metal/mixin';
+import { isWatching } from "ngular-metal/watching";
 
 QUnit.module('Mixin observer');
 

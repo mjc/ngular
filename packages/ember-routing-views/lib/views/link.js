@@ -1,20 +1,20 @@
 /**
-@module ember
-@submodule ember-routing-views
+@module ngular
+@submodule ngular-routing-views
 */
 
-import Ember from "ember-metal/core"; // FEATURES, Logger, assert
+import Ngular from "ngular-metal/core"; // FEATURES, Logger, assert
 
-import { get } from "ember-metal/property_get";
-import merge from "ember-metal/merge";
-import run from "ember-metal/run_loop";
-import { computed } from "ember-metal/computed";
-import { fmt } from "ember-runtime/system/string";
-import keys from "ember-metal/keys";
-import { isSimpleClick } from "ember-views/system/utils";
-import EmberComponent from "ember-views/views/component";
-import { routeArgs } from "ember-routing/utils";
-import { read, subscribe } from "ember-metal/streams/utils";
+import { get } from "ngular-metal/property_get";
+import merge from "ngular-metal/merge";
+import run from "ngular-metal/run_loop";
+import { computed } from "ngular-metal/computed";
+import { fmt } from "ngular-runtime/system/string";
+import keys from "ngular-metal/keys";
+import { isSimpleClick } from "ngular-views/system/utils";
+import NgularComponent from "ngular-views/views/component";
+import { routeArgs } from "ngular-routing/utils";
+import { read, subscribe } from "ngular-metal/streams/utils";
 
 var numberOfContextsAcceptedByHandler = function(handler, handlerInfos) {
   var req = 0;
@@ -29,13 +29,13 @@ var numberOfContextsAcceptedByHandler = function(handler, handlerInfos) {
 };
 
 var linkViewClassNameBindings = ['active', 'loading', 'disabled'];
-if (Ember.FEATURES.isEnabled('ember-routing-transitioning-classes')) {
+if (Ngular.FEATURES.isEnabled('ngular-routing-transitioning-classes')) {
   linkViewClassNameBindings = ['active', 'loading', 'disabled', 'transitioningIn', 'transitioningOut'];
 }
 
 /**
-  `Ember.LinkView` renders an element whose `click` event triggers a
-  transition of the application's instance of `Ember.Router` to
+  `Ngular.LinkView` renders an element whose `click` event triggers a
+  transition of the application's instance of `Ngular.Router` to
   a supplied route by name.
 
   Instances of `LinkView` will most likely be created through
@@ -43,11 +43,11 @@ if (Ember.FEATURES.isEnabled('ember-routing-transitioning-classes')) {
   can be overridden to customize application-wide behavior.
 
   @class LinkView
-  @namespace Ember
-  @extends Ember.View
+  @namespace Ngular
+  @extends Ngular.View
   @see {Handlebars.helpers.link-to}
 **/
-var LinkView = EmberComponent.extend({
+var LinkView = NgularComponent.extend({
   tagName: 'a',
 
   /**
@@ -190,17 +190,17 @@ var LinkView = EmberComponent.extend({
     Example:
 
     ```javascript
-    App.MyLinkView = Ember.LinkView.extend({
+    App.MyLinkView = Ngular.LinkView.extend({
       init: function() {
         this._super.apply(this, arguments);
-        Ember.Logger.log('Event is ' + this.get('eventName'));
+        Ngular.Logger.log('Event is ' + this.get('eventName'));
       }
     });
     ```
 
-    NOTE: If you do override `init` for a framework class like `Ember.View` or
-    `Ember.ArrayController`, be sure to call `this._super.apply(this, arguments)` in your
-    `init` declaration! If you don't, Ember may not have an opportunity to
+    NOTE: If you do override `init` for a framework class like `Ngular.View` or
+    `Ngular.ArrayController`, be sure to call `this._super.apply(this, arguments)` in your
+    `init` declaration! If you don't, Ngular may not have an opportunity to
     do important setup work, and you'll see strange behavior in your
     application.
 
@@ -209,7 +209,7 @@ var LinkView = EmberComponent.extend({
   init() {
     this._super(...arguments);
 
-    Ember.deprecate('Using currentWhen with {{link-to}} is deprecated in favor of `current-when`.', !this.currentWhen);
+    Ngular.deprecate('Using currentWhen with {{link-to}} is deprecated in favor of `current-when`.', !this.currentWhen);
 
     // Map desired event name to invoke function
     var eventName = get(this, 'eventName');
@@ -313,14 +313,14 @@ var LinkView = EmberComponent.extend({
     var willBeActive = get(this, 'willBeActive');
     if (typeof willBeActive === 'undefined') { return false; }
 
-    return !get(this, 'active') && willBeActive && 'ember-transitioning-in';
+    return !get(this, 'active') && willBeActive && 'ngular-transitioning-in';
   }),
 
   transitioningOut: computed('active', 'willBeActive', function() {
     var willBeActive = get(this, 'willBeActive');
     if (typeof willBeActive === 'undefined') { return false; }
 
-    return get(this, 'active') && !willBeActive && 'ember-transitioning-out';
+    return get(this, 'active') && !willBeActive && 'ngular-transitioning-out';
   }),
 
   /**
@@ -373,7 +373,7 @@ var LinkView = EmberComponent.extend({
     if (get(this, '_isDisabled')) { return false; }
 
     if (get(this, 'loading')) {
-      Ember.Logger.warn("This link-to is in an inactive loading state because at least one of its parameters presently has a null/undefined value, or the provided route name is invalid.");
+      Ngular.Logger.warn("This link-to is in an inactive loading state because at least one of its parameters presently has a null/undefined value, or the provided route name is invalid.");
       return false;
     }
 
@@ -390,7 +390,7 @@ var LinkView = EmberComponent.extend({
       transition.method('replace');
     }
 
-    if (Ember.FEATURES.isEnabled('ember-routing-transitioning-classes')) {
+    if (Ngular.FEATURES.isEnabled('ngular-routing-transitioning-classes')) {
       return;
     }
 
@@ -423,7 +423,7 @@ var LinkView = EmberComponent.extend({
       href = href.slice(1);
     }
 
-    // Re-use the routerjs hooks set up by the Ember router.
+    // Re-use the routerjs hooks set up by the Ngular router.
     var routerjs = get(this, 'router.router');
     if (transition.urlMethod === 'update') {
       routerjs.updateURL(href);
@@ -499,7 +499,7 @@ var LinkView = EmberComponent.extend({
 
     if (!namedRoute) { return; }
 
-    Ember.assert(fmt("The attempt to link-to route '%@' failed. " +
+    Ngular.assert(fmt("The attempt to link-to route '%@' failed. " +
                      "The router did not find '%@' in its possible routes: '%@'",
                      [namedRoute, namedRoute, keys(router.router.recognizer.names).join("', '")]),
                      router.hasRoute(namedRoute));

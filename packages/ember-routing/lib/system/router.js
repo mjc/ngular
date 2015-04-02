@@ -1,29 +1,29 @@
-import Ember from "ember-metal/core"; // FEATURES, Logger, assert
-import EmberError from "ember-metal/error";
-import { get } from "ember-metal/property_get";
-import { set } from "ember-metal/property_set";
-import { defineProperty } from "ember-metal/properties";
-import { computed } from "ember-metal/computed";
-import merge from "ember-metal/merge";
-import run from "ember-metal/run_loop";
+import Ngular from "ngular-metal/core"; // FEATURES, Logger, assert
+import NgularError from "ngular-metal/error";
+import { get } from "ngular-metal/property_get";
+import { set } from "ngular-metal/property_set";
+import { defineProperty } from "ngular-metal/properties";
+import { computed } from "ngular-metal/computed";
+import merge from "ngular-metal/merge";
+import run from "ngular-metal/run_loop";
 
-import { fmt } from "ember-runtime/system/string";
-import EmberObject from "ember-runtime/system/object";
-import Evented from "ember-runtime/mixins/evented";
-import EmberRouterDSL from "ember-routing/system/dsl";
-import EmberLocation from "ember-routing/location/api";
+import { fmt } from "ngular-runtime/system/string";
+import NgularObject from "ngular-runtime/system/object";
+import Evented from "ngular-runtime/mixins/evented";
+import NgularRouterDSL from "ngular-routing/system/dsl";
+import NgularLocation from "ngular-routing/location/api";
 import {
   routeArgs,
   getActiveTargetName,
   stashParamNames
-} from "ember-routing/utils";
-import create from 'ember-metal/platform/create';
+} from "ngular-routing/utils";
+import create from 'ngular-metal/platform/create';
 
 import RouterState from "./router_state";
 
 /**
-@module ember
-@submodule ember-routing
+@module ngular
+@submodule ngular-routing
 */
 
 import Router from 'router';
@@ -34,15 +34,15 @@ function K() { return this; }
 var slice = [].slice;
 
 /**
-  The `Ember.Router` class manages the application state and URLs. Refer to
-  the [routing guide](http://emberjs.com/guides/routing/) for documentation.
+  The `Ngular.Router` class manages the application state and URLs. Refer to
+  the [routing guide](http://github.com/mjc/ngular/guides/routing/) for documentation.
 
   @class Router
-  @namespace Ember
-  @extends Ember.Object
-  @uses Ember.Evented
+  @namespace Ngular
+  @extends Ngular.Object
+  @uses Ngular.Evented
 */
-var EmberRouter = EmberObject.extend(Evented, {
+var NgularRouter = NgularObject.extend(Evented, {
   /**
     The `location` property determines the type of URL's that your
     application will use.
@@ -55,7 +55,7 @@ var EmberRouter = EmberObject.extend(Evented, {
 
     @property location
     @default 'hash'
-    @see {Ember.Location}
+    @see {Ngular.Location}
   */
   location: 'hash',
 
@@ -76,7 +76,7 @@ var EmberRouter = EmberObject.extend(Evented, {
     router._triggerWillLeave = K;
 
     var dslCallbacks = this.constructor.dslCallbacks || [K];
-    var dsl = new EmberRouterDSL(null, {
+    var dsl = new NgularRouterDSL(null, {
       enableLoadingSubstates: !!moduleBasedResolver
     });
 
@@ -91,7 +91,7 @@ var EmberRouter = EmberObject.extend(Evented, {
     generateDSL.call(dsl);
 
     if (get(this, 'namespace.LOG_TRANSITIONS_INTERNAL')) {
-      router.log = Ember.Logger.debug;
+      router.log = Ngular.Logger.debug;
     }
 
     router.map(dsl.generate());
@@ -182,7 +182,7 @@ var EmberRouter = EmberObject.extend(Evented, {
     run.once(this, this.trigger, 'didTransition');
 
     if (get(this, 'namespace').LOG_TRANSITIONS) {
-      Ember.Logger.log(`Transitioned into '${EmberRouter._routePath(infos)}'`);
+      Ngular.Logger.log(`Transitioned into '${NgularRouter._routePath(infos)}'`);
     }
   },
 
@@ -235,12 +235,12 @@ var EmberRouter = EmberObject.extend(Evented, {
     run.once(this, this.trigger, 'willTransition', transition);
 
     if (get(this, 'namespace').LOG_TRANSITIONS) {
-      Ember.Logger.log(`Preparing to transition from '${EmberRouter._routePath(oldInfos)}' to ' ${EmberRouter._routePath(newInfos)}'`);
+      Ngular.Logger.log(`Preparing to transition from '${NgularRouter._routePath(oldInfos)}' to ' ${NgularRouter._routePath(newInfos)}'`);
     }
   },
 
   handleURL(url) {
-    // Until we have an ember-idiomatic way of accessing #hashes, we need to
+    // Until we have an ngular-idiomatic way of accessing #hashes, we need to
     // remove it because router.js doesn't know how to handle it.
     url = url.split(/#(.+)?/)[0];
     return this._doURLTransition('handleURL', url);
@@ -276,7 +276,7 @@ var EmberRouter = EmberObject.extend(Evented, {
 
     var infos = this.router.currentHandlerInfos;
     if (get(this, 'namespace').LOG_TRANSITIONS) {
-      Ember.Logger.log(`Intermediate-transitioned into '${EmberRouter._routePath(infos)}'`);
+      Ngular.Logger.log(`Intermediate-transitioned into '${NgularRouter._routePath(infos)}'`);
     }
   },
 
@@ -391,7 +391,7 @@ var EmberRouter = EmberObject.extend(Evented, {
           implementation: location
         };
 
-        location = set(this, 'location', EmberLocation.create(options));
+        location = set(this, 'location', NgularLocation.create(options));
       }
     }
 
@@ -435,7 +435,7 @@ var EmberRouter = EmberObject.extend(Evented, {
         handler = container.lookup(routeName);
 
         if (get(this, 'namespace.LOG_ACTIVE_GENERATION')) {
-          Ember.Logger.info(`generated -> ${routeName}`, { fullName: routeName });
+          Ngular.Logger.info(`generated -> ${routeName}`, { fullName: routeName });
         }
       }
 
@@ -446,7 +446,7 @@ var EmberRouter = EmberObject.extend(Evented, {
 
   _setupRouter(router, location) {
     var lastURL;
-    var emberRouter = this;
+    var ngularRouter = this;
 
     router.getHandler = this._getHandlerFunction();
 
@@ -471,12 +471,12 @@ var EmberRouter = EmberObject.extend(Evented, {
     }
 
     router.didTransition = function(infos) {
-      emberRouter.didTransition(infos);
+      ngularRouter.didTransition(infos);
     };
 
-    if (Ember.FEATURES.isEnabled('ember-router-willtransition')) {
+    if (Ngular.FEATURES.isEnabled('ngular-router-willtransition')) {
       router.willTransition = function(oldInfos, newInfos, transition) {
-        emberRouter.willTransition(oldInfos, newInfos, transition);
+        ngularRouter.willTransition(oldInfos, newInfos, transition);
       };
     }
   },
@@ -498,7 +498,7 @@ var EmberRouter = EmberObject.extend(Evented, {
 
     for (var key in groupedByUrlKey) {
       var qps = groupedByUrlKey[key];
-      Ember.assert(fmt("You're not allowed to have more than one controller " +
+      Ngular.assert(fmt("You're not allowed to have more than one controller " +
                        "property map to the same query param key, but both " +
                        "`%@` and `%@` map to `%@`. You can fix this by mapping " +
                        "one of the controller properties to a different query " +
@@ -528,7 +528,7 @@ var EmberRouter = EmberObject.extend(Evented, {
 
   _doTransition(_targetRouteName, models, _queryParams) {
     var targetRouteName = _targetRouteName || getActiveTargetName(this.router);
-    Ember.assert(`The route ${targetRouteName} was not found`, targetRouteName && this.router.hasRoute(targetRouteName));
+    Ngular.assert(`The route ${targetRouteName} was not found`, targetRouteName && this.router.hasRoute(targetRouteName));
 
     var queryParams = {};
     merge(queryParams, _queryParams);
@@ -651,7 +651,7 @@ var EmberRouter = EmberObject.extend(Evented, {
     }
 
     this.set('targetState', RouterState.create({
-      emberRouter: this,
+      ngularRouter: this,
       routerJs: this.router,
       routerJsState: this.router.activeTransition.state
     }));
@@ -777,7 +777,7 @@ function logError(_error, initialMessage) {
     if (typeof error === "string") { errorArgs.push(error); }
   }
 
-  Ember.Logger.error.apply(this, errorArgs);
+  Ngular.Logger.error.apply(this, errorArgs);
 }
 
 function findChildRouteName(parentRoute, originatingChildRoute, name) {
@@ -786,7 +786,7 @@ function findChildRouteName(parentRoute, originatingChildRoute, name) {
   var targetChildRouteName = originatingChildRoute.routeName.split('.').pop();
   var namespace = parentRoute.routeName === 'application' ? '' : parentRoute.routeName + '.';
 
-  if (Ember.FEATURES.isEnabled("ember-routing-named-substates")) {
+  if (Ngular.FEATURES.isEnabled("ngular-routing-named-substates")) {
     // First, try a named loading state, e.g. 'foo_loading'
     childName = namespace + targetChildRouteName + '_' + name;
     if (routeHasBeenDefined(router, childName)) {
@@ -812,7 +812,7 @@ function triggerEvent(handlerInfos, ignoreFailure, args) {
 
   if (!handlerInfos) {
     if (ignoreFailure) { return; }
-    throw new EmberError(`Can't trigger action '${name}' because your app hasn't finished transitioning into its first route. To trigger an action on destination routes during a transition, you can call \`.send()\` on the \`Transition\` object passed to the \`model/beforeModel/afterModel\` hooks.`);
+    throw new NgularError(`Can't trigger action '${name}' because your app hasn't finished transitioning into its first route. To trigger an action on destination routes during a transition, you can call \`.send()\` on the \`Transition\` object passed to the \`model/beforeModel/afterModel\` hooks.`);
   }
 
   var eventWasHandled = false;
@@ -837,12 +837,12 @@ function triggerEvent(handlerInfos, ignoreFailure, args) {
   }
 
   if (!eventWasHandled && !ignoreFailure) {
-    throw new EmberError(`Nothing handled the action '${name}'. If you did handle the action, this error can be caused by returning true from an action handler in a controller, causing the action to bubble.`);
+    throw new NgularError(`Nothing handled the action '${name}'. If you did handle the action, this error can be caused by returning true from an action handler in a controller, causing the action to bubble.`);
   }
 }
 
-function calculatePostTransitionState(emberRouter, leafRouteName, contexts) {
-  var routerjs = emberRouter.router;
+function calculatePostTransitionState(ngularRouter, leafRouteName, contexts) {
+  var routerjs = ngularRouter.router;
   var state = routerjs.applyIntent(leafRouteName, contexts);
   var handlerInfos = state.handlerInfos;
   var params = state.params;
@@ -868,7 +868,7 @@ function updatePaths(router) {
   }
 
   var infos = router.router.currentHandlerInfos;
-  var path = EmberRouter._routePath(infos);
+  var path = NgularRouter._routePath(infos);
 
   if (!('currentPath' in appController)) {
     defineProperty(appController, 'currentPath');
@@ -883,7 +883,7 @@ function updatePaths(router) {
   set(appController, 'currentRouteName', infos[infos.length - 1].name);
 }
 
-EmberRouter.reopenClass({
+NgularRouter.reopenClass({
   router: null,
 
   /**
@@ -899,7 +899,7 @@ EmberRouter.reopenClass({
     ```
 
     For more detailed examples please see
-    [the guides](http://emberjs.com/guides/routing/defining-your-routes/).
+    [the guides](http://github.com/mjc/ngular/guides/routing/defining-your-routes/).
 
     @method map
     @param callback
@@ -954,7 +954,7 @@ EmberRouter.reopenClass({
 
 function didBeginTransition(transition, router) {
   var routerState = RouterState.create({
-    emberRouter: router,
+    ngularRouter: router,
     routerJs: router.router,
     routerJsState: transition.state
   });
@@ -967,10 +967,10 @@ function didBeginTransition(transition, router) {
   transition.then(null, function(error) {
     if (!error || !error.name) { return; }
 
-    Ember.assert(`The URL '${error.message}' did not match any routes in your application`, error.name !== "UnrecognizedURLError");
+    Ngular.assert(`The URL '${error.message}' did not match any routes in your application`, error.name !== "UnrecognizedURLError");
 
     return error;
-  }, 'Ember: Process errors from Router');
+  }, 'Ngular: Process errors from Router');
 }
 
 function resemblesURL(str) {
@@ -1039,20 +1039,20 @@ function appendLiveRoute(liveRoutes, defaultParentState, renderOptions) {
 }
 
 function appendOrphan(liveRoutes, into, myState) {
-  if (!liveRoutes.outlets.__ember_orphans__) {
-    liveRoutes.outlets.__ember_orphans__ = {
+  if (!liveRoutes.outlets.__ngular_orphans__) {
+    liveRoutes.outlets.__ngular_orphans__ = {
       render: {
-        name: '__ember_orphans__'
+        name: '__ngular_orphans__'
       },
       outlets: create(null)
     };
   }
-  liveRoutes.outlets.__ember_orphans__.outlets[into] = myState;
-  Ember.run.schedule('afterRender', function() {
+  liveRoutes.outlets.__ngular_orphans__.outlets[into] = myState;
+  Ngular.run.schedule('afterRender', function() {
     // `wasUsed` gets set by the render helper. See the function
     // `impersonateAnOutlet`.
-    Ember.assert("You attempted to render into '" + into + "' but it was not found",
-                 liveRoutes.outlets.__ember_orphans__.outlets[into].wasUsed);
+    Ngular.assert("You attempted to render into '" + into + "' but it was not found",
+                 liveRoutes.outlets.__ngular_orphans__.outlets[into].wasUsed);
   });
 }
 
@@ -1079,4 +1079,4 @@ function representEmptyRoute(liveRoutes, defaultParentState, route) {
   }
 }
 
-export default EmberRouter;
+export default NgularRouter;

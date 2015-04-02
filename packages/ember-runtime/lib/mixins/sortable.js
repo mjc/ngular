@@ -1,28 +1,28 @@
 /**
-@module ember
-@submodule ember-runtime
+@module ngular
+@submodule ngular-runtime
 */
 
-import Ember from "ember-metal/core"; // Ember.assert, Ember.A
+import Ngular from "ngular-metal/core"; // Ngular.assert, Ngular.A
 
-import { get } from "ember-metal/property_get";
-import { forEach } from "ember-metal/enumerable_utils";
-import MutableEnumerable from "ember-runtime/mixins/mutable_enumerable";
-import compare from "ember-runtime/compare";
+import { get } from "ngular-metal/property_get";
+import { forEach } from "ngular-metal/enumerable_utils";
+import MutableEnumerable from "ngular-runtime/mixins/mutable_enumerable";
+import compare from "ngular-runtime/compare";
 import {
   addObserver,
   removeObserver
-} from "ember-metal/observer";
-import { computed } from "ember-metal/computed";
-import { notEmpty } from "ember-metal/computed_macros";
+} from "ngular-metal/observer";
+import { computed } from "ngular-metal/computed";
+import { notEmpty } from "ngular-metal/computed_macros";
 import {
   Mixin,
   beforeObserver,
   observer
-} from "ember-metal/mixin"; //ES6TODO: should we access these directly from their package or from how their exposed in ember-metal?
+} from "ngular-metal/mixin"; //ES6TODO: should we access these directly from their package or from how their exposed in ngular-metal?
 
 /**
-  `Ember.SortableMixin` provides a standard interface for array proxies
+  `Ngular.SortableMixin` provides a standard interface for array proxies
   to specify a sort order and maintain this sorting when objects are added,
   removed, or updated without changing the implicit order of their underlying
   model array:
@@ -34,7 +34,7 @@ import {
     {trackNumber: 3, title: 'Glass Onion'},
   ];
 
-  songsController = Ember.ArrayController.create({
+  songsController = Ngular.ArrayController.create({
     model: songs,
     sortProperties: ['trackNumber'],
     sortAscending: true
@@ -70,8 +70,8 @@ import {
   it is preferable to use the proxied class and not the `arrangedContent` array directly.
 
   @class SortableMixin
-  @namespace Ember
-  @uses Ember.MutableEnumerable
+  @namespace Ngular
+  @uses Ngular.MutableEnumerable
 */
 export default Mixin.create(MutableEnumerable, {
 
@@ -114,7 +114,7 @@ export default Mixin.create(MutableEnumerable, {
 
     @property sortFunction
     @type {Function}
-    @default Ember.compare
+    @default Ngular.compare
   */
   sortFunction: compare,
 
@@ -124,7 +124,7 @@ export default Mixin.create(MutableEnumerable, {
     var sortAscending = get(this, 'sortAscending');
     var sortFunction = get(this, 'sortFunction');
 
-    Ember.assert("you need to define `sortProperties`", !!sortProperties);
+    Ngular.assert("you need to define `sortProperties`", !!sortProperties);
 
     forEach(sortProperties, function(propertyName) {
       if (result === 0) {
@@ -178,7 +178,7 @@ export default Mixin.create(MutableEnumerable, {
             addObserver(item, sortProperty, this, 'contentItemSortPropertyDidChange');
           }, this);
         }, this);
-        return Ember.A(content);
+        return Ngular.A(content);
       }
 
       return content;

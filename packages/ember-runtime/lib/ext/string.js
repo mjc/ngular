@@ -1,9 +1,9 @@
 /**
-@module ember
-@submodule ember-runtime
+@module ngular
+@submodule ngular-runtime
 */
 
-import Ember from 'ember-metal/core'; // Ember.EXTEND_PROTOTYPES, Ember.assert, Ember.FEATURES
+import Ngular from 'ngular-metal/core'; // Ngular.EXTEND_PROTOTYPES, Ngular.assert, Ngular.FEATURES
 import {
   fmt,
   w,
@@ -14,14 +14,14 @@ import {
   underscore,
   capitalize,
   classify
-} from 'ember-runtime/system/string';
+} from 'ngular-runtime/system/string';
 
 var StringPrototype = String.prototype;
 
-if (Ember.EXTEND_PROTOTYPES === true || Ember.EXTEND_PROTOTYPES.String) {
+if (Ngular.EXTEND_PROTOTYPES === true || Ngular.EXTEND_PROTOTYPES.String) {
 
   /**
-    See [Ember.String.fmt](/api/classes/Ember.String.html#method_fmt).
+    See [Ngular.String.fmt](/api/classes/Ngular.String.html#method_fmt).
 
     @method fmt
     @for String
@@ -31,7 +31,7 @@ if (Ember.EXTEND_PROTOTYPES === true || Ember.EXTEND_PROTOTYPES.String) {
   };
 
   /**
-    See [Ember.String.w](/api/classes/Ember.String.html#method_w).
+    See [Ngular.String.w](/api/classes/Ngular.String.html#method_w).
 
     @method w
     @for String
@@ -41,7 +41,7 @@ if (Ember.EXTEND_PROTOTYPES === true || Ember.EXTEND_PROTOTYPES.String) {
   };
 
   /**
-    See [Ember.String.loc](/api/classes/Ember.String.html#method_loc).
+    See [Ngular.String.loc](/api/classes/Ngular.String.html#method_loc).
 
     @method loc
     @for String
@@ -51,7 +51,7 @@ if (Ember.EXTEND_PROTOTYPES === true || Ember.EXTEND_PROTOTYPES.String) {
   };
 
   /**
-    See [Ember.String.camelize](/api/classes/Ember.String.html#method_camelize).
+    See [Ngular.String.camelize](/api/classes/Ngular.String.html#method_camelize).
 
     @method camelize
     @for String
@@ -61,7 +61,7 @@ if (Ember.EXTEND_PROTOTYPES === true || Ember.EXTEND_PROTOTYPES.String) {
   };
 
   /**
-    See [Ember.String.decamelize](/api/classes/Ember.String.html#method_decamelize).
+    See [Ngular.String.decamelize](/api/classes/Ngular.String.html#method_decamelize).
 
     @method decamelize
     @for String
@@ -71,7 +71,7 @@ if (Ember.EXTEND_PROTOTYPES === true || Ember.EXTEND_PROTOTYPES.String) {
   };
 
   /**
-    See [Ember.String.dasherize](/api/classes/Ember.String.html#method_dasherize).
+    See [Ngular.String.dasherize](/api/classes/Ngular.String.html#method_dasherize).
 
     @method dasherize
     @for String
@@ -81,7 +81,7 @@ if (Ember.EXTEND_PROTOTYPES === true || Ember.EXTEND_PROTOTYPES.String) {
   };
 
   /**
-    See [Ember.String.underscore](/api/classes/Ember.String.html#method_underscore).
+    See [Ngular.String.underscore](/api/classes/Ngular.String.html#method_underscore).
 
     @method underscore
     @for String
@@ -91,7 +91,7 @@ if (Ember.EXTEND_PROTOTYPES === true || Ember.EXTEND_PROTOTYPES.String) {
   };
 
   /**
-    See [Ember.String.classify](/api/classes/Ember.String.html#method_classify).
+    See [Ngular.String.classify](/api/classes/Ngular.String.html#method_classify).
 
     @method classify
     @for String
@@ -101,7 +101,7 @@ if (Ember.EXTEND_PROTOTYPES === true || Ember.EXTEND_PROTOTYPES.String) {
   };
 
   /**
-    See [Ember.String.capitalize](/api/classes/Ember.String.html#method_capitalize).
+    See [Ngular.String.capitalize](/api/classes/Ngular.String.html#method_capitalize).
 
     @method capitalize
     @for String

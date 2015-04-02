@@ -1,31 +1,31 @@
-import Ember from "ember-metal/core"; // Ember.assert, Ember.Handlebars
+import Ngular from "ngular-metal/core"; // Ngular.assert, Ngular.Handlebars
 
-import ComponentTemplateDeprecation from "ember-views/mixins/component_template_deprecation";
-import TargetActionSupport from "ember-runtime/mixins/target_action_support";
-import View from "ember-views/views/view";
+import ComponentTemplateDeprecation from "ngular-views/mixins/component_template_deprecation";
+import TargetActionSupport from "ngular-runtime/mixins/target_action_support";
+import View from "ngular-views/views/view";
 
-import { get } from "ember-metal/property_get";
-import { set } from "ember-metal/property_set";
-import isNone from 'ember-metal/is_none';
+import { get } from "ngular-metal/property_get";
+import { set } from "ngular-metal/property_set";
+import isNone from 'ngular-metal/is_none';
 
-import { computed } from "ember-metal/computed";
-import { bool } from "ember-metal/computed_macros";
-import defaultComponentLayout from "ember-htmlbars/templates/component";
+import { computed } from "ngular-metal/computed";
+import { bool } from "ngular-metal/computed_macros";
+import defaultComponentLayout from "ngular-htmlbars/templates/component";
 
 /**
-@module ember
-@submodule ember-views
+@module ngular
+@submodule ngular-views
 */
 
 /**
-  An `Ember.Component` is a view that is completely
+  An `Ngular.Component` is a view that is completely
   isolated. Properties accessed in its templates go
   to the view object and actions are targeted at
   the view object. There is no access to the
   surrounding context or outer controller; all
   contextual information must be passed in.
 
-  The easiest way to create an `Ember.Component` is via
+  The easiest way to create an `Ngular.Component` is via
   a template. If you name a template
   `components/my-foo`, you will be able to use
   `{{my-foo}}` in other templates, which will make
@@ -63,7 +63,7 @@ import defaultComponentLayout from "ember-htmlbars/templates/component";
 
   If you want to customize the component, in order to
   handle events or actions, you implement a subclass
-  of `Ember.Component` named after the name of the
+  of `Ngular.Component` named after the name of the
   component. Note that `Component` needs to be appended to the name of
   your subclass like `AppProfileComponent`.
 
@@ -71,7 +71,7 @@ import defaultComponentLayout from "ember-htmlbars/templates/component";
   `hello` for the `app-profile` component:
 
   ```javascript
-  App.AppProfileComponent = Ember.Component.extend({
+  App.AppProfileComponent = Ngular.Component.extend({
     actions: {
       hello: function(name) {
         console.log("Hello", name);
@@ -99,8 +99,8 @@ import defaultComponentLayout from "ember-htmlbars/templates/component";
   requirement in web components.
 
   @class Component
-  @namespace Ember
-  @extends Ember.View
+  @namespace Ngular
+  @extends Ngular.View
 */
 var Component = View.extend(TargetActionSupport, ComponentTemplateDeprecation, {
   /*
@@ -150,7 +150,7 @@ var Component = View.extend(TargetActionSupport, ComponentTemplateDeprecation, {
       var templateName = get(this, 'templateName');
       var template = this.templateForName(templateName, 'template');
 
-      Ember.assert("You specified the templateName " + templateName + " for " + this + ", but it did not exist.", !templateName || !!template);
+      Ngular.assert("You specified the templateName " + templateName + " for " + this + ", but it did not exist.", !templateName || !!template);
 
       return template || get(this, 'defaultTemplate');
     },
@@ -176,7 +176,7 @@ var Component = View.extend(TargetActionSupport, ComponentTemplateDeprecation, {
     var template = get(this, 'template');
 
     if (template) {
-      Ember.assert("A Component must have a parent view in order to yield.", parentView);
+      Ngular.assert("A Component must have a parent view in order to yield.", parentView);
 
       view.appendChild(View, {
         isVirtual: true,
@@ -196,7 +196,7 @@ var Component = View.extend(TargetActionSupport, ComponentTemplateDeprecation, {
     property will point to the controller of the parent view.
 
     @property targetObject
-    @type Ember.Controller
+    @type Ngular.Controller
     @default null
   */
   targetObject: computed(function(key) {
@@ -214,7 +214,7 @@ var Component = View.extend(TargetActionSupport, ComponentTemplateDeprecation, {
 
 
     ```javascript
-    App.PlayButtonComponent = Ember.Component.extend({
+    App.PlayButtonComponent = Ngular.Component.extend({
       click: function() {
         if (this.get('isPlaying')) {
           this.sendAction('play');
@@ -240,7 +240,7 @@ var Component = View.extend(TargetActionSupport, ComponentTemplateDeprecation, {
 
 
     ```javascript
-    App.ApplicationController = Ember.Controller.extend({
+    App.ApplicationController = Ngular.Controller.extend({
       actions: {
         musicStarted: function() {
           // called when the play button is clicked
@@ -258,7 +258,7 @@ var Component = View.extend(TargetActionSupport, ComponentTemplateDeprecation, {
     is assumed.
 
     ```javascript
-    App.NextButtonComponent = Ember.Component.extend({
+    App.NextButtonComponent = Ngular.Component.extend({
       click: function() {
         this.sendAction();
       }
@@ -271,7 +271,7 @@ var Component = View.extend(TargetActionSupport, ComponentTemplateDeprecation, {
     ```
 
     ```javascript
-    App.ApplicationController = Ember.Controller.extend({
+    App.ApplicationController = Ngular.Controller.extend({
       actions: {
         playNextSongInAlbum: function() {
           ...
@@ -290,12 +290,12 @@ var Component = View.extend(TargetActionSupport, ComponentTemplateDeprecation, {
     // Send the default action
     if (action === undefined) {
       actionName = get(this, 'action');
-      Ember.assert("The default action was triggered on the component " + this.toString() +
+      Ngular.assert("The default action was triggered on the component " + this.toString() +
                    ", but the action name (" + actionName + ") was not a string.",
                    isNone(actionName) || typeof actionName === 'string');
     } else {
       actionName = get(this, action);
-      Ember.assert("The " + action + " action was triggered on the component " +
+      Ngular.assert("The " + action + " action was triggered on the component " +
                    this.toString() + ", but the action name (" + actionName +
                    ") was not a string.",
                    isNone(actionName) || typeof actionName === 'string');
@@ -320,18 +320,18 @@ var Component = View.extend(TargetActionSupport, ComponentTemplateDeprecation, {
     }
 
     if (target = get(this, 'target')) {
-      Ember.assert("The `target` for " + this + " (" + target +
+      Ngular.assert("The `target` for " + this + " (" + target +
                    ") does not have a `send` method", typeof target.send === 'function');
       target.send(...arguments);
     } else {
       if (!hasAction) {
-        throw new Error(Ember.inspect(this) + ' had no action handler for: ' + actionName);
+        throw new Error(Ngular.inspect(this) + ' had no action handler for: ' + actionName);
       }
     }
   }
 });
 
-if (Ember.FEATURES.isEnabled('ember-views-component-block-info')) {
+if (Ngular.FEATURES.isEnabled('ngular-views-component-block-info')) {
   Component.reopen({
     /**
       Returns true when the component was invoked with a block template.

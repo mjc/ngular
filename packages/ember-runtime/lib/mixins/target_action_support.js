@@ -1,27 +1,27 @@
 /**
-@module ember
-@submodule ember-runtime
+@module ngular
+@submodule ngular-runtime
 */
-import Ember from "ember-metal/core"; // Ember.lookup, Ember.assert
+import Ngular from "ngular-metal/core"; // Ngular.lookup, Ngular.assert
 
-import { get } from "ember-metal/property_get";
-import { typeOf } from "ember-metal/utils";
-import { Mixin } from "ember-metal/mixin";
-import { computed } from "ember-metal/computed";
+import { get } from "ngular-metal/property_get";
+import { typeOf } from "ngular-metal/utils";
+import { Mixin } from "ngular-metal/mixin";
+import { computed } from "ngular-metal/computed";
 
 /**
-`Ember.TargetActionSupport` is a mixin that can be included in a class
+`Ngular.TargetActionSupport` is a mixin that can be included in a class
 to add a `triggerAction` method with semantics similar to the Handlebars
-`{{action}}` helper. In normal Ember usage, the `{{action}}` helper is
+`{{action}}` helper. In normal Ngular usage, the `{{action}}` helper is
 usually the best choice. This mixin is most often useful when you are
 doing more complex event handling in View objects.
 
-See also `Ember.ViewTargetActionSupport`, which has
+See also `Ngular.ViewTargetActionSupport`, which has
 view-aware defaults for target and actionContext.
 
 @class TargetActionSupport
-@namespace Ember
-@extends Ember.Mixin
+@namespace Ngular
+@extends Ngular.Mixin
 */
 var TargetActionSupport = Mixin.create({
   target: null,
@@ -34,7 +34,7 @@ var TargetActionSupport = Mixin.create({
     if (typeOf(target) === "string") {
       var value = get(this, target);
       if (value === undefined) {
-        value = get(Ember.lookup, target);
+        value = get(Ngular.lookup, target);
       }
 
       return value;
@@ -48,7 +48,7 @@ var TargetActionSupport = Mixin.create({
 
     if (typeOf(actionContext) === "string") {
       var value = get(this, actionContext);
-      if (value === undefined) { value = get(Ember.lookup, actionContext); }
+      if (value === undefined) { value = get(Ngular.lookup, actionContext); }
       return value;
     } else {
       return actionContext;
@@ -60,10 +60,10 @@ var TargetActionSupport = Mixin.create({
   and target will be retrieved from properties of the object. For example:
 
   ```javascript
-  App.SaveButtonView = Ember.View.extend(Ember.TargetActionSupport, {
-    target: Ember.computed.alias('controller'),
+  App.SaveButtonView = Ngular.View.extend(Ngular.TargetActionSupport, {
+    target: Ngular.computed.alias('controller'),
     action: 'save',
-    actionContext: Ember.computed.alias('context'),
+    actionContext: Ngular.computed.alias('context'),
     click: function() {
       this.triggerAction(); // Sends the `save` action, along with the current context
                             // to the current controller
@@ -75,7 +75,7 @@ var TargetActionSupport = Mixin.create({
   an optional object argument to `triggerAction` as well.
 
   ```javascript
-  App.SaveButtonView = Ember.View.extend(Ember.TargetActionSupport, {
+  App.SaveButtonView = Ngular.View.extend(Ngular.TargetActionSupport, {
     click: function() {
       this.triggerAction({
         action: 'save',
@@ -92,8 +92,8 @@ var TargetActionSupport = Mixin.create({
   to `triggerAction`, or a combination:
 
   ```javascript
-  App.SaveButtonView = Ember.View.extend(Ember.TargetActionSupport, {
-    target: Ember.computed.alias('controller'),
+  App.SaveButtonView = Ngular.View.extend(Ngular.TargetActionSupport, {
+    target: Ngular.computed.alias('controller'),
     click: function() {
       this.triggerAction({
         action: 'save'
@@ -130,7 +130,7 @@ var TargetActionSupport = Mixin.create({
       if (target.send) {
         ret = target.send.apply(target, args(actionContext, action));
       } else {
-        Ember.assert("The action '" + action + "' did not exist on " + target, typeof target[action] === 'function');
+        Ngular.assert("The action '" + action + "' did not exist on " + target, typeof target[action] === 'function');
         ret = target[action].apply(target, args(actionContext));
       }
 

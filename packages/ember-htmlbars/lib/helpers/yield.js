@@ -1,28 +1,28 @@
 /**
-@module ember
-@submodule ember-htmlbars
+@module ngular
+@submodule ngular-htmlbars
 */
 
-import Ember from "ember-metal/core";
+import Ngular from "ngular-metal/core";
 
-import { get } from "ember-metal/property_get";
+import { get } from "ngular-metal/property_get";
 
 /**
   `{{yield}}` denotes an area of a template that will be rendered inside
   of another template. It has two main uses:
 
   ### Use with `layout`
-  When used in a Handlebars template that is assigned to an `Ember.View`
-  instance's `layout` property Ember will render the layout template first,
+  When used in a Handlebars template that is assigned to an `Ngular.View`
+  instance's `layout` property Ngular will render the layout template first,
   inserting the view's own rendered output at the `{{yield}}` location.
 
   An empty `<body>` and the following application code:
 
   ```javascript
-  AView = Ember.View.extend({
+  AView = Ngular.View.extend({
     classNames: ['a-view-with-layout'],
-    layout: Ember.Handlebars.compile('<div class="wrapper">{{yield}}</div>'),
-    template: Ember.Handlebars.compile('<span>I am wrapped</span>')
+    layout: Ngular.Handlebars.compile('<div class="wrapper">{{yield}}</div>'),
+    template: Ngular.Handlebars.compile('<span>I am wrapped</span>')
   });
 
   aView = AView.create();
@@ -33,7 +33,7 @@ import { get } from "ember-metal/property_get";
 
   ```html
   <body>
-    <div class='ember-view a-view-with-layout'>
+    <div class='ngular-view a-view-with-layout'>
       <div class="wrapper">
         <span>I am wrapped</span>
       </div>
@@ -42,12 +42,12 @@ import { get } from "ember-metal/property_get";
   ```
 
   The `yield` helper cannot be used outside of a template assigned to an
-  `Ember.View`'s `layout` property and will throw an error if attempted.
+  `Ngular.View`'s `layout` property and will throw an error if attempted.
 
   ```javascript
-  BView = Ember.View.extend({
+  BView = Ngular.View.extend({
     classNames: ['a-view-with-layout'],
-    template: Ember.Handlebars.compile('{{yield}}')
+    template: Ngular.Handlebars.compile('{{yield}}')
   });
 
   bView = BView.create();
@@ -58,7 +58,7 @@ import { get } from "ember-metal/property_get";
   // You called yield in a template that was not a layout
   ```
 
-  ### Use with Ember.Component
+  ### Use with Ngular.Component
   When designing components `{{yield}}` is used to denote where, inside the component's
   template, an optional block passed to the component should render:
 
@@ -85,7 +85,7 @@ import { get } from "ember-metal/property_get";
   ```
 
   @method yield
-  @for Ember.Handlebars.helpers
+  @for Ngular.Handlebars.helpers
   @param {Hash} options
   @return {String} HTML string
 */
@@ -102,7 +102,7 @@ export function yieldHelper(params, hash, options, env) {
     }
   }
 
-  Ember.assert("You called yield in a template that was not a layout", !!layoutView);
+  Ngular.assert("You called yield in a template that was not a layout", !!layoutView);
 
   return layoutView._yield(view, env, options.morph, params);
 }

@@ -1,4 +1,4 @@
-import {SuiteModuleBuilder} from 'ember-runtime/tests/suites/suite';
+import {SuiteModuleBuilder} from 'ngular-runtime/tests/suites/suite';
 
 var suite = SuiteModuleBuilder.create();
 
@@ -24,7 +24,7 @@ suite.test("[A,B].addObject(C) => [A,B,C] + notify", function() {
   obj.addObject(item);
 
   deepEqual(this.toArray(obj), after, 'post item results');
-  equal(Ember.get(obj, 'length'), after.length, 'length');
+  equal(Ngular.get(obj, 'length'), after.length, 'length');
 
   if (observer.isEnabled) {
     equal(observer.timesCalled('[]'), 1, 'should have notified [] once');
@@ -49,7 +49,7 @@ suite.test("[A,B,C].addObject(A) => [A,B,C] + NO notify", function() {
   obj.addObject(item); // note: item in set
 
   deepEqual(this.toArray(obj), after, 'post item results');
-  equal(Ember.get(obj, 'length'), after.length, 'length');
+  equal(Ngular.get(obj, 'length'), after.length, 'length');
 
   if (observer.isEnabled) {
     equal(observer.validate('[]'), false, 'should NOT have notified []');

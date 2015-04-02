@@ -1,5 +1,5 @@
-import run from "ember-metal/run_loop";
-import EmberApplication from "ember-application/system/application";
+import run from "ngular-metal/run_loop";
+import NgularApplication from "ngular-application/system/application";
 
 var jQuery, application, Application;
 var readyWasCalled, domReady, readyCallbacks;
@@ -7,7 +7,7 @@ var readyWasCalled, domReady, readyCallbacks;
 // We are using a small mock of jQuery because jQuery is third-party code with
 // very well-defined semantics, and we want to confirm that a jQuery stub run
 // in a more minimal server environment that implements this behavior will be
-// sufficient for Ember's requirements.
+// sufficient for Ngular's requirements.
 
 QUnit.module("Application readiness", {
   setup() {
@@ -38,7 +38,7 @@ QUnit.module("Application readiness", {
       }
     };
 
-    Application = EmberApplication.extend({
+    Application = NgularApplication.extend({
       $: jQuery,
 
       ready() {
@@ -58,7 +58,7 @@ QUnit.module("Application readiness", {
 // synchronously during the application's initialization, we get the same behavior as if
 // it was triggered after initialization.
 
-QUnit.test("Ember.Application's ready event is called right away if jQuery is already ready", function() {
+QUnit.test("Ngular.Application's ready event is called right away if jQuery is already ready", function() {
   jQuery.isReady = true;
 
   run(function() {
@@ -74,7 +74,7 @@ QUnit.test("Ember.Application's ready event is called right away if jQuery is al
   equal(readyWasCalled, 1, "application's ready was not called again");
 });
 
-QUnit.test("Ember.Application's ready event is called after the document becomes ready", function() {
+QUnit.test("Ngular.Application's ready event is called after the document becomes ready", function() {
   run(function() {
     application = Application.create({ router: false });
   });
@@ -86,7 +86,7 @@ QUnit.test("Ember.Application's ready event is called after the document becomes
   equal(readyWasCalled, 1, "ready was called now that DOM is ready");
 });
 
-QUnit.test("Ember.Application's ready event can be deferred by other components", function() {
+QUnit.test("Ngular.Application's ready event can be deferred by other components", function() {
   run(function() {
     application = Application.create({ router: false });
     application.deferReadiness();
@@ -106,7 +106,7 @@ QUnit.test("Ember.Application's ready event can be deferred by other components"
   equal(readyWasCalled, 1, "ready was called now all readiness deferrals are advanced");
 });
 
-QUnit.test("Ember.Application's ready event can be deferred by other components", function() {
+QUnit.test("Ngular.Application's ready event can be deferred by other components", function() {
   jQuery.isReady = false;
 
   run(function() {

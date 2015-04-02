@@ -1,21 +1,21 @@
-import jQuery from "ember-views/system/jquery";
-import run from "ember-metal/run_loop";
-import EmberView from "ember-views/views/view";
-import { runDestroy } from "ember-runtime/tests/utils";
-import bootstrap from "ember-htmlbars/system/bootstrap";
+import jQuery from "ngular-views/system/jquery";
+import run from "ngular-metal/run_loop";
+import NgularView from "ngular-views/views/view";
+import { runDestroy } from "ngular-runtime/tests/utils";
+import bootstrap from "ngular-htmlbars/system/bootstrap";
 
 var trim = jQuery.trim;
 
-var originalLookup = Ember.lookup;
+var originalLookup = Ngular.lookup;
 var lookup, App, view;
 
-QUnit.module("ember-htmlbars: bootstrap", {
+QUnit.module("ngular-htmlbars: bootstrap", {
   setup() {
-    Ember.lookup = lookup = { Ember: Ember };
+    Ngular.lookup = lookup = { Ngular: Ngular };
   },
   teardown() {
-    Ember.TEMPLATES = {};
-    Ember.lookup = originalLookup;
+    Ngular.TEMPLATES = {};
+    Ngular.lookup = originalLookup;
     runDestroy(App);
     runDestroy(view);
   }
@@ -25,10 +25,10 @@ function checkTemplate(templateName) {
   run(function() {
     bootstrap(jQuery('#qunit-fixture'));
   });
-  var template = Ember.TEMPLATES[templateName];
-  ok(template, 'template is available on Ember.TEMPLATES');
+  var template = Ngular.TEMPLATES[templateName];
+  ok(template, 'template is available on Ngular.TEMPLATES');
   equal(jQuery('#qunit-fixture script').length, 0, 'script removed');
-  var view = EmberView.create({
+  var view = NgularView.create({
     template: template,
     context: {
       firstName: 'Tobias',
@@ -42,13 +42,13 @@ function checkTemplate(templateName) {
   runDestroy(view);
 }
 
-QUnit.test('template with data-template-name should add a new template to Ember.TEMPLATES', function() {
+QUnit.test('template with data-template-name should add a new template to Ngular.TEMPLATES', function() {
   jQuery('#qunit-fixture').html('<script type="text/x-handlebars" data-template-name="funkyTemplate">{{firstName}} takes {{drug}}</script>');
 
   checkTemplate('funkyTemplate');
 });
 
-QUnit.test('template with id instead of data-template-name should add a new template to Ember.TEMPLATES', function() {
+QUnit.test('template with id instead of data-template-name should add a new template to Ngular.TEMPLATES', function() {
   jQuery('#qunit-fixture').html('<script type="text/x-handlebars" id="funkyTemplate" >{{firstName}} takes {{drug}}</script>');
 
   checkTemplate('funkyTemplate');
@@ -68,10 +68,10 @@ if (typeof Handlebars === 'object') {
       bootstrap(jQuery('#qunit-fixture'));
     });
 
-    ok(Ember.TEMPLATES['funkyTemplate'], 'template with name funkyTemplate available');
+    ok(Ngular.TEMPLATES['funkyTemplate'], 'template with name funkyTemplate available');
 
-    // This won't even work with Ember templates
-    equal(trim(Ember.TEMPLATES['funkyTemplate']({ name: 'Tobias' })), "Tobias");
+    // This won't even work with Ngular templates
+    equal(trim(Ngular.TEMPLATES['funkyTemplate']({ name: 'Tobias' })), "Tobias");
   });
 }
 
@@ -125,34 +125,34 @@ QUnit.test('duplicated template data-template-name should throw exception', func
   "duplicate templates should not be allowed");
 });
 
-if (Ember.component) {
+if (Ngular.component) {
   QUnit.test('registerComponents initializer', function() {
-    Ember.TEMPLATES['components/x-apple'] = 'asdf';
+    Ngular.TEMPLATES['components/x-apple'] = 'asdf';
 
-    App = run(Ember.Application, 'create');
+    App = run(Ngular.Application, 'create');
 
-    ok(Ember.Handlebars.helpers['x-apple'], 'x-apple helper is present');
+    ok(Ngular.Handlebars.helpers['x-apple'], 'x-apple helper is present');
     ok(App.__container__.has('component:x-apple'), 'the container is aware of x-apple');
   });
 
   QUnit.test('registerComponents and generated components', function() {
-    Ember.TEMPLATES['components/x-apple'] = 'asdf';
+    Ngular.TEMPLATES['components/x-apple'] = 'asdf';
 
-    App = run(Ember.Application, 'create');
+    App = run(Ngular.Application, 'create');
     view = App.__container__.lookup('component:x-apple');
     equal(view.get('layoutName'), 'components/x-apple', 'has correct layout name');
   });
 
   QUnit.test('registerComponents and non-generated components', function() {
-    Ember.TEMPLATES['components/x-apple'] = 'asdf';
+    Ngular.TEMPLATES['components/x-apple'] = 'asdf';
 
     run(function() {
-      App = Ember.Application.create();
+      App = Ngular.Application.create();
 
       // currently Component code must be loaded before initializers
       // this is mostly due to how they are bootstrapped. We will hopefully
       // sort this out soon.
-      App.XAppleComponent = Ember.Component.extend({
+      App.XAppleComponent = Ngular.Component.extend({
         isCorrect: true
       });
     });

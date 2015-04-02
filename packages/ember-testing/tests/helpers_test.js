@@ -1,18 +1,18 @@
-import Ember from "ember-metal/core";
-import run from "ember-metal/run_loop";
-import EmberObject from "ember-runtime/system/object";
-import RSVP from "ember-runtime/ext/rsvp";
-import EmberView from "ember-views/views/view";
-import jQuery from "ember-views/system/jquery";
+import Ngular from "ngular-metal/core";
+import run from "ngular-metal/run_loop";
+import NgularObject from "ngular-runtime/system/object";
+import RSVP from "ngular-runtime/ext/rsvp";
+import NgularView from "ngular-views/views/view";
+import jQuery from "ngular-views/system/jquery";
 
-import Test from "ember-testing/test";
-import "ember-testing/helpers";  // ensure that the helpers are loaded
-import "ember-testing/initializers"; // ensure the initializer is setup
-import setupForTesting from "ember-testing/setup_for_testing";
-import EmberRouter from "ember-routing/system/router";
-import EmberRoute from "ember-routing/system/route";
-import EmberApplication from "ember-application/system/application";
-import compile from "ember-template-compiler/system/compile";
+import Test from "ngular-testing/test";
+import "ngular-testing/helpers";  // ensure that the helpers are loaded
+import "ngular-testing/initializers"; // ensure the initializer is setup
+import setupForTesting from "ngular-testing/setup_for_testing";
+import NgularRouter from "ngular-routing/system/router";
+import NgularRoute from "ngular-routing/system/route";
+import NgularApplication from "ngular-application/system/application";
+import compile from "ngular-template-compiler/system/compile";
 
 var App;
 var originalAdapter = Test.adapter;
@@ -36,7 +36,7 @@ function cleanup() {
     App = null;
   }
 
-  Ember.TEMPLATES = {};
+  Ngular.TEMPLATES = {};
 }
 
 function assertHelpers(application, helperContainer, expected) {
@@ -58,7 +58,7 @@ function assertHelpers(application, helperContainer, expected) {
   checkHelperPresent('wait', expected);
   checkHelperPresent('triggerEvent', expected);
 
-  if (Ember.FEATURES.isEnabled('ember-testing-checkbox-helpers')) {
+  if (Ngular.FEATURES.isEnabled('ngular-testing-checkbox-helpers')) {
     checkHelperPresent('check', expected);
     checkHelperPresent('uncheck', expected);
   }
@@ -82,20 +82,20 @@ function currentURL(app) {
 
 function setupApp() {
   run(function() {
-    App = EmberApplication.create();
+    App = NgularApplication.create();
     App.setupForTesting();
 
     App.injectTestHelpers();
   });
 }
 
-QUnit.module("ember-testing: Helper setup", {
+QUnit.module("ngular-testing: Helper setup", {
   setup() { cleanup(); },
   teardown() { cleanup(); }
 });
 
-QUnit.test("Ember.Application#injectTestHelpers/#removeTestHelpers", function() {
-  App = run(EmberApplication, EmberApplication.create);
+QUnit.test("Ngular.Application#injectTestHelpers/#removeTestHelpers", function() {
+  App = run(NgularApplication, NgularApplication.create);
   assertNoHelpers(App);
 
   App.injectTestHelpers();
@@ -105,27 +105,27 @@ QUnit.test("Ember.Application#injectTestHelpers/#removeTestHelpers", function() 
   assertNoHelpers(App);
 });
 
-QUnit.test("Ember.Application#setupForTesting", function() {
+QUnit.test("Ngular.Application#setupForTesting", function() {
   run(function() {
-    App = EmberApplication.create();
+    App = NgularApplication.create();
     App.setupForTesting();
   });
 
   equal(App.__container__.lookup('router:main').location, 'none');
 });
 
-QUnit.test("Ember.Application.setupForTesting sets the application to `testing`.", function() {
+QUnit.test("Ngular.Application.setupForTesting sets the application to `testing`.", function() {
   run(function() {
-    App = EmberApplication.create();
+    App = NgularApplication.create();
     App.setupForTesting();
   });
 
   equal(App.testing, true, "Application instance is set to testing.");
 });
 
-QUnit.test("Ember.Application.setupForTesting leaves the system in a deferred state.", function() {
+QUnit.test("Ngular.Application.setupForTesting leaves the system in a deferred state.", function() {
   run(function() {
-    App = EmberApplication.create();
+    App = NgularApplication.create();
     App.setupForTesting();
   });
 
@@ -134,7 +134,7 @@ QUnit.test("Ember.Application.setupForTesting leaves the system in a deferred st
 
 QUnit.test("App.reset() after Application.setupForTesting leaves the system in a deferred state.", function() {
   run(function() {
-    App = EmberApplication.create();
+    App = NgularApplication.create();
     App.setupForTesting();
   });
 
@@ -144,7 +144,7 @@ QUnit.test("App.reset() after Application.setupForTesting leaves the system in a
   equal(App._readinessDeferrals, 1, "App is in deferred state after setupForTesting.");
 });
 
-QUnit.test("Ember.Application#setupForTesting attaches ajax listeners", function() {
+QUnit.test("Ngular.Application#setupForTesting attaches ajax listeners", function() {
   var documentEvents;
 
   documentEvents = jQuery._data(document, 'events');
@@ -166,7 +166,7 @@ QUnit.test("Ember.Application#setupForTesting attaches ajax listeners", function
   equal(documentEvents['ajaxComplete'].length, 1, 'calling injectTestHelpers registers an ajaxComplete handler');
 });
 
-QUnit.test("Ember.Application#setupForTesting attaches ajax listeners only once", function() {
+QUnit.test("Ngular.Application#setupForTesting attaches ajax listeners only once", function() {
   var documentEvents;
 
   documentEvents = jQuery._data(document, 'events');
@@ -191,7 +191,7 @@ QUnit.test("Ember.Application#setupForTesting attaches ajax listeners only once"
   equal(documentEvents['ajaxComplete'].length, 1, 'calling injectTestHelpers registers an ajaxComplete handler');
 });
 
-QUnit.test("Ember.Application#injectTestHelpers calls callbacks registered with onInjectHelpers", function() {
+QUnit.test("Ngular.Application#injectTestHelpers calls callbacks registered with onInjectHelpers", function() {
   var injected = 0;
 
   Test.onInjectHelpers(function() {
@@ -199,7 +199,7 @@ QUnit.test("Ember.Application#injectTestHelpers calls callbacks registered with 
   });
 
   run(function() {
-    App = EmberApplication.create();
+    App = NgularApplication.create();
     App.setupForTesting();
   });
 
@@ -210,11 +210,11 @@ QUnit.test("Ember.Application#injectTestHelpers calls callbacks registered with 
   equal(injected, 1, 'onInjectHelpers are called after injectTestHelpers');
 });
 
-QUnit.test("Ember.Application#injectTestHelpers adds helpers to provided object.", function() {
+QUnit.test("Ngular.Application#injectTestHelpers adds helpers to provided object.", function() {
   var helpers = {};
 
   run(function() {
-    App = EmberApplication.create();
+    App = NgularApplication.create();
     App.setupForTesting();
   });
 
@@ -225,11 +225,11 @@ QUnit.test("Ember.Application#injectTestHelpers adds helpers to provided object.
   assertNoHelpers(App, helpers);
 });
 
-QUnit.test("Ember.Application#removeTestHelpers resets the helperContainer's original values", function() {
+QUnit.test("Ngular.Application#removeTestHelpers resets the helperContainer's original values", function() {
   var helpers = { visit: 'snazzleflabber' };
 
   run(function() {
-    App = EmberApplication.create();
+    App = NgularApplication.create();
     App.setupForTesting();
   });
 
@@ -241,7 +241,7 @@ QUnit.test("Ember.Application#removeTestHelpers resets the helperContainer's ori
   ok(helpers.visit === 'snazzleflabber', "original value added back to container");
 });
 
-QUnit.module("ember-testing: Helper methods", {
+QUnit.module("ngular-testing: Helper methods", {
   setup() {
     setupApp();
   },
@@ -321,7 +321,7 @@ QUnit.test("`click` triggers appropriate events in order", function() {
 
   var click, wait, events;
 
-  App.IndexView = EmberView.extend({
+  App.IndexView = NgularView.extend({
     classNames: 'index-view',
 
     didInsertElement() {
@@ -330,7 +330,7 @@ QUnit.test("`click` triggers appropriate events in order", function() {
       });
     },
 
-    Checkbox: Ember.Checkbox.extend({
+    Checkbox: Ngular.Checkbox.extend({
       click() {
         events.push('click:' + this.get('checked'));
       },
@@ -341,7 +341,7 @@ QUnit.test("`click` triggers appropriate events in order", function() {
     })
   });
 
-  Ember.TEMPLATES.index = compile('{{input type="text"}} {{view view.Checkbox}} {{textarea}} <div contenteditable="true"> </div>');
+  Ngular.TEMPLATES.index = compile('{{input type="text"}} {{view view.Checkbox}} {{textarea}} <div contenteditable="true"> </div>');
 
   run(App, App.advanceReadiness);
 
@@ -448,7 +448,7 @@ QUnit.test("`triggerEvent accepts an optional options hash without context", fun
 
   var triggerEvent, wait, event;
 
-  App.IndexView = EmberView.extend({
+  App.IndexView = NgularView.extend({
     template: compile('{{input type="text" id="scope" class="input"}}'),
 
     didInsertElement() {
@@ -477,7 +477,7 @@ QUnit.test("`triggerEvent can limit searching for a selector to a scope", functi
 
   var triggerEvent, wait, event;
 
-  App.IndexView = EmberView.extend({
+  App.IndexView = NgularView.extend({
     template: compile('{{input type="text" id="outside-scope" class="input"}}<div id="limited">{{input type="text" id="inside-scope" class="input"}}</div>'),
 
     didInsertElement() {
@@ -505,7 +505,7 @@ QUnit.test("`triggerEvent` can be used to trigger arbitrary events", function() 
 
   var triggerEvent, wait, event;
 
-  App.IndexView = EmberView.extend({
+  App.IndexView = NgularView.extend({
     template: compile('{{input type="text" id="foo"}}'),
 
     didInsertElement() {
@@ -532,7 +532,7 @@ QUnit.test("`fillIn` takes context into consideration", function() {
   expect(2);
   var fillIn, find, visit, andThen;
 
-  App.IndexView = EmberView.extend({
+  App.IndexView = NgularView.extend({
     template: compile('<div id="parent">{{input type="text" id="first" class="current"}}</div>{{input type="text" id="second" class="current"}}')
   });
 
@@ -555,7 +555,7 @@ QUnit.test("`fillIn` focuses on the element", function() {
   expect(2);
   var fillIn, find, visit, andThen;
 
-  App.ApplicationRoute = Ember.Route.extend({
+  App.ApplicationRoute = Ngular.Route.extend({
     actions: {
       wasFocused() {
         ok(true, 'focusIn event was triggered');
@@ -563,7 +563,7 @@ QUnit.test("`fillIn` focuses on the element", function() {
     }
   });
 
-  App.IndexView = EmberView.extend({
+  App.IndexView = NgularView.extend({
     template: compile('<div id="parent">{{input type="text" id="first" focus-in="wasFocused"}}</div>')
   });
 
@@ -581,12 +581,12 @@ QUnit.test("`fillIn` focuses on the element", function() {
   });
 });
 
-if (Ember.FEATURES.isEnabled('ember-testing-checkbox-helpers')) {
+if (Ngular.FEATURES.isEnabled('ngular-testing-checkbox-helpers')) {
   QUnit.test("`check` ensures checkboxes are `checked` state for checkboxes", function() {
     expect(2);
     var check, find, visit, andThen;
 
-    App.IndexView = EmberView.extend({
+    App.IndexView = NgularView.extend({
       template: compile('<input type="checkbox" id="unchecked"><input type="checkbox" id="checked" checked>')
     });
 
@@ -610,7 +610,7 @@ if (Ember.FEATURES.isEnabled('ember-testing-checkbox-helpers')) {
     expect(2);
     var uncheck, find, visit, andThen;
 
-    App.IndexView = EmberView.extend({
+    App.IndexView = NgularView.extend({
       template: compile('<input type="checkbox" id="unchecked"><input type="checkbox" id="checked" checked>')
     });
 
@@ -633,7 +633,7 @@ if (Ember.FEATURES.isEnabled('ember-testing-checkbox-helpers')) {
   QUnit.test("`check` asserts the selected inputs are checkboxes", function() {
     var check, visit;
 
-    App.IndexView = EmberView.extend({
+    App.IndexView = NgularView.extend({
       template: compile('<input type="text" id="text">')
     });
 
@@ -652,7 +652,7 @@ if (Ember.FEATURES.isEnabled('ember-testing-checkbox-helpers')) {
   QUnit.test("`uncheck` asserts the selected inputs are checkboxes", function() {
     var visit, uncheck;
 
-    App.IndexView = EmberView.extend({
+    App.IndexView = NgularView.extend({
       template: compile('<input type="text" id="text">')
     });
 
@@ -674,7 +674,7 @@ QUnit.test("`triggerEvent accepts an optional options hash and context", functio
 
   var triggerEvent, wait, event;
 
-  App.IndexView = EmberView.extend({
+  App.IndexView = NgularView.extend({
     template: compile('{{input type="text" id="outside-scope" class="input"}}<div id="limited">{{input type="text" id="inside-scope" class="input"}}</div>'),
 
     didInsertElement() {
@@ -698,12 +698,12 @@ QUnit.test("`triggerEvent accepts an optional options hash and context", functio
   });
 });
 
-QUnit.module("ember-testing debugging helpers", {
+QUnit.module("ngular-testing debugging helpers", {
   setup() {
     setupApp();
 
     run(function() {
-      App.Router = EmberRouter.extend({
+      App.Router = NgularRouter.extend({
         location: 'none'
       });
     });
@@ -727,15 +727,15 @@ QUnit.test("pauseTest pauses", function() {
   App.testHelpers.pauseTest();
 });
 
-QUnit.module("ember-testing routing helpers", {
+QUnit.module("ngular-testing routing helpers", {
   setup() {
     run(function() {
-      App = EmberApplication.create();
+      App = NgularApplication.create();
       App.setupForTesting();
 
       App.injectTestHelpers();
 
-      App.Router = EmberRouter.extend({
+      App.Router = NgularRouter.extend({
         location: 'none'
       });
 
@@ -785,7 +785,7 @@ QUnit.test("currentRouteName for '/posts/new'", function() {
   });
 });
 
-QUnit.module("ember-testing pendingAjaxRequests", {
+QUnit.module("ngular-testing pendingAjaxRequests", {
   setup() {
     setupApp();
   },
@@ -799,27 +799,27 @@ QUnit.test("pendingAjaxRequests is maintained for ajaxSend and ajaxComplete even
   equal(Test.pendingAjaxRequests, 0);
   var xhr = { some: 'xhr' };
   jQuery(document).trigger('ajaxSend', xhr);
-  equal(Test.pendingAjaxRequests, 1, 'Ember.Test.pendingAjaxRequests was incremented');
+  equal(Test.pendingAjaxRequests, 1, 'Ngular.Test.pendingAjaxRequests was incremented');
   jQuery(document).trigger('ajaxComplete', xhr);
-  equal(Test.pendingAjaxRequests, 0, 'Ember.Test.pendingAjaxRequests was decremented');
+  equal(Test.pendingAjaxRequests, 0, 'Ngular.Test.pendingAjaxRequests was decremented');
 });
 
 QUnit.test("pendingAjaxRequests is ignores ajaxComplete events from past setupForTesting calls", function() {
   equal(Test.pendingAjaxRequests, 0);
   var xhr = { some: 'xhr' };
   jQuery(document).trigger('ajaxSend', xhr);
-  equal(Test.pendingAjaxRequests, 1, 'Ember.Test.pendingAjaxRequests was incremented');
+  equal(Test.pendingAjaxRequests, 1, 'Ngular.Test.pendingAjaxRequests was incremented');
 
   run(function() {
     setupForTesting();
   });
-  equal(Test.pendingAjaxRequests, 0, 'Ember.Test.pendingAjaxRequests was reset');
+  equal(Test.pendingAjaxRequests, 0, 'Ngular.Test.pendingAjaxRequests was reset');
 
   var altXhr = { some: 'more xhr' };
   jQuery(document).trigger('ajaxSend', altXhr);
-  equal(Test.pendingAjaxRequests, 1, 'Ember.Test.pendingAjaxRequests was incremented');
+  equal(Test.pendingAjaxRequests, 1, 'Ngular.Test.pendingAjaxRequests was incremented');
   jQuery(document).trigger('ajaxComplete', xhr);
-  equal(Test.pendingAjaxRequests, 1, 'Ember.Test.pendingAjaxRequests is not impressed with your unexpected complete');
+  equal(Test.pendingAjaxRequests, 1, 'Ngular.Test.pendingAjaxRequests is not impressed with your unexpected complete');
 });
 
 QUnit.test("pendingAjaxRequests is reset by setupForTesting", function() {
@@ -830,13 +830,13 @@ QUnit.test("pendingAjaxRequests is reset by setupForTesting", function() {
   equal(Test.pendingAjaxRequests, 0, 'pendingAjaxRequests is reset');
 });
 
-QUnit.module("ember-testing async router", {
+QUnit.module("ngular-testing async router", {
   setup() {
     cleanup();
 
     run(function() {
-      App = EmberApplication.create();
-      App.Router = EmberRouter.extend({
+      App = NgularApplication.create();
+      App.Router = NgularRouter.extend({
         location: 'none'
       });
 
@@ -847,13 +847,13 @@ QUnit.module("ember-testing async router", {
         });
       });
 
-      App.UserRoute = EmberRoute.extend({
+      App.UserRoute = NgularRoute.extend({
         model() {
           return resolveLater();
         }
       });
 
-      App.UserProfileRoute = EmberRoute.extend({
+      App.UserProfileRoute = NgularRoute.extend({
         beforeModel() {
           var self = this;
           return resolveLater().then(function() {
@@ -873,7 +873,7 @@ QUnit.module("ember-testing async router", {
             // should be enough.
             setTimeout(function() {
               run(function() {
-                resolve(EmberObject.create({ firstName: 'Tom' }));
+                resolve(NgularObject.create({ firstName: 'Tom' }));
               });
             }, 20);
           });
@@ -924,11 +924,11 @@ QUnit.module('can override built-in helpers', {
     originalFindHelper  = Test._helpers.find;
     originalWaitHelper  = Test._helpers.wait;
 
-    jQuery('<style>#ember-testing-container { position: absolute; background: white; bottom: 0; right: 0; width: 640px; height: 384px; overflow: auto; z-index: 9999; border: 1px solid #ccc; } #ember-testing { zoom: 50%; }</style>').appendTo('head');
-    jQuery('<div id="ember-testing-container"><div id="ember-testing"></div></div>').appendTo('body');
+    jQuery('<style>#ngular-testing-container { position: absolute; background: white; bottom: 0; right: 0; width: 640px; height: 384px; overflow: auto; z-index: 9999; border: 1px solid #ccc; } #ngular-testing { zoom: 50%; }</style>').appendTo('head');
+    jQuery('<div id="ngular-testing-container"><div id="ngular-testing"></div></div>').appendTo('body');
     run(function() {
-      App = Ember.Application.create({
-        rootElement: '#ember-testing'
+      App = Ngular.Application.create({
+        rootElement: '#ngular-testing'
       });
 
       App.setupForTesting();
@@ -937,7 +937,7 @@ QUnit.module('can override built-in helpers', {
 
   teardown() {
     App.removeTestHelpers();
-    jQuery('#ember-testing-container, #ember-testing').remove();
+    jQuery('#ngular-testing-container, #ngular-testing').remove();
     run(App, App.destroy);
     App = null;
 

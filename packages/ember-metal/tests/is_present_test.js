@@ -1,8 +1,8 @@
-import isPresent from 'ember-metal/is_present';
+import isPresent from 'ngular-metal/is_present';
 
-QUnit.module("Ember.isPresent");
+QUnit.module("Ngular.isPresent");
 
-QUnit.test("Ember.isPresent", function() {
+QUnit.test("Ngular.isPresent", function() {
   var string = "string";
   var fn = function() {};
   var object = { length: 0 };

@@ -1,12 +1,12 @@
-/* global EmberDev */
+/* global NgularDev */
 
-import InjectedProperty from "ember-metal/injected_property";
-import inject from "ember-runtime/inject";
+import InjectedProperty from "ngular-metal/injected_property";
+import inject from "ngular-runtime/inject";
 import {
   createInjectionHelper
-} from "ember-runtime/inject";
-import { Registry } from "ember-runtime/system/container";
-import Object from "ember-runtime/system/object";
+} from "ngular-runtime/inject";
+import { Registry } from "ngular-runtime/system/container";
+import Object from "ngular-runtime/system/object";
 
 QUnit.module('inject');
 
@@ -16,7 +16,7 @@ QUnit.test("calling `inject` directly should error", function() {
   }, /Injected properties must be created through helpers/);
 });
 
-if (!EmberDev.runningProdBuild) {
+if (!NgularDev.runningProdBuild) {
   // this check is done via an assertion which is stripped from
   // production builds
   QUnit.test("injection type validation is run when first looked up", function() {

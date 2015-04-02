@@ -1,20 +1,20 @@
-/* global EmberDev */
+/* global NgularDev */
 
-import Ember from 'ember-metal/core';
-import run from 'ember-metal/run_loop';
-import EmberObject from 'ember-runtime/system/object';
-import Deferred from "ember-runtime/mixins/deferred";
+import Ngular from 'ngular-metal/core';
+import run from 'ngular-metal/run_loop';
+import NgularObject from 'ngular-runtime/system/object';
+import Deferred from "ngular-runtime/mixins/deferred";
 
 var originalDeprecate;
 
 QUnit.module("Deferred", {
   setup() {
-    originalDeprecate = Ember.deprecate;
-    Ember.deprecate = function() { };
+    originalDeprecate = Ngular.deprecate;
+    Ngular.deprecate = function() { };
   },
 
   teardown() {
-    Ember.deprecate = originalDeprecate;
+    Ngular.deprecate = originalDeprecate;
   }
 });
 
@@ -23,7 +23,7 @@ QUnit.test("can resolve deferred", function() {
   var count = 0;
 
   run(function() {
-    deferred = EmberObject.createWithMixins(Deferred);
+    deferred = NgularObject.createWithMixins(Deferred);
   });
 
   deferred.then(function(a) {
@@ -41,7 +41,7 @@ QUnit.test("can reject deferred", function() {
   var count = 0;
 
   run(function() {
-    deferred = EmberObject.createWithMixins(Deferred);
+    deferred = NgularObject.createWithMixins(Deferred);
   });
 
   deferred.then(null, function() {
@@ -60,7 +60,7 @@ QUnit.test("can resolve with then", function() {
   var count2 = 0;
 
   run(function() {
-    deferred = EmberObject.createWithMixins(Deferred);
+    deferred = NgularObject.createWithMixins(Deferred);
   });
 
   deferred.then(function() {
@@ -82,7 +82,7 @@ QUnit.test("can reject with then", function() {
   var count2 = 0;
 
   run(function() {
-    deferred = EmberObject.createWithMixins(Deferred);
+    deferred = NgularObject.createWithMixins(Deferred);
   });
 
   deferred.then(function() {
@@ -103,7 +103,7 @@ QUnit.test("can call resolve multiple times", function() {
   var count = 0;
 
   run(function() {
-    deferred = EmberObject.createWithMixins(Deferred);
+    deferred = NgularObject.createWithMixins(Deferred);
   });
 
   deferred.then(function() {
@@ -125,7 +125,7 @@ QUnit.test("resolve prevent reject", function() {
   var rejected = false;
 
   run(function() {
-    deferred = EmberObject.createWithMixins(Deferred);
+    deferred = NgularObject.createWithMixins(Deferred);
   });
 
   deferred.then(function() {
@@ -147,7 +147,7 @@ QUnit.test("reject prevent resolve", function() {
   var rejected = false;
 
   run(function() {
-    deferred = EmberObject.createWithMixins(Deferred);
+    deferred = NgularObject.createWithMixins(Deferred);
   });
 
   deferred.then(function() {
@@ -169,7 +169,7 @@ QUnit.test("will call callbacks if they are added after resolution", function() 
   var count1 = 0;
 
   run(function() {
-    deferred = EmberObject.createWithMixins(Deferred);
+    deferred = NgularObject.createWithMixins(Deferred);
   });
 
   run(deferred, 'resolve', 'toto');
@@ -196,7 +196,7 @@ QUnit.test("then is chainable", function() {
   var count = 0;
 
   run(function() {
-    deferred = EmberObject.createWithMixins(Deferred);
+    deferred = NgularObject.createWithMixins(Deferred);
   });
 
   deferred.then(function() {
@@ -217,7 +217,7 @@ QUnit.test("can self fulfill", function() {
   var deferred;
 
   run(function() {
-    deferred = EmberObject.createWithMixins(Deferred);
+    deferred = NgularObject.createWithMixins(Deferred);
   });
 
   deferred.then(function(value) {
@@ -233,7 +233,7 @@ QUnit.test("can self reject", function() {
   var deferred;
 
   run(function() {
-    deferred = EmberObject.createWithMixins(Deferred);
+    deferred = NgularObject.createWithMixins(Deferred);
   });
 
   deferred.then(function() {
@@ -251,7 +251,7 @@ QUnit.test("can fulfill to a custom value", function() {
   var obj = {};
 
   run(function() {
-    deferred = EmberObject.createWithMixins(Deferred);
+    deferred = NgularObject.createWithMixins(Deferred);
   });
 
   deferred.then(function(value) {
@@ -267,8 +267,8 @@ QUnit.test("can chain self fulfilling objects", function() {
   var firstDeferred, secondDeferred;
 
   run(function() {
-    firstDeferred = EmberObject.createWithMixins(Deferred);
-    secondDeferred = EmberObject.createWithMixins(Deferred);
+    firstDeferred = NgularObject.createWithMixins(Deferred);
+    secondDeferred = NgularObject.createWithMixins(Deferred);
   });
 
   firstDeferred.then(function(value) {
@@ -290,8 +290,8 @@ QUnit.test("can do multi level assimilation", function() {
   var firstDeferredResolved = false;
 
   run(function() {
-    firstDeferred = EmberObject.createWithMixins(Deferred);
-    secondDeferred = EmberObject.createWithMixins(Deferred);
+    firstDeferred = NgularObject.createWithMixins(Deferred);
+    secondDeferred = NgularObject.createWithMixins(Deferred);
   });
 
   firstDeferred.then(function() {
@@ -313,7 +313,7 @@ QUnit.test("can handle rejection without rejection handler", function() {
   var reason = 'some reason';
 
   var deferred = run(function() {
-    return EmberObject.createWithMixins(Deferred);
+    return NgularObject.createWithMixins(Deferred);
   });
 
   deferred.then().then(function() {
@@ -332,7 +332,7 @@ QUnit.test("can handle fulfillment without  fulfillment handler", function() {
   var fulfillment = 'some fulfillment';
 
   var deferred = run(function() {
-    return EmberObject.createWithMixins(Deferred);
+    return NgularObject.createWithMixins(Deferred);
   });
 
   deferred.then().then(function(actualFulfillment) {
@@ -345,22 +345,22 @@ QUnit.test("can handle fulfillment without  fulfillment handler", function() {
   run(deferred, 'resolve', fulfillment);
 });
 
-if (!EmberDev.runningProdBuild) {
+if (!NgularDev.runningProdBuild) {
   QUnit.test("causes a deprecation warning when used", function() {
     var deferred, deprecationMade;
     var obj = {};
 
-    Ember.deprecate = function(message) {
+    Ngular.deprecate = function(message) {
       deprecationMade = message;
     };
 
-    deferred = EmberObject.createWithMixins(Deferred);
+    deferred = NgularObject.createWithMixins(Deferred);
     equal(deprecationMade, undefined, 'no deprecation was made on init');
 
     deferred.then(function(value) {
       equal(value, obj, "successfully resolved to given value");
     });
-    equal(deprecationMade, 'Usage of Ember.DeferredMixin or Ember.Deferred is deprecated.');
+    equal(deprecationMade, 'Usage of Ngular.DeferredMixin or Ngular.Deferred is deprecated.');
 
     run(deferred, 'resolve', obj);
   });

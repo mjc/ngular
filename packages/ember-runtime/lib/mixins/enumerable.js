@@ -1,32 +1,32 @@
 /**
-@module ember
-@submodule ember-runtime
+@module ngular
+@submodule ngular-runtime
 */
 
 // ..........................................................
 // HELPERS
 //
 
-import Ember from 'ember-metal/core';
-import { get } from 'ember-metal/property_get';
-import { set } from 'ember-metal/property_set';
+import Ngular from 'ngular-metal/core';
+import { get } from 'ngular-metal/property_get';
+import { set } from 'ngular-metal/property_set';
 import {
   Mixin,
   aliasMethod
-} from 'ember-metal/mixin';
-import { indexOf } from 'ember-metal/enumerable_utils';
-import { computed } from 'ember-metal/computed';
+} from 'ngular-metal/mixin';
+import { indexOf } from 'ngular-metal/enumerable_utils';
+import { computed } from 'ngular-metal/computed';
 import {
   propertyWillChange,
   propertyDidChange
-} from 'ember-metal/property_events';
+} from 'ngular-metal/property_events';
 import {
   addListener,
   removeListener,
   sendEvent,
   hasListeners
-} from 'ember-metal/events';
-import compare from 'ember-runtime/compare';
+} from 'ngular-metal/events';
+import compare from 'ngular-runtime/compare';
 
 var contexts = [];
 
@@ -52,7 +52,7 @@ function iter(key, value) {
 
 /**
   This mixin defines the common interface implemented by enumerable objects
-  in Ember. Most of these methods follow the standard Array iteration
+  in Ngular. Most of these methods follow the standard Array iteration
   API defined up to JavaScript 1.8 (excluding language-specific features that
   cannot be emulated in older versions of JavaScript).
 
@@ -66,26 +66,26 @@ function iter(key, value) {
 
   1. You must have a length property. This property should change whenever
      the number of items in your enumerable object changes. If you use this
-     with an `Ember.Object` subclass, you should be sure to change the length
+     with an `Ngular.Object` subclass, you should be sure to change the length
      property using `set().`
 
   2. You must implement `nextObject().` See documentation.
 
-  Once you have these two methods implemented, apply the `Ember.Enumerable` mixin
+  Once you have these two methods implemented, apply the `Ngular.Enumerable` mixin
   to your class and you will be able to enumerate the contents of your object
   like any other collection.
 
-  ## Using Ember Enumeration with Other Libraries
+  ## Using Ngular Enumeration with Other Libraries
 
   Many other libraries provide some kind of iterator or enumeration like
   facility. This is often where the most common API conflicts occur.
-  Ember's API is designed to be as friendly as possible with other
+  Ngular's API is designed to be as friendly as possible with other
   libraries by implementing only methods that mostly correspond to the
   JavaScript 1.8 API.
 
   @class Enumerable
-  @namespace Ember
-  @since Ember 0.9
+  @namespace Ngular
+  @since Ngular 0.9
 */
 export default Mixin.create({
 
@@ -283,9 +283,9 @@ export default Mixin.create({
   getEach: aliasMethod('mapBy'),
 
   /**
-    Sets the value on the named property for each member. This is more
+    Sets the value on the named property for each mngular. This is more
     efficient than using other methods defined on this helper. If the object
-    implements Ember.Observable, the value will be changed to `set(),` otherwise
+    implements Ngular.Observable, the value will be changed to `set(),` otherwise
     it will be set directly. `null` objects are skipped.
 
     @method setEach
@@ -326,7 +326,7 @@ export default Mixin.create({
     @return {Array} The mapped array.
   */
   map(callback, target) {
-    var ret = Ember.A();
+    var ret = Ngular.A();
 
     this.forEach(function(x, idx, i) {
       ret[idx] = callback.call(target, x, idx, i);
@@ -390,7 +390,7 @@ export default Mixin.create({
     @return {Array} A filtered array.
   */
   filter(callback, target) {
-    var ret = Ember.A();
+    var ret = Ngular.A();
 
     this.forEach(function(x, idx, i) {
       if (callback.call(target, x, idx, i)) {
@@ -841,7 +841,7 @@ export default Mixin.create({
     @return {Array} return values from calling invoke.
   */
   invoke(methodName, ...args) {
-    var ret = Ember.A();
+    var ret = Ngular.A();
 
     this.forEach(function(x, idx) {
       var method = x && x[methodName];
@@ -862,7 +862,7 @@ export default Mixin.create({
     @return {Array} the enumerable as an array.
   */
   toArray() {
-    var ret = Ember.A();
+    var ret = Ngular.A();
 
     this.forEach(function(o, idx) {
       ret[idx] = o;
@@ -900,14 +900,14 @@ export default Mixin.create({
 
     @method without
     @param {Object} value
-    @return {Ember.Enumerable}
+    @return {Ngular.Enumerable}
   */
   without(value) {
     if (!this.contains(value)) {
       return this; // nothing to do
     }
 
-    var ret = Ember.A();
+    var ret = Ngular.A();
 
     this.forEach(function(k) {
       if (k !== value) {
@@ -930,10 +930,10 @@ export default Mixin.create({
     This only works on primitive data types, e.g. Strings, Numbers, etc.
 
     @method uniq
-    @return {Ember.Enumerable}
+    @return {Ngular.Enumerable}
   */
   uniq() {
-    var ret = Ember.A();
+    var ret = Ngular.A();
 
     this.forEach(function(k) {
       if (indexOf(ret, k) < 0) {
@@ -965,7 +965,7 @@ export default Mixin.create({
   //
 
   /**
-    Registers an enumerable observer. Must implement `Ember.EnumerableObserver`
+    Registers an enumerable observer. Must implement `Ngular.EnumerableObserver`
     mixin.
 
     @method addEnumerableObserver
@@ -1037,9 +1037,9 @@ export default Mixin.create({
     to be removed or added if available or just a count.
 
     @method enumerableContentWillChange
-    @param {Ember.Enumerable|Number} removing An enumerable of the objects to
+    @param {Ngular.Enumerable|Number} removing An enumerable of the objects to
       be removed or the number of items to be removed.
-    @param {Ember.Enumerable|Number} adding An enumerable of the objects to be
+    @param {Ngular.Enumerable|Number} adding An enumerable of the objects to be
       added or the number of items to be added.
     @chainable
   */
@@ -1091,9 +1091,9 @@ export default Mixin.create({
     notify range observers.
 
     @method enumerableContentDidChange
-    @param {Ember.Enumerable|Number} removing An enumerable of the objects to
+    @param {Ngular.Enumerable|Number} removing An enumerable of the objects to
       be removed or the number of items to be removed.
-    @param {Ember.Enumerable|Number} adding  An enumerable of the objects to
+    @param {Ngular.Enumerable|Number} adding  An enumerable of the objects to
       be added or the number of items to be added.
     @chainable
   */

@@ -1,11 +1,11 @@
-import create from "ember-metal/platform/create";
+import create from "ngular-metal/platform/create";
 import {
   getFirstKey,
   getTailPath
-} from "ember-metal/path_cache";
+} from "ngular-metal/path_cache";
 
 /**
-@module ember-metal
+@module ngular-metal
 */
 
 function Subscriber(callback, context) {
@@ -35,7 +35,7 @@ Subscriber.prototype.removeFrom = function(stream) {
 /**
   @public
   @class Stream
-  @namespace Ember.stream
+  @namespace Ngular.stream
   @constructor
 */
 function Stream(fn) {
@@ -87,7 +87,7 @@ Stream.prototype = {
     // TODO: Ensure value is never called on a destroyed stream
     // so that we can uncomment this assertion.
     //
-    // Ember.assert("Stream error: value was called in an invalid state: " + this.state);
+    // Ngular.assert("Stream error: value was called in an invalid state: " + this.state);
   },
 
   valueFn() {

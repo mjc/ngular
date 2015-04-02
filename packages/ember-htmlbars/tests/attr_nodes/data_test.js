@@ -1,24 +1,24 @@
-import EmberView from "ember-views/views/view";
-import run from "ember-metal/run_loop";
-import EmberObject from "ember-runtime/system/object";
-import compile from "ember-template-compiler/system/compile";
-import Renderer from "ember-views/system/renderer";
+import NgularView from "ngular-views/views/view";
+import run from "ngular-metal/run_loop";
+import NgularObject from "ngular-runtime/system/object";
+import compile from "ngular-template-compiler/system/compile";
+import Renderer from "ngular-views/system/renderer";
 import { equalInnerHTML } from "htmlbars-test-helpers";
-import { domHelper as dom } from "ember-htmlbars/env";
-import { runAppend, runDestroy } from "ember-runtime/tests/utils";
+import { domHelper as dom } from "ngular-htmlbars/env";
+import { runAppend, runDestroy } from "ngular-runtime/tests/utils";
 
 var view, originalSetAttribute, setAttributeCalls, renderer;
 
-if (Ember.FEATURES.isEnabled('ember-htmlbars-attribute-syntax')) {
+if (Ngular.FEATURES.isEnabled('ngular-htmlbars-attribute-syntax')) {
 
-  QUnit.module("ember-htmlbars: data attribute", {
+  QUnit.module("ngular-htmlbars: data attribute", {
     teardown() {
       runDestroy(view);
     }
   });
 
   QUnit.test("property is output", function() {
-    view = EmberView.create({
+    view = NgularView.create({
       context: { name: 'erik' },
       template: compile("<div data-name={{name}}>Hi!</div>")
     });
@@ -29,7 +29,7 @@ if (Ember.FEATURES.isEnabled('ember-htmlbars-attribute-syntax')) {
 
   QUnit.test("property set before didInsertElement", function() {
     var matchingElement;
-    view = EmberView.create({
+    view = NgularView.create({
       didInsertElement() {
         matchingElement = this.$('div[data-name=erik]');
       },
@@ -43,7 +43,7 @@ if (Ember.FEATURES.isEnabled('ember-htmlbars-attribute-syntax')) {
   });
 
   QUnit.test("quoted attributes are concatenated", function() {
-    view = EmberView.create({
+    view = NgularView.create({
       context: { firstName: 'max', lastName: 'jackson' },
       template: compile("<div data-name='{{firstName}} {{lastName}}'>Hi!</div>")
     });
@@ -53,7 +53,7 @@ if (Ember.FEATURES.isEnabled('ember-htmlbars-attribute-syntax')) {
   });
 
   QUnit.test("quoted attributes are updated when changed", function() {
-    view = EmberView.create({
+    view = NgularView.create({
       context: { firstName: 'max', lastName: 'jackson' },
       template: compile("<div data-name='{{firstName}} {{lastName}}'>Hi!</div>")
     });
@@ -67,7 +67,7 @@ if (Ember.FEATURES.isEnabled('ember-htmlbars-attribute-syntax')) {
   });
 
   QUnit.test("quoted attributes are not removed when value is null", function() {
-    view = EmberView.create({
+    view = NgularView.create({
       context: { firstName: 'max', lastName: 'jackson' },
       template: compile("<div data-name='{{firstName}}'>Hi!</div>")
     });
@@ -81,7 +81,7 @@ if (Ember.FEATURES.isEnabled('ember-htmlbars-attribute-syntax')) {
   });
 
   QUnit.test("unquoted attributes are removed when value is null", function() {
-    view = EmberView.create({
+    view = NgularView.create({
       context: { firstName: 'max' },
       template: compile("<div data-name={{firstName}}>Hi!</div>")
     });
@@ -95,7 +95,7 @@ if (Ember.FEATURES.isEnabled('ember-htmlbars-attribute-syntax')) {
   });
 
   QUnit.test("unquoted attributes that are null are not added", function() {
-    view = EmberView.create({
+    view = NgularView.create({
       context: { firstName: null },
       template: compile("<div data-name={{firstName}}>Hi!</div>")
     });
@@ -105,7 +105,7 @@ if (Ember.FEATURES.isEnabled('ember-htmlbars-attribute-syntax')) {
   });
 
   QUnit.test("unquoted attributes are added when changing from null", function() {
-    view = EmberView.create({
+    view = NgularView.create({
       context: { firstName: null },
       template: compile("<div data-name={{firstName}}>Hi!</div>")
     });
@@ -119,7 +119,7 @@ if (Ember.FEATURES.isEnabled('ember-htmlbars-attribute-syntax')) {
   });
 
   QUnit.test("property value is directly added to attribute", function() {
-    view = EmberView.create({
+    view = NgularView.create({
       context: { name: '"" data-foo="blah"' },
       template: compile("<div data-name={{name}}>Hi!</div>")
     });
@@ -129,7 +129,7 @@ if (Ember.FEATURES.isEnabled('ember-htmlbars-attribute-syntax')) {
   });
 
   QUnit.test("path is output", function() {
-    view = EmberView.create({
+    view = NgularView.create({
       context: { name: { firstName: 'erik' } },
       template: compile("<div data-name={{name.firstName}}>Hi!</div>")
     });
@@ -139,8 +139,8 @@ if (Ember.FEATURES.isEnabled('ember-htmlbars-attribute-syntax')) {
   });
 
   QUnit.test("changed property updates", function() {
-    var context = EmberObject.create({ name: 'erik' });
-    view = EmberView.create({
+    var context = NgularObject.create({ name: 'erik' });
+    view = NgularView.create({
       context: context,
       template: compile("<div data-name={{name}}>Hi!</div>")
     });
@@ -156,8 +156,8 @@ if (Ember.FEATURES.isEnabled('ember-htmlbars-attribute-syntax')) {
   QUnit.test("updates are scheduled in the render queue", function() {
     expect(4);
 
-    var context = EmberObject.create({ name: 'erik' });
-    view = EmberView.create({
+    var context = NgularObject.create({ name: 'erik' });
+    view = NgularView.create({
       context: context,
       template: compile("<div data-name={{name}}>Hi!</div>")
     });
@@ -182,8 +182,8 @@ if (Ember.FEATURES.isEnabled('ember-htmlbars-attribute-syntax')) {
 
   QUnit.test("updates fail silently after an element is destroyed", function() {
 
-    var context = EmberObject.create({ name: 'erik' });
-    view = EmberView.create({
+    var context = NgularObject.create({ name: 'erik' });
+    view = NgularView.create({
       context: context,
       template: compile("<div data-name={{name}}>Hi!</div>")
     });
@@ -197,7 +197,7 @@ if (Ember.FEATURES.isEnabled('ember-htmlbars-attribute-syntax')) {
     });
   });
 
-  QUnit.module('ember-htmlbars: {{attribute}} helper -- setAttribute', {
+  QUnit.module('ngular-htmlbars: {{attribute}} helper -- setAttribute', {
     setup() {
       renderer = new Renderer(dom);
 
@@ -221,8 +221,8 @@ if (Ember.FEATURES.isEnabled('ember-htmlbars-attribute-syntax')) {
   });
 
   QUnit.test('calls setAttribute for new values', function() {
-    var context = EmberObject.create({ name: 'erik' });
-    view = EmberView.create({
+    var context = NgularObject.create({ name: 'erik' });
+    view = NgularView.create({
       renderer: renderer,
       context: context,
       template: compile("<div data-name={{name}}>Hi!</div>")
@@ -240,8 +240,8 @@ if (Ember.FEATURES.isEnabled('ember-htmlbars-attribute-syntax')) {
   });
 
   QUnit.test('does not call setAttribute if the same value is set', function() {
-    var context = EmberObject.create({ name: 'erik' });
-    view = EmberView.create({
+    var context = NgularObject.create({ name: 'erik' });
+    view = NgularView.create({
       renderer: renderer,
       context: context,
       template: compile("<div data-name={{name}}>Hi!</div>")

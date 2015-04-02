@@ -1,8 +1,8 @@
-import Ember from "ember-metal/core";
-import {computed} from "ember-metal/computed";
-import ArrayProxy from "ember-runtime/system/array_proxy";
+import Ngular from "ngular-metal/core";
+import {computed} from "ngular-metal/computed";
+import ArrayProxy from "ngular-runtime/system/array_proxy";
 
-QUnit.module("Ember.ArrayProxy - content update");
+QUnit.module("Ngular.ArrayProxy - content update");
 
 QUnit.test("The `contentArrayDidChange` method is invoked after `content` is updated.", function() {
 
@@ -10,10 +10,10 @@ QUnit.test("The `contentArrayDidChange` method is invoked after `content` is upd
   var observerCalled = false;
 
   proxy = ArrayProxy.createWithMixins({
-    content: Ember.A(),
+    content: Ngular.A(),
 
     arrangedContent: computed('content', function(key) {
-      return Ember.A(this.get('content').slice());
+      return Ngular.A(this.get('content').slice());
     }),
 
     contentArrayDidChange(array, idx, removedCount, addedCount) {

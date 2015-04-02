@@ -1,11 +1,11 @@
 /**
-@module ember
-@submodule ember-runtime
+@module ngular
+@submodule ngular-runtime
 */
 
 
-// require('ember-runtime/mixins/array');
-// require('ember-runtime/mixins/mutable_enumerable');
+// require('ngular-runtime/mixins/array');
+// require('ngular-runtime/mixins/mutable_enumerable');
 
 // ..........................................................
 // CONSTANTS
@@ -18,13 +18,13 @@ var EMPTY = [];
 // HELPERS
 //
 
-import { get } from "ember-metal/property_get";
-import { isArray } from "ember-metal/utils";
-import EmberError from "ember-metal/error";
-import { Mixin } from "ember-metal/mixin";
-import EmberArray from "ember-runtime/mixins/array";
-import MutableEnumerable from "ember-runtime/mixins/mutable_enumerable";
-import Enumerable from "ember-runtime/mixins/enumerable";
+import { get } from "ngular-metal/property_get";
+import { isArray } from "ngular-metal/utils";
+import NgularError from "ngular-metal/error";
+import { Mixin } from "ngular-metal/mixin";
+import NgularArray from "ngular-runtime/mixins/array";
+import MutableEnumerable from "ngular-runtime/mixins/mutable_enumerable";
+import Enumerable from "ngular-runtime/mixins/enumerable";
 /**
   This mixin defines the API for modifying array-like objects. These methods
   can be applied only to a collection that keeps its items in an ordered set.
@@ -32,7 +32,7 @@ import Enumerable from "ember-runtime/mixins/enumerable";
   Concrete implementations of this class include ArrayProxy and ArrayController.
 
   It is important to use the methods in this class to modify arrays so that
-  changes are observable. This allows the binding system in Ember to function
+  changes are observable. This allows the binding system in Ngular to function
   correctly.
 
 
@@ -41,16 +41,16 @@ import Enumerable from "ember-runtime/mixins/enumerable";
   modified, but if its underlying enumerable changes, it will change also.
 
   @class MutableArray
-  @namespace Ember
-  @uses Ember.Array
-  @uses Ember.MutableEnumerable
+  @namespace Ngular
+  @uses Ngular.Array
+  @uses Ngular.MutableEnumerable
 */
-export default Mixin.create(EmberArray, MutableEnumerable, {
+export default Mixin.create(NgularArray, MutableEnumerable, {
 
   /**
     __Required.__ You must implement this method to apply this mixin.
 
-    This is one of the primitives you must implement to support `Ember.Array`.
+    This is one of the primitives you must implement to support `Ngular.Array`.
     You should replace amt objects started at idx with the objects in the
     passed array. You should also call `this.enumerableContentDidChange()`
 
@@ -77,7 +77,7 @@ export default Mixin.create(EmberArray, MutableEnumerable, {
     ```
 
     @method clear
-    @return {Ember.Array} An empty Array.
+    @return {Ngular.Array} An empty Array.
   */
   clear() {
     var len = get(this, 'length');
@@ -103,11 +103,11 @@ export default Mixin.create(EmberArray, MutableEnumerable, {
     @method insertAt
     @param {Number} idx index of insert the object at.
     @param {Object} object object to insert
-    @return {Ember.Array} receiver
+    @return {Ngular.Array} receiver
   */
   insertAt(idx, object) {
     if (idx > get(this, 'length')) {
-      throw new EmberError(OUT_OF_RANGE_EXCEPTION);
+      throw new NgularError(OUT_OF_RANGE_EXCEPTION);
     }
 
     this.replace(idx, 0, [object]);
@@ -132,13 +132,13 @@ export default Mixin.create(EmberArray, MutableEnumerable, {
     @method removeAt
     @param {Number} start index, start of range
     @param {Number} len length of passing range
-    @return {Ember.Array} receiver
+    @return {Ngular.Array} receiver
   */
   removeAt(start, len) {
     if ('number' === typeof start) {
 
       if ((start < 0) || (start >= get(this, 'length'))) {
-        throw new EmberError(OUT_OF_RANGE_EXCEPTION);
+        throw new NgularError(OUT_OF_RANGE_EXCEPTION);
       }
 
       // fast case
@@ -183,12 +183,12 @@ export default Mixin.create(EmberArray, MutableEnumerable, {
     ```
 
     @method pushObjects
-    @param {Ember.Enumerable} objects the objects to add
-    @return {Ember.Array} receiver
+    @param {Ngular.Enumerable} objects the objects to add
+    @return {Ngular.Array} receiver
   */
   pushObjects(objects) {
     if (!(Enumerable.detect(objects) || isArray(objects))) {
-      throw new TypeError("Must pass Ember.Enumerable to Ember.MutableArray#pushObjects");
+      throw new TypeError("Must pass Ngular.Enumerable to Ngular.MutableArray#pushObjects");
     }
     this.replace(get(this, 'length'), 0, objects);
     return this;
@@ -275,8 +275,8 @@ export default Mixin.create(EmberArray, MutableEnumerable, {
     ```
 
     @method unshiftObjects
-    @param {Ember.Enumerable} objects the objects to add
-    @return {Ember.Array} receiver
+    @param {Ngular.Enumerable} objects the objects to add
+    @return {Ngular.Array} receiver
   */
   unshiftObjects(objects) {
     this.replace(0, 0, objects);
@@ -288,7 +288,7 @@ export default Mixin.create(EmberArray, MutableEnumerable, {
     KVO-compliant.
 
     @method reverseObjects
-    @return {Ember.Array} receiver
+    @return {Ngular.Array} receiver
    */
   reverseObjects() {
     var len = get(this, 'length');
@@ -313,9 +313,9 @@ export default Mixin.create(EmberArray, MutableEnumerable, {
     ```
 
     @method setObjects
-    @param {Ember.Array} objects array whose content will be used for replacing
+    @param {Ngular.Array} objects array whose content will be used for replacing
         the content of the receiver
-    @return {Ember.Array} receiver with the new content
+    @return {Ngular.Array} receiver with the new content
    */
   setObjects(objects) {
     if (objects.length === 0) {
@@ -328,7 +328,7 @@ export default Mixin.create(EmberArray, MutableEnumerable, {
   },
 
   // ..........................................................
-  // IMPLEMENT Ember.MutableEnumerable
+  // IMPLEMENT Ngular.MutableEnumerable
   //
 
   /**
@@ -344,7 +344,7 @@ export default Mixin.create(EmberArray, MutableEnumerable, {
 
     @method removeObject
     @param {*} obj object to remove
-    @return {Ember.Array} receiver
+    @return {Ngular.Array} receiver
   */
   removeObject(obj) {
     var loc = get(this, 'length') || 0;
@@ -371,7 +371,7 @@ export default Mixin.create(EmberArray, MutableEnumerable, {
 
     @method addObject
     @param {*} obj object to add, if not already present
-    @return {Ember.Array} receiver
+    @return {Ngular.Array} receiver
   */
   addObject(obj) {
     if (!this.contains(obj)) {

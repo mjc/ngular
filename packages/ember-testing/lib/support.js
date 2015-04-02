@@ -1,11 +1,11 @@
-import Ember from "ember-metal/core";
-import jQuery from "ember-views/system/jquery";
+import Ngular from "ngular-metal/core";
+import jQuery from "ngular-views/system/jquery";
 
-import environment from "ember-metal/environment";
+import environment from "ngular-metal/environment";
 
 /**
-  @module ember
-  @submodule ember-testing
+  @module ngular
+  @submodule ngular-testing
  */
 
 var $ = jQuery;
@@ -53,7 +53,7 @@ if (environment.hasDOM) {
 
     // Try again to verify that the patch took effect or blow up.
     testCheckboxClick(function() {
-      Ember.warn("clicked checkboxes should be checked! the jQuery patch didn't work", this.checked);
+      Ngular.warn("clicked checkboxes should be checked! the jQuery patch didn't work", this.checked);
     });
   });
 }

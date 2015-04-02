@@ -1,12 +1,12 @@
-import { testBoth } from 'ember-metal/tests/props_helper';
+import { testBoth } from 'ngular-metal/tests/props_helper';
 import {
   watch,
   unwatch
-} from "ember-metal/watching";
-import { defineProperty } from 'ember-metal/properties';
-import { addListener } from "ember-metal/events";
-import { computed } from 'ember-metal/computed';
-import { set } from 'ember-metal/property_set';
+} from "ngular-metal/watching";
+import { defineProperty } from 'ngular-metal/properties';
+import { addListener } from "ngular-metal/events";
+import { computed } from 'ngular-metal/computed';
+import { set } from 'ngular-metal/property_set';
 
 var willCount, didCount;
 

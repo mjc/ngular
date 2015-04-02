@@ -1,8 +1,8 @@
-import { get } from 'ember-metal/property_get';
+import { get } from 'ngular-metal/property_get';
 import {
   mixin,
   Mixin
-} from 'ember-metal/mixin';
+} from 'ngular-metal/mixin';
 
 QUnit.module('Mixin mergedProperties');
 
@@ -93,7 +93,7 @@ QUnit.test('mergedProperties should be concatenated', function() {
 
 QUnit.test("mergedProperties should exist even if not explicitly set on create", function() {
 
-  var AnObj = Ember.Object.extend({
+  var AnObj = Ngular.Object.extend({
     mergedProperties: ['options'],
     options: {
       a: 'a',

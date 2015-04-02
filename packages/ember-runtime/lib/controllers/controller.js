@@ -1,23 +1,23 @@
-import Ember from "ember-metal/core"; // Ember.assert
-import EmberObject from 'ember-runtime/system/object';
-import Mixin from 'ember-runtime/mixins/controller';
-import { createInjectionHelper } from 'ember-runtime/inject';
+import Ngular from "ngular-metal/core"; // Ngular.assert
+import NgularObject from 'ngular-runtime/system/object';
+import Mixin from 'ngular-runtime/mixins/controller';
+import { createInjectionHelper } from 'ngular-runtime/inject';
 
 /**
-@module ember
-@submodule ember-runtime
+@module ngular
+@submodule ngular-runtime
 */
 
 /**
   @class Controller
-  @namespace Ember
-  @extends Ember.Object
-  @uses Ember.ControllerMixin
+  @namespace Ngular
+  @extends Ngular.Object
+  @uses Ngular.ControllerMixin
 */
-var Controller = EmberObject.extend(Mixin);
+var Controller = NgularObject.extend(Mixin);
 
 function controllerInjectionHelper(factory) {
-  Ember.assert("Defining an injected controller property on a " +
+  Ngular.assert("Defining an injected controller property on a " +
                "non-controller is not allowed.", Mixin.detect(factory.PrototypeMixin));
 }
 
@@ -28,8 +28,8 @@ function controllerInjectionHelper(factory) {
   Example:
 
   ```javascript
-  App.PostController = Ember.Controller.extend({
-    posts: Ember.inject.controller()
+  App.PostController = Ngular.Controller.extend({
+    posts: Ngular.inject.controller()
   });
   ```
 
@@ -38,18 +38,18 @@ function controllerInjectionHelper(factory) {
   reference other controllers. This is functionally equivalent to:
 
   ```javascript
-  App.PostController = Ember.Controller.extend({
+  App.PostController = Ngular.Controller.extend({
     needs: 'posts',
-    posts: Ember.computed.alias('controllers.posts')
+    posts: Ngular.computed.alias('controllers.posts')
   });
   ```
 
   @method controller
   @since 1.10.0
-  @for Ember.inject
+  @for Ngular.inject
   @param {String} name (optional) name of the controller to inject, defaults
          to the property's name
-  @return {Ember.InjectedProperty} injection descriptor instance
+  @return {Ngular.InjectedProperty} injection descriptor instance
   */
 createInjectionHelper('controller', controllerInjectionHelper);
 

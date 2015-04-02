@@ -1,12 +1,12 @@
-import merge from "ember-metal/merge";
-import { map } from "ember-metal/enumerable_utils";
+import merge from "ngular-metal/merge";
+import { map } from "ngular-metal/enumerable_utils";
 import Registry from "container/registry";
-import HashLocation from "ember-routing/location/hash_location";
-import HistoryLocation from "ember-routing/location/history_location";
-import AutoLocation from "ember-routing/location/auto_location";
-import NoneLocation from "ember-routing/location/none_location";
-import Router from "ember-routing/system/router";
-import { runDestroy } from "ember-runtime/tests/utils";
+import HashLocation from "ngular-routing/location/hash_location";
+import HistoryLocation from "ngular-routing/location/history_location";
+import AutoLocation from "ngular-routing/location/auto_location";
+import NoneLocation from "ngular-routing/location/none_location";
+import Router from "ngular-routing/system/router";
+import { runDestroy } from "ngular-runtime/tests/utils";
 
 var registry, container;
 
@@ -22,7 +22,7 @@ function createRouter(overrides, disableSetup) {
   return router;
 }
 
-QUnit.module("Ember Router", {
+QUnit.module("Ngular Router", {
   setup() {
     registry = new Registry();
     container = registry.container();
@@ -104,7 +104,7 @@ QUnit.test("replacePath should be called with the right path", function() {
   });
 });
 
-QUnit.test("Ember.Router._routePath should consume identical prefixes", function() {
+QUnit.test("Ngular.Router._routePath should consume identical prefixes", function() {
   createRouter();
 
   expect(8);

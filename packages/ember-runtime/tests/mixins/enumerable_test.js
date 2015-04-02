@@ -1,12 +1,12 @@
-import Ember from 'ember-metal/core'; // for Ember.A
-import EnumerableTests from 'ember-runtime/tests/suites/enumerable';
-import { indexOf } from 'ember-metal/enumerable_utils';
-import EmberObject from 'ember-runtime/system/object';
-import Enumerable from 'ember-runtime/mixins/enumerable';
-import EmberArray from 'ember-runtime/mixins/array';
-import { get } from 'ember-metal/property_get';
-import { computed } from 'ember-metal/computed';
-import { observer as emberObserver } from 'ember-metal/mixin';
+import Ngular from 'ngular-metal/core'; // for Ngular.A
+import EnumerableTests from 'ngular-runtime/tests/suites/enumerable';
+import { indexOf } from 'ngular-metal/enumerable_utils';
+import NgularObject from 'ngular-runtime/system/object';
+import Enumerable from 'ngular-runtime/mixins/enumerable';
+import NgularArray from 'ngular-runtime/mixins/array';
+import { get } from 'ngular-metal/property_get';
+import { computed } from 'ngular-metal/computed';
+import { observer as ngularObserver } from 'ngular-metal/mixin';
 
 
 function K() { return this; }
@@ -16,7 +16,7 @@ function K() { return this; }
   Implement a basic fake enumerable.  This validates that any non-native
   enumerable can impl this API.
 */
-var TestEnumerable = EmberObject.extend(Enumerable, {
+var TestEnumerable = NgularObject.extend(Enumerable, {
 
   _content: null,
 
@@ -68,50 +68,50 @@ EnumerableTests.extend({
 
 }).run();
 
-QUnit.module('Ember.Enumerable');
+QUnit.module('Ngular.Enumerable');
 
-QUnit.test("should apply Ember.Array to return value of map", function() {
-  var x = EmberObject.createWithMixins(Enumerable);
+QUnit.test("should apply Ngular.Array to return value of map", function() {
+  var x = NgularObject.createWithMixins(Enumerable);
   var y = x.map(K);
-  equal(EmberArray.detect(y), true, "should have mixin applied");
+  equal(NgularArray.detect(y), true, "should have mixin applied");
 });
 
-QUnit.test("should apply Ember.Array to return value of filter", function() {
-  var x = EmberObject.createWithMixins(Enumerable);
+QUnit.test("should apply Ngular.Array to return value of filter", function() {
+  var x = NgularObject.createWithMixins(Enumerable);
   var y = x.filter(K);
-  equal(EmberArray.detect(y), true, "should have mixin applied");
+  equal(NgularArray.detect(y), true, "should have mixin applied");
 });
 
-QUnit.test("should apply Ember.Array to return value of invoke", function() {
-  var x = EmberObject.createWithMixins(Enumerable);
+QUnit.test("should apply Ngular.Array to return value of invoke", function() {
+  var x = NgularObject.createWithMixins(Enumerable);
   var y = x.invoke(K);
-  equal(EmberArray.detect(y), true, "should have mixin applied");
+  equal(NgularArray.detect(y), true, "should have mixin applied");
 });
 
-QUnit.test("should apply Ember.Array to return value of toArray", function() {
-  var x = EmberObject.createWithMixins(Enumerable);
+QUnit.test("should apply Ngular.Array to return value of toArray", function() {
+  var x = NgularObject.createWithMixins(Enumerable);
   var y = x.toArray(K);
-  equal(EmberArray.detect(y), true, "should have mixin applied");
+  equal(NgularArray.detect(y), true, "should have mixin applied");
 });
 
-QUnit.test("should apply Ember.Array to return value of without", function() {
-  var x = EmberObject.createWithMixins(Enumerable, {
+QUnit.test("should apply Ngular.Array to return value of without", function() {
+  var x = NgularObject.createWithMixins(Enumerable, {
     contains() {
       return true;
     }
   });
   var y = x.without(K);
-  equal(EmberArray.detect(y), true, "should have mixin applied");
+  equal(NgularArray.detect(y), true, "should have mixin applied");
 });
 
-QUnit.test("should apply Ember.Array to return value of uniq", function() {
-  var x = EmberObject.createWithMixins(Enumerable);
+QUnit.test("should apply Ngular.Array to return value of uniq", function() {
+  var x = NgularObject.createWithMixins(Enumerable);
   var y = x.uniq(K);
-  equal(EmberArray.detect(y), true, "should have mixin applied");
+  equal(NgularArray.detect(y), true, "should have mixin applied");
 });
 
 QUnit.test('any', function() {
-  var kittens = Ember.A([{
+  var kittens = Ngular.A([{
     color: 'white'
   }, {
     color: 'black'
@@ -126,7 +126,7 @@ QUnit.test('any', function() {
 });
 
 QUnit.test('any with NaN', function() {
-  var numbers = Ember.A([1,2,NaN,4]);
+  var numbers = Ngular.A([1,2,NaN,4]);
 
   var hasNaN = numbers.any(function(n) {
     return isNaN(n);
@@ -136,14 +136,14 @@ QUnit.test('any with NaN', function() {
 });
 
 QUnit.test('every', function() {
-  var allColorsKittens = Ember.A([{
+  var allColorsKittens = Ngular.A([{
     color: 'white'
   }, {
     color: 'black'
   }, {
     color: 'white'
   }]);
-  var allWhiteKittens = Ember.A([{
+  var allWhiteKittens = Ngular.A([{
     color: 'white'
   }, {
     color: 'white'
@@ -170,7 +170,7 @@ QUnit.test('every', function() {
 // CONTENT DID CHANGE
 //
 
-var DummyEnum = EmberObject.extend(Enumerable, {
+var DummyEnum = NgularObject.extend(Enumerable, {
   nextObject() {},
   length: 0
 });
@@ -185,11 +185,11 @@ QUnit.module('mixins/enumerable/enumerableContentDidChange');
 
 QUnit.test('should notify observers of []', function() {
 
-  var obj = EmberObject.createWithMixins(Enumerable, {
+  var obj = NgularObject.createWithMixins(Enumerable, {
     nextObject() {}, // avoid exceptions
 
     _count: 0,
-    enumerablePropertyDidChange: emberObserver('[]', function() {
+    enumerablePropertyDidChange: ngularObserver('[]', function() {
       this._count++;
     })
   });
@@ -209,7 +209,7 @@ QUnit.module('notify observers of length', {
   setup() {
     obj = DummyEnum.createWithMixins({
       _after: 0,
-      lengthDidChange: emberObserver('length', function() {
+      lengthDidChange: ngularObserver('length', function() {
         this._after++;
       })
 
@@ -280,7 +280,7 @@ QUnit.module('notify enumerable observers', {
   setup() {
     obj = DummyEnum.create();
 
-    observer = EmberObject.createWithMixins({
+    observer = NgularObject.createWithMixins({
       _before: null,
       _after: null,
 

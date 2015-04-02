@@ -1,9 +1,9 @@
-import run from "ember-metal/run_loop";
-import QUnitAdapter from "ember-testing/adapters/qunit";
+import run from "ngular-metal/run_loop";
+import QUnitAdapter from "ngular-testing/adapters/qunit";
 
 var adapter;
 
-QUnit.module("ember-testing QUnitAdapter", {
+QUnit.module("ngular-testing QUnitAdapter", {
   setup() {
     adapter = new QUnitAdapter();
   },

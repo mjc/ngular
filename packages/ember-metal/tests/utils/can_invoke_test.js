@@ -1,8 +1,8 @@
-import { canInvoke } from "ember-metal/utils";
+import { canInvoke } from "ngular-metal/utils";
 
 var obj;
 
-QUnit.module("Ember.canInvoke", {
+QUnit.module("Ngular.canInvoke", {
   setup() {
     obj = {
       foobar: "foobar",

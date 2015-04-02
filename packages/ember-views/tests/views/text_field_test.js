@@ -1,10 +1,10 @@
-import run from "ember-metal/run_loop";
-import { get } from "ember-metal/property_get";
-import { set as o_set } from "ember-metal/property_set";
-import EmberObject from "ember-runtime/system/object";
-import TextField from "ember-views/views/text_field";
-import EventDispatcher from "ember-views/system/event_dispatcher";
-import jQuery from "ember-views/system/jquery";
+import run from "ngular-metal/run_loop";
+import { get } from "ngular-metal/property_get";
+import { set as o_set } from "ngular-metal/property_set";
+import NgularObject from "ngular-runtime/system/object";
+import TextField from "ngular-views/views/text_field";
+import EventDispatcher from "ngular-views/system/event_dispatcher";
+import jQuery from "ngular-views/system/jquery";
 
 function K() { return this; }
 
@@ -62,9 +62,9 @@ function append() {
   });
 }
 
-QUnit.module("Ember.TextField", {
+QUnit.module("Ngular.TextField", {
   setup() {
-    TestObject = window.TestObject = EmberObject.create({
+    TestObject = window.TestObject = NgularObject.create({
       value: null
     });
 
@@ -234,7 +234,7 @@ QUnit.test("value binding sets value on the element", function() {
   run(function() {
     textField.$().val('via dom');
     // Trigger lets the view know we changed this value (like a real user editing)
-    textField.trigger('input', EmberObject.create({
+    textField.trigger('input', NgularObject.create({
       type: 'input'
     }));
   });
@@ -253,7 +253,7 @@ QUnit.test("value binding sets value on the element", function() {
 
 QUnit.test("should call the insertNewline method when return key is pressed", function() {
   var wasCalled;
-  var event = EmberObject.create({
+  var event = NgularObject.create({
     keyCode: 13
   });
 
@@ -269,7 +269,7 @@ QUnit.test("should call the insertNewline method when return key is pressed", fu
 
 QUnit.test("should call the cancel method when escape key is pressed", function() {
   var wasCalled;
-  var event = EmberObject.create({
+  var event = NgularObject.create({
     keyCode: 27
   });
 
@@ -286,7 +286,7 @@ QUnit.test("should call the cancel method when escape key is pressed", function(
 QUnit.test("should send an action if one is defined when the return key is pressed", function() {
   expect(2);
 
-  var StubController = EmberObject.extend({
+  var StubController = NgularObject.extend({
     send(actionName, value, sender) {
       equal(actionName, 'didTriggerAction', "text field sent correct action name");
       equal(value, "textFieldValue", "text field sent its current value as first argument");
@@ -310,7 +310,7 @@ QUnit.test("should send an action if one is defined when the return key is press
 QUnit.test("should send an action on keyPress if one is defined with onEvent=keyPress", function() {
   expect(2);
 
-  var StubController = EmberObject.extend({
+  var StubController = NgularObject.extend({
     send(actionName, value, sender) {
       equal(actionName, 'didTriggerAction', "text field sent correct action name");
       equal(value, "textFieldValue", "text field sent its current value as first argument");
@@ -337,7 +337,7 @@ QUnit.test("bubbling of handled actions can be enabled via bubbles property", fu
   textField.set('bubbles', true);
   textField.set('action', 'didTriggerAction');
 
-  textField.set('controller', EmberObject.create({
+  textField.set('controller', NgularObject.create({
     send: K
   }));
 
@@ -361,13 +361,13 @@ QUnit.test("bubbling of handled actions can be enabled via bubbles property", fu
 
 
 var dispatcher, StubController;
-QUnit.module("Ember.TextField - Action events", {
+QUnit.module("Ngular.TextField - Action events", {
   setup() {
 
     dispatcher = EventDispatcher.create();
     dispatcher.setup();
 
-    StubController = EmberObject.extend({
+    StubController = NgularObject.extend({
       send(actionName, value, sender) {
         equal(actionName, 'doSomething', "text field sent correct action name");
       }

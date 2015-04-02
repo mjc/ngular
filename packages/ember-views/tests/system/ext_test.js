@@ -1,7 +1,7 @@
-import run from "ember-metal/run_loop";
-import View from "ember-views/views/view";
+import run from "ngular-metal/run_loop";
+import View from "ngular-views/views/view";
 
-QUnit.module("Ember.View additions to run queue");
+QUnit.module("Ngular.View additions to run queue");
 
 QUnit.test("View hierarchy is done rendering to DOM when functions queued in afterRender execute", function() {
   var didInsert = 0;

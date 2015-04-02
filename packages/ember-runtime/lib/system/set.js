@@ -1,35 +1,35 @@
 /**
-@module ember
-@submodule ember-runtime
+@module ngular
+@submodule ngular-runtime
 */
-import Ember from "ember-metal/core"; // Ember.isNone, Ember.A
+import Ngular from "ngular-metal/core"; // Ngular.isNone, Ngular.A
 
-import { get } from "ember-metal/property_get";
-import { set } from "ember-metal/property_set";
-import { guidFor } from "ember-metal/utils";
-import isNone from 'ember-metal/is_none';
-import { fmt } from "ember-runtime/system/string";
-import CoreObject from "ember-runtime/system/core_object";
-import MutableEnumerable from "ember-runtime/mixins/mutable_enumerable";
-import Enumerable from "ember-runtime/mixins/enumerable";
-import Copyable from "ember-runtime/mixins/copyable";
+import { get } from "ngular-metal/property_get";
+import { set } from "ngular-metal/property_set";
+import { guidFor } from "ngular-metal/utils";
+import isNone from 'ngular-metal/is_none';
+import { fmt } from "ngular-runtime/system/string";
+import CoreObject from "ngular-runtime/system/core_object";
+import MutableEnumerable from "ngular-runtime/mixins/mutable_enumerable";
+import Enumerable from "ngular-runtime/mixins/enumerable";
+import Copyable from "ngular-runtime/mixins/copyable";
 import {
   Freezable,
   FROZEN_ERROR
-} from "ember-runtime/mixins/freezable";
-import EmberError from "ember-metal/error";
+} from "ngular-runtime/mixins/freezable";
+import NgularError from "ngular-metal/error";
 import {
   propertyWillChange,
   propertyDidChange
-} from "ember-metal/property_events";
-import { aliasMethod } from "ember-metal/mixin";
-import { computed } from "ember-metal/computed";
+} from "ngular-metal/property_events";
+import { aliasMethod } from "ngular-metal/mixin";
+import { computed } from "ngular-metal/computed";
 
 /**
   An unordered collection of objects.
 
   A Set works a bit like an array except that its items are not ordered. You
-  can create a set to efficiently test for membership for an object. You can
+  can create a set to efficiently test for mngularship for an object. You can
   also iterate through a set just like an array, even accessing objects by
   index, however there is no guarantee as to their order.
 
@@ -39,22 +39,22 @@ import { computed } from "ember-metal/computed";
   ## Creating a Set
 
   You can create a set like you would most objects using
-  `new Ember.Set()`. Most new sets you create will be empty, but you can
+  `new Ngular.Set()`. Most new sets you create will be empty, but you can
   also initialize the set with some content by passing an array or other
   enumerable of objects to the constructor.
 
   Finally, you can pass in an existing set and the set will be copied. You
-  can also create a copy of a set by calling `Ember.Set#copy()`.
+  can also create a copy of a set by calling `Ngular.Set#copy()`.
 
   ```javascript
   // creates a new empty set
-  var foundNames = new Ember.Set();
+  var foundNames = new Ngular.Set();
 
   // creates a set with four names in it.
-  var names = new Ember.Set(["Charles", "Tom", "Juan", "Alex"]); // :P
+  var names = new Ngular.Set(["Charles", "Tom", "Juan", "Alex"]); // :P
 
   // creates a copy of the names set.
-  var namesCopy = new Ember.Set(names);
+  var namesCopy = new Ngular.Set(names);
 
   // same as above.
   var anotherNamesCopy = names.copy();
@@ -83,14 +83,14 @@ import { computed } from "ember-metal/computed";
   ## Testing for an Object
 
   To test for an object's presence in a set you simply call
-  `Ember.Set#contains()`.
+  `Ngular.Set#contains()`.
 
   ## Observing changes
 
-  When using `Ember.Set`, you can observe the `"[]"` property to be
+  When using `Ngular.Set`, you can observe the `"[]"` property to be
   alerted whenever the content changes. You can also add an enumerable
   observer to the set to be notified of specific objects that are added and
-  removed from the set. See [Ember.Enumerable](/api/classes/Ember.Enumerable.html)
+  removed from the set. See [Ngular.Enumerable](/api/classes/Ngular.Enumerable.html)
   for more information on enumerables.
 
   This is often unhelpful. If you are filtering sets of objects, for instance,
@@ -101,26 +101,26 @@ import { computed } from "ember-metal/computed";
 
   ## Other Methods
 
-  `Ember.Set` primary implements other mixin APIs. For a complete reference
-  on the methods you will use with `Ember.Set`, please consult these mixins.
-  The most useful ones will be `Ember.Enumerable` and
-  `Ember.MutableEnumerable` which implement most of the common iterator
+  `Ngular.Set` primary implements other mixin APIs. For a complete reference
+  on the methods you will use with `Ngular.Set`, please consult these mixins.
+  The most useful ones will be `Ngular.Enumerable` and
+  `Ngular.MutableEnumerable` which implement most of the common iterator
   methods you are used to on Array.
 
-  Note that you can also use the `Ember.Copyable` and `Ember.Freezable`
-  APIs on `Ember.Set` as well. Once a set is frozen it can no longer be
+  Note that you can also use the `Ngular.Copyable` and `Ngular.Freezable`
+  APIs on `Ngular.Set` as well. Once a set is frozen it can no longer be
   modified. The benefit of this is that when you call `frozenCopy()` on it,
-  Ember will avoid making copies of the set. This allows you to write
+  Ngular will avoid making copies of the set. This allows you to write
   code that can know with certainty when the underlying set data will or
   will not be modified.
 
   @class Set
-  @namespace Ember
-  @extends Ember.CoreObject
-  @uses Ember.MutableEnumerable
-  @uses Ember.Copyable
-  @uses Ember.Freezable
-  @since Ember 0.9
+  @namespace Ngular
+  @extends Ngular.CoreObject
+  @uses Ngular.MutableEnumerable
+  @uses Ngular.Copyable
+  @uses Ngular.Freezable
+  @since Ngular 0.9
   @deprecated
 */
 export default CoreObject.extend(MutableEnumerable, Copyable, Freezable, {
@@ -143,17 +143,17 @@ export default CoreObject.extend(MutableEnumerable, Copyable, Freezable, {
     without having to recreate it.
 
     ```javascript
-    var colors = new Ember.Set(["red", "green", "blue"]);
+    var colors = new Ngular.Set(["red", "green", "blue"]);
     colors.length;  // 3
     colors.clear();
     colors.length;  // 0
     ```
 
     @method clear
-    @return {Ember.Set} An empty Set
+    @return {Ngular.Set} An empty Set
   */
   clear() {
-    if (this.isFrozen) { throw new EmberError(FROZEN_ERROR); }
+    if (this.isFrozen) { throw new NgularError(FROZEN_ERROR); }
 
     var len = get(this, 'length');
     if (len === 0) { return this; }
@@ -185,14 +185,14 @@ export default CoreObject.extend(MutableEnumerable, Copyable, Freezable, {
 
     ```javascript
     var colors = ["red", "green", "blue"],
-        same_colors = new Ember.Set(colors);
+        same_colors = new Ngular.Set(colors);
 
     same_colors.isEqual(colors);               // true
     same_colors.isEqual(["purple", "brown"]);  // false
     ```
 
     @method isEqual
-    @param {Ember.Set} obj the other object.
+    @param {Ngular.Set} obj the other object.
     @return {Boolean}
   */
   isEqual(obj) {
@@ -220,10 +220,10 @@ export default CoreObject.extend(MutableEnumerable, Copyable, Freezable, {
     and those can only be added once. If the object is already in the set or
     the passed value is null this method will have no effect.
 
-    This is an alias for `Ember.MutableEnumerable.addObject()`.
+    This is an alias for `Ngular.MutableEnumerable.addObject()`.
 
     ```javascript
-    var colors = new Ember.Set();
+    var colors = new Ngular.Set();
     colors.add("blue");     // ["blue"]
     colors.add("blue");     // ["blue"]
     colors.add("red");      // ["blue", "red"]
@@ -233,17 +233,17 @@ export default CoreObject.extend(MutableEnumerable, Copyable, Freezable, {
 
     @method add
     @param {Object} obj The object to add.
-    @return {Ember.Set} The set itself.
+    @return {Ngular.Set} The set itself.
   */
   add: aliasMethod('addObject'),
 
   /**
     Removes the object from the set if it is found. If you pass a `null` value
     or an object that is already not in the set, this method will have no
-    effect. This is an alias for `Ember.MutableEnumerable.removeObject()`.
+    effect. This is an alias for `Ngular.MutableEnumerable.removeObject()`.
 
     ```javascript
-    var colors = new Ember.Set(["red", "green", "blue"]);
+    var colors = new Ngular.Set(["red", "green", "blue"]);
     colors.remove("red");     // ["blue", "green"]
     colors.remove("purple");  // ["blue", "green"]
     colors.remove(null);      // ["blue", "green"]
@@ -251,7 +251,7 @@ export default CoreObject.extend(MutableEnumerable, Copyable, Freezable, {
 
     @method remove
     @param {Object} obj The object to remove
-    @return {Ember.Set} The set itself.
+    @return {Ngular.Set} The set itself.
   */
   remove: aliasMethod('removeObject'),
 
@@ -259,7 +259,7 @@ export default CoreObject.extend(MutableEnumerable, Copyable, Freezable, {
     Removes the last element from the set and returns it, or `null` if it's empty.
 
     ```javascript
-    var colors = new Ember.Set(["green", "blue"]);
+    var colors = new Ngular.Set(["green", "blue"]);
     colors.pop();  // "blue"
     colors.pop();  // "green"
     colors.pop();  // null
@@ -270,7 +270,7 @@ export default CoreObject.extend(MutableEnumerable, Copyable, Freezable, {
   */
   pop() {
     if (get(this, 'isFrozen')) {
-      throw new EmberError(FROZEN_ERROR);
+      throw new NgularError(FROZEN_ERROR);
     }
 
     var obj = this.length > 0 ? this[this.length-1] : null;
@@ -282,27 +282,27 @@ export default CoreObject.extend(MutableEnumerable, Copyable, Freezable, {
     Inserts the given object on to the end of the set. It returns
     the set itself.
 
-    This is an alias for `Ember.MutableEnumerable.addObject()`.
+    This is an alias for `Ngular.MutableEnumerable.addObject()`.
 
     ```javascript
-    var colors = new Ember.Set();
+    var colors = new Ngular.Set();
     colors.push("red");   // ["red"]
     colors.push("green"); // ["red", "green"]
     colors.push("blue");  // ["red", "green", "blue"]
     ```
 
     @method push
-    @return {Ember.Set} The set itself.
+    @return {Ngular.Set} The set itself.
   */
   push: aliasMethod('addObject'),
 
   /**
     Removes the last element from the set and returns it, or `null` if it's empty.
 
-    This is an alias for `Ember.Set.pop()`.
+    This is an alias for `Ngular.Set.pop()`.
 
     ```javascript
-    var colors = new Ember.Set(["green", "blue"]);
+    var colors = new Ngular.Set(["green", "blue"]);
     colors.shift();  // "blue"
     colors.shift();  // "green"
     colors.shift();  // null
@@ -317,49 +317,49 @@ export default CoreObject.extend(MutableEnumerable, Copyable, Freezable, {
     Inserts the given object on to the end of the set. It returns
     the set itself.
 
-    This is an alias of `Ember.Set.push()`
+    This is an alias of `Ngular.Set.push()`
 
     ```javascript
-    var colors = new Ember.Set();
+    var colors = new Ngular.Set();
     colors.unshift("red");    // ["red"]
     colors.unshift("green");  // ["red", "green"]
     colors.unshift("blue");   // ["red", "green", "blue"]
     ```
 
     @method unshift
-    @return {Ember.Set} The set itself.
+    @return {Ngular.Set} The set itself.
   */
   unshift: aliasMethod('push'),
 
   /**
     Adds each object in the passed enumerable to the set.
 
-    This is an alias of `Ember.MutableEnumerable.addObjects()`
+    This is an alias of `Ngular.MutableEnumerable.addObjects()`
 
     ```javascript
-    var colors = new Ember.Set();
+    var colors = new Ngular.Set();
     colors.addEach(["red", "green", "blue"]);  // ["red", "green", "blue"]
     ```
 
     @method addEach
-    @param {Ember.Enumerable} objects the objects to add.
-    @return {Ember.Set} The set itself.
+    @param {Ngular.Enumerable} objects the objects to add.
+    @return {Ngular.Set} The set itself.
   */
   addEach: aliasMethod('addObjects'),
 
   /**
     Removes each object in the passed enumerable to the set.
 
-    This is an alias of `Ember.MutableEnumerable.removeObjects()`
+    This is an alias of `Ngular.MutableEnumerable.removeObjects()`
 
     ```javascript
-    var colors = new Ember.Set(["red", "green", "blue"]);
+    var colors = new Ngular.Set(["red", "green", "blue"]);
     colors.removeEach(["red", "blue"]);  //  ["green"]
     ```
 
     @method removeEach
-    @param {Ember.Enumerable} objects the objects to remove.
-    @return {Ember.Set} The set itself.
+    @param {Ngular.Enumerable} objects the objects to remove.
+    @return {Ngular.Set} The set itself.
   */
   removeEach: aliasMethod('removeObjects'),
 
@@ -368,7 +368,7 @@ export default CoreObject.extend(MutableEnumerable, Copyable, Freezable, {
   //
 
   init(items) {
-    Ember.deprecate('Ember.Set is deprecated and will be removed in a future release.');
+    Ngular.deprecate('Ngular.Set is deprecated and will be removed in a future release.');
     this._super(...arguments);
 
     if (items) {
@@ -376,7 +376,7 @@ export default CoreObject.extend(MutableEnumerable, Copyable, Freezable, {
     }
   },
 
-  // implement Ember.Enumerable
+  // implement Ngular.Enumerable
   nextObject(idx) {
     return this[idx];
   },
@@ -391,10 +391,10 @@ export default CoreObject.extend(MutableEnumerable, Copyable, Freezable, {
     return this.length > 0 ? this[this.length-1] : undefined;
   }),
 
-  // implements Ember.MutableEnumerable
+  // implements Ngular.MutableEnumerable
   addObject(obj) {
     if (get(this, 'isFrozen')) {
-      throw new EmberError(FROZEN_ERROR);
+      throw new NgularError(FROZEN_ERROR);
     }
 
     if (isNone(obj)) {
@@ -426,10 +426,10 @@ export default CoreObject.extend(MutableEnumerable, Copyable, Freezable, {
     return this;
   },
 
-  // implements Ember.MutableEnumerable
+  // implements Ngular.MutableEnumerable
   removeObject(obj) {
     if (get(this, 'isFrozen')) {
-      throw new EmberError(FROZEN_ERROR);
+      throw new NgularError(FROZEN_ERROR);
     }
 
     if (isNone(obj)) {
@@ -496,6 +496,6 @@ export default CoreObject.extend(MutableEnumerable, Copyable, Freezable, {
     for (idx = 0; idx < len; idx++) {
       array[idx] = this[idx];
     }
-    return fmt("Ember.Set<%@>", [array.join(',')]);
+    return fmt("Ngular.Set<%@>", [array.join(',')]);
   }
 });

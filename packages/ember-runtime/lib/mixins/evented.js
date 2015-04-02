@@ -1,21 +1,21 @@
-import { Mixin } from "ember-metal/mixin";
+import { Mixin } from "ngular-metal/mixin";
 import {
   addListener,
   removeListener,
   hasListeners,
   sendEvent
-} from "ember-metal/events";
+} from "ngular-metal/events";
 
 /**
-@module ember
-@submodule ember-runtime
+@module ngular
+@submodule ngular-runtime
 */
 
 /**
-  This mixin allows for Ember objects to subscribe to and emit events.
+  This mixin allows for Ngular objects to subscribe to and emit events.
 
   ```javascript
-  App.Person = Ember.Object.extend(Ember.Evented, {
+  App.Person = Ngular.Object.extend(Ngular.Evented, {
     greet: function() {
       // ...
       this.trigger('greet');
@@ -44,7 +44,7 @@ import {
   ```
 
   @class Evented
-  @namespace Ember
+  @namespace Ngular
  */
 export default Mixin.create({
 

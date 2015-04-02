@@ -1,8 +1,8 @@
-import { typeOf } from 'ember-metal/utils';
+import { typeOf } from 'ngular-metal/utils';
 
-QUnit.module("Ember Type Checking");
+QUnit.module("Ngular Type Checking");
 
-QUnit.test("Ember.typeOf", function() {
+QUnit.test("Ngular.typeOf", function() {
   var MockedDate = function() { };
   MockedDate.prototype = new Date();
 
@@ -23,9 +23,9 @@ QUnit.test("Ember.typeOf", function() {
   equal(typeOf(error), 'error', "error");
   equal(typeOf(object), 'object', "object");
 
-  if (Ember.Object) {
-    var klass       = Ember.Object.extend();
-    var instance    = Ember.Object.create();
+  if (Ngular.Object) {
+    var klass       = Ngular.Object.extend();
+    var instance    = Ngular.Object.create();
 
     equal(typeOf(klass), 'class', "class");
     equal(typeOf(instance), 'instance', "instance");

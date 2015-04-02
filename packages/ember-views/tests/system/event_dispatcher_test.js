@@ -1,12 +1,12 @@
-import { get } from "ember-metal/property_get";
-import run from "ember-metal/run_loop";
+import { get } from "ngular-metal/property_get";
+import run from "ngular-metal/run_loop";
 
-import EmberObject from "ember-runtime/system/object";
+import NgularObject from "ngular-runtime/system/object";
 
-import jQuery from "ember-views/system/jquery";
-import View from "ember-views/views/view";
-import EventDispatcher from "ember-views/system/event_dispatcher";
-import ContainerView from "ember-views/views/container_view";
+import jQuery from "ngular-views/system/jquery";
+import View from "ngular-views/views/view";
+import EventDispatcher from "ngular-views/system/event_dispatcher";
+import ContainerView from "ngular-views/views/container_view";
 
 var view;
 var dispatcher;
@@ -209,7 +209,7 @@ QUnit.test("should dispatch events to nearest event manager", function() {
       buffer.push('<input id="is-done" type="checkbox">');
     },
 
-    eventManager: EmberObject.create({
+    eventManager: NgularObject.create({
       mouseDown() {
         receivedEvent++;
       }
@@ -233,7 +233,7 @@ QUnit.test("event manager should be able to re-dispatch events to view", functio
   view = ContainerView.createWithMixins({
     elementId: 'containerView',
 
-    eventManager: EmberObject.create({
+    eventManager: NgularObject.create({
       mouseDown(evt, view) {
         // Re-dispatch event when you get it.
         //
@@ -274,7 +274,7 @@ QUnit.test("event handlers should be wrapped in a run loop", function() {
   view = View.createWithMixins({
     elementId: 'test-view',
 
-    eventManager: EmberObject.create({
+    eventManager: NgularObject.create({
       mouseDown() {
         ok(run.currentRunLoop, 'a run loop should have started');
       }
@@ -336,7 +336,7 @@ QUnit.test("additional events and rootElement can be specified", function () {
     }).appendTo(dispatcher.get("rootElement"));
   });
 
-  ok(jQuery(".custom-root").hasClass("ember-application"), "the custom rootElement is used");
+  ok(jQuery(".custom-root").hasClass("ngular-application"), "the custom rootElement is used");
   equal(dispatcher.get("rootElement"), ".custom-root", "the rootElement is updated");
 
   jQuery("#leView").trigger("myevent");

@@ -1,11 +1,11 @@
 /**
-@module ember
-@submodule ember-template-compiler
+@module ngular
+@submodule ngular-template-compiler
 */
 
 /**
   Augments the default precompiled output of an HTMLBars template with
-  additional information needed by Ember.
+  additional information needed by Ngular.
 
   @private
   @method template

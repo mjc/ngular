@@ -1,19 +1,19 @@
-import run from "ember-metal/run_loop";
-import { get } from "ember-metal/property_get";
-import { set } from "ember-metal/property_set";
-import EmberApplication from "ember-application/system/application";
-import EmberObject from "ember-runtime/system/object";
-import Router from "ember-routing/system/router";
-import View from "ember-views/views/view";
-import Controller from "ember-runtime/controllers/controller";
-import jQuery from "ember-views/system/jquery";
+import run from "ngular-metal/run_loop";
+import { get } from "ngular-metal/property_get";
+import { set } from "ngular-metal/property_set";
+import NgularApplication from "ngular-application/system/application";
+import NgularObject from "ngular-runtime/system/object";
+import Router from "ngular-routing/system/router";
+import View from "ngular-views/views/view";
+import Controller from "ngular-runtime/controllers/controller";
+import jQuery from "ngular-views/system/jquery";
 import Registry from 'container/registry';
 
 var application, Application;
 
-QUnit.module("Ember.Application - resetting", {
+QUnit.module("Ngular.Application - resetting", {
   setup() {
-    Application = EmberApplication.extend({
+    Application = NgularApplication.extend({
       name: "App",
       rootElement: "#qunit-fixture"
     });
@@ -219,13 +219,13 @@ QUnit.test("When an application with advance/deferReadiness is reset, the app do
   equal(readyCallCount, 2, 'ready was called twice');
 });
 
-QUnit.test("With ember-data like initializer and constant", function() {
+QUnit.test("With ngular-data like initializer and constant", function() {
   var readyCallCount;
 
   readyCallCount = 0;
 
   var DS = {
-    Store: EmberObject.extend({
+    Store: NgularObject.extend({
       init() {
         if (!get(DS, 'defaultStore')) {
           set(DS, 'defaultStore', this);

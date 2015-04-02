@@ -1,9 +1,9 @@
-import EmberObject from "ember-runtime/system/object";
+import NgularObject from "ngular-runtime/system/object";
 import {
   guidFor
-} from "ember-metal/utils";
-import { get } from "ember-metal/property_get";
-import { forEach } from "ember-metal/enumerable_utils";
+} from "ngular-metal/utils";
+import { get } from "ngular-metal/property_get";
+import { forEach } from "ngular-metal/enumerable_utils";
 
 /**
   @class
@@ -33,10 +33,10 @@ import { forEach } from "ember-metal/enumerable_utils";
   define any required methods.  Then call run() on the new subclass.  This
   will create an instance of your class and then defining the unit tests.
 
-  @extends Ember.Object
+  @extends Ngular.Object
   @private
 */
-var Suite = EmberObject.extend({
+var Suite = NgularObject.extend({
 
   /**
     __Required.__ You must implement this method to apply this mixin.
@@ -127,7 +127,7 @@ Suite.reopenClass({
   }
 });
 
-var SuiteModuleBuilder = EmberObject.extend({
+var SuiteModuleBuilder = NgularObject.extend({
   _module: null,
   _tests: null,
 

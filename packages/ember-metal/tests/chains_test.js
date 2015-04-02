@@ -1,6 +1,6 @@
-import { addObserver } from "ember-metal/observer";
-import { finishChains } from "ember-metal/chains";
-import create from 'ember-metal/platform/create';
+import { addObserver } from "ngular-metal/observer";
+import { finishChains } from "ngular-metal/chains";
+import create from 'ngular-metal/platform/create';
 
 QUnit.module("Chains");
 
@@ -13,5 +13,5 @@ QUnit.test("finishChains should properly copy chains from prototypes to instance
   var childObj = create(obj);
   finishChains(childObj);
 
-  ok(obj['__ember_meta__'].chains !== childObj['__ember_meta__'].chains, "The chains object is copied");
+  ok(obj['__ngular_meta__'].chains !== childObj['__ngular_meta__'].chains, "The chains object is copied");
 });

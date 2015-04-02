@@ -1,17 +1,17 @@
-import keys from 'ember-metal/keys';
+import keys from 'ngular-metal/keys';
 
 /**
   Merge the contents of two objects together into the first object.
 
   ```javascript
-  Ember.merge({first: 'Tom'}, {last: 'Dale'}); // {first: 'Tom', last: 'Dale'}
+  Ngular.merge({first: 'Tom'}, {last: 'Dale'}); // {first: 'Tom', last: 'Dale'}
   var a = {first: 'Yehuda'};
   var b = {last: 'Katz'};
-  Ember.merge(a, b); // a == {first: 'Yehuda', last: 'Katz'}, b == {last: 'Katz'}
+  Ngular.merge(a, b); // a == {first: 'Yehuda', last: 'Katz'}, b == {last: 'Katz'}
   ```
 
   @method merge
-  @for Ember
+  @for Ngular
   @param {Object} original The object to merge into
   @param {Object} updates The object to copy properties from
   @return {Object}

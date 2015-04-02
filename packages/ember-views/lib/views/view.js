@@ -1,55 +1,55 @@
-// Ember.assert, Ember.deprecate, Ember.warn, Ember.TEMPLATES,
-// jQuery, Ember.lookup,
-// Ember.ContainerView circular dependency
-// Ember.ENV
-import Ember from 'ember-metal/core';
+// Ngular.assert, Ngular.deprecate, Ngular.warn, Ngular.TEMPLATES,
+// jQuery, Ngular.lookup,
+// Ngular.ContainerView circular dependency
+// Ngular.ENV
+import Ngular from 'ngular-metal/core';
 
-import Evented from "ember-runtime/mixins/evented";
-import EmberObject from "ember-runtime/system/object";
-import EmberError from "ember-metal/error";
-import { get } from "ember-metal/property_get";
-import run from "ember-metal/run_loop";
-import { addObserver, removeObserver } from "ember-metal/observer";
-import { guidFor } from "ember-metal/utils";
-import { computed } from "ember-metal/computed";
+import Evented from "ngular-runtime/mixins/evented";
+import NgularObject from "ngular-runtime/system/object";
+import NgularError from "ngular-metal/error";
+import { get } from "ngular-metal/property_get";
+import run from "ngular-metal/run_loop";
+import { addObserver, removeObserver } from "ngular-metal/observer";
+import { guidFor } from "ngular-metal/utils";
+import { computed } from "ngular-metal/computed";
 import {
   Mixin,
   observer,
   beforeObserver
-} from "ember-metal/mixin";
-import { deprecateProperty } from "ember-metal/deprecate_property";
+} from "ngular-metal/mixin";
+import { deprecateProperty } from "ngular-metal/deprecate_property";
 import {
   propertyWillChange,
   propertyDidChange
-} from "ember-metal/property_events";
+} from "ngular-metal/property_events";
 
-import jQuery from "ember-views/system/jquery";
-import "ember-views/system/ext";  // for the side effect of extending Ember.run.queues
+import jQuery from "ngular-views/system/jquery";
+import "ngular-views/system/ext";  // for the side effect of extending Ngular.run.queues
 
-import CoreView from "ember-views/views/core_view";
-import ViewStreamSupport from "ember-views/mixins/view_stream_support";
-import ViewKeywordSupport from "ember-views/mixins/view_keyword_support";
-import ViewContextSupport from "ember-views/mixins/view_context_support";
-import ViewChildViewsSupport from "ember-views/mixins/view_child_views_support";
+import CoreView from "ngular-views/views/core_view";
+import ViewStreamSupport from "ngular-views/mixins/view_stream_support";
+import ViewKeywordSupport from "ngular-views/mixins/view_keyword_support";
+import ViewContextSupport from "ngular-views/mixins/view_context_support";
+import ViewChildViewsSupport from "ngular-views/mixins/view_child_views_support";
 import {
   childViewsProperty
-} from "ember-views/mixins/view_child_views_support";
-import ViewStateSupport from "ember-views/mixins/view_state_support";
-import TemplateRenderingSupport from "ember-views/mixins/template_rendering_support";
-import ClassNamesSupport from "ember-views/mixins/class_names_support";
-import AttributeBindingsSupport from "ember-views/mixins/attribute_bindings_support";
-import LegacyViewSupport from "ember-views/mixins/legacy_view_support";
-import InstrumentationSupport from "ember-views/mixins/instrumentation_support";
-import VisibilitySupport from "ember-views/mixins/visibility_support";
+} from "ngular-views/mixins/view_child_views_support";
+import ViewStateSupport from "ngular-views/mixins/view_state_support";
+import TemplateRenderingSupport from "ngular-views/mixins/template_rendering_support";
+import ClassNamesSupport from "ngular-views/mixins/class_names_support";
+import AttributeBindingsSupport from "ngular-views/mixins/attribute_bindings_support";
+import LegacyViewSupport from "ngular-views/mixins/legacy_view_support";
+import InstrumentationSupport from "ngular-views/mixins/instrumentation_support";
+import VisibilitySupport from "ngular-views/mixins/visibility_support";
 
 function K() { return this; }
 
 /**
-@module ember
-@submodule ember-views
+@module ngular
+@submodule ngular-views
 */
 
-Ember.warn("The VIEW_PRESERVES_CONTEXT flag has been removed and the functionality can no longer be disabled.", Ember.ENV.VIEW_PRESERVES_CONTEXT !== false);
+Ngular.warn("The VIEW_PRESERVES_CONTEXT flag has been removed and the functionality can no longer be disabled.", Ngular.ENV.VIEW_PRESERVES_CONTEXT !== false);
 
 /**
   Global hash of shared templates. This will automatically be populated
@@ -57,15 +57,15 @@ Ember.warn("The VIEW_PRESERVES_CONTEXT flag has been removed and the functionali
   separate files that get loaded into JavaScript at buildtime.
 
   @property TEMPLATES
-  @for Ember
+  @for Ngular
   @type Hash
 */
-Ember.TEMPLATES = {};
+Ngular.TEMPLATES = {};
 
 var EMPTY_ARRAY = [];
 
 /**
-  `Ember.View` is the class in Ember responsible for encapsulating templates of
+  `Ngular.View` is the class in Ngular responsible for encapsulating templates of
   HTML content, combining templates with data to render as sections of a page's
   DOM, and registering and responding to user-initiated events.
 
@@ -76,7 +76,7 @@ var EMPTY_ARRAY = [];
   class:
 
   ```javascript
-  ParagraphView = Ember.View.extend({
+  ParagraphView = Ngular.View.extend({
     tagName: 'em'
   });
   ```
@@ -84,7 +84,7 @@ var EMPTY_ARRAY = [];
   Would result in instances with the following HTML:
 
   ```html
-  <em id="ember1" class="ember-view"></em>
+  <em id="ngular1" class="ngular-view"></em>
   ```
 
   ## HTML `class` Attribute
@@ -93,7 +93,7 @@ var EMPTY_ARRAY = [];
   `classNames` property that is set to an array of strings:
 
   ```javascript
-  MyView = Ember.View.extend({
+  MyView = Ngular.View.extend({
     classNames: ['my-class', 'my-other-class']
   });
   ```
@@ -101,7 +101,7 @@ var EMPTY_ARRAY = [];
   Will result in view instances with an HTML representation of:
 
   ```html
-  <div id="ember1" class="ember-view my-class my-other-class"></div>
+  <div id="ngular1" class="ngular-view my-class my-other-class"></div>
   ```
 
   `class` attribute values can also be set by providing a `classNameBindings`
@@ -110,7 +110,7 @@ var EMPTY_ARRAY = [];
   attribute. These properties can be computed properties:
 
   ```javascript
-  MyView = Ember.View.extend({
+  MyView = Ngular.View.extend({
     classNameBindings: ['propertyA', 'propertyB'],
     propertyA: 'from-a',
     propertyB: function() {
@@ -122,7 +122,7 @@ var EMPTY_ARRAY = [];
   Will result in view instances with an HTML representation of:
 
   ```html
-  <div id="ember1" class="ember-view from-a from-b"></div>
+  <div id="ngular1" class="ngular-view from-a from-b"></div>
   ```
 
   If the value of a class name binding returns a boolean the property name
@@ -130,7 +130,7 @@ var EMPTY_ARRAY = [];
   will not be added if the value is `false` or `undefined`.
 
   ```javascript
-  MyView = Ember.View.extend({
+  MyView = Ngular.View.extend({
     classNameBindings: ['hovered'],
     hovered: true
   });
@@ -139,7 +139,7 @@ var EMPTY_ARRAY = [];
   Will result in view instances with an HTML representation of:
 
   ```html
-  <div id="ember1" class="ember-view hovered"></div>
+  <div id="ngular1" class="ngular-view hovered"></div>
   ```
 
   When using boolean class name bindings you can supply a string value other
@@ -147,7 +147,7 @@ var EMPTY_ARRAY = [];
   preferred value after a ":" character when defining the binding:
 
   ```javascript
-  MyView = Ember.View.extend({
+  MyView = Ngular.View.extend({
     classNameBindings: ['awesome:so-very-cool'],
     awesome: true
   });
@@ -156,14 +156,14 @@ var EMPTY_ARRAY = [];
   Will result in view instances with an HTML representation of:
 
   ```html
-  <div id="ember1" class="ember-view so-very-cool"></div>
+  <div id="ngular1" class="ngular-view so-very-cool"></div>
   ```
 
   Boolean value class name bindings whose property names are in a
   camelCase-style format will be converted to a dasherized format:
 
   ```javascript
-  MyView = Ember.View.extend({
+  MyView = Ngular.View.extend({
     classNameBindings: ['isUrgent'],
     isUrgent: true
   });
@@ -172,16 +172,16 @@ var EMPTY_ARRAY = [];
   Will result in view instances with an HTML representation of:
 
   ```html
-  <div id="ember1" class="ember-view is-urgent"></div>
+  <div id="ngular1" class="ngular-view is-urgent"></div>
   ```
 
   Class name bindings can also refer to object values that are found by
   traversing a path relative to the view itself:
 
   ```javascript
-  MyView = Ember.View.extend({
+  MyView = Ngular.View.extend({
     classNameBindings: ['messages.empty']
-    messages: Ember.Object.create({
+    messages: Ngular.Object.create({
       empty: true
     })
   });
@@ -190,7 +190,7 @@ var EMPTY_ARRAY = [];
   Will result in view instances with an HTML representation of:
 
   ```html
-  <div id="ember1" class="ember-view empty"></div>
+  <div id="ngular1" class="ngular-view empty"></div>
   ```
 
   If you want to add a class name for a property which evaluates to true and
@@ -199,7 +199,7 @@ var EMPTY_ARRAY = [];
 
   ```javascript
   // Applies 'enabled' class when isEnabled is true and 'disabled' when isEnabled is false
-  Ember.View.extend({
+  Ngular.View.extend({
     classNameBindings: ['isEnabled:enabled:disabled']
     isEnabled: true
   });
@@ -208,21 +208,21 @@ var EMPTY_ARRAY = [];
   Will result in view instances with an HTML representation of:
 
   ```html
-  <div id="ember1" class="ember-view enabled"></div>
+  <div id="ngular1" class="ngular-view enabled"></div>
   ```
 
   When isEnabled is `false`, the resulting HTML representation looks like
   this:
 
   ```html
-  <div id="ember1" class="ember-view disabled"></div>
+  <div id="ngular1" class="ngular-view disabled"></div>
   ```
 
   This syntax offers the convenience to add a class if a property is `false`:
 
   ```javascript
   // Applies no class when isEnabled is true and class 'disabled' when isEnabled is false
-  Ember.View.extend({
+  Ngular.View.extend({
     classNameBindings: ['isEnabled::disabled']
     isEnabled: true
   });
@@ -231,14 +231,14 @@ var EMPTY_ARRAY = [];
   Will result in view instances with an HTML representation of:
 
   ```html
-  <div id="ember1" class="ember-view"></div>
+  <div id="ngular1" class="ngular-view"></div>
   ```
 
   When the `isEnabled` property on the view is set to `false`, it will result
   in view instances with an HTML representation of:
 
   ```html
-  <div id="ember1" class="ember-view disabled"></div>
+  <div id="ngular1" class="ngular-view disabled"></div>
   ```
 
   Updates to the the value of a class name binding will result in automatic
@@ -247,7 +247,7 @@ var EMPTY_ARRAY = [];
   will be removed.
 
   Both `classNames` and `classNameBindings` are concatenated properties. See
-  [Ember.Object](/api/classes/Ember.Object.html) documentation for more
+  [Ngular.Object](/api/classes/Ngular.Object.html) documentation for more
   information about concatenated properties.
 
   ## HTML Attributes
@@ -258,7 +258,7 @@ var EMPTY_ARRAY = [];
   HTML associated attribute:
 
   ```javascript
-  AnchorView = Ember.View.extend({
+  AnchorView = Ngular.View.extend({
     tagName: 'a',
     attributeBindings: ['href'],
     href: 'http://google.com'
@@ -268,14 +268,14 @@ var EMPTY_ARRAY = [];
   Will result in view instances with an HTML representation of:
 
   ```html
-  <a id="ember1" class="ember-view" href="http://google.com"></a>
+  <a id="ngular1" class="ngular-view" href="http://google.com"></a>
   ```
 
   One property can be mapped on to another by placing a ":" between
   the source property and the destination property:
 
   ```javascript
-  AnchorView = Ember.View.extend({
+  AnchorView = Ngular.View.extend({
     tagName: 'a',
     attributeBindings: ['url:href'],
     url: 'http://google.com'
@@ -285,14 +285,14 @@ var EMPTY_ARRAY = [];
   Will result in view instances with an HTML representation of:
 
   ```html
-  <a id="ember1" class="ember-view" href="http://google.com"></a>
+  <a id="ngular1" class="ngular-view" href="http://google.com"></a>
   ```
 
   Namespaced attributes (e.g. `xlink:href`) are supported, but have to be
   mapped, since `:` is not a valid character for properties in Javascript:
 
   ```javascript
-  UseView = Ember.View.extend({
+  UseView = Ngular.View.extend({
     tagName: 'use',
     attributeBindings: ['xlinkHref:xlink:href'],
     xlinkHref: '#triangle'
@@ -309,7 +309,7 @@ var EMPTY_ARRAY = [];
   its value:
 
   ```javascript
-  MyTextInput = Ember.View.extend({
+  MyTextInput = Ngular.View.extend({
     tagName: 'input',
     attributeBindings: ['disabled'],
     disabled: true
@@ -319,13 +319,13 @@ var EMPTY_ARRAY = [];
   Will result in view instances with an HTML representation of:
 
   ```html
-  <input id="ember1" class="ember-view" disabled="disabled" />
+  <input id="ngular1" class="ngular-view" disabled="disabled" />
   ```
 
   `attributeBindings` can refer to computed properties:
 
   ```javascript
-  MyTextInput = Ember.View.extend({
+  MyTextInput = Ngular.View.extend({
     tagName: 'input',
     attributeBindings: ['disabled'],
     disabled: function() {
@@ -341,7 +341,7 @@ var EMPTY_ARRAY = [];
   Updates to the the property of an attribute binding will result in automatic
   update of the  HTML attribute in the view's rendered HTML representation.
 
-  `attributeBindings` is a concatenated property. See [Ember.Object](/api/classes/Ember.Object.html)
+  `attributeBindings` is a concatenated property. See [Ngular.Object](/api/classes/Ngular.Object.html)
   documentation for more information about concatenated properties.
 
   ## Templates
@@ -349,22 +349,22 @@ var EMPTY_ARRAY = [];
   The HTML contents of a view's rendered representation are determined by its
   template. Templates can be any function that accepts an optional context
   parameter and returns a string of HTML that will be inserted within the
-  view's tag. Most typically in Ember this function will be a compiled
-  `Ember.Handlebars` template.
+  view's tag. Most typically in Ngular this function will be a compiled
+  `Ngular.Handlebars` template.
 
   ```javascript
-  AView = Ember.View.extend({
-    template: Ember.Handlebars.compile('I am the template')
+  AView = Ngular.View.extend({
+    template: Ngular.Handlebars.compile('I am the template')
   });
   ```
 
   Will result in view instances with an HTML representation of:
 
   ```html
-  <div id="ember1" class="ember-view">I am the template</div>
+  <div id="ngular1" class="ngular-view">I am the template</div>
   ```
 
-  Within an Ember application is more common to define a Handlebars templates as
+  Within an Ngular application is more common to define a Handlebars templates as
   part of a page:
 
   ```html
@@ -376,7 +376,7 @@ var EMPTY_ARRAY = [];
   And associate it by name using a view's `templateName` property:
 
   ```javascript
-  AView = Ember.View.extend({
+  AView = Ngular.View.extend({
     templateName: 'some-template'
   });
   ```
@@ -392,7 +392,7 @@ var EMPTY_ARRAY = [];
   And `templateName` property:
 
   ```javascript
-  AView = Ember.View.extend({
+  AView = Ngular.View.extend({
     templateName: 'posts/new'
   });
   ```
@@ -407,8 +407,8 @@ var EMPTY_ARRAY = [];
   the `defaultTemplate` value will be used:
 
   ```javascript
-  AView = Ember.View.extend({
-    defaultTemplate: Ember.Handlebars.compile('I was the default'),
+  AView = Ngular.View.extend({
+    defaultTemplate: Ngular.Handlebars.compile('I was the default'),
     template: null,
     templateName: null
   });
@@ -417,26 +417,26 @@ var EMPTY_ARRAY = [];
   Will result in instances with an HTML representation of:
 
   ```html
-  <div id="ember1" class="ember-view">I was the default</div>
+  <div id="ngular1" class="ngular-view">I was the default</div>
   ```
 
   If a `template` or `templateName` is provided it will take precedence over
   `defaultTemplate`:
 
   ```javascript
-  AView = Ember.View.extend({
-    defaultTemplate: Ember.Handlebars.compile('I was the default')
+  AView = Ngular.View.extend({
+    defaultTemplate: Ngular.Handlebars.compile('I was the default')
   });
 
   aView = AView.create({
-    template: Ember.Handlebars.compile('I was the template, not default')
+    template: Ngular.Handlebars.compile('I was the template, not default')
   });
   ```
 
   Will result in the following HTML representation when rendered:
 
   ```html
-  <div id="ember1" class="ember-view">I was the template, not default</div>
+  <div id="ngular1" class="ngular-view">I was the template, not default</div>
   ```
 
   ## View Context
@@ -444,11 +444,11 @@ var EMPTY_ARRAY = [];
   The default context of the compiled template is the view's controller:
 
   ```javascript
-  AView = Ember.View.extend({
-    template: Ember.Handlebars.compile('Hello {{excitedGreeting}}')
+  AView = Ngular.View.extend({
+    template: Ngular.Handlebars.compile('Hello {{excitedGreeting}}')
   });
 
-  aController = Ember.Object.create({
+  aController = Ngular.Object.create({
     firstName: 'Barry',
     excitedGreeting: function() {
       return this.get("content.firstName") + "!!!"
@@ -463,7 +463,7 @@ var EMPTY_ARRAY = [];
   Will result in an HTML representation of:
 
   ```html
-  <div id="ember1" class="ember-view">Hello Barry!!!</div>
+  <div id="ngular1" class="ngular-view">Hello Barry!!!</div>
   ```
 
   A context can also be explicitly supplied through the view's `context`
@@ -478,7 +478,7 @@ var EMPTY_ARRAY = [];
   view's tag. Views whose HTML element is self closing (e.g. `<input />`)
   cannot have a layout and this property will be ignored.
 
-  Most typically in Ember a layout will be a compiled `Ember.Handlebars`
+  Most typically in Ngular a layout will be a compiled `Ngular.Handlebars`
   template.
 
   A view's layout can be set directly with the `layout` property or reference
@@ -489,23 +489,23 @@ var EMPTY_ARRAY = [];
   inserted at this location:
 
   ```javascript
-  AViewWithLayout = Ember.View.extend({
-    layout: Ember.Handlebars.compile("<div class='my-decorative-class'>{{yield}}</div>"),
-    template: Ember.Handlebars.compile("I got wrapped")
+  AViewWithLayout = Ngular.View.extend({
+    layout: Ngular.Handlebars.compile("<div class='my-decorative-class'>{{yield}}</div>"),
+    template: Ngular.Handlebars.compile("I got wrapped")
   });
   ```
 
   Will result in view instances with an HTML representation of:
 
   ```html
-  <div id="ember1" class="ember-view">
+  <div id="ngular1" class="ngular-view">
     <div class="my-decorative-class">
       I got wrapped
     </div>
   </div>
   ```
 
-  See [Ember.Handlebars.helpers.yield](/api/classes/Ember.Handlebars.helpers.html#method_yield)
+  See [Ngular.Handlebars.helpers.yield](/api/classes/Ngular.Handlebars.helpers.html#method_yield)
   for more information.
 
   ## Responding to Browser Events
@@ -521,7 +521,7 @@ var EMPTY_ARRAY = [];
   argument to this method.
 
   ```javascript
-  AView = Ember.View.extend({
+  AView = Ngular.View.extend({
     click: function(event) {
       // will be called when when an instance's
       // rendered element is clicked
@@ -535,14 +535,14 @@ var EMPTY_ARRAY = [];
   then implement methods that match the desired event names. Matching events
   that occur on the view's rendered HTML or the rendered HTML of any of its DOM
   descendants will trigger this method. A `jQuery.Event` object will be passed
-  as the first argument to the method and an  `Ember.View` object as the
-  second. The `Ember.View` will be the view whose rendered HTML was interacted
+  as the first argument to the method and an  `Ngular.View` object as the
+  second. The `Ngular.View` will be the view whose rendered HTML was interacted
   with. This may be the view with the `eventManager` property or one of its
   descendant views.
 
   ```javascript
-  AView = Ember.View.extend({
-    eventManager: Ember.Object.create({
+  AView = Ngular.View.extend({
+    eventManager: Ngular.Object.create({
       doubleClick: function(event, view) {
         // will be called when when an instance's
         // rendered element or any rendering
@@ -557,11 +557,11 @@ var EMPTY_ARRAY = [];
   same name handled through methods on the view.
 
   ```javascript
-  AView = Ember.View.extend({
+  AView = Ngular.View.extend({
     mouseEnter: function(event) {
       // will never trigger.
     },
-    eventManager: Ember.Object.create({
+    eventManager: Ngular.Object.create({
       mouseEnter: function(event, view) {
         // takes precedence over AView#mouseEnter
       }
@@ -577,10 +577,10 @@ var EMPTY_ARRAY = [];
   on the descendant.
 
   ```javascript
-  var App = Ember.Application.create();
-  App.OuterView = Ember.View.extend({
-    template: Ember.Handlebars.compile("outer {{#view 'inner'}}inner{{/view}} outer"),
-    eventManager: Ember.Object.create({
+  var App = Ngular.Application.create();
+  App.OuterView = Ngular.View.extend({
+    template: Ngular.Handlebars.compile("outer {{#view 'inner'}}inner{{/view}} outer"),
+    eventManager: Ngular.Object.create({
       mouseEnter: function(event, view) {
         // view might be instance of either
         // OuterView or InnerView depending on
@@ -589,7 +589,7 @@ var EMPTY_ARRAY = [];
     })
   });
 
-  App.InnerView = Ember.View.extend({
+  App.InnerView = Ngular.View.extend({
     click: function(event) {
       // will be called if rendered inside
       // an OuterView because OuterView's
@@ -604,14 +604,14 @@ var EMPTY_ARRAY = [];
 
   ### Handlebars `{{action}}` Helper
 
-  See [Handlebars.helpers.action](/api/classes/Ember.Handlebars.helpers.html#method_action).
+  See [Handlebars.helpers.action](/api/classes/Ngular.Handlebars.helpers.html#method_action).
 
   ### Event Names
 
   All of the event handling approaches described above respond to the same set
   of events. The names of the built-in events are listed below. (The hash of
-  built-in events exists in `Ember.EventDispatcher`.) Additional, custom events
-  can be registered by using `Ember.Application.customEvents`.
+  built-in events exists in `Ngular.EventDispatcher`.) Additional, custom events
+  can be registered by using `Ngular.Application.customEvents`.
 
   Touch events:
 
@@ -659,21 +659,21 @@ var EMPTY_ARRAY = [];
 
   ## Handlebars `{{view}}` Helper
 
-  Other `Ember.View` instances can be included as part of a view's template by
-  using the `{{view}}` Handlebars helper. See [Ember.Handlebars.helpers.view](/api/classes/Ember.Handlebars.helpers.html#method_view)
+  Other `Ngular.View` instances can be included as part of a view's template by
+  using the `{{view}}` Handlebars helper. See [Ngular.Handlebars.helpers.view](/api/classes/Ngular.Handlebars.helpers.html#method_view)
   for additional information.
 
   @class View
-  @namespace Ember
-  @extends Ember.CoreView
-  @uses Ember.ViewContextSupport
-  @uses Ember.ViewChildViewsSupport
-  @uses Ember.TemplateRenderingSupport
-  @uses Ember.ClassNamesSupport
-  @uses Ember.AttributeBindingsSupport
-  @uses Ember.LegacyViewSupport
-  @uses Ember.InstrumentationSupport
-  @uses Ember.VisibilitySupport
+  @namespace Ngular
+  @extends Ngular.CoreView
+  @uses Ngular.ViewContextSupport
+  @uses Ngular.ViewChildViewsSupport
+  @uses Ngular.TemplateRenderingSupport
+  @uses Ngular.ClassNamesSupport
+  @uses Ngular.AttributeBindingsSupport
+  @uses Ngular.LegacyViewSupport
+  @uses Ngular.InstrumentationSupport
+  @uses Ngular.VisibilitySupport
 */
 // jscs:disable validateIndentation
 var View = CoreView.extend(
@@ -704,8 +704,8 @@ var View = CoreView.extend(
   /**
     The name of the template to lookup if no template is provided.
 
-    By default `Ember.View` will lookup a template with this name in
-    `Ember.TEMPLATES` (a shared global object).
+    By default `Ngular.View` will lookup a template with this name in
+    `Ngular.TEMPLATES` (a shared global object).
 
     @property templateName
     @type String
@@ -716,8 +716,8 @@ var View = CoreView.extend(
   /**
     The name of the layout to lookup if no layout is provided.
 
-    By default `Ember.View` will lookup a template with this name in
-    `Ember.TEMPLATES` (a shared global object).
+    By default `Ngular.View` will lookup a template with this name in
+    `Ngular.TEMPLATES` (a shared global object).
 
     @property layoutName
     @type String
@@ -741,7 +741,7 @@ var View = CoreView.extend(
     get: function() {
       var templateName = get(this, 'templateName');
       var template = this.templateForName(templateName, 'template');
-      Ember.assert("You specified the templateName " + templateName + " for " + this + ", but it did not exist.", !templateName || !!template);
+      Ngular.assert("You specified the templateName " + templateName + " for " + this + ", but it did not exist.", !templateName || !!template);
       return template || get(this, 'defaultTemplate');
     },
     set: function(key, value) {
@@ -768,7 +768,7 @@ var View = CoreView.extend(
     var layoutName = get(this, 'layoutName');
     var layout = this.templateForName(layoutName, 'layout');
 
-    Ember.assert("You specified the layoutName " + layoutName + " for " + this + ", but it did not exist.", !layoutName || !!layout);
+    Ngular.assert("You specified the layoutName " + layoutName + " for " + this + ", but it did not exist.", !layoutName || !!layout);
 
     return layout || get(this, 'defaultLayout');
   }).property('layoutName'),
@@ -789,11 +789,11 @@ var View = CoreView.extend(
 
   templateForName(name, type) {
     if (!name) { return; }
-    Ember.assert("templateNames are not allowed to contain periods: "+name, name.indexOf('.') === -1);
+    Ngular.assert("templateNames are not allowed to contain periods: "+name, name.indexOf('.') === -1);
 
     if (!this.container) {
-      throw new EmberError('Container was not found when looking up a views template. ' +
-                 'This is most likely due to manually instantiating an Ember.View. ' +
+      throw new NgularError('Container was not found when looking up a views template. ' +
+                 'This is most likely due to manually instantiating an Ngular.View. ' +
                  'See: http://git.io/EKPpnA');
     }
 
@@ -834,9 +834,9 @@ var View = CoreView.extend(
     class or mixin.
 
     @method nearestOfType
-    @param {Class,Mixin} klass Subclass of Ember.View (or Ember.View itself),
-           or an instance of Ember.Mixin.
-    @return Ember.View
+    @param {Class,Mixin} klass Subclass of Ngular.View (or Ngular.View itself),
+           or an instance of Ngular.Mixin.
+    @return Ngular.View
   */
   nearestOfType(klass) {
     var view = get(this, 'parentView');
@@ -855,7 +855,7 @@ var View = CoreView.extend(
 
     @method nearestWithProperty
     @param {String} property A property name
-    @return Ember.View
+    @return Ngular.View
   */
   nearestWithProperty(property) {
     var view = get(this, 'parentView');
@@ -953,7 +953,7 @@ var View = CoreView.extend(
     @return {jQuery} the jQuery object for the DOM node
   */
   $(sel) {
-    Ember.assert('You cannot access this.$() on a component with `tagName: \'\'` specified.', this.tagName !== '');
+    Ngular.assert('You cannot access this.$() on a component with `tagName: \'\'` specified.', this.tagName !== '');
     return this.currentState.$(this, sel);
   },
 
@@ -984,20 +984,20 @@ var View = CoreView.extend(
     finished synchronizing.
 
     This is not typically a function that you will need to call directly when
-    building your application. You might consider using `Ember.ContainerView`
+    building your application. You might consider using `Ngular.ContainerView`
     instead. If you do need to use `appendTo`, be sure that the target element
-    you are providing is associated with an `Ember.Application` and does not
-    have an ancestor element that is associated with an Ember view.
+    you are providing is associated with an `Ngular.Application` and does not
+    have an ancestor element that is associated with an Ngular view.
 
     @method appendTo
     @param {String|DOMElement|jQuery} A selector, element, HTML string, or jQuery object
-    @return {Ember.View} receiver
+    @return {Ngular.View} receiver
   */
   appendTo(selector) {
     var target = jQuery(selector);
 
-    Ember.assert("You tried to append to (" + selector + ") but that isn't in the DOM", target.length > 0);
-    Ember.assert("You cannot append to an existing Ember.View. Consider using Ember.ContainerView instead.", !target.is('.ember-view') && !target.parents().is('.ember-view'));
+    Ngular.assert("You tried to append to (" + selector + ") but that isn't in the DOM", target.length > 0);
+    Ngular.assert("You cannot append to an existing Ngular.View. Consider using Ngular.ContainerView instead.", !target.is('.ngular-view') && !target.parents().is('.ngular-view'));
 
     this.renderer.appendTo(this, target[0]);
 
@@ -1035,7 +1035,7 @@ var View = CoreView.extend(
     ```js
     app.visit('/').then(function(instance) {
       var element;
-      Ember.run(function() {
+      Ngular.run(function() {
         element = renderToElement(instance);
       });
 
@@ -1067,13 +1067,13 @@ var View = CoreView.extend(
 
     @method replaceIn
     @param {String|DOMElement|jQuery} target A selector, element, HTML string, or jQuery object
-    @return {Ember.View} received
+    @return {Ngular.View} received
   */
   replaceIn(selector) {
     var target = jQuery(selector);
 
-    Ember.assert("You tried to replace in (" + selector + ") but that isn't in the DOM", target.length > 0);
-    Ember.assert("You cannot replace an existing Ember.View. Consider using Ember.ContainerView instead.", !target.is('.ember-view') && !target.parents().is('.ember-view'));
+    Ngular.assert("You tried to replace in (" + selector + ") but that isn't in the DOM", target.length > 0);
+    Ngular.assert("You cannot replace an existing Ngular.View. Consider using Ngular.ContainerView instead.", !target.is('.ngular-view') && !target.parents().is('.ngular-view'));
 
     this.renderer.replaceIn(this, target[0]);
 
@@ -1094,7 +1094,7 @@ var View = CoreView.extend(
     finished synchronizing.
 
     @method append
-    @return {Ember.View} receiver
+    @return {Ngular.View} receiver
   */
   append() {
     return this.appendTo(document.body);
@@ -1104,7 +1104,7 @@ var View = CoreView.extend(
     Removes the view's element from the element to which it is attached.
 
     @method remove
-    @return {Ember.View} receiver
+    @return {Ngular.View} receiver
   */
   remove() {
     // What we should really do here is wait until the end of the run loop
@@ -1158,7 +1158,7 @@ var View = CoreView.extend(
     be called on this view and all of its child views.
 
     @method createElement
-    @return {Ember.View} receiver
+    @return {Ngular.View} receiver
   */
   createElement() {
     if (this.element) { return this; }
@@ -1213,7 +1213,7 @@ var View = CoreView.extend(
     want to implement the above callbacks.
 
     @method destroyElement
-    @return {Ember.View} receiver
+    @return {Ngular.View} receiver
   */
   destroyElement() {
     return this.currentState.destroyElement(this);
@@ -1336,7 +1336,7 @@ var View = CoreView.extend(
     does nothing.
 
     @method removeFromParent
-    @return {Ember.View} receiver
+    @return {Ngular.View} receiver
   */
   removeFromParent() {
     var parent = this._parentView;
@@ -1376,7 +1376,7 @@ var View = CoreView.extend(
   //
 
   /**
-    Handle events from `Ember.EventDispatcher`
+    Handle events from `Ngular.EventDispatcher`
 
     @method handleEvent
     @param eventName {String}
@@ -1399,7 +1399,7 @@ var View = CoreView.extend(
     @private
   */
   _register() {
-    Ember.assert("Attempted to register a view with an id already in use: "+this.elementId, !this._viewRegistry[this.elementId]);
+    Ngular.assert("Attempted to register a view with an id already in use: "+this.elementId, !this._viewRegistry[this.elementId]);
     this._viewRegistry[this.elementId] = this;
   },
 
@@ -1476,7 +1476,7 @@ deprecateProperty(View.prototype, 'states', '_states');
 // once the view has been inserted into the DOM, legal manipulations
 // are done on the DOM element.
 
-var mutation = EmberObject.extend(Evented).create();
+var mutation = NgularObject.extend(Evented).create();
 // TODO MOVE TO RENDERER HOOKS
 View.addMutationListener = function(callback) {
   mutation.on('change', callback);
@@ -1502,7 +1502,7 @@ View.views = {};
 // If someone overrides the child views computed property when
 // defining their class, we want to be able to process the user's
 // supplied childViews and then restore the original computed property
-// at view initialization time. This happens in Ember.ContainerView's init
+// at view initialization time. This happens in Ngular.ContainerView's init
 // method.
 View.childViewsProperty = childViewsProperty;
 

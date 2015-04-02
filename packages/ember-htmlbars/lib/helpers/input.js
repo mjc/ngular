@@ -1,12 +1,12 @@
-import Checkbox from "ember-views/views/checkbox";
-import TextField from "ember-views/views/text_field";
-import { read } from "ember-metal/streams/utils";
+import Checkbox from "ngular-views/views/checkbox";
+import TextField from "ngular-views/views/text_field";
+import { read } from "ngular-metal/streams/utils";
 
-import Ember from "ember-metal/core"; // Ember.assert
+import Ngular from "ngular-metal/core"; // Ngular.assert
 
 /**
-@module ember
-@submodule ember-htmlbars
+@module ngular
+@submodule ngular-htmlbars
 */
 
 /**
@@ -52,7 +52,7 @@ import Ember from "ember-metal/core"; // Ember.assert
   ## Bound:
 
   ```javascript
-  App.ApplicationController = Ember.Controller.extend({
+  App.ApplicationController = Ngular.Controller.extend({
     firstName: "Stanley",
     entryNotAllowed: true
   });
@@ -97,28 +97,28 @@ import Ember from "ember-metal/core"; // Ember.assert
   {{input focus-in="alertMessage"}}
   ```
 
-  See more about [Text Support Actions](/api/classes/Ember.TextField.html)
+  See more about [Text Support Actions](/api/classes/Ngular.TextField.html)
 
   ## Extension
 
-  Internally, `{{input type="text"}}` creates an instance of `Ember.TextField`, passing
-  arguments from the helper to `Ember.TextField`'s `create` method. You can extend the
+  Internally, `{{input type="text"}}` creates an instance of `Ngular.TextField`, passing
+  arguments from the helper to `Ngular.TextField`'s `create` method. You can extend the
   capabilities of text inputs in your applications by reopening this class. For example,
   if you are building a Bootstrap project where `data-*` attributes are used, you
   can add one to the `TextField`'s `attributeBindings` property:
 
 
   ```javascript
-  Ember.TextField.reopen({
+  Ngular.TextField.reopen({
     attributeBindings: ['data-error']
   });
   ```
 
-  Keep in mind when writing `Ember.TextField` subclasses that `Ember.TextField`
-  itself extends `Ember.Component`, meaning that it does NOT inherit
+  Keep in mind when writing `Ngular.TextField` subclasses that `Ngular.TextField`
+  itself extends `Ngular.Component`, meaning that it does NOT inherit
   the `controller` of the parent view.
 
-  See more about [Ember components](/api/classes/Ember.Component.html)
+  See more about [Ngular components](/api/classes/Ngular.Component.html)
 
 
   ## Use as checkbox
@@ -152,7 +152,7 @@ import Ember from "ember-metal/core"; // Ember.assert
   ## Bound:
 
   ```javascript
-  App.ApplicationController = Ember.Controller.extend({
+  App.ApplicationController = Ngular.Controller.extend({
     isAdmin: true
   });
   ```
@@ -169,25 +169,25 @@ import Ember from "ember-metal/core"; // Ember.assert
 
   ## Extension
 
-  Internally, `{{input type="checkbox"}}` creates an instance of `Ember.Checkbox`, passing
-  arguments from the helper to `Ember.Checkbox`'s `create` method. You can extend the
+  Internally, `{{input type="checkbox"}}` creates an instance of `Ngular.Checkbox`, passing
+  arguments from the helper to `Ngular.Checkbox`'s `create` method. You can extend the
   capablilties of checkbox inputs in your applications by reopening this class. For example,
   if you wanted to add a css class to all checkboxes in your application:
 
 
   ```javascript
-  Ember.Checkbox.reopen({
+  Ngular.Checkbox.reopen({
     classNames: ['my-app-checkbox']
   });
   ```
 
 
   @method input
-  @for Ember.Handlebars.helpers
+  @for Ngular.Handlebars.helpers
   @param {Hash} options
 */
 export function inputHelper(params, hash, options, env) {
-  Ember.assert('You can only pass attributes to the `input` helper, not arguments', params.length === 0);
+  Ngular.assert('You can only pass attributes to the `input` helper, not arguments', params.length === 0);
 
   var onEvent = hash.on;
   var inputType;
@@ -197,7 +197,7 @@ export function inputHelper(params, hash, options, env) {
   if (inputType === 'checkbox') {
     delete hash.type;
 
-    Ember.assert("{{input type='checkbox'}} does not support setting `value=someBooleanValue`;" +
+    Ngular.assert("{{input type='checkbox'}} does not support setting `value=someBooleanValue`;" +
                  " you must use `checked=someBooleanValue` instead.", !hash.hasOwnProperty('value'));
 
     env.helpers.view.helperFunction.call(this, [Checkbox], hash, options, env);

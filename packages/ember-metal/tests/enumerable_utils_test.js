@@ -1,6 +1,6 @@
-import EnumerableUtils from 'ember-metal/enumerable_utils';
+import EnumerableUtils from 'ngular-metal/enumerable_utils';
 
-QUnit.module('Ember.EnumerableUtils.intersection');
+QUnit.module('Ngular.EnumerableUtils.intersection');
 
 QUnit.test('returns an array of objects that appear in both enumerables', function() {
   var a = [1,2,3];

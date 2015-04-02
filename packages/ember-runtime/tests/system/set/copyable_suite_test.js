@@ -1,10 +1,10 @@
-import CopyableTests from 'ember-runtime/tests/suites/copyable';
-import Set from "ember-runtime/system/set";
-import {generateGuid} from 'ember-metal/utils';
-import {get} from 'ember-metal/property_get';
+import CopyableTests from 'ngular-runtime/tests/suites/copyable';
+import Set from "ngular-runtime/system/set";
+import {generateGuid} from 'ngular-metal/utils';
+import {get} from 'ngular-metal/property_get';
 
 CopyableTests.extend({
-  name: 'Ember.Set Copyable',
+  name: 'Ngular.Set Copyable',
 
   newObject() {
     var set, originalCopy;

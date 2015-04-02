@@ -1,19 +1,19 @@
-import Ember from "ember-metal/core"; // Ember.TEMPLATES
-import run from "ember-metal/run_loop";
-import Logger from "ember-metal/logger";
-import Controller from "ember-runtime/controllers/controller";
-import EmberObject from "ember-runtime/system/object";
-import Namespace from "ember-runtime/system/namespace";
-import Application from "ember-application/system/application";
+import Ngular from "ngular-metal/core"; // Ngular.TEMPLATES
+import run from "ngular-metal/run_loop";
+import Logger from "ngular-metal/logger";
+import Controller from "ngular-runtime/controllers/controller";
+import NgularObject from "ngular-runtime/system/object";
+import Namespace from "ngular-runtime/system/namespace";
+import Application from "ngular-application/system/application";
 import {
   registerHelper
-} from "ember-htmlbars/helpers";
+} from "ngular-htmlbars/helpers";
 
 var registry, locator, application, originalLookup, originalLoggerInfo;
 
-QUnit.module("Ember.Application Dependency Injection - default resolver", {
+QUnit.module("Ngular.Application Dependency Injection - default resolver", {
   setup() {
-    originalLookup = Ember.lookup;
+    originalLookup = Ngular.lookup;
     application = run(Application, 'create');
 
     registry = application.registry;
@@ -22,8 +22,8 @@ QUnit.module("Ember.Application Dependency Injection - default resolver", {
   },
 
   teardown() {
-    Ember.TEMPLATES = {};
-    Ember.lookup = originalLookup;
+    Ngular.TEMPLATES = {};
+    Ngular.lookup = originalLookup;
     run(application, 'destroy');
     var UserInterfaceNamespace = Namespace.NAMESPACES_BY_ID['UserInterface'];
     if (UserInterfaceNamespace) { run(UserInterfaceNamespace, 'destroy'); }
@@ -33,7 +33,7 @@ QUnit.module("Ember.Application Dependency Injection - default resolver", {
 });
 
 QUnit.test('the default resolver can look things up in other namespaces', function() {
-  var UserInterface = Ember.lookup.UserInterface = Namespace.create();
+  var UserInterface = Ngular.lookup.UserInterface = Namespace.create();
   UserInterface.NavigationController = Controller.extend();
 
   var nav = locator.lookup('controller:userInterface/navigation');
@@ -41,14 +41,14 @@ QUnit.test('the default resolver can look things up in other namespaces', functi
   ok(nav instanceof UserInterface.NavigationController, "the result should be an instance of the specified class");
 });
 
-QUnit.test('the default resolver looks up templates in Ember.TEMPLATES', function() {
+QUnit.test('the default resolver looks up templates in Ngular.TEMPLATES', function() {
   function fooTemplate() {}
   function fooBarTemplate() {}
   function fooBarBazTemplate() {}
 
-  Ember.TEMPLATES['foo'] = fooTemplate;
-  Ember.TEMPLATES['fooBar'] = fooBarTemplate;
-  Ember.TEMPLATES['fooBar/baz'] = fooBarBazTemplate;
+  Ngular.TEMPLATES['foo'] = fooTemplate;
+  Ngular.TEMPLATES['fooBar'] = fooBarTemplate;
+  Ngular.TEMPLATES['fooBar/baz'] = fooBarBazTemplate;
 
   equal(locator.lookup('template:foo'), fooTemplate, "resolves template:foo");
   equal(locator.lookup('template:fooBar'), fooBarTemplate, "resolves template:foo_bar");
@@ -64,19 +64,19 @@ function detectEqual(first, second, message) {
 }
 
 QUnit.test('the default resolver looks up arbitrary types on the namespace', function() {
-  application.FooManager = EmberObject.extend({});
+  application.FooManager = NgularObject.extend({});
 
   detectEqual(application.FooManager, registry.resolver('manager:foo'), "looks up FooManager on application");
 });
 
 QUnit.test("the default resolver resolves models on the namespace", function() {
-  application.Post = EmberObject.extend({});
+  application.Post = NgularObject.extend({});
 
   detectEqual(application.Post, locator.lookupFactory('model:post'), "looks up Post model on application");
 });
 
 QUnit.test("the default resolver resolves *:main on the namespace", function() {
-  application.FooBar = EmberObject.extend({});
+  application.FooBar = NgularObject.extend({});
 
   detectEqual(application.FooBar, locator.lookupFactory('foo-bar:main'), "looks up FooBar type without name on application");
 });
@@ -121,7 +121,7 @@ QUnit.test("the default resolver logs hits if `LOG_RESOLVER` is set", function()
   expect(3);
 
   application.LOG_RESOLVER = true;
-  application.ScoobyDoo = EmberObject.extend();
+  application.ScoobyDoo = NgularObject.extend();
   application.toString = function() { return 'App'; };
 
   Logger.info = function(symbol, name, padding, lookupDescription) {
@@ -151,7 +151,7 @@ QUnit.test("the default resolver logs misses if `LOG_RESOLVER` is set", function
 QUnit.test("doesn't log without LOG_RESOLVER", function() {
   var infoCount = 0;
 
-  application.ScoobyDoo = EmberObject.extend();
+  application.ScoobyDoo = NgularObject.extend();
 
   Logger.info = function(symbol, name) {
     infoCount = infoCount + 1;

@@ -1,14 +1,14 @@
 /**
-@module ember
-@submodule ember-views
+@module ngular
+@submodule ngular-views
 */
 
-import { _Metamorph } from "ember-views/views/metamorph_view";
-import { read, chain, subscribe, unsubscribe } from "ember-metal/streams/utils";
-import { readComponentFactory } from "ember-views/streams/utils";
-import mergeViewBindings from "ember-htmlbars/system/merge-view-bindings";
-import EmberError from "ember-metal/error";
-import ContainerView from "ember-views/views/container_view";
+import { _Metamorph } from "ngular-views/views/metamorph_view";
+import { read, chain, subscribe, unsubscribe } from "ngular-metal/streams/utils";
+import { readComponentFactory } from "ngular-views/streams/utils";
+import mergeViewBindings from "ngular-htmlbars/system/merge-view-bindings";
+import NgularError from "ngular-metal/error";
+import ContainerView from "ngular-views/views/container_view";
 
 export default ContainerView.extend(_Metamorph, {
   init() {
@@ -32,7 +32,7 @@ export default ContainerView.extend(_Metamorph, {
   _createNewComponent() {
     var componentClass = read(this.componentClassStream);
     if (!componentClass) {
-      throw new EmberError('HTMLBars error: Could not find component named "' + read(this._boundComponentOptions.componentNameStream) + '".');
+      throw new NgularError('HTMLBars error: Could not find component named "' + read(this._boundComponentOptions.componentNameStream) + '".');
     }
     var hash    = this._boundComponentOptions;
     var hashForComponent = {};

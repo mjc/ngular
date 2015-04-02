@@ -1,18 +1,18 @@
-import MutableArrayTests from 'ember-runtime/tests/suites/mutable_array';
-import MutableArray from 'ember-runtime/mixins/mutable_array';
-import EmberObject from 'ember-runtime/system/object';
-import {computed} from 'ember-metal/computed';
+import MutableArrayTests from 'ngular-runtime/tests/suites/mutable_array';
+import MutableArray from 'ngular-runtime/mixins/mutable_array';
+import NgularObject from 'ngular-runtime/system/object';
+import {computed} from 'ngular-metal/computed';
 
 /*
   Implement a basic fake mutable array.  This validates that any non-native
   enumerable can impl this API.
 */
-var TestMutableArray = EmberObject.extend(MutableArray, {
+var TestMutableArray = NgularObject.extend(MutableArray, {
 
   _content: null,
 
   init(ary) {
-    this._content = Ember.A(ary || []);
+    this._content = Ngular.A(ary || []);
   },
 
   replace(idx, amt, objects) {

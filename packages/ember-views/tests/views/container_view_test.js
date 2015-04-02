@@ -1,17 +1,17 @@
-import { get } from "ember-metal/property_get";
-import { set } from "ember-metal/property_set";
-import run from "ember-metal/run_loop";
-import { computed } from "ember-metal/computed";
-import { read } from "ember-metal/streams/utils";
-import Controller from "ember-runtime/controllers/controller";
-import jQuery from "ember-views/system/jquery";
-import View from "ember-views/views/view";
-import ContainerView from "ember-views/views/container_view";
+import { get } from "ngular-metal/property_get";
+import { set } from "ngular-metal/property_set";
+import run from "ngular-metal/run_loop";
+import { computed } from "ngular-metal/computed";
+import { read } from "ngular-metal/streams/utils";
+import Controller from "ngular-runtime/controllers/controller";
+import jQuery from "ngular-views/system/jquery";
+import View from "ngular-views/views/view";
+import ContainerView from "ngular-views/views/container_view";
 
 var trim = jQuery.trim;
 var container, view, otherContainer;
 
-QUnit.module("ember-views/views/container_view_test", {
+QUnit.module("ngular-views/views/container_view_test", {
   teardown() {
     run(function() {
       container.destroy();

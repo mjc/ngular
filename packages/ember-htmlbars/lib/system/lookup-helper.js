@@ -1,12 +1,12 @@
 /**
-@module ember
-@submodule ember-htmlbars
+@module ngular
+@submodule ngular-htmlbars
 */
 
-import Ember from "ember-metal/core";
-import Cache from "ember-metal/cache";
-import makeViewHelper from "ember-htmlbars/system/make-view-helper";
-import HandlebarsCompatibleHelper from "ember-htmlbars/compat/helper";
+import Ngular from "ngular-metal/core";
+import Cache from "ngular-metal/cache";
+import makeViewHelper from "ngular-htmlbars/system/make-view-helper";
+import HandlebarsCompatibleHelper from "ngular-htmlbars/compat/helper";
 
 export var ISNT_HELPER_CACHE = new Cache(1000, function(key) {
   return key.indexOf('-') === -1;
@@ -18,7 +18,7 @@ export var ISNT_HELPER_CACHE = new Cache(1000, function(key) {
   * Look for a registered helper
   * If a dash exists in the name:
     * Look for a helper registed in the container
-    * Use Ember.ComponentLookup to find an Ember.Component that resolves
+    * Use Ngular.ComponentLookup to find an Ngular.Component that resolves
       to the given name
 
   @private
@@ -43,7 +43,7 @@ export default function lookupHelper(name, view, env) {
   helper = container.lookup(helperName);
   if (!helper) {
     var componentLookup = container.lookup('component-lookup:main');
-    Ember.assert("Could not find 'component-lookup:main' on the provided container," +
+    Ngular.assert("Could not find 'component-lookup:main' on the provided container," +
                  " which is necessary for performing component lookups", componentLookup);
 
     var Component = componentLookup.lookupFactory(name, container);

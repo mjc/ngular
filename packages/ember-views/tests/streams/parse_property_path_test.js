@@ -1,6 +1,6 @@
-import { parsePropertyPath } from "ember-views/streams/class_name_binding";
+import { parsePropertyPath } from "ngular-views/streams/class_name_binding";
 
-QUnit.module("EmberView - parsePropertyPath");
+QUnit.module("NgularView - parsePropertyPath");
 
 QUnit.test("it works with a simple property path", function() {
   var parsed = parsePropertyPath("simpleProperty");

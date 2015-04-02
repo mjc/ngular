@@ -1,17 +1,17 @@
-import {get} from "ember-metal/property_get";
-import EmberObject from "ember-runtime/system/object";
+import {get} from "ngular-metal/property_get";
+import NgularObject from "ngular-runtime/system/object";
 
-QUnit.module('EmberObject.extend');
+QUnit.module('NgularObject.extend');
 
 QUnit.test('Basic extend', function() {
-  var SomeClass = EmberObject.extend({ foo: 'BAR' });
+  var SomeClass = NgularObject.extend({ foo: 'BAR' });
   ok(SomeClass.isClass, "A class has isClass of true");
   var obj = new SomeClass();
   equal(obj.foo, 'BAR');
 });
 
 QUnit.test('Sub-subclass', function() {
-  var SomeClass = EmberObject.extend({ foo: 'BAR' });
+  var SomeClass = NgularObject.extend({ foo: 'BAR' });
   var AnotherClass = SomeClass.extend({ bar: 'FOO' });
   var obj = new AnotherClass();
   equal(obj.foo, 'BAR');
@@ -19,7 +19,7 @@ QUnit.test('Sub-subclass', function() {
 });
 
 QUnit.test('Overriding a method several layers deep', function() {
-  var SomeClass = EmberObject.extend({
+  var SomeClass = NgularObject.extend({
     fooCnt: 0,
     foo() { this.fooCnt++; },
 
@@ -64,7 +64,7 @@ QUnit.test('Overriding a method several layers deep', function() {
 });
 
 QUnit.test('With concatenatedProperties', function() {
-  var SomeClass = EmberObject.extend({ things: 'foo', concatenatedProperties: ['things'] });
+  var SomeClass = NgularObject.extend({ things: 'foo', concatenatedProperties: ['things'] });
   var AnotherClass = SomeClass.extend({ things: 'bar' });
   var YetAnotherClass = SomeClass.extend({ things: 'baz' });
   var some = new SomeClass();
@@ -76,7 +76,7 @@ QUnit.test('With concatenatedProperties', function() {
 });
 
 QUnit.test('With concatenatedProperties class properties', function() {
-  var SomeClass = EmberObject.extend();
+  var SomeClass = NgularObject.extend();
   SomeClass.reopenClass({
     concatenatedProperties: ['things'],
     things: 'foo'

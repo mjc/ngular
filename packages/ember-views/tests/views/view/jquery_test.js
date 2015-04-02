@@ -1,11 +1,11 @@
-import { get } from "ember-metal/property_get";
-import EmberView from "ember-views/views/view";
-import { runAppend, runDestroy } from "ember-runtime/tests/utils";
+import { get } from "ngular-metal/property_get";
+import NgularView from "ngular-views/views/view";
+import { runAppend, runDestroy } from "ngular-runtime/tests/utils";
 
 var view;
-QUnit.module("EmberView#$", {
+QUnit.module("NgularView#$", {
   setup() {
-    view = EmberView.extend({
+    view = NgularView.extend({
       render(context, firstTime) {
         context.push('<span></span>');
       }
@@ -20,7 +20,7 @@ QUnit.module("EmberView#$", {
 });
 
 QUnit.test("returns undefined if no element", function() {
-  var view = EmberView.create();
+  var view = NgularView.create();
   ok(!get(view, 'element'), 'precond - should have no element');
   equal(view.$(), undefined, 'should return undefined');
   equal(view.$('span'), undefined, 'should undefined if filter passed');
@@ -52,7 +52,7 @@ QUnit.test("returns empty jQuery object if filter passed that does not match ite
 });
 
 QUnit.test("asserts for tagless views", function() {
-  var view = EmberView.create({
+  var view = NgularView.create({
     tagName: ''
   });
 

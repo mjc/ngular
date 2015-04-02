@@ -1,19 +1,19 @@
-import EmberObject from "ember-runtime/system/object";
-import run from "ember-metal/run_loop";
-import EmberView from "ember-views/views/view";
-import EventDispatcher from "ember-views/system/event_dispatcher";
+import NgularObject from "ngular-runtime/system/object";
+import run from "ngular-metal/run_loop";
+import NgularView from "ngular-views/views/view";
+import EventDispatcher from "ngular-views/system/event_dispatcher";
 
-import { computed } from "ember-metal/computed";
-import Namespace from "ember-runtime/system/namespace";
-import ArrayController from "ember-runtime/controllers/array_controller";
-import ArrayProxy from "ember-runtime/system/array_proxy";
-import SelectView from "ember-views/views/select";
-import compile from 'ember-template-compiler/system/compile';
-import { runAppend, runDestroy } from "ember-runtime/tests/utils";
+import { computed } from "ngular-metal/computed";
+import Namespace from "ngular-runtime/system/namespace";
+import ArrayController from "ngular-runtime/controllers/array_controller";
+import ArrayProxy from "ngular-runtime/system/array_proxy";
+import SelectView from "ngular-views/views/select";
+import compile from 'ngular-template-compiler/system/compile';
+import { runAppend, runDestroy } from "ngular-runtime/tests/utils";
 
 var dispatcher, view;
 
-QUnit.module("ember-htmlbars: Ember.Select - usage inside templates", {
+QUnit.module("ngular-htmlbars: Ngular.Select - usage inside templates", {
   setup() {
     dispatcher = EventDispatcher.create();
     dispatcher.setup();
@@ -26,7 +26,7 @@ QUnit.module("ember-htmlbars: Ember.Select - usage inside templates", {
 });
 
 QUnit.test("works from a template with bindings [DEPRECATED]", function() {
-  var Person = EmberObject.extend({
+  var Person = NgularObject.extend({
     id: null,
     firstName: null,
     lastName: null,
@@ -41,7 +41,7 @@ QUnit.test("works from a template with bindings [DEPRECATED]", function() {
   var application = Namespace.create();
 
   application.peopleController = ArrayController.create({
-    content: Ember.A([
+    content: Ngular.A([
       Person.create({ id: 1, firstName: 'Yehuda', lastName: 'Katz' }),
       Person.create({ id: 2, firstName: 'Tom', lastName: 'Dale' }),
       Person.create({ id: 3, firstName: 'Peter', lastName: 'Wagenet' }),
@@ -49,11 +49,11 @@ QUnit.test("works from a template with bindings [DEPRECATED]", function() {
     ])
   });
 
-  application.selectedPersonController = EmberObject.create({
+  application.selectedPersonController = NgularObject.create({
     person: null
   });
 
-  view = EmberView.create({
+  view = NgularView.create({
     app: application,
     selectView: SelectView,
     template: compile(
@@ -90,7 +90,7 @@ QUnit.test("works from a template with bindings [DEPRECATED]", function() {
 });
 
 QUnit.test("works from a template", function() {
-  var Person = EmberObject.extend({
+  var Person = NgularObject.extend({
     id: null,
     firstName: null,
     lastName: null,
@@ -105,7 +105,7 @@ QUnit.test("works from a template", function() {
   var application = Namespace.create();
 
   application.peopleController = ArrayController.create({
-    content: Ember.A([
+    content: Ngular.A([
       Person.create({ id: 1, firstName: 'Yehuda', lastName: 'Katz' }),
       Person.create({ id: 2, firstName: 'Tom', lastName: 'Dale' }),
       Person.create({ id: 3, firstName: 'Peter', lastName: 'Wagenet' }),
@@ -113,11 +113,11 @@ QUnit.test("works from a template", function() {
     ])
   });
 
-  application.selectedPersonController = EmberObject.create({
+  application.selectedPersonController = NgularObject.create({
     person: null
   });
 
-  view = EmberView.create({
+  view = NgularView.create({
     app: application,
     selectView: SelectView,
     template: compile(
@@ -152,10 +152,10 @@ QUnit.test("works from a template", function() {
 });
 
 QUnit.test("upon content change, the DOM should reflect the selection (#481)", function() {
-  var userOne = { name: 'Mike', options: Ember.A(['a', 'b']), selectedOption: 'a' };
-  var userTwo = { name: 'John', options: Ember.A(['c', 'd']), selectedOption: 'd' };
+  var userOne = { name: 'Mike', options: Ngular.A(['a', 'b']), selectedOption: 'a' };
+  var userTwo = { name: 'John', options: Ngular.A(['c', 'd']), selectedOption: 'd' };
 
-  view = EmberView.create({
+  view = NgularView.create({
     user: userOne,
     selectView: SelectView,
     template: compile(
@@ -186,11 +186,11 @@ QUnit.test("upon content change with Array-like content, the DOM should reflect 
   var sylvain = { id: 5, name: 'Sylvain' };
 
   var proxy = ArrayProxy.create({
-    content: Ember.A(),
+    content: Ngular.A(),
     selectedOption: sylvain
   });
 
-  view = EmberView.create({
+  view = NgularView.create({
     proxy: proxy,
     selectView: SelectView,
     template: compile(
@@ -208,7 +208,7 @@ QUnit.test("upon content change with Array-like content, the DOM should reflect 
   equal(selectEl.selectedIndex, -1, "Precond: The DOM reflects the lack of selection");
 
   run(function() {
-    proxy.set('content', Ember.A([tom, sylvain]));
+    proxy.set('content', Ngular.A([tom, sylvain]));
   });
 
   equal(select.get('selection'), sylvain, "Selection was properly set after content change");
@@ -216,8 +216,8 @@ QUnit.test("upon content change with Array-like content, the DOM should reflect 
 });
 
 function testValueBinding(templateString) {
-  view = EmberView.create({
-    collection: Ember.A([{ name: 'Wes', value: 'w' }, { name: 'Gordon', value: 'g' }]),
+  view = NgularView.create({
+    collection: Ngular.A([{ name: 'Wes', value: 'w' }, { name: 'Gordon', value: 'g' }]),
     val: 'g',
     selectView: SelectView,
     template: compile(templateString)
@@ -266,8 +266,8 @@ QUnit.test("select element should correctly initialize and update selectedIndex 
 });
 
 function testSelectionBinding(templateString) {
-  view = EmberView.create({
-    collection: Ember.A([{ name: 'Wes', value: 'w' }, { name: 'Gordon', value: 'g' }]),
+  view = NgularView.create({
+    collection: Ngular.A([{ name: 'Wes', value: 'w' }, { name: 'Gordon', value: 'g' }]),
     selection: { name: 'Gordon', value: 'g' },
     selectView: SelectView,
     template: compile(templateString)
@@ -325,11 +325,11 @@ QUnit.test("select element should correctly initialize and update selectedIndex 
     '    prompt="Please wait..."' +
     '    selection=view.selection}}';
 
-  view = EmberView.create({
-    collection: Ember.A([{ name: 'Wes', val: 'w' }, { name: 'Gordon', val: 'g' }]),
+  view = NgularView.create({
+    collection: Ngular.A([{ name: 'Wes', val: 'w' }, { name: 'Gordon', val: 'g' }]),
     selection: { name: 'Gordon', val: 'g' },
     selectView: SelectView,
-    template: Ember.Handlebars.compile(templateString)
+    template: Ngular.Handlebars.compile(templateString)
   });
 
   run(function() {

@@ -1,9 +1,9 @@
 /**
-@module ember
-@submodule ember-htmlbars
+@module ngular
+@submodule ngular-htmlbars
 */
 
-import o_create from "ember-metal/platform/create";
+import o_create from "ngular-metal/platform/create";
 
 /**
  @private
@@ -12,16 +12,16 @@ import o_create from "ember-metal/platform/create";
 var helpers = o_create(null);
 
 /**
-@module ember
-@submodule ember-htmlbars
+@module ngular
+@submodule ngular-htmlbars
 */
 
-import Helper from "ember-htmlbars/system/helper";
+import Helper from "ngular-htmlbars/system/helper";
 
 /**
   @private
   @method _registerHelper
-  @for Ember.HTMLBars
+  @for Ngular.HTMLBars
   @param {String} name
   @param {Object|Function} helperFunc the helper function to add
 */

@@ -1,14 +1,14 @@
-import { get } from "ember-metal/property_get";
-import { set } from "ember-metal/property_set";
-import run from "ember-metal/run_loop";
-import EmberView from "ember-views/views/view";
-import ContainerView from "ember-views/views/container_view";
-import compile from "ember-template-compiler/system/compile";
+import { get } from "ngular-metal/property_get";
+import { set } from "ngular-metal/property_set";
+import run from "ngular-metal/run_loop";
+import NgularView from "ngular-views/views/view";
+import ContainerView from "ngular-views/views/container_view";
+import compile from "ngular-template-compiler/system/compile";
 
 var View, view, parentBecameVisible, childBecameVisible, grandchildBecameVisible;
 var parentBecameHidden, childBecameHidden, grandchildBecameHidden;
 
-QUnit.module("EmberView#isVisible", {
+QUnit.module("NgularView#isVisible", {
   teardown() {
     if (view) {
       run(function() { view.destroy(); });
@@ -17,7 +17,7 @@ QUnit.module("EmberView#isVisible", {
 });
 
 QUnit.test("should hide views when isVisible is false", function() {
-  view = EmberView.create({
+  view = NgularView.create({
     isVisible: false
   });
 
@@ -38,7 +38,7 @@ QUnit.test("should hide views when isVisible is false", function() {
 });
 
 QUnit.test("should hide element if isVisible is false before element is created", function() {
-  view = EmberView.create({
+  view = NgularView.create({
     isVisible: false
   });
 
@@ -71,7 +71,7 @@ QUnit.test("should hide element if isVisible is false before element is created"
   });
 });
 
-QUnit.module("EmberView#isVisible with Container", {
+QUnit.module("NgularView#isVisible with Container", {
   setup() {
     expectDeprecation("Setting `childViews` on a Container is deprecated.");
 
@@ -92,7 +92,7 @@ QUnit.module("EmberView#isVisible with Container", {
         becameVisible() { childBecameVisible++; },
         becameHidden() { childBecameHidden++; },
 
-        grandchild: EmberView.extend({
+        grandchild: NgularView.extend({
           template() { return "seems weird bro"; },
           becameVisible() { grandchildBecameVisible++; },
           becameHidden() { grandchildBecameHidden++; }

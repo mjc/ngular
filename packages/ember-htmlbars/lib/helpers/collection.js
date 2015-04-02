@@ -1,27 +1,27 @@
 /**
-@module ember
-@submodule ember-htmlbars
+@module ngular
+@submodule ngular-htmlbars
 */
 
-import Ember from "ember-metal/core"; // Ember.assert, Ember.deprecate
-import { IS_BINDING } from "ember-metal/mixin";
-import { fmt } from "ember-runtime/system/string";
-import { get } from "ember-metal/property_get";
-import CollectionView from "ember-views/views/collection_view";
-import { readViewFactory } from "ember-views/streams/utils";
-import { map } from 'ember-metal/enumerable_utils';
+import Ngular from "ngular-metal/core"; // Ngular.assert, Ngular.deprecate
+import { IS_BINDING } from "ngular-metal/mixin";
+import { fmt } from "ngular-runtime/system/string";
+import { get } from "ngular-metal/property_get";
+import CollectionView from "ngular-views/views/collection_view";
+import { readViewFactory } from "ngular-views/streams/utils";
+import { map } from 'ngular-metal/enumerable_utils';
 import {
   streamifyClassNameBinding
-} from "ember-views/streams/class_name_binding";
-import mergeViewBindings from "ember-htmlbars/system/merge-view-bindings";
+} from "ngular-views/streams/class_name_binding";
+import mergeViewBindings from "ngular-htmlbars/system/merge-view-bindings";
 
 /**
-  `{{collection}}` is a `Ember.Handlebars` helper for adding instances of
-  `Ember.CollectionView` to a template. See [Ember.CollectionView](/api/classes/Ember.CollectionView.html)
+  `{{collection}}` is a `Ngular.Handlebars` helper for adding instances of
+  `Ngular.CollectionView` to a template. See [Ngular.CollectionView](/api/classes/Ngular.CollectionView.html)
    for additional information on how a `CollectionView` functions.
 
   `{{collection}}`'s primary use is as a block helper with a `contentBinding`
-  option pointing towards an `Ember.Array`-compatible object. An `Ember.View`
+  option pointing towards an `Ngular.Array`-compatible object. An `Ngular.View`
   instance will be created for each item in its `content` property. Each view
   will have its own `content` property set to the appropriate item in the
   collection.
@@ -40,8 +40,8 @@ import mergeViewBindings from "ember-htmlbars/system/merge-view-bindings";
   And the following application code
 
   ```javascript
-  App = Ember.Application.create();
-  App.ApplicationRoute = Ember.Route.extend({
+  App = Ngular.Application.create();
+  App.ApplicationRoute = Ngular.Route.extend({
     model: function() {
       return [{name: 'Yehuda'},{name: 'Tom'},{name: 'Peter'}];
     }
@@ -51,10 +51,10 @@ import mergeViewBindings from "ember-htmlbars/system/merge-view-bindings";
   The following HTML will result:
 
   ```html
-  <div class="ember-view">
-    <div class="ember-view">Hi Yehuda</div>
-    <div class="ember-view">Hi Tom</div>
-    <div class="ember-view">Hi Peter</div>
+  <div class="ngular-view">
+    <div class="ngular-view">Hi Yehuda</div>
+    <div class="ngular-view">Hi Tom</div>
+    <div class="ngular-view">Hi Peter</div>
   </div>
   ```
 
@@ -73,32 +73,32 @@ import mergeViewBindings from "ember-htmlbars/system/merge-view-bindings";
   And application code
 
   ```javascript
-  App = Ember.Application.create();
-  App.ApplicationRoute = Ember.Route.extend({
+  App = Ngular.Application.create();
+  App.ApplicationRoute = Ngular.Route.extend({
     model: function() {
       return [{name: 'Yehuda'},{name: 'Tom'},{name: 'Peter'}];
     }
   });
 
-  App.AnItemView = Ember.View.extend({
-    template: Ember.Handlebars.compile("Greetings {{view.content.name}}")
+  App.AnItemView = Ngular.View.extend({
+    template: Ngular.Handlebars.compile("Greetings {{view.content.name}}")
   });
   ```
 
   Will result in the HTML structure below
 
   ```html
-  <div class="ember-view">
-    <div class="ember-view">Greetings Yehuda</div>
-    <div class="ember-view">Greetings Tom</div>
-    <div class="ember-view">Greetings Peter</div>
+  <div class="ngular-view">
+    <div class="ngular-view">Greetings Yehuda</div>
+    <div class="ngular-view">Greetings Tom</div>
+    <div class="ngular-view">Greetings Peter</div>
   </div>
   ```
 
   ### Specifying a CollectionView subclass
 
   By default the `{{collection}}` helper will create an instance of
-  `Ember.CollectionView`. You can supply a `Ember.CollectionView` subclass to
+  `Ngular.CollectionView`. You can supply a `Ngular.CollectionView` subclass to
   the helper by passing it as the first argument:
 
   ```handlebars
@@ -112,7 +112,7 @@ import mergeViewBindings from "ember-htmlbars/system/merge-view-bindings";
   ### Forwarded `item.*`-named Options
 
   As with the `{{view}}`, helper options passed to the `{{collection}}` will be
-  set on the resulting `Ember.CollectionView` as properties. Additionally,
+  set on the resulting `Ngular.CollectionView` as properties. Additionally,
   options prefixed with `item` will be applied to the views rendered for each
   item (note the camelcasing):
 
@@ -127,24 +127,24 @@ import mergeViewBindings from "ember-htmlbars/system/merge-view-bindings";
   Will result in the following HTML structure:
 
   ```html
-  <div class="ember-view">
-    <p class="ember-view greeting">Howdy Yehuda</p>
-    <p class="ember-view greeting">Howdy Tom</p>
-    <p class="ember-view greeting">Howdy Peter</p>
+  <div class="ngular-view">
+    <p class="ngular-view greeting">Howdy Yehuda</p>
+    <p class="ngular-view greeting">Howdy Tom</p>
+    <p class="ngular-view greeting">Howdy Peter</p>
   </div>
   ```
 
   @method collection
-  @for Ember.Handlebars.helpers
+  @for Ngular.Handlebars.helpers
   @deprecated Use `{{each}}` helper instead.
 */
 export function collectionHelper(params, hash, options, env) {
   var path = params[0];
 
-  Ember.deprecate("Using the {{collection}} helper without specifying a class has been" +
+  Ngular.deprecate("Using the {{collection}} helper without specifying a class has been" +
                   " deprecated as the {{each}} helper now supports the same functionality.", path !== 'collection');
 
-  Ember.assert("You cannot pass more than one argument to the collection helper", params.length <= 1);
+  Ngular.assert("You cannot pass more than one argument to the collection helper", params.length <= 1);
 
   var data     = env.data;
   var template = options.template;
@@ -161,7 +161,7 @@ export function collectionHelper(params, hash, options, env) {
   var collectionClass;
   if (path) {
     collectionClass = readViewFactory(path, container);
-    Ember.assert(fmt("%@ #collection: Could not find collection class %@", [data.view, path]), !!collectionClass);
+    Ngular.assert(fmt("%@ #collection: Could not find collection class %@", [data.view, path]), !!collectionClass);
   } else {
     collectionClass = CollectionView;
   }
@@ -185,7 +185,7 @@ export function collectionHelper(params, hash, options, env) {
     itemViewClass = container.lookupFactory('view:'+itemViewClass);
   }
 
-  Ember.assert(fmt("%@ #collection: Could not find itemViewClass %@", [data.view, itemViewClass]), !!itemViewClass);
+  Ngular.assert(fmt("%@ #collection: Could not find itemViewClass %@", [data.view, itemViewClass]), !!itemViewClass);
 
   delete hash.itemViewClass;
   delete hash.itemView;

@@ -4,54 +4,54 @@
 "REMOVE_USE_STRICT: true";
 
 /**
-  @module ember
-  @submodule ember-runtime
+  @module ngular
+  @submodule ngular-runtime
 */
 
-// using ember-metal/lib/main here to ensure that ember-debug is setup
+// using ngular-metal/lib/main here to ensure that ngular-debug is setup
 // if present
-import Ember from "ember-metal";
-import merge from "ember-metal/merge";
-// Ember.assert, Ember.config
+import Ngular from "ngular-metal";
+import merge from "ngular-metal/merge";
+// Ngular.assert, Ngular.config
 
-// NOTE: this object should never be included directly. Instead use `Ember.Object`.
-// We only define this separately so that `Ember.Set` can depend on it.
-import { get } from "ember-metal/property_get";
+// NOTE: this object should never be included directly. Instead use `Ngular.Object`.
+// We only define this separately so that `Ngular.Set` can depend on it.
+import { get } from "ngular-metal/property_get";
 import {
   guidFor,
   apply
-} from "ember-metal/utils";
-import o_create from 'ember-metal/platform/create';
+} from "ngular-metal/utils";
+import o_create from 'ngular-metal/platform/create';
 import {
   generateGuid,
   GUID_KEY_PROPERTY,
   NEXT_SUPER_PROPERTY,
   meta,
   makeArray
-} from "ember-metal/utils";
-import { finishChains } from "ember-metal/chains";
-import { sendEvent } from "ember-metal/events";
+} from "ngular-metal/utils";
+import { finishChains } from "ngular-metal/chains";
+import { sendEvent } from "ngular-metal/events";
 import {
   IS_BINDING,
   Mixin,
   REQUIRED
-} from "ember-metal/mixin";
-import { indexOf } from "ember-metal/enumerable_utils";
-import EmberError from "ember-metal/error";
-import { defineProperty as o_defineProperty } from "ember-metal/platform/define_property";
-import keys from "ember-metal/keys";
-import ActionHandler from "ember-runtime/mixins/action_handler";
-import { defineProperty } from "ember-metal/properties";
-import { Binding } from "ember-metal/binding";
-import { ComputedProperty, computed } from "ember-metal/computed";
-import InjectedProperty from "ember-metal/injected_property";
-import run from 'ember-metal/run_loop';
-import { destroy } from "ember-metal/watching";
+} from "ngular-metal/mixin";
+import { indexOf } from "ngular-metal/enumerable_utils";
+import NgularError from "ngular-metal/error";
+import { defineProperty as o_defineProperty } from "ngular-metal/platform/define_property";
+import keys from "ngular-metal/keys";
+import ActionHandler from "ngular-runtime/mixins/action_handler";
+import { defineProperty } from "ngular-metal/properties";
+import { Binding } from "ngular-metal/binding";
+import { ComputedProperty, computed } from "ngular-metal/computed";
+import InjectedProperty from "ngular-metal/injected_property";
+import run from 'ngular-metal/run_loop';
+import { destroy } from "ngular-metal/watching";
 import {
   K
-} from 'ember-metal/core';
-import { hasPropertyAccessors } from "ember-metal/platform/define_property";
-import { validatePropertyInjections } from "ember-runtime/inject";
+} from 'ngular-metal/core';
+import { hasPropertyAccessors } from "ngular-metal/platform/define_property";
+import { validatePropertyInjections } from "ngular-runtime/inject";
 
 var schedule = run.schedule;
 var applyMixin = Mixin._apply;
@@ -94,10 +94,10 @@ function makeCtor() {
       for (var i = 0, l = props.length; i < l; i++) {
         var properties = props[i];
 
-        Ember.assert("Ember.Object.create no longer supports mixing in other definitions, use createWithMixins instead.", !(properties instanceof Mixin));
+        Ngular.assert("Ngular.Object.create no longer supports mixing in other definitions, use createWithMixins instead.", !(properties instanceof Mixin));
 
         if (typeof properties !== 'object' && properties !== undefined) {
-          throw new EmberError("Ember.Object.create only accepts objects.");
+          throw new NgularError("Ngular.Object.create only accepts objects.");
         }
 
         if (!properties) { continue; }
@@ -121,10 +121,10 @@ function makeCtor() {
           var possibleDesc = this[keyName];
           var desc = (possibleDesc !== null && typeof possibleDesc === 'object' && possibleDesc.isDescriptor) ? possibleDesc : undefined;
 
-          Ember.assert("Ember.Object.create no longer supports defining computed properties. Define computed properties using extend() or reopen() before calling create().", !(value instanceof ComputedProperty));
-          Ember.assert("Ember.Object.create no longer supports defining methods that call _super.", !(typeof value === 'function' && value.toString().indexOf('._super') !== -1));
-          Ember.assert("`actions` must be provided at extend time, not at create " +
-                       "time, when Ember.ActionHandler is used (i.e. views, " +
+          Ngular.assert("Ngular.Object.create no longer supports defining computed properties. Define computed properties using extend() or reopen() before calling create().", !(value instanceof ComputedProperty));
+          Ngular.assert("Ngular.Object.create no longer supports defining methods that call _super.", !(typeof value === 'function' && value.toString().indexOf('._super') !== -1));
+          Ngular.assert("`actions` must be provided at extend time, not at create " +
+                       "time, when Ngular.ActionHandler is used (i.e. views, " +
                        "controllers & routes).", !((keyName === 'actions') && ActionHandler.detect(this)));
 
           if (concatenatedProperties &&
@@ -157,7 +157,7 @@ function makeCtor() {
             if (typeof this.setUnknownProperty === 'function' && !(keyName in this)) {
               this.setUnknownProperty(keyName, value);
             } else {
-              if (Ember.FEATURES.isEnabled('mandatory-setter')) {
+              if (Ngular.FEATURES.isEnabled('mandatory-setter')) {
                 if (hasPropertyAccessors) {
                   defineProperty(this, keyName, null, value); // setup mandatory setter
                 } else {
@@ -224,10 +224,10 @@ function makeCtor() {
 
 /**
   @class CoreObject
-  @namespace Ember
+  @namespace Ngular
 */
 var CoreObject = makeCtor();
-CoreObject.toString = function() { return "Ember.CoreObject"; };
+CoreObject.toString = function() { return "Ngular.CoreObject"; };
 CoreObject.PrototypeMixin = Mixin.create({
   reopen(...args) {
     applyMixin(this, args, true);
@@ -241,7 +241,7 @@ CoreObject.PrototypeMixin = Mixin.create({
     Example:
 
     ```javascript
-    App.Person = Ember.Object.extend({
+    App.Person = Ngular.Object.extend({
       init: function() {
         alert('Name is ' + this.get('name'));
       }
@@ -254,9 +254,9 @@ CoreObject.PrototypeMixin = Mixin.create({
     // alerts 'Name is Steve'.
     ```
 
-    NOTE: If you do override `init` for a framework class like `Ember.View` or
-    `Ember.ArrayController`, be sure to call `this._super.apply(this, arguments)` in your
-    `init` declaration! If you don't, Ember may not have an opportunity to
+    NOTE: If you do override `init` for a framework class like `Ngular.View` or
+    `Ngular.ArrayController`, be sure to call `this._super.apply(this, arguments)` in your
+    `init` declaration! If you don't, Ngular may not have an opportunity to
     do important setup work, and you'll see strange behavior in your
     application.
 
@@ -272,18 +272,18 @@ CoreObject.PrototypeMixin = Mixin.create({
     Defines the properties that will be concatenated from the superclass
     (instead of overridden).
 
-    By default, when you extend an Ember class a property defined in
+    By default, when you extend an Ngular class a property defined in
     the subclass overrides a property with the same name that is defined
     in the superclass. However, there are some cases where it is preferable
     to build up a property's value by combining the superclass' property
-    value with the subclass' value. An example of this in use within Ember
-    is the `classNames` property of `Ember.View`.
+    value with the subclass' value. An example of this in use within Ngular
+    is the `classNames` property of `Ngular.View`.
 
     Here is some sample code showing the difference between a concatenated
     property and a normal one:
 
     ```javascript
-    App.BarView = Ember.View.extend({
+    App.BarView = Ngular.View.extend({
       someNonConcatenatedProperty: ['bar'],
       classNames: ['bar']
     });
@@ -295,7 +295,7 @@ CoreObject.PrototypeMixin = Mixin.create({
 
     var fooBarView = App.FooBarView.create();
     fooBarView.get('someNonConcatenatedProperty'); // ['foo']
-    fooBarView.get('classNames'); // ['ember-view', 'bar', 'foo']
+    fooBarView.get('classNames'); // ['ngular-view', 'bar', 'foo']
     ```
 
     This behavior extends to object creation as well. Continuing the
@@ -307,7 +307,7 @@ CoreObject.PrototypeMixin = Mixin.create({
       classNames: ['baz']
     })
     view.get('someNonConcatenatedProperty'); // ['baz']
-    view.get('classNames'); // ['ember-view', 'bar', 'foo', 'baz']
+    view.get('classNames'); // ['ngular-view', 'bar', 'foo', 'baz']
     ```
     Adding a single property that is not an array will just add it in the array:
 
@@ -315,16 +315,16 @@ CoreObject.PrototypeMixin = Mixin.create({
     var view = App.FooBarView.create({
       classNames: 'baz'
     })
-    view.get('classNames'); // ['ember-view', 'bar', 'foo', 'baz']
+    view.get('classNames'); // ['ngular-view', 'bar', 'foo', 'baz']
     ```
 
-    Using the `concatenatedProperties` property, we can tell Ember to mix the
+    Using the `concatenatedProperties` property, we can tell Ngular to mix the
     content of the properties.
 
-    In `Ember.View` the `classNameBindings` and `attributeBindings` properties
+    In `Ngular.View` the `classNameBindings` and `attributeBindings` properties
     are also concatenated, in addition to `classNames`.
 
-    This feature is available for you to use throughout the Ember object model,
+    This feature is available for you to use throughout the Ngular object model,
     although typical app developers are likely to use it infrequently. Since
     it changes expectations about behavior of properties, you should properly
     document its usage in each individual concatenated property (to not
@@ -369,7 +369,7 @@ CoreObject.PrototypeMixin = Mixin.create({
     happen immediately.  It will set an isDestroying flag immediately.
 
     @method destroy
-    @return {Ember.Object} receiver
+    @return {Ngular.Object} receiver
   */
   destroy() {
     if (this.isDestroying) { return; }
@@ -408,22 +408,22 @@ CoreObject.PrototypeMixin = Mixin.create({
 
   /**
     Returns a string representation which attempts to provide more information
-    than Javascript's `toString` typically does, in a generic way for all Ember
+    than Javascript's `toString` typically does, in a generic way for all Ngular
     objects.
 
     ```javascript
     App.Person = Em.Object.extend()
     person = App.Person.create()
-    person.toString() //=> "<App.Person:ember1024>"
+    person.toString() //=> "<App.Person:ngular1024>"
     ```
 
-    If the object's class is not defined on an Ember namespace, it will
+    If the object's class is not defined on an Ngular namespace, it will
     indicate it is a subclass of the registered superclass:
 
    ```javascript
     Student = App.Person.extend()
     student = Student.create()
-    student.toString() //=> "<(subclass of App.Person):ember1025>"
+    student.toString() //=> "<(subclass of App.Person):ngular1025>"
     ```
 
     If the method `toStringExtension` is defined, its return value will be
@@ -436,7 +436,7 @@ CoreObject.PrototypeMixin = Mixin.create({
       }
     });
     teacher = App.Teacher.create()
-    teacher.toString(); //=> "<App.Teacher:ember1026:Tom Dale>"
+    teacher.toString(); //=> "<App.Teacher:ngular1026:Tom Dale>"
     ```
 
     @method toString
@@ -474,19 +474,19 @@ var ClassMixinProps = {
     Creates a new subclass.
 
     ```javascript
-    App.Person = Ember.Object.extend({
+    App.Person = Ngular.Object.extend({
       say: function(thing) {
         alert(thing);
        }
     });
     ```
 
-    This defines a new subclass of Ember.Object: `App.Person`. It contains one method: `say()`.
+    This defines a new subclass of Ngular.Object: `App.Person`. It contains one method: `say()`.
 
-    You can also create a subclass from any existing class by calling its `extend()`  method. For example, you might want to create a subclass of Ember's built-in `Ember.View` class:
+    You can also create a subclass from any existing class by calling its `extend()`  method. For example, you might want to create a subclass of Ngular's built-in `Ngular.View` class:
 
     ```javascript
-    App.PersonView = Ember.View.extend({
+    App.PersonView = Ngular.View.extend({
       tagName: 'li',
       classNameBindings: ['isAdministrator']
     });
@@ -495,7 +495,7 @@ var ClassMixinProps = {
     When defining a subclass, you can override methods but still access the implementation of your parent class by calling the special `_super()` method:
 
     ```javascript
-    App.Person = Ember.Object.extend({
+    App.Person = Ngular.Object.extend({
       say: function(thing) {
         var name = this.get('name');
         alert(name + ' says: ' + thing);
@@ -523,7 +523,7 @@ var ClassMixinProps = {
     You can also pass `Mixin` classes to add additional properties to the subclass.
 
     ```javascript
-    App.Person = Ember.Object.extend({
+    App.Person = Ngular.Object.extend({
       say: function(thing) {
         alert(this.get('name') + ' says: ' + thing);
       }
@@ -594,7 +594,7 @@ var ClassMixinProps = {
     containing values to initialize the newly instantiated object with.
 
     ```javascript
-    App.Person = Ember.Object.extend({
+    App.Person = Ngular.Object.extend({
       helloWorld: function() {
         alert("Hi, my name is " + this.get('name'));
       }
@@ -608,7 +608,7 @@ var ClassMixinProps = {
     ```
 
     `create` will call the `init` function if defined during
-    `Ember.AnyObject.extend`
+    `Ngular.AnyObject.extend`
 
     If no arguments are passed to `create`, it will not set values to the new
     instance during initialization:
@@ -639,7 +639,7 @@ var ClassMixinProps = {
     properties and functions:
 
     ```javascript
-    MyObject = Ember.Object.extend({
+    MyObject = Ngular.Object.extend({
       name: 'an object'
     });
 
@@ -673,7 +673,7 @@ var ClassMixinProps = {
     Augments a constructor's own properties and functions:
 
     ```javascript
-    MyObject = Ember.Object.extend({
+    MyObject = Ngular.Object.extend({
       name: 'an object'
     });
 
@@ -689,7 +689,7 @@ var ClassMixinProps = {
     and not on any instance of that class.
 
     ```javascript
-    App.Person = Ember.Object.extend({
+    App.Person = Ngular.Object.extend({
       name : "",
       sayHello : function() {
         alert("Hello. My name is " + this.get('name'));
@@ -776,7 +776,7 @@ var ClassMixinProps = {
     var possibleDesc = proto[key];
     var desc = (possibleDesc !== null && typeof possibleDesc === 'object' && possibleDesc.isDescriptor) ? possibleDesc : undefined;
 
-    Ember.assert("metaForProperty() could not find a computed property with key '"+key+"'.", !!desc && desc instanceof ComputedProperty);
+    Ngular.assert("metaForProperty() could not find a computed property with key '"+key+"'.", !!desc && desc instanceof ComputedProperty);
     return desc._meta || {};
   },
 
@@ -823,10 +823,10 @@ var ClassMixinProps = {
 };
 
 function injectedPropertyAssertion() {
-  Ember.assert("Injected properties are invalid", validatePropertyInjections(this));
+  Ngular.assert("Injected properties are invalid", validatePropertyInjections(this));
 }
 
-Ember.runInDebug(function() {
+Ngular.runInDebug(function() {
   /**
     Provides lookup-time type validation for injected properties.
 
@@ -869,8 +869,8 @@ ClassMixin.apply(CoreObject);
 CoreObject.reopen({
   didDefineProperty(proto, key, value) {
     if (hasCachedComputedProperties === false) { return; }
-    if (value instanceof Ember.ComputedProperty) {
-      var cache = Ember.meta(this.constructor).cache;
+    if (value instanceof Ngular.ComputedProperty) {
+      var cache = Ngular.meta(this.constructor).cache;
 
       if (cache && cache._computedProperties !== undefined) {
         cache._computedProperties = undefined;

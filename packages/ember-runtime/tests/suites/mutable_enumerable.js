@@ -1,8 +1,8 @@
-import { EnumerableTests } from 'ember-runtime/tests/suites/enumerable';
+import { EnumerableTests } from 'ngular-runtime/tests/suites/enumerable';
 
-import addObjectTests from 'ember-runtime/tests/suites/mutable_enumerable/addObject';
-import removeObjectTests from 'ember-runtime/tests/suites/mutable_enumerable/removeObject';
-import removeObjectsTests from 'ember-runtime/tests/suites/mutable_enumerable/removeObjects';
+import addObjectTests from 'ngular-runtime/tests/suites/mutable_enumerable/addObject';
+import removeObjectTests from 'ngular-runtime/tests/suites/mutable_enumerable/removeObject';
+import removeObjectsTests from 'ngular-runtime/tests/suites/mutable_enumerable/removeObjects';
 
 var MutableEnumerableTests = EnumerableTests.extend();
 MutableEnumerableTests.importModuleTests(addObjectTests);

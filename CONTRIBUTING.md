@@ -1,17 +1,17 @@
 # Questions
 
-This is the issue tracker for Ember.js. The Ember.js community uses this site
+This is the issue tracker for Ngular.js. The Ngular.js community uses this site
 to collect and track bugs and discussions of new features. If you are having
-difficulties using Ember.js or have a question about usage, please ask a
-question on Stack Overflow: http://stackoverflow.com/questions/ask?tags=ember.js
+difficulties using Ngular.js or have a question about usage, please ask a
+question on Stack Overflow: http://stackoverflow.com/questions/ask?tags=ngular.js
 
-The Ember.js community is very active on Stack Overflow and most questions
+The Ngular.js community is very active on Stack Overflow and most questions
 receive attention the same day they're posted:
-http://stackoverflow.com/questions/tagged/ember.js
+http://stackoverflow.com/questions/tagged/ngular.js
 
 # Issue Labeling
 
-Ember uses [StandardIssueLabels](https://github.com/wagenet/StandardIssueLabels) for Github Issues.
+Ngular uses [StandardIssueLabels](https://github.com/wagenet/StandardIssueLabels) for Github Issues.
 
 # Issues
 
@@ -27,16 +27,16 @@ this bug already.
 3. Provide JSFiddle or JSBin demo that specifically shows the problem. This
 demo should be fully operational with the exception of the bug you want to
 demonstrate. The more pared down, the better.
-Preconfigured starting points for the latest Ember: [JSFiddle](https://jsfiddle.net/dfcaus7t/1/) | [JSBin](http://emberjs.jsbin.com) (may not work with older IE versions due to MIME type issues).
+Preconfigured starting points for the latest Ngular: [JSFiddle](https://jsfiddle.net/dfcaus7t/1/) | [JSBin](http://ngularjs.jsbin.com) (may not work with older IE versions due to MIME type issues).
 If it is not possible to produce a fiddle, please make sure you provide very
 specific steps to reproduce the error. If we cannot reproduce it, we will
 close the ticket.
 
 4. Your issue will be verified. The provided example will be tested for
-correctness. The Ember team will work with you until your issue can
+correctness. The Ngular team will work with you until your issue can
 be verified.
 
-5. Keep up to date with feedback from the Ember team on your ticket. Your
+5. Keep up to date with feedback from the Ngular team on your ticket. Your
 ticket may be closed if it becomes stale.
 
 6. If possible, submit a Pull Request with a failing test. Better yet, take
@@ -54,7 +54,7 @@ discussing.
 2. Provide a clear and detailed explanation of the feature you want and why
 it's important to add. Keep in mind that we want features that will be useful
 to the majority of our users and not just a small subset. If you're just
-targeting a minority of users, consider writing an add-on library for Ember.
+targeting a minority of users, consider writing an add-on library for Ngular.
 
 3. If the feature is complex, consider writing some initial documentation for
 it. If we do end up accepting the feature it will need to be documented and
@@ -64,12 +64,12 @@ this will also help us to understand it better ourselves.
 always have more work to do than time to do it. If you can write some code
 then that will speed the process along.
 
-# Building Ember.js
+# Building Ngular.js
 
-Building Ember is quite simple.
+Building Ngular is quite simple.
 
 ```sh
-cd ember.js
+cd ngular.js
 npm install
 bower install
 npm run-script build
@@ -88,10 +88,10 @@ to know that you have a clean slate: `npm install && bower install && npm test`.
 3. Add a test for your change. Only refactoring and documentation changes
 require no new tests. If you are adding functionality or fixing a bug, we need
 a test! If your change is a new feature, please
-[wrap it in a feature flag](http://emberjs.com/guides/contributing/adding-new-features/).
+[wrap it in a feature flag](http://github.com/mjc/ngular/guides/contributing/adding-new-features/).
 
 4. Make sure to check out the
-   [JavaScript Style Guide](https://github.com/emberjs/ember.js/blob/master/STYLEGUIDE.md) and
+   [JavaScript Style Guide](https://github.com/ngularjs/ngular.js/blob/master/STYLEGUIDE.md) and
    ensure that your code complies with the rules. If you missed a rule or two, don't worry, our
    tests will warn you.
 
@@ -115,13 +115,13 @@ explanation of why you made the changes you made. For new features make sure to
 explain a standard use case to us.
 
 We try to be quick about responding to tickets but sometimes we get a bit
-backlogged. If the response is slow, try to find someone on IRC (#emberjs) to
+backlogged. If the response is slow, try to find someone on IRC (#ngularjs) to
 give the ticket a review.
 
 Some things that will increase the chance that your pull request is accepted,
 taken straight from the Ruby on Rails guide:
 
-* Use Ember idioms and helpers
+* Use Ngular idioms and helpers
 * Include tests that fail without your code, and pass with it
 * Update the documentation, the surrounding one, examples elsewhere, guides,
   whatever is affected by your contribution
@@ -145,7 +145,7 @@ updating or writing new documentation:
 5. Use two spaces between the code and the example: `foo();  // result`
 6. All references to code words must be enclosed in backticks
 7. Prefer a single space between sentences
-8. Reference Ember.js as Ember.
+8. Reference Ngular.js as Ngular.
 9. Wrap long markdown blocks > 80 characters
 10. Don't include blank lines after `@param` definitions
 
@@ -186,8 +186,8 @@ Documentation commits are tagged as `[DOC channel]` where channel is `canary`,
 
 ### Security
 
-Security commits will be tagged as `[SECURITY cve]`. Please do not submit security related PRs without coordinating with the security team. See the [Security Policy](http://emberjs.com/security/) for more information.
+Security commits will be tagged as `[SECURITY cve]`. Please do not submit security related PRs without coordinating with the security team. See the [Security Policy](http://github.com/mjc/ngular/security/) for more information.
 
 ### Other
 
-In general almost all commits should fall into one of these categories. In the cases where they don't please submit your PR untagged. An Ember contributor will let you know if tagging is required.
+In general almost all commits should fall into one of these categories. In the cases where they don't please submit your PR untagged. An Ngular contributor will let you know if tagging is required.

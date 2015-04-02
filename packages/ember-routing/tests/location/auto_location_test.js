@@ -1,14 +1,14 @@
-import { get } from "ember-metal/property_get";
-import run from "ember-metal/run_loop";
-import merge from "ember-metal/merge";
-import AutoLocation from "ember-routing/location/auto_location";
+import { get } from "ngular-metal/property_get";
+import run from "ngular-metal/run_loop";
+import merge from "ngular-metal/merge";
+import AutoLocation from "ngular-routing/location/auto_location";
 import {
   getHistoryPath,
   getHashPath
-} from "ember-routing/location/auto_location";
-import HistoryLocation from "ember-routing/location/history_location";
-import HashLocation from "ember-routing/location/hash_location";
-import NoneLocation from "ember-routing/location/none_location";
+} from "ngular-routing/location/auto_location";
+import HistoryLocation from "ngular-routing/location/history_location";
+import HashLocation from "ngular-routing/location/hash_location";
+import NoneLocation from "ngular-routing/location/none_location";
 import Registry from "container/registry";
 
 
@@ -52,7 +52,7 @@ function createLocation(location, history) {
 
 var location;
 
-QUnit.module("Ember.AutoLocation", {
+QUnit.module("Ngular.AutoLocation", {
   teardown() {
     if (location) {
       run(location, 'destroy');

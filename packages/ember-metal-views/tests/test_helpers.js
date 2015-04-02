@@ -1,5 +1,5 @@
-import create from 'ember-metal/platform/create';
-import { Renderer } from "ember-metal-views";
+import create from 'ngular-metal/platform/create';
+import { Renderer } from "ngular-metal-views";
 
 var renderer;
 

@@ -1,21 +1,21 @@
-import create from 'ember-metal/platform/create';
-import {get} from "ember-metal/property_get";
-import run from "ember-metal/run_loop";
-import ObjectProxy from "ember-runtime/system/object_proxy";
-import PromiseProxyMixin from "ember-runtime/mixins/promise_proxy";
-import EmberRSVP from "ember-runtime/ext/rsvp";
+import create from 'ngular-metal/platform/create';
+import {get} from "ngular-metal/property_get";
+import run from "ngular-metal/run_loop";
+import ObjectProxy from "ngular-runtime/system/object_proxy";
+import PromiseProxyMixin from "ngular-runtime/mixins/promise_proxy";
+import NgularRSVP from "ngular-runtime/ext/rsvp";
 import {
   onerrorDefault
-} from "ember-runtime/ext/rsvp";
+} from "ngular-runtime/ext/rsvp";
 import * as RSVP from 'rsvp';
 
 var ObjectPromiseProxy;
 
-QUnit.test("present on ember namespace", function() {
+QUnit.test("present on ngular namespace", function() {
   ok(PromiseProxyMixin, "expected PromiseProxyMixin to exist");
 });
 
-QUnit.module("Ember.PromiseProxy - ObjectProxy", {
+QUnit.module("Ngular.PromiseProxy - ObjectProxy", {
   setup() {
     ObjectPromiseProxy = ObjectProxy.extend(PromiseProxyMixin);
   }
@@ -198,7 +198,7 @@ QUnit.test("should work with promise inheritance", function() {
 });
 
 QUnit.test("should reset isFulfilled and isRejected when promise is reset", function() {
-  var deferred = EmberRSVP.defer();
+  var deferred = NgularRSVP.defer();
 
   var proxy = ObjectPromiseProxy.create({
     promise: deferred.promise
@@ -216,7 +216,7 @@ QUnit.test("should reset isFulfilled and isRejected when promise is reset", func
   equal(get(proxy, 'isRejected'), false, 'expects the proxy to indicate that it is not rejected');
   equal(get(proxy, 'isFulfilled'), true, 'expects the proxy to indicate that it is fulfilled');
 
-  var anotherDeferred = EmberRSVP.defer();
+  var anotherDeferred = NgularRSVP.defer();
   proxy.set('promise', anotherDeferred.promise);
 
   equal(get(proxy, 'isPending'), true, 'expects the proxy to indicate that it is loading');
@@ -233,7 +233,7 @@ QUnit.test("should reset isFulfilled and isRejected when promise is reset", func
 });
 
 QUnit.test("should have content when isFulfilled is set", function() {
-  var deferred = EmberRSVP.defer();
+  var deferred = NgularRSVP.defer();
 
   var proxy = ObjectPromiseProxy.create({
     promise: deferred.promise
@@ -248,7 +248,7 @@ QUnit.test("should have content when isFulfilled is set", function() {
 
 QUnit.test("should have reason when isRejected is set", function() {
   var error = new Error('Y U REJECT?!?');
-  var deferred = EmberRSVP.defer();
+  var deferred = NgularRSVP.defer();
 
   var proxy = ObjectPromiseProxy.create({
     promise: deferred.promise

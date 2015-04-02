@@ -1,34 +1,34 @@
-import Ember from "ember-metal/core"; // lookup, etc
-import run from "ember-metal/run_loop";
-import Application from "ember-application/system/application";
-import EmberObject from "ember-runtime/system/object";
-import DefaultResolver from "ember-application/system/resolver";
-import { guidFor } from "ember-metal/utils";
+import Ngular from "ngular-metal/core"; // lookup, etc
+import run from "ngular-metal/run_loop";
+import Application from "ngular-application/system/application";
+import NgularObject from "ngular-runtime/system/object";
+import DefaultResolver from "ngular-application/system/resolver";
+import { guidFor } from "ngular-metal/utils";
 
 var originalLookup, App, originalModelInjections;
 
-QUnit.module("Ember.Application Dependency Injection – toString", {
+QUnit.module("Ngular.Application Dependency Injection – toString", {
   setup() {
-    originalModelInjections = Ember.MODEL_FACTORY_INJECTIONS;
-    Ember.MODEL_FACTORY_INJECTIONS = true;
+    originalModelInjections = Ngular.MODEL_FACTORY_INJECTIONS;
+    Ngular.MODEL_FACTORY_INJECTIONS = true;
 
-    originalLookup = Ember.lookup;
+    originalLookup = Ngular.lookup;
 
     run(function() {
       App = Application.create();
-      Ember.lookup = {
+      Ngular.lookup = {
         App: App
       };
     });
 
-    App.Post = EmberObject.extend();
+    App.Post = NgularObject.extend();
 
   },
 
   teardown() {
-    Ember.lookup = originalLookup;
+    Ngular.lookup = originalLookup;
     run(App, 'destroy');
-    Ember.MODEL_FACTORY_INJECTIONS = originalModelInjections;
+    Ngular.MODEL_FACTORY_INJECTIONS = originalModelInjections;
   }
 });
 
@@ -57,7 +57,7 @@ QUnit.test("with a custom resolver", function() {
     });
   });
 
-  App.registry.register('model:peter', EmberObject.extend());
+  App.registry.register('model:peter', NgularObject.extend());
 
   var peter = App.__container__.lookup('model:peter');
   var guid = guidFor(peter);

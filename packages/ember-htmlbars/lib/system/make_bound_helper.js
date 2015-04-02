@@ -1,19 +1,19 @@
 /**
-@module ember
-@submodule ember-htmlbars
+@module ngular
+@submodule ngular-htmlbars
 */
 
-import Ember from "ember-metal/core"; // Ember.FEATURES, Ember.assert, Ember.Handlebars, Ember.lookup
-import Helper from "ember-htmlbars/system/helper";
+import Ngular from "ngular-metal/core"; // Ngular.FEATURES, Ngular.assert, Ngular.Handlebars, Ngular.lookup
+import Helper from "ngular-htmlbars/system/helper";
 
-import Stream from "ember-metal/streams/stream";
+import Stream from "ngular-metal/streams/stream";
 import {
   readArray,
   readHash,
   subscribe,
   scanHash,
   scanArray
-} from "ember-metal/streams/utils";
+} from "ngular-metal/streams/utils";
 
 /**
   Create a bound helper. Accepts a function that receives the ordered and hash parameters
@@ -54,7 +54,7 @@ import {
 
   @private
   @method makeBoundHelper
-  @for Ember.HTMLBars
+  @for Ngular.HTMLBars
   @param {Function} function
   @since 1.10.0
 */
@@ -64,7 +64,7 @@ export default function makeBoundHelper(fn) {
     var numParams = params.length;
     var param, prop;
 
-    Ember.assert("makeBoundHelper generated helpers do not support use with blocks", !options.template);
+    Ngular.assert("makeBoundHelper generated helpers do not support use with blocks", !options.template);
 
     function valueFn() {
       return fn.call(view, readArray(params), readHash(hash), options, env);

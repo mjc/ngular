@@ -1,12 +1,12 @@
-import Ember from 'ember-metal/core';
-import { testBoth } from 'ember-metal/tests/props_helper';
+import Ngular from 'ngular-metal/core';
+import { testBoth } from 'ngular-metal/tests/props_helper';
 import {
   Binding,
   bind
-} from "ember-metal/binding";
-import run from 'ember-metal/run_loop';
-import { set } from 'ember-metal/property_set';
-import { get } from 'ember-metal/property_get';
+} from "ngular-metal/binding";
+import run from 'ngular-metal/run_loop';
+import { set } from 'ngular-metal/property_set';
+import { get } from 'ngular-metal/property_get';
 
 function performTest(binding, a, b, get, set, connect) {
   if (connect === undefined) {
@@ -37,14 +37,14 @@ function performTest(binding, a, b, get, set, connect) {
 
 var originalLookup, lookup, GlobalB;
 
-QUnit.module("Ember.Binding", {
+QUnit.module("Ngular.Binding", {
   setup() {
-    originalLookup = Ember.lookup;
-    Ember.lookup = lookup = {};
+    originalLookup = Ngular.lookup;
+    Ngular.lookup = lookup = {};
   },
   teardown() {
     lookup = null;
-    Ember.lookup = originalLookup;
+    Ngular.lookup = originalLookup;
   }
 });
 

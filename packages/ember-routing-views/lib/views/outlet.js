@@ -1,16 +1,16 @@
 /**
-@module ember
-@submodule ember-routing-views
+@module ngular
+@submodule ngular-routing-views
 */
 
-import ContainerView from "ember-views/views/container_view";
-import { _Metamorph } from "ember-views/views/metamorph_view";
-import { get } from "ember-metal/property_get";
+import ContainerView from "ngular-views/views/container_view";
+import { _Metamorph } from "ngular-views/views/metamorph_view";
+import { get } from "ngular-metal/property_get";
 
 export var CoreOutletView = ContainerView.extend({
   init() {
     this._super();
-    this._childOutlets = Ember.A();
+    this._childOutlets = Ngular.A();
     this._outletState = null;
   },
 
@@ -24,7 +24,7 @@ export var CoreOutletView = ContainerView.extend({
     return parent;
   },
 
-  _linkParent: Ember.on('init', 'parentViewDidChange', function() {
+  _linkParent: Ngular.on('init', 'parentViewDidChange', function() {
     var parent = this._parentOutlet();
     if (parent) {
       parent._childOutlets.push(this);
@@ -95,7 +95,7 @@ export var CoreOutletView = ContainerView.extend({
     }
 
     if (LOG_VIEW_LOOKUPS) {
-      Ember.Logger.info("Rendering " + render.name + " with " + (render.isDefaultView ? "default view " : "") + view, { fullName: 'view:' + render.name });
+      Ngular.Logger.info("Rendering " + render.name + " with " + (render.isDefaultView ? "default view " : "") + view, { fullName: 'view:' + render.name });
     }
 
     return view;

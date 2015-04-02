@@ -1,10 +1,10 @@
-import Ember from "ember-metal/core"; // FEATURES
-import { get } from "ember-metal/property_get";
-import { set } from "ember-metal/property_set";
-import { tryInvoke } from "ember-metal/utils";
+import Ngular from "ngular-metal/core"; // FEATURES
+import { get } from "ngular-metal/property_get";
+import { set } from "ngular-metal/property_set";
+import { tryInvoke } from "ngular-metal/utils";
 
-import EmberObject from "ember-runtime/system/object";
-import environment from "ember-metal/environment";
+import NgularObject from "ngular-runtime/system/object";
+import environment from "ngular-metal/environment";
 
 import {
   supportsHashChange,
@@ -14,28 +14,28 @@ import {
   getQuery,
   getFullPath,
   replacePath
-} from "ember-routing/location/util";
+} from "ngular-routing/location/util";
 
 /**
-@module ember
-@submodule ember-routing
+@module ngular
+@submodule ngular-routing
 */
 
 /**
-  Ember.AutoLocation will select the best location option based off browser
+  Ngular.AutoLocation will select the best location option based off browser
   support with the priority order: history, hash, none.
 
   Clean pushState paths accessed by hashchange-only browsers will be redirected
   to the hash-equivalent and vice versa so future transitions are consistent.
 
   Keep in mind that since some of your users will use `HistoryLocation`, your
-  server must serve the Ember app at all the routes you define.
+  server must serve the Ngular app at all the routes you define.
 
   @class AutoLocation
-  @namespace Ember
+  @namespace Ngular
   @static
 */
-export default EmberObject.extend({
+export default NgularObject.extend({
   /**
     @private
 
@@ -113,7 +113,7 @@ export default EmberObject.extend({
   detect() {
     var rootURL = this.rootURL;
 
-    Ember.assert('rootURL must end with a trailing forward slash e.g. "/app/"',
+    Ngular.assert('rootURL must end with a trailing forward slash e.g. "/app/"',
                  rootURL.charAt(rootURL.length-1) === '/');
 
     var implementation = detectImplementation({
@@ -131,7 +131,7 @@ export default EmberObject.extend({
     }
 
     var concrete = this.container.lookup(`location:${implementation}`);
-    Ember.assert(`Could not find location '${implementation}'.`, !!concrete);
+    Ngular.assert(`Could not find location '${implementation}'.`, !!concrete);
 
     set(this, 'concreteImplementation', concrete);
   },
@@ -155,7 +155,7 @@ export default EmberObject.extend({
 function delegateToConcreteImplementation(methodName) {
   return function(...args) {
     var concreteImplementation = get(this, 'concreteImplementation');
-    Ember.assert("AutoLocation's detect() method should be called before calling any other hooks.", !!concreteImplementation);
+    Ngular.assert("AutoLocation's detect() method should be called before calling any other hooks.", !!concreteImplementation);
     return tryInvoke(concreteImplementation, methodName, args);
   };
 }
@@ -239,9 +239,9 @@ export function getHistoryPath(rootURL, location) {
   var rootURLIndex = path.indexOf(rootURL);
   var routeHash, hashParts;
 
-  Ember.assert(`Path ${path} does not start with the provided rootURL ${rootURL}`, rootURLIndex === 0);
+  Ngular.assert(`Path ${path} does not start with the provided rootURL ${rootURL}`, rootURLIndex === 0);
 
-  // By convention, Ember.js routes using HashLocation are required to start
+  // By convention, Ngular.js routes using HashLocation are required to start
   // with `#/`. Anything else should NOT be considered a route and should
   // be passed straight through, without transformation.
   if (hash.substr(0, 2) === '#/') {

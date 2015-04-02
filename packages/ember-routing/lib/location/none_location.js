@@ -1,23 +1,23 @@
-import { get } from "ember-metal/property_get";
-import { set } from "ember-metal/property_set";
-import EmberObject from "ember-runtime/system/object";
+import { get } from "ngular-metal/property_get";
+import { set } from "ngular-metal/property_set";
+import NgularObject from "ngular-runtime/system/object";
 
 /**
-@module ember
-@submodule ember-routing
+@module ngular
+@submodule ngular-routing
 */
 
 /**
-  Ember.NoneLocation does not interact with the browser. It is useful for
+  Ngular.NoneLocation does not interact with the browser. It is useful for
   testing, or when you need to manage state with your Router, but temporarily
   don't want it to muck with the URL (for example when you embed your
   application in a larger page).
 
   @class NoneLocation
-  @namespace Ember
-  @extends Ember.Object
+  @namespace Ngular
+  @extends Ngular.Object
 */
-export default EmberObject.extend({
+export default NgularObject.extend({
   implementation: 'none',
   path: '',
 
@@ -33,7 +33,7 @@ export default EmberObject.extend({
   },
 
   /**
-    Set the path and remembers what was set. Using this method
+    Set the path and remngulars what was set. Using this method
     to change the path will not invoke the `updateURL` callback.
 
     @private

@@ -1,12 +1,12 @@
 /**
-@module ember-metal
+@module ngular-metal
 */
 
-import Ember from "ember-metal/core";
-import { hasPropertyAccessors } from "ember-metal/platform/define_property";
-import { defineProperty } from "ember-metal/properties";
-import { get } from "ember-metal/property_get";
-import { set } from "ember-metal/property_set";
+import Ngular from "ngular-metal/core";
+import { hasPropertyAccessors } from "ngular-metal/platform/define_property";
+import { defineProperty } from "ngular-metal/properties";
+import { get } from "ngular-metal/property_get";
+import { set } from "ngular-metal/property_set";
 
 
 /**
@@ -23,7 +23,7 @@ import { set } from "ember-metal/property_set";
 
 export function deprecateProperty(object, deprecatedKey, newKey) {
   function deprecate() {
-    Ember.deprecate(`Usage of \`${deprecatedKey}\` is deprecated, use \`${newKey}\` instead.`);
+    Ngular.deprecate(`Usage of \`${deprecatedKey}\` is deprecated, use \`${newKey}\` instead.`);
   }
 
   if (hasPropertyAccessors) {

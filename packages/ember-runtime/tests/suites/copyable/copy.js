@@ -1,4 +1,4 @@
-import {SuiteModuleBuilder} from 'ember-runtime/tests/suites/suite';
+import {SuiteModuleBuilder} from 'ngular-runtime/tests/suites/suite';
 
 var suite = SuiteModuleBuilder.create();
 

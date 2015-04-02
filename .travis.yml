@@ -25,16 +25,16 @@ script:
   - npm test
 
 after_script:
-    - ember stop-sauce-connect
+    - ngular stop-sauce-connect
 
 env:
   global:
-    - SAUCE_USERNAME=ember-ci
+    - SAUCE_USERNAME=ngular-ci
     - SAUCE_ACCESS_KEY=b5cff982-069f-4a0d-ac34-b77e57c2e295
     - DISABLE_SOURCE_MAPS=true
     - BROCCOLI_ENV=production
-    - S3_BUILD_CACHE_BUCKET=emberjs-build-cache
-    - S3_BUCKET_NAME=builds.emberjs.com
+    - S3_BUILD_CACHE_BUCKET=ngularjs-build-cache
+    - S3_BUCKET_NAME=builds.github.com/mjc/ngular
     - secure: "SHnuJ4A3QbSc3LV2fYynDPbbSbhVl0ZWnCiKPuRgwnddDnoSaMQUY2RqyHdtsQGdUZCOeNaMvYUhYx6hzxBVHn0yuN3KA20aSwvYdwaMgZXfJi+lyxgsEI8iYdksWXvVbCAyKM8zjTWXUtNcMBGtsGYOfdD41wfZgI8GsI0YYJc="
     - secure: ! 'KXJmcGLpnxnPmmei/qPNVcdQxLX1xyYIaVocinQ0YAjtBvCtAwg63EWMFnGp
 
@@ -49,8 +49,8 @@ env:
     - secure: e0yxVfwVW61d3Mi/QBOsY6Rfd1mZd3VXUd9xNRoz/fkvQJRuVwDe7oG3NOuJ4LZzvMw7BJ+zpDV9D8nKhAyPEEOgpkkMHUB7Ds83pHG4qSMzm4EAwBCadDLXCQirldz8dzN5FAqgGucXoj5fj/p2SKOkO6qWIZveGr8pdBJEG1E=
   matrix:
     - TEST_SUITE=each-package-tests
-    - TEST_SUITE=built-tests EMBER_ENV=production
+    - TEST_SUITE=built-tests NGULAR_ENV=production
     - TEST_SUITE=old-jquery
     - TEST_SUITE=extend-prototypes
-    - TEST_SUITE=node EMBER_ENV=production
+    - TEST_SUITE=node NGULAR_ENV=production
     - TEST_SUITE=sauce

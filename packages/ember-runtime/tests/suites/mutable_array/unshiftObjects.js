@@ -1,4 +1,4 @@
-import {SuiteModuleBuilder} from 'ember-runtime/tests/suites/suite';
+import {SuiteModuleBuilder} from 'ngular-runtime/tests/suites/suite';
 
 var suite = SuiteModuleBuilder.create();
 
@@ -22,7 +22,7 @@ suite.test("[].unshiftObjects([A,B,C]) => [A,B,C] + notify", function() {
   obj.unshiftObjects(items);
 
   deepEqual(this.toArray(obj), items, 'post item results');
-  equal(Ember.get(obj, 'length'), items.length, 'length');
+  equal(Ngular.get(obj, 'length'), items.length, 'length');
 
   equal(observer.timesCalled('[]'), 1, 'should have notified [] once');
   equal(observer.timesCalled('@each'), 1, 'should have notified @each once');
@@ -44,7 +44,7 @@ suite.test("[A,B,C].unshiftObjects([X,Y]) => [X,Y,A,B,C] + notify", function() {
   obj.unshiftObjects(items);
 
   deepEqual(this.toArray(obj), after, 'post item results');
-  equal(Ember.get(obj, 'length'), after.length, 'length');
+  equal(Ngular.get(obj, 'length'), after.length, 'length');
 
   equal(observer.timesCalled('[]'), 1, 'should have notified [] once');
   equal(observer.timesCalled('@each'), 1, 'should have notified @each once');
@@ -67,7 +67,7 @@ suite.test("[A,B,C].unshiftObjects([A,B]) => [A,B,A,B,C] + notify", function() {
   obj.unshiftObjects(items);
 
   deepEqual(this.toArray(obj), after, 'post item results');
-  equal(Ember.get(obj, 'length'), after.length, 'length');
+  equal(Ngular.get(obj, 'length'), after.length, 'length');
 
   equal(observer.timesCalled('[]'), 1, 'should have notified [] once');
   equal(observer.timesCalled('@each'), 1, 'should have notified @each once');

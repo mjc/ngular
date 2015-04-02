@@ -1,9 +1,9 @@
 import {
   subscribe,
   reset as instrumentationReset
-} from "ember-metal/instrumentation";
-import run from "ember-metal/run_loop";
-import EmberView from "ember-views/views/view";
+} from "ngular-metal/instrumentation";
+import run from "ngular-metal/run_loop";
+import NgularView from "ngular-views/views/view";
 
 var view, beforeCalls, afterCalls;
 
@@ -13,7 +13,7 @@ function confirmPayload(payload, view) {
   equal(payload && payload.view, view, 'payload contains the view itself');
 }
 
-QUnit.module("EmberView#instrumentation", {
+QUnit.module("NgularView#instrumentation", {
   setup() {
     beforeCalls = [];
     afterCalls  = [];
@@ -28,7 +28,7 @@ QUnit.module("EmberView#instrumentation", {
       }
     });
 
-    view = EmberView.create({
+    view = NgularView.create({
       _debugContainerKey: 'suchryzsd',
       instrumentDisplay: 'asdfasdfmewj'
     });
@@ -51,7 +51,7 @@ QUnit.test("generates the proper instrumentation details when called directly", 
   confirmPayload(payload, view);
 });
 
-QUnit.test("should add ember-view to views", function() {
+QUnit.test("should add ngular-view to views", function() {
   run(view, 'createElement');
 
   confirmPayload(beforeCalls[0], view);

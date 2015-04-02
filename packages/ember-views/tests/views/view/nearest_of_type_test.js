@@ -1,6 +1,6 @@
-import run from "ember-metal/run_loop";
-import { Mixin as EmberMixin } from "ember-metal/mixin";
-import View from "ember-views/views/view";
+import run from "ngular-metal/run_loop";
+import { Mixin as NgularMixin } from "ngular-metal/mixin";
+import View from "ngular-views/views/view";
 
 var parentView, view;
 
@@ -14,7 +14,7 @@ QUnit.module("View#nearest*", {
 });
 
 (function() {
-  var Mixin = EmberMixin.create({});
+  var Mixin = NgularMixin.create({});
   var Parent = View.extend(Mixin, {
     render(buffer) {
       this.appendChild(View.create());

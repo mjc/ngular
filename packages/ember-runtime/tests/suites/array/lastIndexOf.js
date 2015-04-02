@@ -1,5 +1,5 @@
-import {SuiteModuleBuilder} from 'ember-runtime/tests/suites/suite';
-import {fmt} from "ember-runtime/system/string";
+import {SuiteModuleBuilder} from 'ngular-runtime/tests/suites/suite';
+import {fmt} from "ngular-runtime/system/string";
 
 var suite = SuiteModuleBuilder.create();
 

@@ -1,7 +1,7 @@
-import { set } from 'ember-metal/property_set';
-import { get } from 'ember-metal/property_get';
-import run from 'ember-metal/run_loop';
-import { oneWay } from "ember-metal/binding";
+import { set } from 'ngular-metal/property_set';
+import { get } from 'ngular-metal/property_get';
+import run from 'ngular-metal/run_loop';
+import { oneWay } from "ngular-metal/binding";
 
 var MyApp;
 

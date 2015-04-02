@@ -1,10 +1,10 @@
-import run from "ember-metal/run_loop";
-import { forEach } from "ember-metal/array";
-import Application from "ember-application/system/application";
+import run from "ngular-metal/run_loop";
+import { forEach } from "ngular-metal/array";
+import Application from "ngular-application/system/application";
 
 var application, registry;
 
-QUnit.module("Ember.Application Dependency Injection – normalization", {
+QUnit.module("Ngular.Application Dependency Injection – normalization", {
   setup() {
     application = run(Application, 'create');
     registry = application.registry;

@@ -1,11 +1,11 @@
-import EmberRouter from "ember-routing/system/router";
-import { forEach } from "ember-metal/enumerable_utils";
+import NgularRouter from "ngular-routing/system/router";
+import { forEach } from "ngular-metal/enumerable_utils";
 
 var Router;
 
-QUnit.module("Ember Router DSL", {
+QUnit.module("Ngular Router DSL", {
   setup() {
-    Router = EmberRouter.extend();
+    Router = NgularRouter.extend();
   },
   teardown() {
     Router = null;
@@ -20,7 +20,7 @@ QUnit.test("should fail when using a reserved route name", function() {
   forEach(reservedNames, function(reservedName) {
 
     expectAssertion(function() {
-      Router = EmberRouter.extend();
+      Router = NgularRouter.extend();
 
       Router.map(function() {
         this.route(reservedName);
@@ -31,7 +31,7 @@ QUnit.test("should fail when using a reserved route name", function() {
     }, "'" + reservedName + "' cannot be used as a route name.");
 
     expectAssertion(function() {
-      Router = EmberRouter.extend();
+      Router = NgularRouter.extend();
 
       Router.map(function() {
         this.resource(reservedName);
@@ -79,7 +79,7 @@ QUnit.test("should retain resource namespace if nested with routes", function() 
 });
 
 // jscs:disable validateIndentation
-if (Ember.FEATURES.isEnabled("ember-routing-named-substates")) {
+if (Ngular.FEATURES.isEnabled("ngular-routing-named-substates")) {
 
 QUnit.test("should add loading and error routes if _isRouterMapResult is true", function() {
   Router.map(function() {

@@ -1,6 +1,6 @@
-import { set } from "ember-metal/property_set";
-import Stream from "ember-metal/streams/stream";
-import KeyStream from "ember-views/streams/key_stream";
+import { set } from "ngular-metal/property_set";
+import Stream from "ngular-metal/streams/stream";
+import KeyStream from "ngular-views/streams/key_stream";
 
 var source, object, count;
 

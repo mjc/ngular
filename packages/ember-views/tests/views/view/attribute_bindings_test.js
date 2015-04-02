@@ -1,21 +1,21 @@
-import Ember from "ember-metal/core";
-import run from "ember-metal/run_loop";
-import { observersFor } from "ember-metal/observer";
-import { changeProperties } from "ember-metal/property_events";
-import { SafeString } from "ember-htmlbars/utils/string";
+import Ngular from "ngular-metal/core";
+import run from "ngular-metal/run_loop";
+import { observersFor } from "ngular-metal/observer";
+import { changeProperties } from "ngular-metal/property_events";
+import { SafeString } from "ngular-htmlbars/utils/string";
 
-import EmberView from "ember-views/views/view";
+import NgularView from "ngular-views/views/view";
 
-var originalLookup = Ember.lookup;
+var originalLookup = Ngular.lookup;
 var lookup, view;
 
 var appendView = function() {
   run(function() { view.appendTo('#qunit-fixture'); });
 };
 
-QUnit.module("EmberView - Attribute Bindings", {
+QUnit.module("NgularView - Attribute Bindings", {
   setup() {
-    Ember.lookup = lookup = {};
+    Ngular.lookup = lookup = {};
   },
   teardown() {
     if (view) {
@@ -24,12 +24,12 @@ QUnit.module("EmberView - Attribute Bindings", {
       });
       view = null;
     }
-    Ember.lookup = originalLookup;
+    Ngular.lookup = originalLookup;
   }
 });
 
 QUnit.test("should render attribute bindings", function() {
-  view = EmberView.create({
+  view = NgularView.create({
     attributeBindings: ['type', 'destroyed', 'exists', 'nothing', 'notDefined', 'notNumber', 'explosions'],
 
     type: 'submit',
@@ -49,7 +49,7 @@ QUnit.test("should render attribute bindings", function() {
 });
 
 QUnit.test("should normalize case for attribute bindings", function() {
-  view = EmberView.create({
+  view = NgularView.create({
     tagName: 'input',
     attributeBindings: ['disAbled'],
     disAbled: true
@@ -63,7 +63,7 @@ QUnit.test("should normalize case for attribute bindings", function() {
 });
 
 QUnit.test("should render attribute bindings on input", function() {
-  view = EmberView.create({
+  view = NgularView.create({
     tagName: 'input',
     attributeBindings: ['type', 'isDisabled:disabled'],
 
@@ -80,7 +80,7 @@ QUnit.test("should render attribute bindings on input", function() {
 });
 
 QUnit.test("should update attribute bindings", function() {
-  view = EmberView.create({
+  view = NgularView.create({
     attributeBindings: ['type', 'color:data-color', 'exploded', 'collapsed', 'times'],
     type: 'reset',
     color: 'red',
@@ -115,7 +115,7 @@ QUnit.test("should update attribute bindings", function() {
 });
 
 QUnit.test("should update attribute bindings on input (boolean)", function() {
-  view = EmberView.create({
+  view = NgularView.create({
     tagName: 'input',
     attributeBindings: ['disabled'],
     disabled: true
@@ -135,7 +135,7 @@ QUnit.test("should update attribute bindings on input (boolean)", function() {
 });
 
 QUnit.test("should update attribute bindings on input (raw number prop)", function() {
-  view = EmberView.create({
+  view = NgularView.create({
     tagName: 'input',
     attributeBindings: ['size'],
     size: 20
@@ -155,7 +155,7 @@ QUnit.test("should update attribute bindings on input (raw number prop)", functi
 });
 
 QUnit.test("should update attribute bindings on input (name)", function() {
-  view = EmberView.create({
+  view = NgularView.create({
     tagName: 'input',
     attributeBindings: ['name'],
     name: 'bloody-awful'
@@ -175,7 +175,7 @@ QUnit.test("should update attribute bindings on input (name)", function() {
 });
 
 QUnit.test("should update attribute bindings with micro syntax", function() {
-  view = EmberView.create({
+  view = NgularView.create({
     tagName: 'input',
     attributeBindings: ['isDisabled:disabled'],
     type: 'reset',
@@ -194,7 +194,7 @@ QUnit.test("should update attribute bindings with micro syntax", function() {
 });
 
 QUnit.test("should allow namespaced attributes in micro syntax", function () {
-  view = EmberView.create({
+  view = NgularView.create({
     attributeBindings: ['xlinkHref:xlink:href'],
     xlinkHref: '/foo.png'
   });
@@ -211,7 +211,7 @@ QUnit.test("should allow namespaced attributes in micro syntax", function () {
 });
 
 QUnit.test("should update attribute bindings on svg", function() {
-  view = EmberView.create({
+  view = NgularView.create({
     attributeBindings: ['viewBox'],
     viewBox: null
   });
@@ -233,7 +233,7 @@ QUnit.test("should update attribute bindings on svg", function() {
 // passed array item is a String, it will be converted into a
 // String object instead of a normal string.
 QUnit.test("should allow binding to String objects", function() {
-  view = EmberView.create({
+  view = NgularView.create({
     attributeBindings: ['foo'],
     // JSHint doesn't like `new String` so we'll create it the same way it gets created in practice
     foo: (function() { return this; }).call("bar")
@@ -254,7 +254,7 @@ QUnit.test("should allow binding to String objects", function() {
 });
 
 QUnit.test("should teardown observers on rerender", function() {
-  view = EmberView.create({
+  view = NgularView.create({
     attributeBindings: ['foo'],
     classNameBindings: ['foo'],
     foo: 'bar'
@@ -272,7 +272,7 @@ QUnit.test("should teardown observers on rerender", function() {
 });
 
 QUnit.test("handles attribute bindings for properties", function() {
-  view = EmberView.create({
+  view = NgularView.create({
     tagName: 'input',
     attributeBindings: ['checked'],
     checked: null
@@ -296,7 +296,7 @@ QUnit.test("handles attribute bindings for properties", function() {
 });
 
 QUnit.test("handles `undefined` value for properties", function() {
-  view = EmberView.create({
+  view = NgularView.create({
     tagName: 'input',
     attributeBindings: ['value'],
     value: "test"
@@ -314,7 +314,7 @@ QUnit.test("handles `undefined` value for properties", function() {
 });
 
 QUnit.test("handles null value for attributes on text fields", function() {
-  view = EmberView.create({
+  view = NgularView.create({
     tagName: 'input',
     attributeBindings: ['value']
   });
@@ -333,7 +333,7 @@ QUnit.test("handles null value for attributes on text fields", function() {
 });
 
 QUnit.test("handles a 0 value attribute on text fields", function() {
-  view = EmberView.create({
+  view = NgularView.create({
     tagName: 'input',
     attributeBindings: ['value']
   });
@@ -351,7 +351,7 @@ QUnit.test("handles a 0 value attribute on text fields", function() {
 
 QUnit.test("attributeBindings should not fail if view has been removed", function() {
   run(function() {
-    view = EmberView.create({
+    view = NgularView.create({
       attributeBindings: ['checked'],
       checked: true
     });
@@ -375,7 +375,7 @@ QUnit.test("attributeBindings should not fail if view has been removed", functio
 
 QUnit.test("attributeBindings should not fail if view has been destroyed", function() {
   run(function() {
-    view = EmberView.create({
+    view = NgularView.create({
       attributeBindings: ['checked'],
       checked: true
     });
@@ -398,7 +398,7 @@ QUnit.test("attributeBindings should not fail if view has been destroyed", funct
 });
 
 QUnit.test("asserts if an attributeBinding is setup on class", function() {
-  view = EmberView.create({
+  view = NgularView.create({
     attributeBindings: ['class']
   });
 
@@ -410,7 +410,7 @@ QUnit.test("asserts if an attributeBinding is setup on class", function() {
 QUnit.test("blacklists href bindings based on protocol", function() {
   /* jshint scripturl:true */
 
-  view = EmberView.create({
+  view = NgularView.create({
     tagName: 'a',
     attributeBindings: ['href'],
     href: "javascript:alert('foo')"
@@ -428,7 +428,7 @@ QUnit.test("blacklists href bindings based on protocol", function() {
 });
 
 QUnit.test("attributeBindings should be overridable", function() {
-  var ParentView = EmberView.extend({
+  var ParentView = NgularView.extend({
     attributeBindings: ['href'],
     href: "an href"
   });

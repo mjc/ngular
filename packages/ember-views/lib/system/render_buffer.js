@@ -1,13 +1,13 @@
 /**
-@module ember
-@submodule ember-views
+@module ngular
+@submodule ngular-views
 */
 
-import jQuery from "ember-views/system/jquery";
-import Ember from "ember-metal/core";
-import o_create from 'ember-metal/platform/create';
+import jQuery from "ngular-views/system/jquery";
+import Ngular from "ngular-metal/core";
+import o_create from 'ngular-metal/platform/create';
 import { normalizeProperty } from "dom-helper/prop";
-import { canSetNameOnInputs } from "ember-views/system/platform";
+import { canSetNameOnInputs } from "ngular-views/system/platform";
 
 // The HTML spec allows for "omitted start tags". These tags are optional
 // when their intended child is the first thing in the parent tag. For
@@ -110,16 +110,16 @@ function escapeAttribute(value) {
 }
 
 /**
-  `Ember.RenderBuffer` gathers information regarding the view and generates the
-  final representation. `Ember.RenderBuffer` will generate HTML which can be pushed
+  `Ngular.RenderBuffer` gathers information regarding the view and generates the
+  final representation. `Ngular.RenderBuffer` will generate HTML which can be pushed
   to the DOM.
 
    ```javascript
-   var buffer = new Ember.RenderBuffer('div', contextualElement);
+   var buffer = new Ngular.RenderBuffer('div', contextualElement);
   ```
 
   @method renderBuffer
-  @namespace Ember
+  @namespace Ngular
   @param {String} tagName tag name (such as 'div' or 'p') used for the buffer
 */
 
@@ -128,7 +128,7 @@ var RenderBuffer = function(domHelper) {
   this.childViews = [];
   this.attrNodes = [];
 
-  Ember.assert("RenderBuffer requires a DOM helper to be passed to its constructor.", !!domHelper);
+  Ngular.assert("RenderBuffer requires a DOM helper to be passed to its constructor.", !!domHelper);
 
   this.dom = domHelper;
 };
@@ -184,7 +184,7 @@ RenderBuffer.prototype = {
     The id in of the element, to be applied in the id attribute.
 
     You should not set this property yourself, rather, you should use
-    the `id()` method of `Ember.RenderBuffer`.
+    the `id()` method of `Ngular.RenderBuffer`.
 
     @property elementId
     @type String
@@ -199,7 +199,7 @@ RenderBuffer.prototype = {
     elementAttributes hash to `{'data-view':'Foo.bar'}`.
 
     You should not maintain this hash yourself, rather, you should use
-    the `attr()` method of `Ember.RenderBuffer`.
+    the `attr()` method of `Ngular.RenderBuffer`.
 
     @property elementAttributes
     @type Hash
@@ -214,7 +214,7 @@ RenderBuffer.prototype = {
     elementProperties hash to `{'checked':true}`.
 
     You should not maintain this hash yourself, rather, you should use
-    the `prop()` method of `Ember.RenderBuffer`.
+    the `prop()` method of `Ngular.RenderBuffer`.
 
     @property elementProperties
     @type Hash
@@ -223,13 +223,13 @@ RenderBuffer.prototype = {
   elementProperties: null,
 
   /**
-    The tagname of the element an instance of `Ember.RenderBuffer` represents.
+    The tagname of the element an instance of `Ngular.RenderBuffer` represents.
 
-    Usually, this gets set as the first parameter to `Ember.RenderBuffer`. For
+    Usually, this gets set as the first parameter to `Ngular.RenderBuffer`. For
     example, if you wanted to create a `p` tag, then you would call
 
     ```javascript
-    Ember.RenderBuffer('p', contextualElement)
+    Ngular.RenderBuffer('p', contextualElement)
     ```
 
     @property elementTag
@@ -245,7 +245,7 @@ RenderBuffer.prototype = {
     elementStyle hash to `{'background-color':'black'}`.
 
     You should not maintain this hash yourself, rather, you should use
-    the `style()` method of `Ember.RenderBuffer`.
+    the `style()` method of `Ngular.RenderBuffer`.
 
     @property elementStyle
     @type Hash
@@ -271,7 +271,7 @@ RenderBuffer.prototype = {
       var childView = childViews[i];
       var ref = el.querySelector('#morph-'+i);
 
-      Ember.assert('An error occurred while setting up template bindings. Please check ' +
+      Ngular.assert('An error occurred while setting up template bindings. Please check ' +
                    (((childView && childView._parentView && childView._parentView._debugTemplateName ? '"' + childView._parentView._debugTemplateName + '" template ' : ''))
                    )  + 'for invalid markup or bindings within HTML comments.',
                    ref);
@@ -299,10 +299,10 @@ RenderBuffer.prototype = {
       if (this.buffer === null) {
         this.buffer = '';
       }
-      Ember.assert("A string cannot be pushed into the buffer after a fragment", !this.buffer.nodeType);
+      Ngular.assert("A string cannot be pushed into the buffer after a fragment", !this.buffer.nodeType);
       this.buffer += content;
     } else {
-      Ember.assert("A fragment cannot be pushed into a buffer that contains content", !this.buffer);
+      Ngular.assert("A fragment cannot be pushed into a buffer that contains content", !this.buffer);
       this.buffer = content;
     }
     return this;
@@ -355,7 +355,7 @@ RenderBuffer.prototype = {
     @param {String} name The name of the attribute
     @param {String} value The value to add to the attribute
     @chainable
-    @return {Ember.RenderBuffer|String} this or the current attribute value
+    @return {Ngular.RenderBuffer|String} this or the current attribute value
   */
   attr(name, value) {
     var attributes = this.elementAttributes = (this.elementAttributes || {});
@@ -390,7 +390,7 @@ RenderBuffer.prototype = {
     @param {String} name The name of the property
     @param {String} value The value to add to the property
     @chainable
-    @return {Ember.RenderBuffer|String} this or the current property value
+    @return {Ngular.RenderBuffer|String} this or the current property value
   */
   prop(name, value) {
     var properties = this.elementProperties = (this.elementProperties || {});
@@ -511,7 +511,7 @@ RenderBuffer.prototype = {
 
     var content = this.innerContent();
     // No content means a text node buffer, with the content
-    // in _element. Ember._BoundView is an example.
+    // in _element. Ngular._BoundView is an example.
     if (content === null) {
       return this._element;
     }
@@ -560,7 +560,7 @@ RenderBuffer.prototype = {
 
   outerContextualElement() {
     if (this._outerContextualElement === undefined) {
-      Ember.deprecate("The render buffer expects an outer contextualElement to exist." +
+      Ngular.deprecate("The render buffer expects an outer contextualElement to exist." +
                       " This ensures DOM that requires context is correctly generated (tr, SVG tags)." +
                       " Defaulting to document.body, but this will be removed in the future");
       this.outerContextualElement = document.body;

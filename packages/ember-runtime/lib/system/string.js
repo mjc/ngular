@@ -1,14 +1,14 @@
 /**
-@module ember
-@submodule ember-runtime
+@module ngular
+@submodule ngular-runtime
 */
-import Ember from "ember-metal/core"; // Ember.STRINGS, Ember.FEATURES
+import Ngular from "ngular-metal/core"; // Ngular.STRINGS, Ngular.FEATURES
 import {
   isArray,
-  inspect as emberInspect
-} from "ember-metal/utils";
+  inspect as ngularInspect
+} from "ngular-metal/utils";
 
-import Cache from "ember-metal/cache";
+import Cache from "ngular-metal/cache";
 
 var STRING_DASHERIZE_REGEXP = (/[ _]/g);
 
@@ -70,7 +70,7 @@ function fmt(str, formats) {
   return str.replace(/%@([0-9]+)?/g, function(s, argIndex) {
     argIndex = (argIndex) ? parseInt(argIndex, 10) - 1 : idx++;
     s = cachedFormats[argIndex];
-    return (s === null) ? '(null)' : (s === undefined) ? '' : emberInspect(s);
+    return (s === null) ? '(null)' : (s === undefined) ? '' : ngularInspect(s);
   });
 }
 
@@ -79,7 +79,7 @@ function loc(str, formats) {
     formats = Array.prototype.slice.call(arguments, 1);
   }
 
-  str = Ember.STRINGS[str] || str;
+  str = Ngular.STRINGS[str] || str;
   return fmt(str, formats);
 }
 
@@ -113,22 +113,22 @@ function capitalize(str) {
 
 /**
   Defines the hash of localized strings for the current language. Used by
-  the `Ember.String.loc()` helper. To localize, add string values to this
+  the `Ngular.String.loc()` helper. To localize, add string values to this
   hash.
 
   @property STRINGS
-  @for Ember
+  @for Ngular
   @type Hash
 */
-Ember.STRINGS = {};
+Ngular.STRINGS = {};
 
 /**
   Defines string helper methods including string formatting and localization.
-  Unless `Ember.EXTEND_PROTOTYPES.String` is `false` these methods will also be
+  Unless `Ngular.EXTEND_PROTOTYPES.String` is `false` these methods will also be
   added to the `String.prototype` as well.
 
   @class String
-  @namespace Ember
+  @namespace Ngular
   @static
 */
 export default {
@@ -157,20 +157,20 @@ export default {
   /**
     Formats the passed string, but first looks up the string in the localized
     strings hash. This is a convenient way to localize text. See
-    `Ember.String.fmt()` for more information on formatting.
+    `Ngular.String.fmt()` for more information on formatting.
 
     Note that it is traditional but not required to prefix localized string
     keys with an underscore or other character so you can easily identify
     localized strings.
 
     ```javascript
-    Ember.STRINGS = {
+    Ngular.STRINGS = {
       '_Hello World': 'Bonjour le monde',
       '_Hello %@ %@': 'Bonjour %@ %@'
     };
 
-    Ember.String.loc("_Hello World");  // 'Bonjour le monde';
-    Ember.String.loc("_Hello %@ %@", ["John", "Smith"]);  // "Bonjour John Smith";
+    Ngular.String.loc("_Hello World");  // 'Bonjour le monde';
+    Ngular.String.loc("_Hello %@ %@", ["John", "Smith"]);  // "Bonjour John Smith";
     ```
 
     @method loc
@@ -186,7 +186,7 @@ export default {
     is mostly useful when applied to the `String.prototype`.
 
     ```javascript
-    Ember.String.w("alpha beta gamma").forEach(function(key) {
+    Ngular.String.w("alpha beta gamma").forEach(function(key) {
       console.log(key);
     });
 

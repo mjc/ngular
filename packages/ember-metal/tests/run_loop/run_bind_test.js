@@ -1,8 +1,8 @@
-import run from 'ember-metal/run_loop';
+import run from 'ngular-metal/run_loop';
 
 QUnit.module('system/run_loop/run_bind_test');
 
-QUnit.test('Ember.run.bind builds a run-loop wrapped callback handler', function() {
+QUnit.test('Ngular.run.bind builds a run-loop wrapped callback handler', function() {
   expect(3);
 
   var obj = {
@@ -18,7 +18,7 @@ QUnit.test('Ember.run.bind builds a run-loop wrapped callback handler', function
   equal(obj.value, 1);
 });
 
-QUnit.test('Ember.run.bind keeps the async callback arguments', function() {
+QUnit.test('Ngular.run.bind keeps the async callback arguments', function() {
   expect(4);
 
   var asyncCallback = function(increment, increment2, increment3) {

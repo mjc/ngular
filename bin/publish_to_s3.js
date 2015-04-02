@@ -14,7 +14,7 @@
 // ```sh
 // ./bin/publish_to_s3.js
 // ```
-var S3Publisher = require('ember-publisher');
+var S3Publisher = require('ngular-publisher');
 var configPath = require('path').join(__dirname, '../config/s3ProjectConfig.js');
 
 var publisher = new S3Publisher({projectConfigPath: configPath});

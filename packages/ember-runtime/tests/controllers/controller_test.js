@@ -1,17 +1,17 @@
-/* global EmberDev */
+/* global NgularDev */
 
-import Controller from "ember-runtime/controllers/controller";
-import Service from "ember-runtime/system/service";
-import ObjectController from "ember-runtime/controllers/object_controller";
-import ArrayController from "ember-runtime/controllers/array_controller";
+import Controller from "ngular-runtime/controllers/controller";
+import Service from "ngular-runtime/system/service";
+import ObjectController from "ngular-runtime/controllers/object_controller";
+import ArrayController from "ngular-runtime/controllers/array_controller";
 import {
   objectControllerDeprecation
-} from "ember-runtime/controllers/object_controller";
-import Mixin from "ember-metal/mixin";
-import Object from "ember-runtime/system/object";
-import { Registry } from "ember-runtime/system/container";
-import inject from "ember-runtime/inject";
-import { get } from "ember-metal/property_get";
+} from "ngular-runtime/controllers/object_controller";
+import Mixin from "ngular-metal/mixin";
+import Object from "ngular-runtime/system/object";
+import { Registry } from "ngular-runtime/system/container";
+import inject from "ngular-runtime/inject";
+import { get } from "ngular-metal/property_get";
 
 QUnit.module('Controller event handling');
 
@@ -188,7 +188,7 @@ QUnit.test("specifying `content` (with `model` specified) does not result in dep
 
 QUnit.module('Controller injected properties');
 
-if (!EmberDev.runningProdBuild) {
+if (!NgularDev.runningProdBuild) {
   QUnit.test("defining a controller on a non-controller should fail assertion", function() {
     expectAssertion(function() {
       var registry = new Registry();

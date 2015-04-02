@@ -1,15 +1,15 @@
-import { get } from "ember-metal/property_get";
-import setProperties from "ember-metal/set_properties";
-import { computed } from "ember-metal/computed";
-import { Mixin } from "ember-metal/mixin";
-import EmberError from "ember-metal/error";
+import { get } from "ngular-metal/property_get";
+import setProperties from "ngular-metal/set_properties";
+import { computed } from "ngular-metal/computed";
+import { Mixin } from "ngular-metal/mixin";
+import NgularError from "ngular-metal/error";
 
 var not = computed.not;
 var or = computed.or;
 
 /**
-  @module ember
-  @submodule ember-runtime
+  @module ngular
+  @submodule ngular-runtime
  */
 
 function tap(proxy, promise) {
@@ -30,14 +30,14 @@ function tap(proxy, promise) {
       isRejected: true
     });
     throw reason;
-  }, "Ember: PromiseProxy");
+  }, "Ngular: PromiseProxy");
 }
 
 /**
   A low level mixin making ObjectProxy, ObjectController or ArrayController's promise aware.
 
   ```javascript
-  var ObjectPromiseController = Ember.ObjectController.extend(Ember.PromiseProxyMixin);
+  var ObjectPromiseController = Ngular.ObjectController.extend(Ngular.PromiseProxyMixin);
 
   var controller = ObjectPromiseController.create({
     promise: $.getJSON('/some/remote/data.json')
@@ -96,7 +96,7 @@ function tap(proxy, promise) {
     lastName: {{lastName}}
   {{/if}}
   ```
-  @class Ember.PromiseProxyMixin
+  @class Ngular.PromiseProxyMixin
 */
 export default Mixin.create({
   /**
@@ -149,7 +149,7 @@ export default Mixin.create({
     Example:
 
     ```javascript
-    Ember.ObjectController.extend(Ember.PromiseProxyMixin).create({
+    Ngular.ObjectController.extend(Ngular.PromiseProxyMixin).create({
       promise: <thenable>
     });
     ```
@@ -158,7 +158,7 @@ export default Mixin.create({
   */
   promise: computed({
     get: function() {
-      throw new EmberError("PromiseProxy's promise must be set");
+      throw new NgularError("PromiseProxy's promise must be set");
     },
     set: function(key, promise) {
       return tap(this, promise);

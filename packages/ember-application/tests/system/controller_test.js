@@ -1,12 +1,12 @@
 /*jshint newcap:false */
 
-import Controller from "ember-runtime/controllers/controller";
-import "ember-application/ext/controller";
+import Controller from "ngular-runtime/controllers/controller";
+import "ngular-application/ext/controller";
 
-import { Registry } from "ember-runtime/system/container";
-import { A } from "ember-runtime/system/native_array";
-import ArrayController from "ember-runtime/controllers/array_controller";
-import { computed } from "ember-metal/computed";
+import { Registry } from "ngular-runtime/system/container";
+import { A } from "ngular-runtime/system/native_array";
+import ArrayController from "ngular-runtime/controllers/array_controller";
+import { computed } from "ngular-metal/computed";
 
 QUnit.module("Controller dependencies");
 

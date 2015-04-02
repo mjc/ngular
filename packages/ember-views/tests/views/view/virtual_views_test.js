@@ -1,7 +1,7 @@
-import { get } from "ember-metal/property_get";
-import run from "ember-metal/run_loop";
-import jQuery from "ember-views/system/jquery";
-import EmberView from "ember-views/views/view";
+import { get } from "ngular-metal/property_get";
+import run from "ngular-metal/run_loop";
+import jQuery from "ngular-views/system/jquery";
+import NgularView from "ngular-views/views/view";
 
 var rootView, childView;
 
@@ -15,7 +15,7 @@ QUnit.module("virtual views", {
 });
 
 QUnit.test("a virtual view does not appear as a view's parentView", function() {
-  rootView = EmberView.create({
+  rootView = NgularView.create({
     elementId: 'root-view',
 
     render(buffer) {
@@ -24,7 +24,7 @@ QUnit.test("a virtual view does not appear as a view's parentView", function() {
     }
   });
 
-  var virtualView = EmberView.create({
+  var virtualView = NgularView.create({
     isVirtual: true,
     tagName: '',
 
@@ -34,7 +34,7 @@ QUnit.test("a virtual view does not appear as a view's parentView", function() {
     }
   });
 
-  childView = EmberView.create({
+  childView = NgularView.create({
     render(buffer) {
       buffer.push("<p>Bye!</p>");
     }
@@ -55,7 +55,7 @@ QUnit.test("a virtual view does not appear as a view's parentView", function() {
 });
 
 QUnit.test("when a virtual view's child views change, the parent's childViews should reflect", function() {
-  rootView = EmberView.create({
+  rootView = NgularView.create({
     elementId: 'root-view',
 
     render(buffer) {
@@ -64,7 +64,7 @@ QUnit.test("when a virtual view's child views change, the parent's childViews sh
     }
   });
 
-  var virtualView = EmberView.create({
+  var virtualView = NgularView.create({
     isVirtual: true,
     tagName: '',
 
@@ -74,7 +74,7 @@ QUnit.test("when a virtual view's child views change, the parent's childViews sh
     }
   });
 
-  childView = EmberView.create({
+  childView = NgularView.create({
     render(buffer) {
       buffer.push("<p>Bye!</p>");
     }

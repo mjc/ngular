@@ -1,7 +1,7 @@
-import Ember from "ember-metal/core";
-import run from "ember-metal/run_loop";
-import {computed} from "ember-metal/computed";
-import ArrayProxy from "ember-runtime/system/array_proxy";
+import Ngular from "ngular-metal/core";
+import run from "ngular-metal/run_loop";
+import {computed} from "ngular-metal/computed";
+import ArrayProxy from "ngular-runtime/system/array_proxy";
 
 var array;
 
@@ -9,10 +9,10 @@ QUnit.module("ArrayProxy - arrangedContent", {
   setup() {
     run(function() {
       array = ArrayProxy.createWithMixins({
-        content: Ember.A([1,2,4,5]),
+        content: Ngular.A([1,2,4,5]),
         arrangedContent: computed(function() {
           var content = this.get('content');
-          return content && Ember.A(content.slice().sort(function(a, b) {
+          return content && Ngular.A(content.slice().sort(function(a, b) {
             if (a == null) { a = -1; }
             if (b == null) { b = -1; }
             return b - a;
@@ -44,7 +44,7 @@ QUnit.test("addObjects - adds to end of 'content' if not present", function() {
 });
 
 QUnit.test("compact - returns arrangedContent without nulls and undefined", function() {
-  run(function() { array.set('content', Ember.A([1,3,null,2,undefined])); });
+  run(function() { array.set('content', Ngular.A([1,3,null,2,undefined])); });
   deepEqual(array.compact(), [3,2,1]);
 });
 
@@ -176,7 +176,7 @@ QUnit.module("ArrayProxy - arrangedContent matching content", {
   setup() {
     run(function() {
       array = ArrayProxy.createWithMixins({
-        content: Ember.A([1,2,4,5])
+        content: Ngular.A([1,2,4,5])
       });
     });
   },
@@ -206,11 +206,11 @@ QUnit.module("ArrayProxy - arrangedContent with transforms", {
   setup() {
     run(function() {
       array = ArrayProxy.createWithMixins({
-        content: Ember.A([1,2,4,5]),
+        content: Ngular.A([1,2,4,5]),
 
         arrangedContent: computed(function() {
           var content = this.get('content');
-          return content && Ember.A(content.slice().sort(function(a, b) {
+          return content && Ngular.A(content.slice().sort(function(a, b) {
             if (a == null) { a = -1; }
             if (b == null) { b = -1; }
             return b - a;

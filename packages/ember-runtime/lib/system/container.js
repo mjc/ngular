@@ -1,4 +1,4 @@
-import { set } from "ember-metal/property_set";
+import { set } from "ngular-metal/property_set";
 import Registry from "container/registry";
 import Container from "container/container";
 

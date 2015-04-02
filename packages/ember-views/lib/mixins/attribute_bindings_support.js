@@ -1,19 +1,19 @@
 /**
-@module ember
-@submodule ember-views
+@module ngular
+@submodule ngular-views
 */
-import { Mixin } from "ember-metal/mixin";
-import AttrNode from "ember-views/attr_nodes/attr_node";
-import { defineProperty } from "ember-metal/properties";
-import { canSetNameOnInputs } from "ember-views/system/platform";
-import { read } from "ember-metal/streams/utils";
-import { set } from "ember-metal/property_set";
+import { Mixin } from "ngular-metal/mixin";
+import AttrNode from "ngular-views/attr_nodes/attr_node";
+import { defineProperty } from "ngular-metal/properties";
+import { canSetNameOnInputs } from "ngular-views/system/platform";
+import { read } from "ngular-metal/streams/utils";
+import { set } from "ngular-metal/property_set";
 
 var EMPTY_ARRAY = [];
 
 /**
   @class AttributeBindingsSupport
-  @namespace Ember
+  @namespace Ngular
 */
 var AttributeBindingsSupport = Mixin.create({
   concatenatedProperties: ['attributeBindings'],
@@ -25,7 +25,7 @@ var AttributeBindingsSupport = Mixin.create({
     ```javascript
     // Applies the type attribute to the element
     // with the value "button", like <div type="button">
-    Ember.View.extend({
+    Ngular.View.extend({
       attributeBindings: ['type'],
       type: 'button'
     });
@@ -36,7 +36,7 @@ var AttributeBindingsSupport = Mixin.create({
 
     ```javascript
     // Renders something like <div enabled="enabled">
-    Ember.View.extend({
+    Ngular.View.extend({
       attributeBindings: ['enabled'],
       enabled: true
     });
@@ -55,7 +55,7 @@ var AttributeBindingsSupport = Mixin.create({
     then applies the current value of the attributes to the passed render buffer.
 
     @method _applyAttributeBindings
-    @param {Ember.RenderBuffer} buffer
+    @param {Ngular.RenderBuffer} buffer
     @param {Array} attributeBindings
     @private
   */
@@ -79,7 +79,7 @@ var AttributeBindingsSupport = Mixin.create({
         attrName = binding.substring(colonIndex + 1);
       }
 
-      Ember.assert('You cannot use class as an attributeBinding, use classNameBindings instead.', attrName !== 'class');
+      Ngular.assert('You cannot use class as an attributeBinding, use classNameBindings instead.', attrName !== 'class');
 
       if (property in this) {
         attrValue = this.getStream('view.'+property);

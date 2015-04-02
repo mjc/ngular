@@ -1,15 +1,15 @@
-import Ember from "ember-metal/core";
-import { tryCatchFinally } from "ember-metal/utils";
+import Ngular from "ngular-metal/core";
+import { tryCatchFinally } from "ngular-metal/utils";
 
 /**
-  The purpose of the Ember Instrumentation module is
+  The purpose of the Ngular Instrumentation module is
   to provide efficient, general-purpose instrumentation
-  for Ember.
+  for Ngular.
 
-  Subscribe to a listener by using `Ember.subscribe`:
+  Subscribe to a listener by using `Ngular.subscribe`:
 
   ```javascript
-  Ember.subscribe("render", {
+  Ngular.subscribe("render", {
     before: function(name, timestamp, payload) {
 
     },
@@ -24,15 +24,15 @@ import { tryCatchFinally } from "ember-metal/utils";
   value will be passed as a fourth parameter to the `after`
   callback.
 
-  Instrument a block of code by using `Ember.instrument`:
+  Instrument a block of code by using `Ngular.instrument`:
 
   ```javascript
-  Ember.instrument("render.handlebars", payload, function() {
+  Ngular.instrument("render.handlebars", payload, function() {
     // rendering logic
   }, binding);
   ```
 
-  Event names passed to `Ember.instrument` are namespaced
+  Event names passed to `Ngular.instrument` are namespaced
   by periods, from more general to more specific. Subscribers
   can listen for events by whatever level of granularity they
   are interested in.
@@ -44,7 +44,7 @@ import { tryCatchFinally } from "ember-metal/utils";
   even `render.handlebars.layout`.
 
   @class Instrumentation
-  @namespace Ember
+  @namespace Ngular
   @static
 */
 export var subscribers = [];
@@ -78,7 +78,7 @@ var time = (function() {
   Notifies event's subscribers, calls `before` and `after` hooks.
 
   @method instrument
-  @namespace Ember.Instrumentation
+  @namespace Ngular.Instrumentation
 
   @param {String} [name] Namespaced event name.
   @param {Object} payload
@@ -125,7 +125,7 @@ export function _instrumentStart(name, _payload) {
 
   var payload = _payload();
 
-  var STRUCTURED_PROFILE = Ember.STRUCTURED_PROFILE;
+  var STRUCTURED_PROFILE = Ngular.STRUCTURED_PROFILE;
   var timeName;
   if (STRUCTURED_PROFILE) {
     timeName = name + ": " + payload.object;
@@ -159,7 +159,7 @@ export function _instrumentStart(name, _payload) {
   Subscribes to a particular event or instrumented block of code.
 
   @method subscribe
-  @namespace Ember.Instrumentation
+  @namespace Ngular.Instrumentation
 
   @param {String} [pattern] Namespaced event name.
   @param {Object} [object] Before and After hooks.
@@ -199,7 +199,7 @@ export function subscribe(pattern, object) {
   Unsubscribes from a particular event or instrumented block of code.
 
   @method unsubscribe
-  @namespace Ember.Instrumentation
+  @namespace Ngular.Instrumentation
 
   @param {Object} [subscriber]
 */
@@ -217,10 +217,10 @@ export function unsubscribe(subscriber) {
 }
 
 /**
-  Resets `Ember.Instrumentation` by flushing list of subscribers.
+  Resets `Ngular.Instrumentation` by flushing list of subscribers.
 
   @method reset
-  @namespace Ember.Instrumentation
+  @namespace Ngular.Instrumentation
 */
 export function reset() {
   subscribers.length = 0;

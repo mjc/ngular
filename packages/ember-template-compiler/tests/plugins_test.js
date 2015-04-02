@@ -1,12 +1,12 @@
-import plugins from "ember-template-compiler/plugins";
+import plugins from "ngular-template-compiler/plugins";
 import {
   registerPlugin
-} from "ember-template-compiler/plugins";
-import compile from "ember-template-compiler/system/compile";
+} from "ngular-template-compiler/plugins";
+import compile from "ngular-template-compiler/system/compile";
 
 var originalASTPlugins;
 
-QUnit.module("ember-htmlbars: Ember.HTMLBars.registerASTPlugin", {
+QUnit.module("ngular-htmlbars: Ngular.HTMLBars.registerASTPlugin", {
   setup() {
     originalASTPlugins = plugins.ast.slice();
   },

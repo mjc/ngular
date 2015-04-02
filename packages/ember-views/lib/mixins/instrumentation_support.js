@@ -1,14 +1,14 @@
 /**
-@module ember
-@submodule ember-views
+@module ngular
+@submodule ngular-views
 */
-import { Mixin } from "ember-metal/mixin";
-import { computed } from "ember-metal/computed";
-import { get } from "ember-metal/property_get";
+import { Mixin } from "ngular-metal/mixin";
+import { computed } from "ngular-metal/computed";
+import { get } from "ngular-metal/property_get";
 
 /**
   @class InstrumentationSupport
-  @namespace Ember
+  @namespace Ngular
 */
 var InstrumentationSupport = Mixin.create({
   /**

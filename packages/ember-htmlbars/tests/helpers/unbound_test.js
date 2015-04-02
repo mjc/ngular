@@ -1,20 +1,20 @@
 /*jshint newcap:false*/
-import EmberView from 'ember-views/views/view';
-import EmberObject from 'ember-runtime/system/object';
+import NgularView from 'ngular-views/views/view';
+import NgularObject from 'ngular-runtime/system/object';
 
-import { A } from 'ember-runtime/system/native_array';
-import Ember from 'ember-metal/core';
-import { get } from 'ember-metal/property_get';
-import { set } from 'ember-metal/property_set';
-import run from 'ember-metal/run_loop';
-import compile from "ember-template-compiler/system/compile";
-import EmberError from 'ember-metal/error';
-import helpers from "ember-htmlbars/helpers";
-import registerBoundHelper from "ember-htmlbars/compat/register-bound-helper";
-import makeBoundHelper from "ember-htmlbars/compat/make-bound-helper";
+import { A } from 'ngular-runtime/system/native_array';
+import Ngular from 'ngular-metal/core';
+import { get } from 'ngular-metal/property_get';
+import { set } from 'ngular-metal/property_set';
+import run from 'ngular-metal/run_loop';
+import compile from "ngular-template-compiler/system/compile";
+import NgularError from 'ngular-metal/error';
+import helpers from "ngular-htmlbars/helpers";
+import registerBoundHelper from "ngular-htmlbars/compat/register-bound-helper";
+import makeBoundHelper from "ngular-htmlbars/compat/make-bound-helper";
 
-import { Registry } from "ember-runtime/system/container";
-import { runAppend, runDestroy } from "ember-runtime/tests/utils";
+import { Registry } from "ngular-runtime/system/container";
+import { runAppend, runDestroy } from "ngular-runtime/tests/utils";
 
 function expectDeprecationInHTMLBars() {
   // leave this as an empty function until we are ready to use it
@@ -23,15 +23,15 @@ function expectDeprecationInHTMLBars() {
 
 
 var view, lookup, registry, container;
-var originalLookup = Ember.lookup;
+var originalLookup = Ngular.lookup;
 
-QUnit.module('ember-htmlbars: {{#unbound}} helper', {
+QUnit.module('ngular-htmlbars: {{#unbound}} helper', {
   setup() {
-    Ember.lookup = lookup = { Ember: Ember };
+    Ngular.lookup = lookup = { Ngular: Ngular };
 
-    view = EmberView.create({
+    view = NgularView.create({
       template: compile('{{unbound foo}} {{unbound bar}}'),
-      context: EmberObject.create({
+      context: NgularObject.create({
         foo: 'BORK',
         barBinding: 'foo'
       })
@@ -42,7 +42,7 @@ QUnit.module('ember-htmlbars: {{#unbound}} helper', {
 
   teardown() {
     runDestroy(view);
-    Ember.lookup = originalLookup;
+    Ngular.lookup = originalLookup;
   }
 });
 
@@ -59,14 +59,14 @@ QUnit.test('it should not re-render if the property changes', function() {
 
 QUnit.test('it should throw the helper missing error if multiple properties are provided', function() {
   throws(function() {
-    runAppend(EmberView.create({
+    runAppend(NgularView.create({
       template: compile('{{unbound foo bar}}'),
-      context: EmberObject.create({
+      context: NgularObject.create({
         foo: 'BORK',
         bar: 'foo'
       })
     }));
-  }, EmberError);
+  }, NgularError);
 });
 
 QUnit.test('should property escape unsafe hrefs', function() {
@@ -76,7 +76,7 @@ QUnit.test('should property escape unsafe hrefs', function() {
 
   runDestroy(view);
 
-  view = EmberView.create({
+  view = NgularView.create({
     template: compile('<ul>{{#each person in view.people}}<a href="{{unbound person.url}}">{{person.name}}</a>{{/each}}</ul>'),
     people: A([{
       name: 'Bob',
@@ -99,9 +99,9 @@ QUnit.test('should property escape unsafe hrefs', function() {
   }
 });
 
-QUnit.module("ember-htmlbars: {{#unbound boundHelper arg1 arg2... argN}} form: render unbound helper invocations", {
+QUnit.module("ngular-htmlbars: {{#unbound boundHelper arg1 arg2... argN}} form: render unbound helper invocations", {
   setup() {
-    Ember.lookup = lookup = { Ember: Ember };
+    Ngular.lookup = lookup = { Ngular: Ngular };
     expectDeprecationInHTMLBars();
 
     registerBoundHelper('surround', function(prefix, value, suffix) {
@@ -133,7 +133,7 @@ QUnit.module("ember-htmlbars: {{#unbound boundHelper arg1 arg2... argN}} form: r
     delete helpers['concatNames'];
 
     runDestroy(view);
-    Ember.lookup = originalLookup;
+    Ngular.lookup = originalLookup;
   }
 });
 
@@ -148,9 +148,9 @@ QUnit.test("should be able to render an unbound helper invocation", function() {
       return a.join('');
     });
 
-    view = EmberView.create({
+    view = NgularView.create({
       template: compile('{{unbound repeat foo countBinding="bar"}} {{repeat foo countBinding="bar"}} {{unbound repeat foo count=2}} {{repeat foo count=4}}'),
-      context: EmberObject.create({
+      context: NgularObject.create({
         foo: "X",
         numRepeatsBinding: "bar",
         bar: 5
@@ -171,9 +171,9 @@ QUnit.test("should be able to render an unbound helper invocation", function() {
 });
 
 QUnit.test("should be able to render an bound helper invocation mixed with static values", function() {
-  view = EmberView.create({
+  view = NgularView.create({
       template: compile('{{unbound surround prefix value "bar"}} {{surround prefix value "bar"}} {{unbound surround "bar" value suffix}} {{surround "bar" value suffix}}'),
-      context: EmberObject.create({
+      context: NgularObject.create({
         prefix: "before",
         value: "core",
         suffix: "after"
@@ -191,9 +191,9 @@ QUnit.test("should be able to render an bound helper invocation mixed with stati
 });
 
 QUnit.test("should be able to render unbound forms of multi-arg helpers", function() {
-  view = EmberView.create({
+  view = NgularView.create({
     template: compile("{{fauxconcat foo bar bing}} {{unbound fauxconcat foo bar bing}}"),
-    context: EmberObject.create({
+    context: NgularObject.create({
       foo: "a",
       bar: "b",
       bing: "c"
@@ -211,10 +211,10 @@ QUnit.test("should be able to render unbound forms of multi-arg helpers", functi
 });
 
 QUnit.test("should be able to render an unbound helper invocation for helpers with dependent keys", function() {
-  view = EmberView.create({
+  view = NgularView.create({
     template: compile("{{capitalizeName person}} {{unbound capitalizeName person}} {{concatNames person}} {{unbound concatNames person}}"),
-    context: EmberObject.create({
-      person: EmberObject.create({
+    context: NgularObject.create({
+      person: NgularObject.create({
         firstName: 'shooby',
         lastName:  'taylor'
       })
@@ -232,13 +232,13 @@ QUnit.test("should be able to render an unbound helper invocation for helpers wi
 });
 
 QUnit.test("should be able to render an unbound helper invocation in #each helper", function() {
-  view = EmberView.create({
+  view = NgularView.create({
     template: compile(
       ["{{#each person in people}}",
         "{{capitalize person.firstName}} {{unbound capitalize person.firstName}}",
         "{{/each}}"].join("")),
     context: {
-      people: Ember.A([
+      people: Ngular.A([
         {
           firstName: 'shooby',
           lastName:  'taylor'
@@ -257,15 +257,15 @@ QUnit.test("should be able to render an unbound helper invocation in #each helpe
 
 QUnit.test("should be able to render an unbound helper invocation with bound hash options", function() {
   try {
-    Ember.Handlebars.registerBoundHelper('repeat', function(value) {
+    Ngular.Handlebars.registerBoundHelper('repeat', function(value) {
       return [].slice.call(arguments, 0, -1).join('');
     });
 
 
-    view = EmberView.create({
+    view = NgularView.create({
       template: compile("{{capitalizeName person}} {{unbound capitalizeName person}} {{concatNames person}} {{unbound concatNames person}}"),
-      context: EmberObject.create({
-        person: EmberObject.create({
+      context: NgularObject.create({
+        person: NgularObject.create({
           firstName: 'shooby',
           lastName:  'taylor'
         })
@@ -281,12 +281,12 @@ QUnit.test("should be able to render an unbound helper invocation with bound has
 
     equal(view.$().text(), "SALLY SHOOBY sallytaylor shoobytaylor", "only bound values change");
   } finally {
-    delete Ember.Handlebars.registerBoundHelper['repeat'];
+    delete Ngular.Handlebars.registerBoundHelper['repeat'];
   }
 });
 
 QUnit.test("should be able to render bound form of a helper inside unbound form of same helper", function() {
-  view = EmberView.create({
+  view = NgularView.create({
     template: compile(
       ["{{#unbound if foo}}",
         "{{#if bar}}true{{/if}}",
@@ -296,7 +296,7 @@ QUnit.test("should be able to render bound form of a helper inside unbound form 
         "{{#if bar}}true{{/if}}",
         "{{#unless bar}}false{{/unless}}",
         "{{/unbound}}"].join("")),
-    context: EmberObject.create({
+    context: NgularObject.create({
       foo: true,
       notfoo: false,
       bar: true
@@ -313,9 +313,9 @@ QUnit.test("should be able to render bound form of a helper inside unbound form 
   equal(view.$().text(), "falsefalse", "bound if and unless inside unbound if/unless are updated");
 });
 
-QUnit.module("ember-htmlbars: {{#unbound}} helper -- Container Lookup", {
+QUnit.module("ngular-htmlbars: {{#unbound}} helper -- Container Lookup", {
   setup() {
-    Ember.lookup = lookup = { Ember: Ember };
+    Ngular.lookup = lookup = { Ngular: Ngular };
     registry = new Registry();
     container = registry.container();
     registry.optionsForType('helper', { instantiate: false });
@@ -324,7 +324,7 @@ QUnit.module("ember-htmlbars: {{#unbound}} helper -- Container Lookup", {
   teardown() {
     runDestroy(view);
     runDestroy(container);
-    Ember.lookup = originalLookup;
+    Ngular.lookup = originalLookup;
     registry = container = view = null;
   }
 });
@@ -336,7 +336,7 @@ QUnit.test("should lookup helpers in the container", function() {
     return value.toUpperCase();
   }));
 
-  view = EmberView.create({
+  view = NgularView.create({
     template: compile("{{unbound up-case displayText}}"),
     container: container,
     context: {
@@ -357,12 +357,12 @@ QUnit.test("should lookup helpers in the container", function() {
 
 QUnit.test("should be able to output a property without binding", function() {
   var context = {
-    content: EmberObject.create({
+    content: NgularObject.create({
       anUnboundString: "No spans here, son."
     })
   };
 
-  view = EmberView.create({
+  view = NgularView.create({
     context: context,
     template: compile('<div id="first">{{unbound content.anUnboundString}}</div>')
   });
@@ -373,7 +373,7 @@ QUnit.test("should be able to output a property without binding", function() {
 });
 
 QUnit.test("should be able to use unbound helper in #each helper", function() {
-  view = EmberView.create({
+  view = NgularView.create({
     items: A(['a', 'b', 'c', 1, 2, 3]),
     template: compile('<ul>{{#each item in view.items}}<li>{{unbound item}}</li>{{/each}}</ul>')
   });
@@ -385,7 +385,7 @@ QUnit.test("should be able to use unbound helper in #each helper", function() {
 });
 
 QUnit.test("should be able to use unbound helper in #each helper (with objects)", function() {
-  view = EmberView.create({
+  view = NgularView.create({
     items: A([{ wham: 'bam' }, { wham: 1 }]),
     template: compile('<ul>{{#each item in view.items}}<li>{{unbound item.wham}}</li>{{/each}}</ul>')
   });
@@ -399,7 +399,7 @@ QUnit.test("should be able to use unbound helper in #each helper (with objects)"
 QUnit.test('should work properly with attributes', function() {
   expect(4);
 
-  view = EmberView.create({
+  view = NgularView.create({
     template: compile('<ul>{{#each person in view.people}}<li class="{{unbound person.cool}}">{{person.name}}</li>{{/each}}</ul>'),
     people: A([{
       name: 'Bob',

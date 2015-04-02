@@ -1,11 +1,11 @@
-import Ember from "ember-metal/core";
+import Ngular from "ngular-metal/core";
 
-QUnit.module('ember-metal/core/main');
+QUnit.module('ngular-metal/core/main');
 
-QUnit.test('Ember registers itself', function() {
-  var lib = Ember.libraries._registry[0];
+QUnit.test('Ngular registers itself', function() {
+  var lib = Ngular.libraries._registry[0];
 
-  equal(lib.name, 'Ember');
-  equal(lib.version, Ember.VERSION);
+  equal(lib.name, 'Ngular');
+  equal(lib.version, Ngular.VERSION);
 });
 

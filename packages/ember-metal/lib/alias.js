@@ -1,21 +1,21 @@
-import { get } from "ember-metal/property_get";
-import { set } from "ember-metal/property_set";
-import Ember from "ember-metal/core"; // Ember.assert
-import EmberError from "ember-metal/error";
+import { get } from "ngular-metal/property_get";
+import { set } from "ngular-metal/property_set";
+import Ngular from "ngular-metal/core"; // Ngular.assert
+import NgularError from "ngular-metal/error";
 import {
   Descriptor,
   defineProperty
-} from "ember-metal/properties";
-import { ComputedProperty } from "ember-metal/computed";
-import create from "ember-metal/platform/create";
+} from "ngular-metal/properties";
+import { ComputedProperty } from "ngular-metal/computed";
+import create from "ngular-metal/platform/create";
 import {
   meta,
   inspect
-} from "ember-metal/utils";
+} from "ngular-metal/utils";
 import {
   addDependentKeys,
   removeDependentKeys
-} from "ember-metal/dependent_keys";
+} from "ngular-metal/dependent_keys";
 
 export default function alias(altKey) {
   return new AliasedProperty(altKey);
@@ -46,7 +46,7 @@ AliasedProperty.prototype.didUnwatch = function(obj, keyName) {
 };
 
 AliasedProperty.prototype.setup = function(obj, keyName) {
-  Ember.assert(`Setting alias '${keyName}' on self`, this.altKey !== keyName);
+  Ngular.assert(`Setting alias '${keyName}' on self`, this.altKey !== keyName);
   var m = meta(obj);
   if (m.watching[keyName]) {
     addDependentKeys(this, obj, keyName, m);
@@ -66,7 +66,7 @@ AliasedProperty.prototype.readOnly = function() {
 };
 
 function AliasedProperty_readOnlySet(obj, keyName, value) {
-  throw new EmberError(`Cannot set read-only property '${keyName}' on object: ${inspect(obj)}`);
+  throw new NgularError(`Cannot set read-only property '${keyName}' on object: ${inspect(obj)}`);
 }
 
 AliasedProperty.prototype.oneWay = function() {
@@ -79,6 +79,6 @@ function AliasedProperty_oneWaySet(obj, keyName, value) {
   return set(obj, keyName, value);
 }
 
-// Backwards compatibility with Ember Data
+// Backwards compatibility with Ngular Data
 AliasedProperty.prototype._meta = undefined;
 AliasedProperty.prototype.meta = ComputedProperty.prototype.meta;

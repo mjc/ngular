@@ -1,10 +1,10 @@
 /*jshint debug:true*/
 
 /**
-@module ember
-@submodule ember-htmlbars
+@module ngular
+@submodule ngular-htmlbars
 */
-import Logger from "ember-metal/logger";
+import Logger from "ngular-metal/logger";
 
 /**
   Execute the `debugger` statement in the current template's context.
@@ -46,7 +46,7 @@ import Logger from "ember-metal/logger";
   ```
 
   @method debugger
-  @for Ember.Handlebars.helpers
+  @for Ngular.Handlebars.helpers
   @param {String} property
 */
 export function debuggerHelper(params, hash, options, env) {

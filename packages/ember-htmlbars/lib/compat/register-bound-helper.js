@@ -1,10 +1,10 @@
 /**
-@module ember
-@submodule ember-htmlbars
+@module ngular
+@submodule ngular-htmlbars
 */
 
-import helpers from "ember-htmlbars/helpers";
-import makeBoundHelper from "ember-htmlbars/compat/make-bound-helper";
+import helpers from "ngular-htmlbars/helpers";
+import makeBoundHelper from "ngular-htmlbars/compat/make-bound-helper";
 
 var slice = [].slice;
 
@@ -16,8 +16,8 @@ var slice = [].slice;
   ## Simple example
 
   ```javascript
-  Ember.Handlebars.registerBoundHelper('capitalize', function(value) {
-    return Ember.String.capitalize(value);
+  Ngular.Handlebars.registerBoundHelper('capitalize', function(value) {
+    return Ngular.String.capitalize(value);
   });
   ```
 
@@ -36,7 +36,7 @@ var slice = [].slice;
   passed into the helper call.
 
   ```javascript
-  Ember.Handlebars.registerBoundHelper('repeat', function(value, options) {
+  Ngular.Handlebars.registerBoundHelper('repeat', function(value, options) {
     var count = options.hash.count;
     var a = [];
     while(a.length < count) {
@@ -66,23 +66,23 @@ var slice = [].slice;
 
   ## Example with extra dependencies
 
-  The `Ember.Handlebars.registerBoundHelper` method takes a variable length
+  The `Ngular.Handlebars.registerBoundHelper` method takes a variable length
   third parameter which indicates extra dependencies on the passed in value.
   This allows the handlebars helper to update when these dependencies change.
 
   ```javascript
-  Ember.Handlebars.registerBoundHelper('capitalizeName', function(value) {
+  Ngular.Handlebars.registerBoundHelper('capitalizeName', function(value) {
     return value.get('name').toUpperCase();
   }, 'name');
   ```
 
   ## Example with multiple bound properties
 
-  `Ember.Handlebars.registerBoundHelper` supports binding to
+  `Ngular.Handlebars.registerBoundHelper` supports binding to
   multiple properties, e.g.:
 
   ```javascript
-  Ember.Handlebars.registerBoundHelper('concatenate', function() {
+  Ngular.Handlebars.registerBoundHelper('concatenate', function() {
     var values = Array.prototype.slice.call(arguments, 0, -1);
     return values.join('||');
   });
@@ -112,7 +112,7 @@ var slice = [].slice;
   the addition of child views of any kind.
 
   @method registerBoundHelper
-  @for Ember.Handlebars
+  @for Ngular.Handlebars
   @param {String} name
   @param {Function} function
   @param {String} dependentKeys*

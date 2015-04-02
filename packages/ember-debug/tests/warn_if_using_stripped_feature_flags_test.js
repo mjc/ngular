@@ -1,19 +1,19 @@
-import Ember from 'ember-metal/core';
-import { _warnIfUsingStrippedFeatureFlags } from 'ember-debug';
+import Ngular from 'ngular-metal/core';
+import { _warnIfUsingStrippedFeatureFlags } from 'ngular-debug';
 
 var oldWarn, oldRunInDebug, origEnvFeatures, origEnableAll, origEnableOptional;
 
 function confirmWarns(expectedMsg) {
   var featuresWereStripped = true;
-  var FEATURES = Ember.ENV.FEATURES;
+  var FEATURES = Ngular.ENV.FEATURES;
 
-  Ember.warn = function(msg, test) {
+  Ngular.warn = function(msg, test) {
     if (!test) {
       equal(msg, expectedMsg);
     }
   };
 
-  Ember.runInDebug = function (func) {
+  Ngular.runInDebug = function (func) {
     func();
   };
 
@@ -25,50 +25,50 @@ function confirmWarns(expectedMsg) {
   _warnIfUsingStrippedFeatureFlags(FEATURES, featuresWereStripped);
 }
 
-QUnit.module("ember-debug - _warnIfUsingStrippedFeatureFlags", {
+QUnit.module("ngular-debug - _warnIfUsingStrippedFeatureFlags", {
   setup() {
-    oldWarn            = Ember.warn;
-    oldRunInDebug      = Ember.runInDebug;
-    origEnvFeatures    = Ember.ENV.FEATURES;
-    origEnableAll      = Ember.ENV.ENABLE_ALL_FEATURES;
-    origEnableOptional = Ember.ENV.ENABLE_OPTIONAL_FEATURES;
+    oldWarn            = Ngular.warn;
+    oldRunInDebug      = Ngular.runInDebug;
+    origEnvFeatures    = Ngular.ENV.FEATURES;
+    origEnableAll      = Ngular.ENV.ENABLE_ALL_FEATURES;
+    origEnableOptional = Ngular.ENV.ENABLE_OPTIONAL_FEATURES;
   },
 
   teardown() {
-    Ember.warn                         = oldWarn;
-    Ember.runInDebug                   = oldRunInDebug;
-    Ember.ENV.FEATURES                 = origEnvFeatures;
-    Ember.ENV.ENABLE_ALL_FEATURES      = origEnableAll;
-    Ember.ENV.ENABLE_OPTIONAL_FEATURES = origEnableOptional;
+    Ngular.warn                         = oldWarn;
+    Ngular.runInDebug                   = oldRunInDebug;
+    Ngular.ENV.FEATURES                 = origEnvFeatures;
+    Ngular.ENV.ENABLE_ALL_FEATURES      = origEnableAll;
+    Ngular.ENV.ENABLE_OPTIONAL_FEATURES = origEnableOptional;
   }
 });
 
-QUnit.test("Setting Ember.ENV.ENABLE_ALL_FEATURES truthy in non-canary, debug build causes a warning", function() {
+QUnit.test("Setting Ngular.ENV.ENABLE_ALL_FEATURES truthy in non-canary, debug build causes a warning", function() {
   expect(1);
 
-  Ember.ENV.ENABLE_ALL_FEATURES = true;
-  Ember.ENV.ENABLE_OPTIONAL_FEATURES = false;
-  Ember.ENV.FEATURES = {};
+  Ngular.ENV.ENABLE_ALL_FEATURES = true;
+  Ngular.ENV.ENABLE_OPTIONAL_FEATURES = false;
+  Ngular.ENV.FEATURES = {};
 
-  confirmWarns('Ember.ENV.ENABLE_ALL_FEATURES is only available in canary builds.');
+  confirmWarns('Ngular.ENV.ENABLE_ALL_FEATURES is only available in canary builds.');
 });
 
-QUnit.test("Setting Ember.ENV.ENABLE_OPTIONAL_FEATURES truthy in non-canary, debug build causes a warning", function() {
+QUnit.test("Setting Ngular.ENV.ENABLE_OPTIONAL_FEATURES truthy in non-canary, debug build causes a warning", function() {
   expect(1);
 
-  Ember.ENV.ENABLE_ALL_FEATURES = false;
-  Ember.ENV.ENABLE_OPTIONAL_FEATURES = true;
-  Ember.ENV.FEATURES = {};
+  Ngular.ENV.ENABLE_ALL_FEATURES = false;
+  Ngular.ENV.ENABLE_OPTIONAL_FEATURES = true;
+  Ngular.ENV.FEATURES = {};
 
-  confirmWarns('Ember.ENV.ENABLE_OPTIONAL_FEATURES is only available in canary builds.');
+  confirmWarns('Ngular.ENV.ENABLE_OPTIONAL_FEATURES is only available in canary builds.');
 });
 
 QUnit.test("Enabling a FEATURES flag in non-canary, debug build causes a warning", function() {
   expect(1);
 
-  Ember.ENV.ENABLE_ALL_FEATURES = false;
-  Ember.ENV.ENABLE_OPTIONAL_FEATURES = false;
-  Ember.ENV.FEATURES = {
+  Ngular.ENV.ENABLE_ALL_FEATURES = false;
+  Ngular.ENV.ENABLE_OPTIONAL_FEATURES = false;
+  Ngular.ENV.FEATURES = {
     'fred': true,
     'barney': false,
     'wilma': null

@@ -1,13 +1,13 @@
-import Ember from "ember-metal/core";
-import emberRun from "ember-metal/run_loop";
-import create from 'ember-metal/platform/create';
-import RSVP from "ember-runtime/ext/rsvp";
-import setupForTesting from "ember-testing/setup_for_testing";
-import EmberApplication from "ember-application/system/application";
+import Ngular from "ngular-metal/core";
+import ngularRun from "ngular-metal/run_loop";
+import create from 'ngular-metal/platform/create';
+import RSVP from "ngular-runtime/ext/rsvp";
+import setupForTesting from "ngular-testing/setup_for_testing";
+import NgularApplication from "ngular-application/system/application";
 
 /**
-  @module ember
-  @submodule ember-testing
+  @module ngular
+  @submodule ngular-testing
  */
 var helpers = {};
 var injectHelpersCallbacks = [];
@@ -21,7 +21,7 @@ var injectHelpersCallbacks = [];
     your application.
 
   @class Test
-  @namespace Ember
+  @namespace Ngular
 */
 var Test = {
   /**
@@ -43,8 +43,8 @@ var Test = {
     For example:
 
     ```javascript
-    Ember.Test.registerHelper('boot', function(app) {
-      Ember.run(app, app.advanceReadiness);
+    Ngular.Test.registerHelper('boot', function(app) {
+      Ngular.run(app, app.advanceReadiness);
     });
     ```
 
@@ -52,7 +52,7 @@ var Test = {
     called with `app` as the first parameter.
 
     ```javascript
-    App = Ember.Application.create();
+    App = Ngular.Application.create();
     App.injectTestHelpers();
     boot();
     ```
@@ -80,8 +80,8 @@ var Test = {
     For example:
 
     ```javascript
-    Ember.Test.registerAsyncHelper('boot', function(app) {
-      Ember.run(app, app.advanceReadiness);
+    Ngular.Test.registerAsyncHelper('boot', function(app) {
+      Ngular.run(app, app.advanceReadiness);
     });
     ```
 
@@ -93,7 +93,7 @@ var Test = {
     For example:
 
     ```javascript
-    Ember.Test.registerAsyncHelper('deletePost', function(app, postId) {
+    Ngular.Test.registerAsyncHelper('deletePost', function(app, postId) {
       click('.delete-' + postId);
     });
 
@@ -123,7 +123,7 @@ var Test = {
     Example:
 
     ```javascript
-    Ember.Test.unregisterHelper('wait');
+    Ngular.Test.unregisterHelper('wait');
     ```
 
     @public
@@ -144,12 +144,12 @@ var Test = {
     Example:
 
     ```javascript
-    Ember.Test.onInjectHelpers(function() {
-      Ember.$(document).ajaxSend(function() {
+    Ngular.Test.onInjectHelpers(function() {
+      Ngular.$(document).ajaxSend(function() {
         Test.pendingAjaxRequests++;
       });
 
-      Ember.$(document).ajaxComplete(function() {
+      Ngular.$(document).ajaxComplete(function() {
         Test.pendingAjaxRequests--;
       });
     });
@@ -165,7 +165,7 @@ var Test = {
 
   /**
     This returns a thenable tailored for testing.  It catches failed
-    `onSuccess` callbacks and invokes the `Ember.Test.adapter.exception`
+    `onSuccess` callbacks and invokes the `Ngular.Test.adapter.exception`
     callback in the last chained then.
 
     This method should be returned by async helpers such as `wait`.
@@ -179,7 +179,7 @@ var Test = {
   },
 
   /**
-   Used to allow ember-testing to communicate with a specific testing
+   Used to allow ngular-testing to communicate with a specific testing
    framework.
 
    You can manually set it before calling `App.setupForTesting()`.
@@ -187,22 +187,22 @@ var Test = {
    Example:
 
    ```javascript
-   Ember.Test.adapter = MyCustomAdapter.create()
+   Ngular.Test.adapter = MyCustomAdapter.create()
    ```
 
-   If you do not set it, ember-testing will default to `Ember.Test.QUnitAdapter`.
+   If you do not set it, ngular-testing will default to `Ngular.Test.QUnitAdapter`.
 
    @public
    @property adapter
    @type {Class} The adapter to be used.
-   @default Ember.Test.QUnitAdapter
+   @default Ngular.Test.QUnitAdapter
   */
   adapter: null,
 
   /**
-    Replacement for `Ember.RSVP.resolve`
+    Replacement for `Ngular.RSVP.resolve`
     The only difference is this uses
-    an instance of `Ember.Test.Promise`
+    an instance of `Ngular.Test.Promise`
 
     @public
     @method resolve
@@ -216,14 +216,14 @@ var Test = {
   },
 
   /**
-     This allows ember-testing to play nicely with other asynchronous
+     This allows ngular-testing to play nicely with other asynchronous
      events, such as an application that is waiting for a CSS3
      transition or an IndexDB transaction.
 
      For example:
 
      ```javascript
-     Ember.Test.registerWaiter(function() {
+     Ngular.Test.registerWaiter(function() {
        return myPendingTransactions() == 0;
      });
      ```
@@ -233,7 +233,7 @@ var Test = {
      For example:
 
      ```javascript
-     Ember.Test.registerWaiter(MyDB, MyDB.hasPendingTransactions);
+     Ngular.Test.registerWaiter(MyDB, MyDB.hasPendingTransactions);
      ```
 
      @public
@@ -248,7 +248,7 @@ var Test = {
       context = null;
     }
     if (!this.waiters) {
-      this.waiters = Ember.A();
+      this.waiters = Ngular.A();
     }
     this.waiters.push([context, callback]);
   },
@@ -268,7 +268,7 @@ var Test = {
       callback = context;
       context = null;
     }
-    this.waiters = Ember.A(this.waiters.filter(function(elt) {
+    this.waiters = Ngular.A(this.waiters.filter(function(elt) {
       return !(elt[0] === context && elt[1] === callback);
     }));
   }
@@ -308,17 +308,17 @@ function helper(app, name) {
 }
 
 function run(fn) {
-  if (!emberRun.currentRunLoop) {
-    return emberRun(fn);
+  if (!ngularRun.currentRunLoop) {
+    return ngularRun(fn);
   } else {
     return fn();
   }
 }
 
-EmberApplication.reopen({
+NgularApplication.reopen({
   /**
    This property contains the testing helpers for the current application. These
-   are created once you call `injectTestHelpers` on your `Ember.Application`
+   are created once you call `injectTestHelpers` on your `Ngular.Application`
    instance. The included helpers are also available on the `window` object by
    default, but can be used from this object on the individual application also.
 
@@ -477,7 +477,7 @@ Test.Promise.prototype.constructor = Test.Promise;
 Test.Promise.resolve = Test.resolve;
 
 // Patch `then` to isolate async methods
-// specifically `Ember.Test.lastPromise`
+// specifically `Ngular.Test.lastPromise`
 var originalThen = RSVP.Promise.prototype.then;
 Test.Promise.prototype.then = function(onSuccess, onFailure) {
   return originalThen.call(this, function(val) {
@@ -488,7 +488,7 @@ Test.Promise.prototype.then = function(onSuccess, onFailure) {
 // This method isolates nested async methods
 // so that they don't conflict with other last promises.
 //
-// 1. Set `Ember.Test.lastPromise` to null
+// 1. Set `Ngular.Test.lastPromise` to null
 // 2. Invoke method
 // 3. Return the last promise created during method
 function isolate(fn, val) {

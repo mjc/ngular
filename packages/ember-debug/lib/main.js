@@ -1,33 +1,33 @@
 /*global __fail__*/
 
-import Ember from "ember-metal/core";
-import EmberError from "ember-metal/error";
-import Logger from "ember-metal/logger";
+import Ngular from "ngular-metal/core";
+import NgularError from "ngular-metal/error";
+import Logger from "ngular-metal/logger";
 
-import environment from "ember-metal/environment";
+import environment from "ngular-metal/environment";
 
 /**
-Ember Debug
+Ngular Debug
 
-@module ember
-@submodule ember-debug
+@module ngular
+@submodule ngular-debug
 */
 
 /**
-@class Ember
+@class Ngular
 */
 
 /**
   Define an assertion that will throw an exception if the condition is not
-  met. Ember build tools will remove any calls to `Ember.assert()` when
+  met. Ngular build tools will remove any calls to `Ngular.assert()` when
   doing a production build. Example:
 
   ```javascript
   // Test for truthiness
-  Ember.assert('Must pass a valid object', obj);
+  Ngular.assert('Must pass a valid object', obj);
 
   // Fail unconditionally
-  Ember.assert('This code path should never be run');
+  Ngular.assert('This code path should never be run');
   ```
 
   @method assert
@@ -37,31 +37,31 @@ Ember Debug
     falsy, an exception will be thrown. If this is a function, it will be executed and
     its return value will be used as condition.
 */
-Ember.assert = function(desc, test) {
+Ngular.assert = function(desc, test) {
   var throwAssertion;
 
-  if (Ember.typeOf(test) === 'function') {
+  if (Ngular.typeOf(test) === 'function') {
     throwAssertion = !test();
   } else {
     throwAssertion = !test;
   }
 
   if (throwAssertion) {
-    throw new EmberError("Assertion Failed: " + desc);
+    throw new NgularError("Assertion Failed: " + desc);
   }
 };
 
 
 /**
-  Display a warning with the provided message. Ember build tools will
-  remove any calls to `Ember.warn()` when doing a production build.
+  Display a warning with the provided message. Ngular build tools will
+  remove any calls to `Ngular.warn()` when doing a production build.
 
   @method warn
   @param {String} message A warning to display.
   @param {Boolean} test An optional boolean. If falsy, the warning
     will be displayed.
 */
-Ember.warn = function(message, test) {
+Ngular.warn = function(message, test) {
   if (!test) {
     Logger.warn("WARNING: "+message);
     if ('trace' in Logger) {
@@ -71,24 +71,24 @@ Ember.warn = function(message, test) {
 };
 
 /**
-  Display a debug notice. Ember build tools will remove any calls to
-  `Ember.debug()` when doing a production build.
+  Display a debug notice. Ngular build tools will remove any calls to
+  `Ngular.debug()` when doing a production build.
 
   ```javascript
-  Ember.debug('I\'m a debug notice!');
+  Ngular.debug('I\'m a debug notice!');
   ```
 
   @method debug
   @param {String} message A debug message to display.
 */
-Ember.debug = function(message) {
+Ngular.debug = function(message) {
   Logger.debug("DEBUG: "+message);
 };
 
 /**
   Display a deprecation warning with the provided message and a stack trace
-  (Chrome and Firefox only). Ember build tools will remove any calls to
-  `Ember.deprecate()` when doing a production build.
+  (Chrome and Firefox only). Ngular build tools will remove any calls to
+  `Ngular.deprecate()` when doing a production build.
 
   @method deprecate
   @param {String} message A description of the deprecation.
@@ -96,9 +96,9 @@ Ember.debug = function(message) {
     will be displayed. If this is a function, it will be executed and its return
     value will be used as condition.
   @param {Object} options An optional object that can be used to pass
-    in a `url` to the transition guide on the emberjs.com website.
+    in a `url` to the transition guide on the github.com/mjc/ngular website.
 */
-Ember.deprecate = function(message, test, options) {
+Ngular.deprecate = function(message, test, options) {
   var noDeprecation;
 
   if (typeof test === 'function') {
@@ -109,7 +109,7 @@ Ember.deprecate = function(message, test, options) {
 
   if (noDeprecation) { return; }
 
-  if (Ember.ENV.RAISE_ON_DEPRECATION) { throw new EmberError(message); }
+  if (Ngular.ENV.RAISE_ON_DEPRECATION) { throw new NgularError(message); }
 
   var error;
 
@@ -117,13 +117,13 @@ Ember.deprecate = function(message, test, options) {
   try { __fail__.fail(); } catch (e) { error = e; }
 
   if (arguments.length === 3) {
-    Ember.assert('options argument to Ember.deprecate should be an object', options && typeof options === 'object');
+    Ngular.assert('options argument to Ngular.deprecate should be an object', options && typeof options === 'object');
     if (options.url) {
       message += ' See ' + options.url + ' for more details.';
     }
   }
 
-  if (Ember.LOG_STACKTRACE_ON_DEPRECATION && error.stack) {
+  if (Ngular.LOG_STACKTRACE_ON_DEPRECATION && error.stack) {
     var stack;
     var stackStr = '';
 
@@ -154,11 +154,11 @@ Ember.deprecate = function(message, test, options) {
   Display a deprecation warning with the provided message and a stack trace
   (Chrome and Firefox only) when the assigned method is called.
 
-  Ember build tools will not remove calls to `Ember.deprecateFunc()`, though
+  Ngular build tools will not remove calls to `Ngular.deprecateFunc()`, though
   no warnings will be shown in production.
 
   ```javascript
-  Ember.oldMethod = Ember.deprecateFunc('Please use the new, updated method', Ember.newMethod);
+  Ngular.oldMethod = Ngular.deprecateFunc('Please use the new, updated method', Ngular.newMethod);
   ```
 
   @method deprecateFunc
@@ -166,21 +166,21 @@ Ember.deprecate = function(message, test, options) {
   @param {Function} func The new function called to replace its deprecated counterpart.
   @return {Function} a new function that wrapped the original function with a deprecation warning
 */
-Ember.deprecateFunc = function(message, func) {
+Ngular.deprecateFunc = function(message, func) {
   return function() {
-    Ember.deprecate(message);
+    Ngular.deprecate(message);
     return func.apply(this, arguments);
   };
 };
 
 
 /**
-  Run a function meant for debugging. Ember build tools will remove any calls to
-  `Ember.runInDebug()` when doing a production build.
+  Run a function meant for debugging. Ngular build tools will remove any calls to
+  `Ngular.runInDebug()` when doing a production build.
 
   ```javascript
-  Ember.runInDebug(function() {
-    Ember.Handlebars.EachView.reopen({
+  Ngular.runInDebug(function() {
+    Ngular.Handlebars.EachView.reopen({
       didInsertElement: function() {
         console.log('I\'m happy');
       }
@@ -192,12 +192,12 @@ Ember.deprecateFunc = function(message, func) {
   @param {Function} func The function to be executed.
   @since 1.5.0
 */
-Ember.runInDebug = function(func) {
+Ngular.runInDebug = function(func) {
   func();
 };
 
 /**
-  Will call `Ember.warn()` if ENABLE_ALL_FEATURES, ENABLE_OPTIONAL_FEATURES, or
+  Will call `Ngular.warn()` if ENABLE_ALL_FEATURES, ENABLE_OPTIONAL_FEATURES, or
   any specific FEATURES flag is truthy.
 
   This method is called automatically in debug canary builds.
@@ -208,59 +208,59 @@ Ember.runInDebug = function(func) {
 */
 export function _warnIfUsingStrippedFeatureFlags(FEATURES, featuresWereStripped) {
   if (featuresWereStripped) {
-    Ember.warn('Ember.ENV.ENABLE_ALL_FEATURES is only available in canary builds.', !Ember.ENV.ENABLE_ALL_FEATURES);
-    Ember.warn('Ember.ENV.ENABLE_OPTIONAL_FEATURES is only available in canary builds.', !Ember.ENV.ENABLE_OPTIONAL_FEATURES);
+    Ngular.warn('Ngular.ENV.ENABLE_ALL_FEATURES is only available in canary builds.', !Ngular.ENV.ENABLE_ALL_FEATURES);
+    Ngular.warn('Ngular.ENV.ENABLE_OPTIONAL_FEATURES is only available in canary builds.', !Ngular.ENV.ENABLE_OPTIONAL_FEATURES);
 
     for (var key in FEATURES) {
       if (FEATURES.hasOwnProperty(key) && key !== 'isEnabled') {
-        Ember.warn('FEATURE["' + key + '"] is set as enabled, but FEATURE flags are only available in canary builds.', !FEATURES[key]);
+        Ngular.warn('FEATURE["' + key + '"] is set as enabled, but FEATURE flags are only available in canary builds.', !FEATURES[key]);
       }
     }
   }
 }
 
-if (!Ember.testing) {
+if (!Ngular.testing) {
   // Complain if they're using FEATURE flags in builds other than canary
-  Ember.FEATURES['features-stripped-test'] = true;
+  Ngular.FEATURES['features-stripped-test'] = true;
   var featuresWereStripped = true;
 
-  if (Ember.FEATURES.isEnabled('features-stripped-test')) {
+  if (Ngular.FEATURES.isEnabled('features-stripped-test')) {
     featuresWereStripped = false;
   }
 
-  delete Ember.FEATURES['features-stripped-test'];
-  _warnIfUsingStrippedFeatureFlags(Ember.ENV.FEATURES, featuresWereStripped);
+  delete Ngular.FEATURES['features-stripped-test'];
+  _warnIfUsingStrippedFeatureFlags(Ngular.ENV.FEATURES, featuresWereStripped);
 
-  // Inform the developer about the Ember Inspector if not installed.
+  // Inform the developer about the Ngular Inspector if not installed.
   var isFirefox = typeof InstallTrigger !== 'undefined';
   var isChrome = environment.isChrome;
 
   if (typeof window !== 'undefined' && (isFirefox || isChrome) && window.addEventListener) {
     window.addEventListener("load", function() {
-      if (document.documentElement && document.documentElement.dataset && !document.documentElement.dataset.emberExtension) {
+      if (document.documentElement && document.documentElement.dataset && !document.documentElement.dataset.ngularExtension) {
         var downloadURL;
 
         if (isChrome) {
-          downloadURL = 'https://chrome.google.com/webstore/detail/ember-inspector/bmdblncegkenkacieihfhpjfppoconhi';
+          downloadURL = 'https://chrome.google.com/webstore/detail/ngular-inspector/bmdblncegkenkacieihfhpjfppoconhi';
         } else if (isFirefox) {
-          downloadURL = 'https://addons.mozilla.org/en-US/firefox/addon/ember-inspector/';
+          downloadURL = 'https://addons.mozilla.org/en-US/firefox/addon/ngular-inspector/';
         }
 
-        Ember.debug('For more advanced debugging, install the Ember Inspector from ' + downloadURL);
+        Ngular.debug('For more advanced debugging, install the Ngular Inspector from ' + downloadURL);
       }
     }, false);
   }
 }
 
 /*
-  We are transitioning away from `ember.js` to `ember.debug.js` to make
+  We are transitioning away from `ngular.js` to `ngular.debug.js` to make
   it much clearer that it is only for local development purposes.
 
   This flag value is changed by the tooling (by a simple string replacement)
-  so that if `ember.js` (which must be output for backwards compat reasons) is
+  so that if `ngular.js` (which must be output for backwards compat reasons) is
   used a nice helpful warning message will be printed out.
 */
-export var runningNonEmberDebugJS = false;
-if (runningNonEmberDebugJS) {
-  Ember.warn('Please use `ember.debug.js` instead of `ember.js` for development and debugging.');
+export var runningNonNgularDebugJS = false;
+if (runningNonNgularDebugJS) {
+  Ngular.warn('Please use `ngular.debug.js` instead of `ngular.js` for development and debugging.');
 }

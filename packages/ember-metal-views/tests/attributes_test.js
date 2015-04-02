@@ -2,9 +2,9 @@ import {
   appendTo,
   subject,
   testsFor
-} from "ember-metal-views/tests/test_helpers";
+} from "ngular-metal-views/tests/test_helpers";
 
-testsFor("ember-metal-views - attributes");
+testsFor("ngular-metal-views - attributes");
 
 QUnit.test('aliased attributeBindings', function() {
   var view = {

@@ -1,4 +1,4 @@
-import run from 'ember-metal/run_loop';
+import run from 'ngular-metal/run_loop';
 
 QUnit.module('run.next');
 

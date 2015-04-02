@@ -1,28 +1,28 @@
-import Ember from "ember-metal/core";
-import {guidFor} from "ember-metal/utils";
-import run from "ember-metal/run_loop";
-import {get} from "ember-metal/property_get";
-import {computed} from "ember-metal/computed";
-import compare from "ember-runtime/compare";
-import EmberObject from "ember-runtime/system/object";
-import ArrayController from "ember-runtime/controllers/array_controller";
-import Controller from "ember-runtime/controllers/controller";
-import {sort} from "ember-runtime/computed/reduce_computed_macros";
+import Ngular from "ngular-metal/core";
+import {guidFor} from "ngular-metal/utils";
+import run from "ngular-metal/run_loop";
+import {get} from "ngular-metal/property_get";
+import {computed} from "ngular-metal/computed";
+import compare from "ngular-runtime/compare";
+import NgularObject from "ngular-runtime/system/object";
+import ArrayController from "ngular-runtime/controllers/array_controller";
+import Controller from "ngular-runtime/controllers/controller";
+import {sort} from "ngular-runtime/computed/reduce_computed_macros";
 import Registry from "container/registry";
 
 var lannisters, arrayController, controllerClass, otherControllerClass, registry, container, itemControllerCount,
     tywin, jaime, cersei, tyrion;
 
-QUnit.module("Ember.ArrayController - itemController", {
+QUnit.module("Ngular.ArrayController - itemController", {
   setup() {
     registry = new Registry();
     container = registry.container();
 
-    tywin = EmberObject.create({ name: 'Tywin' });
-    jaime = EmberObject.create({ name: 'Jaime' });
-    cersei = EmberObject.create({ name: 'Cersei' });
-    tyrion = EmberObject.create({ name: 'Tyrion' });
-    lannisters = Ember.A([tywin, jaime, cersei]);
+    tywin = NgularObject.create({ name: 'Tywin' });
+    jaime = NgularObject.create({ name: 'Jaime' });
+    cersei = NgularObject.create({ name: 'Cersei' });
+    tyrion = NgularObject.create({ name: 'Tyrion' });
+    lannisters = Ngular.A([tywin, jaime, cersei]);
 
     itemControllerCount = 0;
     controllerClass = Controller.extend({
@@ -160,7 +160,7 @@ QUnit.test("when the underlying array changes, old subcontainers are destroyed",
   equal(!!cerseiController.isDestroying, false, "precond - nobody is destroyed yet");
 
   run(function() {
-    arrayController.set('model', Ember.A());
+    arrayController.set('model', Ngular.A());
   });
 
   equal(!!jaimeController.isDestroying, true, "old subcontainers are destroyed");
@@ -278,7 +278,7 @@ QUnit.test("target and parentController are set to the concrete parentController
     target: parent,
     parentController: parent,
     _isVirtual: true,
-    model: Ember.A([
+    model: Ngular.A([
       { name: 'kris seldenator' }
     ])
   });
@@ -333,14 +333,14 @@ QUnit.test("`itemController`'s life cycle should be entangled with its parent co
   equal(jaimeController.get('isDestroyed'), true);
 });
 
-QUnit.module('Ember.ArrayController - itemController with arrayComputed', {
+QUnit.module('Ngular.ArrayController - itemController with arrayComputed', {
   setup() {
     registry = new Registry();
     container = registry.container();
 
-    cersei = EmberObject.create({ name: 'Cersei' });
-    jaime = EmberObject.create({ name: 'Jaime' });
-    lannisters = Ember.A([jaime, cersei]);
+    cersei = NgularObject.create({ name: 'Cersei' });
+    jaime = NgularObject.create({ name: 'Jaime' });
+    lannisters = Ngular.A([jaime, cersei]);
 
     controllerClass = Controller.extend({
       title: computed(function () {
@@ -370,7 +370,7 @@ QUnit.test("item controllers can be used to provide properties for array compute
   ok(compare(guidFor(cersei), guidFor(jaime)) < 0, "precond - guid tiebreaker would fail test");
 
   arrayController.reopen({
-    sortProperties: Ember.A(['title']),
+    sortProperties: Ngular.A(['title']),
     sorted: sort('@this', 'sortProperties')
   });
 

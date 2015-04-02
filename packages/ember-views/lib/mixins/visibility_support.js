@@ -1,19 +1,19 @@
 /**
-@module ember
-@submodule ember-views
+@module ngular
+@submodule ngular-views
 */
 import {
   Mixin,
   observer
-} from "ember-metal/mixin";
-import { get } from "ember-metal/property_get";
-import run from "ember-metal/run_loop";
+} from "ngular-metal/mixin";
+import { get } from "ngular-metal/property_get";
+import run from "ngular-metal/run_loop";
 
 function K() { return this; }
 
 /**
   @class VisibilitySupport
-  @namespace Ember
+  @namespace Ngular
 */
 var VisibilitySupport = Mixin.create({
   /**

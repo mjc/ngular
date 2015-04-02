@@ -1,8 +1,8 @@
-import run from "ember-metal/run_loop";
-import { set } from "ember-metal/property_set";
-import View from "ember-views/views/view";
-import { runAppend, runDestroy } from "ember-runtime/tests/utils";
-import compile from "ember-template-compiler/system/compile";
+import run from "ngular-metal/run_loop";
+import { set } from "ngular-metal/property_set";
+import View from "ngular-views/views/view";
+import { runAppend, runDestroy } from "ngular-runtime/tests/utils";
+import compile from "ngular-template-compiler/system/compile";
 
 var view;
 var controller;

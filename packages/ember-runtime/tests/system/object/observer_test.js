@@ -1,14 +1,14 @@
-import Ember from "ember-metal/core";
-import { observer } from "ember-metal/mixin";
-import run from "ember-metal/run_loop";
-import { testBoth } from "ember-metal/tests/props_helper";
-import EmberObject from "ember-runtime/system/object";
+import Ngular from "ngular-metal/core";
+import { observer } from "ngular-metal/mixin";
+import run from "ngular-metal/run_loop";
+import { testBoth } from "ngular-metal/tests/props_helper";
+import NgularObject from "ngular-runtime/system/object";
 
-QUnit.module('EmberObject observer');
+QUnit.module('NgularObject observer');
 
 testBoth('observer on class', function(get, set) {
 
-  var MyClass = EmberObject.extend({
+  var MyClass = NgularObject.extend({
 
     count: 0,
 
@@ -28,7 +28,7 @@ testBoth('observer on class', function(get, set) {
 
 testBoth('observer on subclass', function(get, set) {
 
-  var MyClass = EmberObject.extend({
+  var MyClass = NgularObject.extend({
 
     count: 0,
 
@@ -57,7 +57,7 @@ testBoth('observer on subclass', function(get, set) {
 
 testBoth('observer on instance', function(get, set) {
 
-  var obj = EmberObject.createWithMixins({
+  var obj = NgularObject.createWithMixins({
 
     count: 0,
 
@@ -76,7 +76,7 @@ testBoth('observer on instance', function(get, set) {
 
 testBoth('observer on instance overriding class', function(get, set) {
 
-  var MyClass = EmberObject.extend({
+  var MyClass = NgularObject.extend({
 
     count: 0,
 
@@ -104,7 +104,7 @@ testBoth('observer on instance overriding class', function(get, set) {
 
 testBoth('observer should not fire after being destroyed', function(get, set) {
 
-  var obj = EmberObject.createWithMixins({
+  var obj = NgularObject.createWithMixins({
     count: 0,
     foo: observer('bar', function() {
       set(this, 'count', get(this, 'count')+1);
@@ -115,7 +115,7 @@ testBoth('observer should not fire after being destroyed', function(get, set) {
 
   run(function() { obj.destroy(); });
 
-  if (Ember.assert) {
+  if (Ngular.assert) {
     expectAssertion(function() {
       set(obj, 'bar', "BAZ");
     }, "calling set on destroyed object");
@@ -132,7 +132,7 @@ testBoth('observer should not fire after being destroyed', function(get, set) {
 
 testBoth('chain observer on class', function(get, set) {
 
-  var MyClass = EmberObject.extend({
+  var MyClass = NgularObject.extend({
     count: 0,
 
     foo: observer('bar.baz', function() {
@@ -163,7 +163,7 @@ testBoth('chain observer on class', function(get, set) {
 
 testBoth('chain observer on class', function(get, set) {
 
-  var MyClass = EmberObject.extend({
+  var MyClass = NgularObject.extend({
     count: 0,
 
     foo: observer('bar.baz', function() {
@@ -203,14 +203,14 @@ testBoth('chain observer on class', function(get, set) {
 testBoth('chain observer on class that has a reference to an uninitialized object will finish chains that reference it', function(get, set) {
   var changed = false;
 
-  var ChildClass = EmberObject.extend({
+  var ChildClass = NgularObject.extend({
     parent: null,
     parentOneTwoDidChange: observer('parent.one.two', function() {
       changed = true;
     })
   });
 
-  var ParentClass = EmberObject.extend({
+  var ParentClass = NgularObject.extend({
     one: {
       two: "old"
     },

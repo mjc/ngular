@@ -1,35 +1,35 @@
-import Ember from "ember-metal/core";
-import Renderer from 'ember-metal-views/renderer';
-import create from 'ember-metal/platform/create';
-import RenderBuffer from "ember-views/system/render_buffer";
-import run from "ember-metal/run_loop";
-import { get } from "ember-metal/property_get";
+import Ngular from "ngular-metal/core";
+import Renderer from 'ngular-metal-views/renderer';
+import create from 'ngular-metal/platform/create';
+import RenderBuffer from "ngular-views/system/render_buffer";
+import run from "ngular-metal/run_loop";
+import { get } from "ngular-metal/property_get";
 import {
   _instrumentStart,
   subscribers
-} from "ember-metal/instrumentation";
+} from "ngular-metal/instrumentation";
 
-function EmberRenderer(domHelper, _destinedForDOM) {
+function NgularRenderer(domHelper, _destinedForDOM) {
   this._super$constructor(domHelper, _destinedForDOM);
   this.buffer = new RenderBuffer(domHelper);
 }
 
-EmberRenderer.prototype = create(Renderer.prototype);
-EmberRenderer.prototype.constructor = EmberRenderer;
-EmberRenderer.prototype._super$constructor = Renderer;
+NgularRenderer.prototype = create(Renderer.prototype);
+NgularRenderer.prototype.constructor = NgularRenderer;
+NgularRenderer.prototype._super$constructor = Renderer;
 
-EmberRenderer.prototype.scheduleRender =
-  function EmberRenderer_scheduleRender(ctx, fn) {
+NgularRenderer.prototype.scheduleRender =
+  function NgularRenderer_scheduleRender(ctx, fn) {
     return run.scheduleOnce('render', ctx, fn);
   };
 
-EmberRenderer.prototype.cancelRender =
-  function EmberRenderer_cancelRender(id) {
+NgularRenderer.prototype.cancelRender =
+  function NgularRenderer_cancelRender(id) {
     run.cancel(id);
   };
 
-EmberRenderer.prototype.createElement =
-  function EmberRenderer_createElement(view, contextualElement) {
+NgularRenderer.prototype.createElement =
+  function NgularRenderer_createElement(view, contextualElement) {
     // If this is the top-most view, start a new buffer. Otherwise,
     // create a new buffer relative to the original using the
     // provided buffer operation (for example, `insertAfter` will
@@ -37,7 +37,7 @@ EmberRenderer.prototype.createElement =
     var tagName = view.tagName;
     if (tagName !== null && typeof tagName === 'object' && tagName.isDescriptor) {
       tagName = get(view, 'tagName');
-      Ember.deprecate('In the future using a computed property to define tagName will not be permitted. That value will be respected, but changing it will not update the element.', !tagName);
+      Ngular.deprecate('In the future using a computed property to define tagName will not be permitted. That value will be respected, but changing it will not update the element.', !tagName);
     }
     var classNameBindings = view.classNameBindings;
     var taglessViewWithClassBindings = tagName === '' && (classNameBindings && classNameBindings.length > 0);
@@ -46,7 +46,7 @@ EmberRenderer.prototype.createElement =
       tagName = 'div';
     }
 
-    Ember.assert('You cannot use `classNameBindings` on a tag-less view: ' + view.toString(), !taglessViewWithClassBindings);
+    Ngular.assert('You cannot use `classNameBindings` on a tag-less view: ' + view.toString(), !taglessViewWithClassBindings);
 
     var buffer = view.buffer = this.buffer;
     buffer.reset(tagName, contextualElement);
@@ -79,12 +79,12 @@ EmberRenderer.prototype.createElement =
     return element;
   };
 
-EmberRenderer.prototype.destroyView = function destroyView(view) {
+NgularRenderer.prototype.destroyView = function destroyView(view) {
   view.removedFromDOM = true;
   view.destroy();
 };
 
-EmberRenderer.prototype.childViews = function childViews(view) {
+NgularRenderer.prototype.childViews = function childViews(view) {
   if (view._attrNodes && view._childViews) {
     return view._attrNodes.concat(view._childViews);
   }
@@ -147,4 +147,4 @@ Renderer.prototype.didDestroyElement = function (view) {
   }
 }; // element destroyed so view.destroy shouldn't try to remove it removedFromDOM
 
-export default EmberRenderer;
+export default NgularRenderer;

@@ -8,10 +8,10 @@ var originalModelInjections;
 
 QUnit.module("Container", {
   setup() {
-    originalModelInjections = Ember.MODEL_FACTORY_INJECTIONS;
+    originalModelInjections = Ngular.MODEL_FACTORY_INJECTIONS;
   },
   teardown() {
-    Ember.MODEL_FACTORY_INJECTIONS = originalModelInjections;
+    Ngular.MODEL_FACTORY_INJECTIONS = originalModelInjections;
   }
 });
 
@@ -258,7 +258,7 @@ QUnit.test("An invalid factory throws an error", function() {
 });
 
 QUnit.test("Injecting a failed lookup raises an error", function() {
-  Ember.MODEL_FACTORY_INJECTIONS = true;
+  Ngular.MODEL_FACTORY_INJECTIONS = true;
 
   var registry = new Registry();
   var container = registry.container();

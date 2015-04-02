@@ -1,14 +1,14 @@
-import { ArrayTests } from 'ember-runtime/tests/suites/array';
+import { ArrayTests } from 'ngular-runtime/tests/suites/array';
 
-import insertAtTests from 'ember-runtime/tests/suites/mutable_array/insertAt';
-import popObjectTests from 'ember-runtime/tests/suites/mutable_array/popObject';
-import pushObjectTests from 'ember-runtime/tests/suites/mutable_array/pushObject';
-import pushObjectsTest from 'ember-runtime/tests/suites/mutable_array/pushObjects';
-import removeAtTests from 'ember-runtime/tests/suites/mutable_array/removeAt';
-import replaceTests from 'ember-runtime/tests/suites/mutable_array/replace';
-import shiftObjectTests from 'ember-runtime/tests/suites/mutable_array/shiftObject';
-import unshiftObjectTests from 'ember-runtime/tests/suites/mutable_array/unshiftObject';
-import reverseObjectsTests from 'ember-runtime/tests/suites/mutable_array/reverseObjects';
+import insertAtTests from 'ngular-runtime/tests/suites/mutable_array/insertAt';
+import popObjectTests from 'ngular-runtime/tests/suites/mutable_array/popObject';
+import pushObjectTests from 'ngular-runtime/tests/suites/mutable_array/pushObject';
+import pushObjectsTest from 'ngular-runtime/tests/suites/mutable_array/pushObjects';
+import removeAtTests from 'ngular-runtime/tests/suites/mutable_array/removeAt';
+import replaceTests from 'ngular-runtime/tests/suites/mutable_array/replace';
+import shiftObjectTests from 'ngular-runtime/tests/suites/mutable_array/shiftObject';
+import unshiftObjectTests from 'ngular-runtime/tests/suites/mutable_array/unshiftObject';
+import reverseObjectsTests from 'ngular-runtime/tests/suites/mutable_array/reverseObjects';
 
 var MutableArrayTests = ArrayTests.extend();
 MutableArrayTests.importModuleTests(insertAtTests);

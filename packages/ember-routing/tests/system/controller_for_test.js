@@ -1,19 +1,19 @@
-import Ember from 'ember-metal/core'; // A
-import { get } from "ember-metal/property_get";
-import { set } from "ember-metal/property_set";
-import run from "ember-metal/run_loop";
+import Ngular from 'ngular-metal/core'; // A
+import { get } from "ngular-metal/property_get";
+import { set } from "ngular-metal/property_set";
+import run from "ngular-metal/run_loop";
 
 import Registry from 'container/registry';
-import Namespace from "ember-runtime/system/namespace";
-import { classify } from "ember-runtime/system/string";
-import Controller from "ember-runtime/controllers/controller";
-import ObjectController from "ember-runtime/controllers/object_controller";
-import ArrayController from "ember-runtime/controllers/array_controller";
-import controllerFor from "ember-routing/system/controller_for";
-import generateController from "ember-routing/system/generate_controller";
+import Namespace from "ngular-runtime/system/namespace";
+import { classify } from "ngular-runtime/system/string";
+import Controller from "ngular-runtime/controllers/controller";
+import ObjectController from "ngular-runtime/controllers/object_controller";
+import ArrayController from "ngular-runtime/controllers/array_controller";
+import controllerFor from "ngular-routing/system/controller_for";
+import generateController from "ngular-routing/system/generate_controller";
 import {
   generateControllerFactory
-} from "ember-routing/system/generate_controller";
+} from "ngular-routing/system/generate_controller";
 
 var buildContainer = function(namespace) {
   var registry = new Registry();
@@ -50,7 +50,7 @@ function resolverFor(namespace) {
 
 var container, appController, namespace;
 
-QUnit.module("Ember.controllerFor", {
+QUnit.module("Ngular.controllerFor", {
   setup() {
     namespace = Namespace.create();
     container = buildContainer(namespace);
@@ -71,7 +71,7 @@ QUnit.test("controllerFor should lookup for registered controllers", function() 
   equal(appController, controller, 'should find app controller');
 });
 
-QUnit.module("Ember.generateController", {
+QUnit.module("Ngular.generateController", {
   setup() {
     namespace = Namespace.create();
     container = buildContainer(namespace);
@@ -85,25 +85,25 @@ QUnit.module("Ember.generateController", {
 });
 
 QUnit.test("generateController and generateControllerFactory are properties on the root namespace", function() {
-  equal(Ember.generateController, generateController, 'should export generateController');
-  equal(Ember.generateControllerFactory, generateControllerFactory, 'should export generateControllerFactory');
+  equal(Ngular.generateController, generateController, 'should export generateController');
+  equal(Ngular.generateControllerFactory, generateControllerFactory, 'should export generateControllerFactory');
 });
 
-QUnit.test("generateController should create Ember.Controller", function() {
+QUnit.test("generateController should create Ngular.Controller", function() {
   var controller = generateController(container, 'home');
 
   ok(controller instanceof Controller, 'should create controller');
 });
 
-QUnit.test("generateController should create Ember.ObjectController [DEPRECATED]", function() {
+QUnit.test("generateController should create Ngular.ObjectController [DEPRECATED]", function() {
   var context = {};
   var controller = generateController(container, 'home', context);
 
   ok(controller instanceof ObjectController, 'should create controller');
 });
 
-QUnit.test("generateController should create Ember.ArrayController", function() {
-  var context = Ember.A();
+QUnit.test("generateController should create Ngular.ArrayController", function() {
+  var context = Ngular.A();
   var controller = generateController(container, 'home', context);
 
   ok(controller instanceof ArrayController, 'should create controller');
@@ -130,7 +130,7 @@ QUnit.test("generateController should create App.ObjectController if provided", 
 });
 
 QUnit.test("generateController should create App.ArrayController if provided", function() {
-  var context = Ember.A();
+  var context = Ngular.A();
   var controller;
   namespace.ArrayController = ArrayController.extend();
 

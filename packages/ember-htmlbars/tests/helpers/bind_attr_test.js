@@ -1,48 +1,48 @@
-/*globals EmberDev */
+/*globals NgularDev */
 /*jshint newcap:false*/
 
-import Ember from "ember-metal/core"; // Ember.lookup
-import run from "ember-metal/run_loop";
-import Namespace from "ember-runtime/system/namespace";
-import EmberView from "ember-views/views/view";
-import _MetamorphView from "ember-views/views/metamorph_view";
-import EmberObject from "ember-runtime/system/object";
-import { A } from "ember-runtime/system/native_array";
-import { computed } from "ember-metal/computed";
-import { observersFor } from "ember-metal/observer";
-import { Registry } from "ember-runtime/system/container";
-import { set } from "ember-metal/property_set";
-import { runAppend, runDestroy } from "ember-runtime/tests/utils";
-import { styleWarning } from "ember-views/attr_nodes/attr_node";
-import { SafeString } from "ember-htmlbars/utils/string";
+import Ngular from "ngular-metal/core"; // Ngular.lookup
+import run from "ngular-metal/run_loop";
+import Namespace from "ngular-runtime/system/namespace";
+import NgularView from "ngular-views/views/view";
+import _MetamorphView from "ngular-views/views/metamorph_view";
+import NgularObject from "ngular-runtime/system/object";
+import { A } from "ngular-runtime/system/native_array";
+import { computed } from "ngular-metal/computed";
+import { observersFor } from "ngular-metal/observer";
+import { Registry } from "ngular-runtime/system/container";
+import { set } from "ngular-metal/property_set";
+import { runAppend, runDestroy } from "ngular-runtime/tests/utils";
+import { styleWarning } from "ngular-views/attr_nodes/attr_node";
+import { SafeString } from "ngular-htmlbars/utils/string";
 
-import helpers from "ember-htmlbars/helpers";
-import compile from "ember-template-compiler/system/compile";
+import helpers from "ngular-htmlbars/helpers";
+import compile from "ngular-template-compiler/system/compile";
 var view;
 
-var originalLookup = Ember.lookup;
+var originalLookup = Ngular.lookup;
 var TemplateTests, registry, container, lookup, warnings, originalWarn;
 
 /**
-  This module specifically tests integration with Handlebars and Ember-specific
+  This module specifically tests integration with Handlebars and Ngular-specific
   Handlebars extensions.
 
   If you add additional template support to View, you should create a new
   file in which to test.
 */
-QUnit.module("ember-htmlbars: {{bind-attr}}", {
+QUnit.module("ngular-htmlbars: {{bind-attr}}", {
   setup() {
-    Ember.lookup = lookup = {};
+    Ngular.lookup = lookup = {};
     lookup.TemplateTests = TemplateTests = Namespace.create();
     registry = new Registry();
     container = registry.container();
     registry.optionsForType('template', { instantiate: false });
     registry.register('view:default', _MetamorphView);
-    registry.register('view:toplevel', EmberView.extend());
+    registry.register('view:toplevel', NgularView.extend());
 
     warnings = [];
-    originalWarn = Ember.warn;
-    Ember.warn = function(message, test) {
+    originalWarn = Ngular.warn;
+    Ngular.warn = function(message, test) {
       if (!test) {
         warnings.push(message);
       }
@@ -54,8 +54,8 @@ QUnit.module("ember-htmlbars: {{bind-attr}}", {
     runDestroy(view);
     registry = container = view = null;
 
-    Ember.lookup = lookup = originalLookup;
-    Ember.warn = originalWarn;
+    Ngular.lookup = lookup = originalLookup;
+    Ngular.warn = originalWarn;
     TemplateTests = null;
   }
 });
@@ -63,27 +63,27 @@ QUnit.module("ember-htmlbars: {{bind-attr}}", {
 QUnit.test("should be able to bind element attributes using {{bind-attr}}", function() {
   var template = compile('<img {{bind-attr src=view.content.url alt=view.content.title}}>');
 
-  view = EmberView.create({
+  view = NgularView.create({
     template: template,
-    content: EmberObject.create({
-      url: "http://www.emberjs.com/assets/images/logo.png",
+    content: NgularObject.create({
+      url: "http://www.github.com/mjc/ngular/assets/images/logo.png",
       title: "The SproutCore Logo"
     })
   });
 
   runAppend(view);
 
-  equal(view.$('img').attr('src'), "http://www.emberjs.com/assets/images/logo.png", "sets src attribute");
+  equal(view.$('img').attr('src'), "http://www.github.com/mjc/ngular/assets/images/logo.png", "sets src attribute");
   equal(view.$('img').attr('alt'), "The SproutCore Logo", "sets alt attribute");
 
   run(function() {
-    set(view, 'content.title', "El logo de Eember");
+    set(view, 'content.title', "El logo de Engular");
   });
 
-  equal(view.$('img').attr('alt'), "El logo de Eember", "updates alt attribute when content's title attribute changes");
+  equal(view.$('img').attr('alt'), "El logo de Engular", "updates alt attribute when content's title attribute changes");
 
   run(function() {
-    set(view, 'content', EmberObject.create({
+    set(view, 'content', NgularObject.create({
       url: "http://www.thegooglez.com/theydonnothing",
       title: "I CAN HAZ SEARCH"
     }));
@@ -93,7 +93,7 @@ QUnit.test("should be able to bind element attributes using {{bind-attr}}", func
 
   run(function() {
     set(view, 'content', {
-      url: "http://www.emberjs.com/assets/images/logo.png",
+      url: "http://www.github.com/mjc/ngular/assets/images/logo.png",
       title: "The SproutCore Logo"
     });
   });
@@ -101,19 +101,19 @@ QUnit.test("should be able to bind element attributes using {{bind-attr}}", func
   equal(view.$('img').attr('alt'), "The SproutCore Logo", "updates alt attribute when content object is a hash");
 
   run(function() {
-    set(view, 'content', EmberObject.createWithMixins({
-      url: "http://www.emberjs.com/assets/images/logo.png",
+    set(view, 'content', NgularObject.createWithMixins({
+      url: "http://www.github.com/mjc/ngular/assets/images/logo.png",
       title: computed(function() {
-        return "Nanananana Ember!";
+        return "Nanananana Ngular!";
       })
     }));
   });
 
-  equal(view.$('img').attr('alt'), "Nanananana Ember!", "updates alt attribute when title property is computed");
+  equal(view.$('img').attr('alt'), "Nanananana Ngular!", "updates alt attribute when title property is computed");
 });
 
 QUnit.test("should be able to bind to view attributes with {{bind-attr}}", function() {
-  view = EmberView.create({
+  view = NgularView.create({
     value: 'Test',
     template: compile('<img src="test.jpg" {{bind-attr alt=view.value}}>')
   });
@@ -132,7 +132,7 @@ QUnit.test("should be able to bind to view attributes with {{bind-attr}}", funct
 QUnit.test("should be able to bind to globals with {{bind-attr}} (DEPRECATED)", function() {
   TemplateTests.set('value', 'Test');
 
-  view = EmberView.create({
+  view = NgularView.create({
     template: compile('<img src="test.jpg" {{bind-attr alt=TemplateTests.value}}>')
   });
 
@@ -144,7 +144,7 @@ QUnit.test("should be able to bind to globals with {{bind-attr}} (DEPRECATED)", 
 });
 
 QUnit.test("should not allow XSS injection via {{bind-attr}}", function() {
-  view = EmberView.create({
+  view = NgularView.create({
     template: compile('<img src="test.jpg" {{bind-attr alt=view.content.value}}>'),
     content: {
       value: 'Trololol" onmouseover="alert(\'HAX!\');'
@@ -161,27 +161,27 @@ QUnit.test("should not allow XSS injection via {{bind-attr}}", function() {
 QUnit.test("should be able to bind use {{bind-attr}} more than once on an element", function() {
   var template = compile('<img {{bind-attr src=view.content.url}} {{bind-attr alt=view.content.title}}>');
 
-  view = EmberView.create({
+  view = NgularView.create({
     template: template,
-    content: EmberObject.create({
-      url: "http://www.emberjs.com/assets/images/logo.png",
+    content: NgularObject.create({
+      url: "http://www.github.com/mjc/ngular/assets/images/logo.png",
       title: "The SproutCore Logo"
     })
   });
 
   runAppend(view);
 
-  equal(view.$('img').attr('src'), "http://www.emberjs.com/assets/images/logo.png", "sets src attribute");
+  equal(view.$('img').attr('src'), "http://www.github.com/mjc/ngular/assets/images/logo.png", "sets src attribute");
   equal(view.$('img').attr('alt'), "The SproutCore Logo", "sets alt attribute");
 
   run(function() {
-    set(view, 'content.title', "El logo de Eember");
+    set(view, 'content.title', "El logo de Engular");
   });
 
-  equal(view.$('img').attr('alt'), "El logo de Eember", "updates alt attribute when content's title attribute changes");
+  equal(view.$('img').attr('alt'), "El logo de Engular", "updates alt attribute when content's title attribute changes");
 
   run(function() {
-    set(view, 'content', EmberObject.create({
+    set(view, 'content', NgularObject.create({
       url: "http://www.thegooglez.com/theydonnothing",
       title: "I CAN HAZ SEARCH"
     }));
@@ -191,7 +191,7 @@ QUnit.test("should be able to bind use {{bind-attr}} more than once on an elemen
 
   run(function() {
     set(view, 'content', {
-      url: "http://www.emberjs.com/assets/images/logo.png",
+      url: "http://www.github.com/mjc/ngular/assets/images/logo.png",
       title: "The SproutCore Logo"
     });
   });
@@ -199,15 +199,15 @@ QUnit.test("should be able to bind use {{bind-attr}} more than once on an elemen
   equal(view.$('img').attr('alt'), "The SproutCore Logo", "updates alt attribute when content object is a hash");
 
   run(function() {
-    set(view, 'content', EmberObject.createWithMixins({
-      url: "http://www.emberjs.com/assets/images/logo.png",
+    set(view, 'content', NgularObject.createWithMixins({
+      url: "http://www.github.com/mjc/ngular/assets/images/logo.png",
       title: computed(function() {
-        return "Nanananana Ember!";
+        return "Nanananana Ngular!";
       })
     }));
   });
 
-  equal(view.$('img').attr('alt'), "Nanananana Ember!", "updates alt attribute when title property is computed");
+  equal(view.$('img').attr('alt'), "Nanananana Ngular!", "updates alt attribute when title property is computed");
 
 });
 
@@ -240,7 +240,7 @@ QUnit.test("{{bindAttr}} is aliased to {{bind-attr}}", function() {
 QUnit.test("{{bindAttr}} can be used to bind attributes [DEPRECATED]", function() {
   expect(3);
 
-  view = EmberView.create({
+  view = NgularView.create({
     value: 'Test',
     template: compile('<img src="test.jpg" {{bindAttr alt=view.value}}>')
   });
@@ -261,30 +261,30 @@ QUnit.test("{{bindAttr}} can be used to bind attributes [DEPRECATED]", function(
 QUnit.test("should be able to bind element attributes using {{bind-attr}} inside a block", function() {
   var template = compile('{{#with view.content as image}}<img {{bind-attr src=image.url alt=image.title}}>{{/with}}');
 
-  view = EmberView.create({
+  view = NgularView.create({
     template: template,
-    content: EmberObject.create({
-      url: "http://www.emberjs.com/assets/images/logo.png",
+    content: NgularObject.create({
+      url: "http://www.github.com/mjc/ngular/assets/images/logo.png",
       title: "The SproutCore Logo"
     })
   });
 
   runAppend(view);
 
-  equal(view.$('img').attr('src'), "http://www.emberjs.com/assets/images/logo.png", "sets src attribute");
+  equal(view.$('img').attr('src'), "http://www.github.com/mjc/ngular/assets/images/logo.png", "sets src attribute");
   equal(view.$('img').attr('alt'), "The SproutCore Logo", "sets alt attribute");
 
   run(function() {
-    set(view, 'content.title', "El logo de Eember");
+    set(view, 'content.title', "El logo de Engular");
   });
 
-  equal(view.$('img').attr('alt'), "El logo de Eember", "updates alt attribute when content's title attribute changes");
+  equal(view.$('img').attr('alt'), "El logo de Engular", "updates alt attribute when content's title attribute changes");
 });
 
 QUnit.test("should be able to bind class attribute with {{bind-attr}}", function() {
   var template = compile('<img {{bind-attr class="view.foo"}}>');
 
-  view = EmberView.create({
+  view = NgularView.create({
     template: template,
     foo: 'bar'
   });
@@ -303,7 +303,7 @@ QUnit.test("should be able to bind class attribute with {{bind-attr}}", function
 QUnit.test("should be able to bind unquoted class attribute with {{bind-attr}}", function() {
   var template = compile('<img {{bind-attr class=view.foo}}>');
 
-  view = EmberView.create({
+  view = NgularView.create({
     template: template,
     foo: 'bar'
   });
@@ -322,7 +322,7 @@ QUnit.test("should be able to bind unquoted class attribute with {{bind-attr}}",
 QUnit.test("should be able to bind class attribute via a truthy property with {{bind-attr}}", function() {
   var template = compile('<img {{bind-attr class="view.isNumber:is-truthy"}}>');
 
-  view = EmberView.create({
+  view = NgularView.create({
     template: template,
     isNumber: 5
   });
@@ -341,7 +341,7 @@ QUnit.test("should be able to bind class attribute via a truthy property with {{
 QUnit.test("should be able to bind class to view attribute with {{bind-attr}}", function() {
   var template = compile('<img {{bind-attr class="view.foo"}}>');
 
-  view = EmberView.create({
+  view = NgularView.create({
     template: template,
     foo: 'bar'
   });
@@ -358,7 +358,7 @@ QUnit.test("should be able to bind class to view attribute with {{bind-attr}}", 
 });
 
 QUnit.test("should not allow XSS injection via {{bind-attr}} with class", function() {
-  view = EmberView.create({
+  view = NgularView.create({
     template: compile('<img {{bind-attr class="view.foo"}}>'),
     foo: '" onmouseover="alert(\'I am in your classes hacking your app\');'
   });
@@ -373,11 +373,11 @@ QUnit.test("should not allow XSS injection via {{bind-attr}} with class", functi
 
 QUnit.test("should be able to bind class attribute using ternary operator in {{bind-attr}}", function() {
   var template = compile('<img {{bind-attr class="view.content.isDisabled:disabled:enabled"}} />');
-  var content = EmberObject.create({
+  var content = NgularObject.create({
     isDisabled: true
   });
 
-  view = EmberView.create({
+  view = NgularView.create({
     template: template,
     content: content
   });
@@ -397,14 +397,14 @@ QUnit.test("should be able to bind class attribute using ternary operator in {{b
 
 QUnit.test("should be able to add multiple classes using {{bind-attr class}}", function() {
   var template = compile('<div {{bind-attr class="view.content.isAwesomeSauce view.content.isAlsoCool view.content.isAmazing:amazing :is-super-duper view.content.isEnabled:enabled:disabled"}}></div>');
-  var content = EmberObject.create({
+  var content = NgularObject.create({
     isAwesomeSauce: true,
     isAlsoCool: true,
     isAmazing: true,
     isEnabled: true
   });
 
-  view = EmberView.create({
+  view = NgularView.create({
     template: template,
     content: content
   });
@@ -434,7 +434,7 @@ QUnit.test("should be able to add multiple classes using {{bind-attr class}}", f
 QUnit.test("should be able to bind classes to globals with {{bind-attr class}} (DEPRECATED)", function() {
   TemplateTests.set('isOpen', true);
 
-  view = EmberView.create({
+  view = NgularView.create({
     template: compile('<img src="test.jpg" {{bind-attr class="TemplateTests.isOpen"}}>')
   });
 
@@ -448,7 +448,7 @@ QUnit.test("should be able to bind classes to globals with {{bind-attr class}} (
 QUnit.test("should be able to bind-attr to 'this' in an {{#each}} block [DEPRECATED]", function() {
   expectDeprecation('Using the context switching form of {{each}} is deprecated. Please use the block param form (`{{#each bar as |foo|}}`) instead.');
 
-  view = EmberView.create({
+  view = NgularView.create({
     template: compile('{{#each view.images}}<img {{bind-attr src=this}}>{{/each}}'),
     images: A(['one.png', 'two.jpg', 'three.gif'])
   });
@@ -464,7 +464,7 @@ QUnit.test("should be able to bind-attr to 'this' in an {{#each}} block [DEPRECA
 QUnit.test("should be able to bind classes to 'this' in an {{#each}} block with {{bind-attr class}} [DEPRECATED]", function() {
   expectDeprecation('Using the context switching form of {{each}} is deprecated. Please use the block param form (`{{#each bar as |foo|}}`) instead.');
 
-  view = EmberView.create({
+  view = NgularView.create({
     template: compile('{{#each view.items}}<li {{bind-attr class="this"}}>Item</li>{{/each}}'),
     items: A(['a', 'b', 'c'])
   });
@@ -477,7 +477,7 @@ QUnit.test("should be able to bind classes to 'this' in an {{#each}} block with 
 });
 
 QUnit.test("should be able to bind-attr to var in {{#each var in list}} block", function() {
-  view = EmberView.create({
+  view = NgularView.create({
     template: compile('{{#each image in view.images}}<img {{bind-attr src=image}}>{{/each}}'),
     images: A(['one.png', 'two.jpg', 'three.gif'])
   });
@@ -501,7 +501,7 @@ QUnit.test("should be able to bind-attr to var in {{#each var in list}} block", 
 });
 
 QUnit.test("should teardown observers from bind-attr on rerender", function() {
-  view = EmberView.create({
+  view = NgularView.create({
     template: compile('<span {{bind-attr class="view.foo" name=view.foo}}>wat</span>'),
     foo: 'bar'
   });
@@ -518,7 +518,7 @@ QUnit.test("should teardown observers from bind-attr on rerender", function() {
 });
 
 QUnit.test("should keep class in the order it appears in", function() {
-  view = EmberView.create({
+  view = NgularView.create({
     template: compile('<span {{bind-attr class=":foo :baz"}}></span>')
   });
 
@@ -528,7 +528,7 @@ QUnit.test("should keep class in the order it appears in", function() {
 });
 
 QUnit.test('should allow either quoted or unquoted values', function() {
-  view = EmberView.create({
+  view = NgularView.create({
     value: 'Test',
     source: 'test.jpg',
     template: compile('<img {{bind-attr alt="view.value" src=view.source}}>')
@@ -550,7 +550,7 @@ QUnit.test('should allow either quoted or unquoted values', function() {
 
 QUnit.test("property before didInsertElement", function() {
   var matchingElement;
-  view = EmberView.create({
+  view = NgularView.create({
     name: 'bob',
     template: compile('<div {{bind-attr alt=view.name}}></div>'),
     didInsertElement() {
@@ -564,7 +564,7 @@ QUnit.test("property before didInsertElement", function() {
 QUnit.test("asserts for <div class='foo' {{bind-attr class='bar'}}></div>", function() {
   var template = compile('<div class="foo" {{bind-attr class=view.foo}}></div>');
 
-  view = EmberView.create({
+  view = NgularView.create({
     template: template,
     foo: 'bar'
   });
@@ -577,7 +577,7 @@ QUnit.test("asserts for <div class='foo' {{bind-attr class='bar'}}></div>", func
 QUnit.test("asserts for <div data-bar='foo' {{bind-attr data-bar='blah'}}></div>", function() {
   var template = compile('<div data-bar="foo" {{bind-attr data-bar=view.blah}}></div>');
 
-  view = EmberView.create({
+  view = NgularView.create({
     template: template,
     blah: 'bar'
   });
@@ -590,7 +590,7 @@ QUnit.test("asserts for <div data-bar='foo' {{bind-attr data-bar='blah'}}></div>
 QUnit.test("src attribute bound to undefined is empty", function() {
   var template = compile("<img {{bind-attr src=view.undefinedValue}}>");
 
-  view = EmberView.create({
+  view = NgularView.create({
     template: template,
     undefinedValue: undefined
   });
@@ -603,7 +603,7 @@ QUnit.test("src attribute bound to undefined is empty", function() {
 QUnit.test("src attribute bound to null is empty", function() {
   var template = compile("<img {{bind-attr src=view.nullValue}}>");
 
-  view = EmberView.create({
+  view = NgularView.create({
     template: template,
     nullValue: null
   });
@@ -616,7 +616,7 @@ QUnit.test("src attribute bound to null is empty", function() {
 QUnit.test("src attribute will be cleared when the value is set to null or undefined", function() {
   var template = compile("<img {{bind-attr src=view.value}}>");
 
-  view = EmberView.create({
+  view = NgularView.create({
     template: template,
     value: 'one'
   });
@@ -650,10 +650,10 @@ QUnit.test("src attribute will be cleared when the value is set to null or undef
   equal(view.element.firstChild.getAttribute('src'), '', "src attribute is empty");
 });
 
-if (!EmberDev.runningProdBuild) {
+if (!NgularDev.runningProdBuild) {
 
   QUnit.test('specifying `<div {{bind-attr style=userValue}}></div>` triggers a warning', function() {
-    view = EmberView.create({
+    view = NgularView.create({
       userValue: '42',
       template: compile('<div {{bind-attr style=view.userValue}}></div>')
     });
@@ -665,7 +665,7 @@ if (!EmberDev.runningProdBuild) {
 }
 
 QUnit.test('specifying `<div {{bind-attr style=userValue}}></div>` works properly with a SafeString', function() {
-  view = EmberView.create({
+  view = NgularView.create({
     userValue: new SafeString('42'),
     template: compile('<div {{bind-attr style=view.userValue}}></div>')
   });

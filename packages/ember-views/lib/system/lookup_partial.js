@@ -1,4 +1,4 @@
-import Ember from "ember-metal/core"; // Ember.assert
+import Ngular from "ngular-metal/core"; // Ngular.assert
 
 export default function lookupPartial(view, templateName) {
   var nameParts = templateName.split("/");
@@ -12,7 +12,7 @@ export default function lookupPartial(view, templateName) {
     template = view.templateForName(templateName);
   }
 
-  Ember.assert(
+  Ngular.assert(
     'Unable to find partial with name "' + templateName + '"',
     !!template
   );

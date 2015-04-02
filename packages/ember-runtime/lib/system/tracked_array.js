@@ -1,5 +1,5 @@
-import { get } from "ember-metal/property_get";
-import { forEach } from "ember-metal/enumerable_utils";
+import { get } from "ngular-metal/property_get";
+import { forEach } from "ngular-metal/enumerable_utils";
 
 var RETAIN = 'r';
 var INSERT = 'i';
@@ -8,12 +8,12 @@ var DELETE = 'd';
 export default TrackedArray;
 
 /**
-  An `Ember.TrackedArray` tracks array operations.  It's useful when you want to
+  An `Ngular.TrackedArray` tracks array operations.  It's useful when you want to
   lazily compute the indexes of items in an array after they've been shifted by
   subsequent operations.
 
   @class TrackedArray
-  @namespace Ember
+  @namespace Ngular
   @param {Array} [items=[]] The array to be tracked.  This is used just to get
   the initial items for the starting state of retain:n.
 */
@@ -110,7 +110,7 @@ TrackedArray.prototype = {
     * {number} offset The computed offset of the items, ie the index in the
     array of the first item for this operation.
     * {string} operation The type of the operation.  One of
-    `Ember.TrackedArray.{RETAIN, DELETE, INSERT}`
+    `Ngular.TrackedArray.{RETAIN, DELETE, INSERT}`
 
     @method apply
     @param {Function} callback
@@ -293,7 +293,7 @@ TrackedArray.prototype = {
   @method ArrayOperation
   @private
   @param {String} type The type of the operation.  One of
-  `Ember.TrackedArray.{RETAIN, INSERT, DELETE}`
+  `Ngular.TrackedArray.{RETAIN, INSERT, DELETE}`
   @param {Number} count The number of items in this operation.
   @param {Array} items The items of the operation, if included.  RETAIN and
   INSERT include their items, DELETE does not.

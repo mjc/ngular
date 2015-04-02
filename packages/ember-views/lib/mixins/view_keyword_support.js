@@ -1,6 +1,6 @@
-import { Mixin } from "ember-metal/mixin";
-import create from 'ember-metal/platform/create';
-import KeyStream from "ember-views/streams/key_stream";
+import { Mixin } from "ngular-metal/mixin";
+import create from 'ngular-metal/platform/create';
+import KeyStream from "ngular-views/streams/key_stream";
 
 var ViewKeywordSupport = Mixin.create({
   init() {

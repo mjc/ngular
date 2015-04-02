@@ -1,6 +1,6 @@
-import { compile } from "ember-template-compiler";
+import { compile } from "ngular-template-compiler";
 
-QUnit.module('ember-template-compiler: transform-each-in-to-hash');
+QUnit.module('ngular-template-compiler: transform-each-in-to-hash');
 
 QUnit.test('cannot use block params and keyword syntax together', function() {
   expect(1);

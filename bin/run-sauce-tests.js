@@ -35,16 +35,16 @@ function run(command, _args) {
 
 RSVP.resolve()
   .then(function() {
-    return run('./node_modules/.bin/ember', [ 'start-sauce-connect' ]);
+    return run('./node_modules/.bin/ngular', [ 'start-sauce-connect' ]);
   })
   .then(function() {
-    // calling testem directly here instead of `ember test` so that
+    // calling testem directly here instead of `ngular test` so that
     // we do not have to do a double build (by the time this is run
-    // we have already ran `ember build`).
+    // we have already ran `ngular build`).
     return run('./node_modules/.bin/testem', [ 'ci', '--port', '7000' ]);
   })
   .finally(function() {
-    return run('./node_modules/.bin/ember', [ 'stop-sauce-connect' ]);
+    return run('./node_modules/.bin/ngular', [ 'stop-sauce-connect' ]);
   })
   .catch(function() {
     process.exit(1);

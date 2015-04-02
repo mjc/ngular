@@ -1,6 +1,6 @@
 /**
-@module ember
-@submodule ember-views
+@module ngular
+@submodule ngular-views
 */
 
 export function isSimpleClick(event) {
@@ -13,7 +13,7 @@ export function isSimpleClick(event) {
 /**
   @private
   @method getViewRange
-  @param {Ember.View} view
+  @param {Ngular.View} view
 */
 function getViewRange(view) {
   var range = document.createRange();
@@ -26,12 +26,12 @@ function getViewRange(view) {
   `getViewClientRects` provides information about the position of the border
   box edges of a view relative to the viewport.
 
-  It is only intended to be used by development tools like the Ember Inspector
+  It is only intended to be used by development tools like the Ngular Inspector
   and may not work on older browsers.
 
   @private
   @method getViewClientRects
-  @param {Ember.View} view
+  @param {Ngular.View} view
 */
 export function getViewClientRects(view) {
   var range = getViewRange(view);
@@ -42,12 +42,12 @@ export function getViewClientRects(view) {
   `getViewBoundingClientRect` provides information about the position of the
   bounding border box edges of a view relative to the viewport.
 
-  It is only intended to be used by development tools like the Ember Inpsector
+  It is only intended to be used by development tools like the Ngular Inpsector
   and may not work on older browsers.
 
   @private
   @method getViewBoundingClientRect
-  @param {Ember.View} view
+  @param {Ngular.View} view
 */
 export function getViewBoundingClientRect(view) {
   var range = getViewRange(view);

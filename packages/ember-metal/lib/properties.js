@@ -1,14 +1,14 @@
 /**
-@module ember-metal
+@module ngular-metal
 */
 
-import Ember from "ember-metal/core";
-import { meta as metaFor } from "ember-metal/utils";
+import Ngular from "ngular-metal/core";
+import { meta as metaFor } from "ngular-metal/utils";
 import {
   defineProperty as objectDefineProperty,
   hasPropertyAccessors
-} from 'ember-metal/platform/define_property';
-import { overrideChains } from "ember-metal/property_events";
+} from 'ngular-metal/platform/define_property';
+import { overrideChains } from "ngular-metal/property_events";
 // ..........................................................
 // DESCRIPTOR
 //
@@ -27,13 +27,13 @@ export function Descriptor() {
 
 export function MANDATORY_SETTER_FUNCTION(name) {
   return function SETTER_FUNCTION(value) {
-    Ember.assert(`You must use Ember.set() to set the \`${name}\` property (of ${this}) to \`${value}\`.`, false);
+    Ngular.assert(`You must use Ngular.set() to set the \`${name}\` property (of ${this}) to \`${value}\`.`, false);
   };
 }
 
 export function DEFAULT_GETTER_FUNCTION(name) {
   return function GETTER_FUNCTION() {
-    var meta = this['__ember_meta__'];
+    var meta = this['__ngular_meta__'];
     return meta && meta.values[name];
   };
 }
@@ -41,7 +41,7 @@ export function DEFAULT_GETTER_FUNCTION(name) {
 /**
   NOTE: This is a low-level method used by other parts of the API. You almost
   never want to call this method directly. Instead you should use
-  `Ember.mixin()` to define new properties.
+  `Ngular.mixin()` to define new properties.
 
   Defines a property on an object. This method works much like the ES5
   `Object.defineProperty()` method except that it can also accept computed
@@ -56,7 +56,7 @@ export function DEFAULT_GETTER_FUNCTION(name) {
 
   ```javascript
   // ES5 compatible mode
-  Ember.defineProperty(contact, 'firstName', {
+  Ngular.defineProperty(contact, 'firstName', {
     writable: true,
     configurable: false,
     enumerable: true,
@@ -64,17 +64,17 @@ export function DEFAULT_GETTER_FUNCTION(name) {
   });
 
   // define a simple property
-  Ember.defineProperty(contact, 'lastName', undefined, 'Jolley');
+  Ngular.defineProperty(contact, 'lastName', undefined, 'Jolley');
 
   // define a computed property
-  Ember.defineProperty(contact, 'fullName', Ember.computed(function() {
+  Ngular.defineProperty(contact, 'fullName', Ngular.computed(function() {
     return this.firstName+' '+this.lastName;
   }).property('firstName', 'lastName'));
   ```
 
   @private
   @method defineProperty
-  @for Ember
+  @for Ngular
   @param {Object} obj the object to define this property on. This may be a prototype.
   @param {String} keyName the name of the property
   @param {Descriptor} [desc] an instance of `Descriptor` (typically a
@@ -102,7 +102,7 @@ export function defineProperty(obj, keyName, desc, data, meta) {
   if (desc instanceof Descriptor) {
     value = desc;
 
-    if (Ember.FEATURES.isEnabled('mandatory-setter')) {
+    if (Ngular.FEATURES.isEnabled('mandatory-setter')) {
       if (watching && hasPropertyAccessors) {
         objectDefineProperty(obj, keyName, {
           configurable: true,
@@ -121,7 +121,7 @@ export function defineProperty(obj, keyName, desc, data, meta) {
     if (desc == null) {
       value = data;
 
-      if (Ember.FEATURES.isEnabled('mandatory-setter')) {
+      if (Ngular.FEATURES.isEnabled('mandatory-setter')) {
         if (watching && hasPropertyAccessors) {
           meta.values[keyName] = data;
           objectDefineProperty(obj, keyName, {

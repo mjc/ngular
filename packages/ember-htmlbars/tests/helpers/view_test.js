@@ -1,25 +1,25 @@
-/*globals EmberDev */
-import EmberView from "ember-views/views/view";
+/*globals NgularDev */
+import NgularView from "ngular-views/views/view";
 import Registry from "container/registry";
-import run from "ember-metal/run_loop";
-import jQuery from "ember-views/system/jquery";
-import TextField from 'ember-views/views/text_field';
-import Namespace from 'ember-runtime/system/namespace';
-import EmberObject from 'ember-runtime/system/object';
-import ContainerView from 'ember-views/views/container_view';
-import _MetamorphView from 'ember-views/views/metamorph_view';
+import run from "ngular-metal/run_loop";
+import jQuery from "ngular-views/system/jquery";
+import TextField from 'ngular-views/views/text_field';
+import Namespace from 'ngular-runtime/system/namespace';
+import NgularObject from 'ngular-runtime/system/object';
+import ContainerView from 'ngular-views/views/container_view';
+import _MetamorphView from 'ngular-views/views/metamorph_view';
 import SafeString from 'htmlbars-util/safe-string';
-import precompile from 'ember-template-compiler/compat/precompile';
-import compile from "ember-template-compiler/system/compile";
-import template from 'ember-template-compiler/system/template';
-import { observersFor } from "ember-metal/observer";
-import Controller from 'ember-runtime/controllers/controller';
-import makeBoundHelper from "ember-htmlbars/system/make_bound_helper";
+import precompile from 'ngular-template-compiler/compat/precompile';
+import compile from "ngular-template-compiler/system/compile";
+import template from 'ngular-template-compiler/system/template';
+import { observersFor } from "ngular-metal/observer";
+import Controller from 'ngular-runtime/controllers/controller';
+import makeBoundHelper from "ngular-htmlbars/system/make_bound_helper";
 
-import { runAppend, runDestroy } from "ember-runtime/tests/utils";
-import { set } from 'ember-metal/property_set';
-import { get } from 'ember-metal/property_get';
-import { computed } from 'ember-metal/computed';
+import { runAppend, runDestroy } from "ngular-runtime/tests/utils";
+import { set } from 'ngular-metal/property_set';
+import { get } from 'ngular-metal/property_get';
+import { computed } from 'ngular-metal/computed';
 
 var view, originalLookup, registry, container, lookup;
 
@@ -35,22 +35,22 @@ function nthChild(view, nth) {
 
 function viewClass(options) {
   options.container = options.container || container;
-  return EmberView.extend(options);
+  return NgularView.extend(options);
 }
 
 var firstChild = nthChild;
 
-QUnit.module("ember-htmlbars: {{#view}} helper", {
+QUnit.module("ngular-htmlbars: {{#view}} helper", {
   setup() {
-    originalLookup = Ember.lookup;
-    Ember.lookup = lookup = {};
+    originalLookup = Ngular.lookup;
+    Ngular.lookup = lookup = {};
 
     registry = new Registry();
     container = registry.container();
     registry.optionsForType('template', { instantiate: false });
     registry.optionsForType('helper', { instantiate: false });
     registry.register('view:default', _MetamorphView);
-    registry.register('view:toplevel', EmberView.extend());
+    registry.register('view:toplevel', NgularView.extend());
   },
 
   teardown() {
@@ -58,13 +58,13 @@ QUnit.module("ember-htmlbars: {{#view}} helper", {
     runDestroy(view);
     registry = container = view = null;
 
-    Ember.lookup = lookup = originalLookup;
+    Ngular.lookup = lookup = originalLookup;
   }
 });
 
-// https://github.com/emberjs/ember.js/issues/120
+// https://github.com/ngularjs/ngular.js/issues/120
 QUnit.test("should not enter an infinite loop when binding an attribute in Handlebars", function() {
-  var LinkView = EmberView.extend({
+  var LinkView = NgularView.extend({
     classNames: ['app-link'],
     tagName: 'a',
     attributeBindings: ['href'],
@@ -75,9 +75,9 @@ QUnit.test("should not enter an infinite loop when binding an attribute in Handl
     }
   });
 
-  var parentView = EmberView.create({
+  var parentView = NgularView.create({
     linkView: LinkView,
-    test: EmberObject.create({ href: 'test' }),
+    test: NgularObject.create({ href: 'test' }),
     template: compile('{{#view view.linkView href=view.test.href}} Test {{/view}}')
   });
 
@@ -106,7 +106,7 @@ QUnit.test("By default view:toplevel is used", function() {
     lookupFactory: lookupFactory
   };
 
-  view = EmberView.extend({
+  view = NgularView.extend({
     template: compile('{{view}}'),
     container: container
   }).create();
@@ -116,8 +116,8 @@ QUnit.test("By default view:toplevel is used", function() {
   equal(jQuery('#toplevel-view').text(), 'hello world');
 });
 
-QUnit.test("By default, without a container, EmberView is used", function() {
-  view = EmberView.extend({
+QUnit.test("By default, without a container, NgularView is used", function() {
+  view = NgularView.extend({
     template: compile('{{view tagName="span"}}')
   }).create();
 
@@ -127,7 +127,7 @@ QUnit.test("By default, without a container, EmberView is used", function() {
 });
 
 QUnit.test("View lookup - App.FuView (DEPRECATED)", function() {
-  Ember.lookup = {
+  Ngular.lookup = {
     App: {
       FuView: viewClass({
         elementId: "fu",
@@ -163,7 +163,7 @@ QUnit.test("View lookup - 'fu'", function() {
     lookupFactory: lookupFactory
   };
 
-  view = EmberView.extend({
+  view = NgularView.extend({
     template: compile("{{view 'fu'}}"),
     container: container
   }).create();
@@ -189,7 +189,7 @@ QUnit.test("View lookup - 'fu' when fu is a property and a view name", function(
     lookupFactory: lookupFactory
   };
 
-  view = EmberView.extend({
+  view = NgularView.extend({
     template: compile("{{view 'fu'}}"),
     context: { fu: 'boom!' },
     container: container
@@ -216,7 +216,7 @@ QUnit.test("View lookup - view.computed", function() {
     lookupFactory: lookupFactory
   };
 
-  view = EmberView.extend({
+  view = NgularView.extend({
     template: compile("{{view view.computed}}"),
     container: container,
     computed: 'fu'
@@ -228,7 +228,7 @@ QUnit.test("View lookup - view.computed", function() {
 });
 
 QUnit.test("id bindings downgrade to one-time property lookup", function() {
-  view = EmberView.extend({
+  view = NgularView.extend({
     template: compile("{{#view id=view.meshuggah}}{{view.parentView.meshuggah}}{{/view}}"),
     meshuggah: 'stengah'
   }).create();
@@ -241,7 +241,7 @@ QUnit.test("id bindings downgrade to one-time property lookup", function() {
 });
 
 QUnit.test("specifying `id` as a static value works properly", function() {
-  view = EmberView.extend({
+  view = NgularView.extend({
     template: compile("{{#view id='blah'}}{{view.parentView.meshuggah}}{{/view}}"),
     meshuggah: 'stengah'
   }).create();
@@ -252,20 +252,20 @@ QUnit.test("specifying `id` as a static value works properly", function() {
 });
 
 QUnit.test("mixing old and new styles of property binding fires a warning, treats value as if it were quoted", function() {
-  if (EmberDev && EmberDev.runningProdBuild) {
+  if (NgularDev && NgularDev.runningProdBuild) {
     ok(true, 'Logging does not occur in production builds');
     return;
   }
 
   expect(2);
 
-  var oldWarn = Ember.warn;
+  var oldWarn = Ngular.warn;
 
-  Ember.warn = function(msg) {
+  Ngular.warn = function(msg) {
     ok(msg.match(/You're attempting to render a view by passing borfBinding.+, but this syntax is ambiguous./));
   };
 
-  view = EmberView.extend({
+  view = NgularView.extend({
     template: compile("{{#view borfBinding=view.snork}}<p id='lol'>{{view.borf}}</p>{{/view}}"),
     snork: "nerd"
   }).create();
@@ -276,7 +276,7 @@ QUnit.test("mixing old and new styles of property binding fires a warning, treat
 
   equal(jQuery('#lol').text(), "nerd", "awkward mixed syntax treated like binding");
 
-  Ember.warn = oldWarn;
+  Ngular.warn = oldWarn;
 });
 
 QUnit.test('"Binding"-suffixed bindings are runloop-synchronized [DEPRECATED]', function() {
@@ -284,7 +284,7 @@ QUnit.test('"Binding"-suffixed bindings are runloop-synchronized [DEPRECATED]', 
 
   var subview;
 
-  var Subview = EmberView.extend({
+  var Subview = NgularView.extend({
     init() {
       subview = this;
       return this._super.apply(this, arguments);
@@ -292,7 +292,7 @@ QUnit.test('"Binding"-suffixed bindings are runloop-synchronized [DEPRECATED]', 
     template: compile('<div class="color">{{view.color}}</div>')
   });
 
-  var View = EmberView.extend({
+  var View = NgularView.extend({
     color: "mauve",
     Subview: Subview,
     template: compile('<h1>{{view view.Subview colorBinding="view.color"}}</h1>')
@@ -328,7 +328,7 @@ QUnit.test('Non-"Binding"-suffixed bindings are runloop-synchronized', function(
 
   var subview;
 
-  var Subview = EmberView.extend({
+  var Subview = NgularView.extend({
     init() {
       subview = this;
       return this._super.apply(this, arguments);
@@ -336,7 +336,7 @@ QUnit.test('Non-"Binding"-suffixed bindings are runloop-synchronized', function(
     template: compile('<div class="color">{{view.color}}</div>')
   });
 
-  var View = EmberView.extend({
+  var View = NgularView.extend({
     color: "mauve",
     Subview: Subview,
     template: compile('<h1>{{view view.Subview color=view.color}}</h1>')
@@ -369,9 +369,9 @@ QUnit.test("allows you to pass attributes that will be assigned to the class ins
 
   registry = new Registry();
   container = registry.container();
-  registry.register('view:toplevel', EmberView.extend());
+  registry.register('view:toplevel', NgularView.extend());
 
-  view = EmberView.extend({
+  view = NgularView.extend({
     template: compile('{{view id="foo" tagName="h1" class="foo"}}{{#view id="bar" class="bar"}}Bar{{/view}}'),
     container: container
   }).create();
@@ -385,8 +385,8 @@ QUnit.test("allows you to pass attributes that will be assigned to the class ins
 });
 
 QUnit.test("Should apply class without condition always", function() {
-  view = EmberView.create({
-    controller: Ember.Object.create(),
+  view = NgularView.create({
+    controller: Ngular.Object.create(),
     template: compile('{{#view id="foo" classBinding=":foo"}} Foo{{/view}}')
   });
 
@@ -396,7 +396,7 @@ QUnit.test("Should apply class without condition always", function() {
 });
 
 QUnit.test("Should apply classes when bound controller.* property specified", function() {
-  view = EmberView.create({
+  view = NgularView.create({
     controller: {
       someProp: 'foo'
     },
@@ -409,7 +409,7 @@ QUnit.test("Should apply classes when bound controller.* property specified", fu
 });
 
 QUnit.test("Should apply classes when bound property specified", function() {
-  view = EmberView.create({
+  view = NgularView.create({
     controller: {
       someProp: 'foo'
     },
@@ -426,7 +426,7 @@ QUnit.test("Should apply a class from a sub expression", function() {
     return params.join('');
   }));
 
-  view = EmberView.create({
+  view = NgularView.create({
     container: container,
     controller: {
       type: 'btn',
@@ -446,7 +446,7 @@ QUnit.test("Should apply a class from a sub expression", function() {
 });
 
 QUnit.test("Should not apply classes when bound property specified is false", function() {
-  view = EmberView.create({
+  view = NgularView.create({
     controller: {
       someProp: false
     },
@@ -459,7 +459,7 @@ QUnit.test("Should not apply classes when bound property specified is false", fu
 });
 
 QUnit.test("Should apply classes of the dasherized property name when bound property specified is true", function() {
-  view = EmberView.create({
+  view = NgularView.create({
     controller: {
       someProp: true
     },
@@ -476,7 +476,7 @@ QUnit.test("Should update classes from a bound property", function() {
     someProp: true
   };
 
-  view = EmberView.create({
+  view = NgularView.create({
     controller: controller,
     template: compile('{{#view id="foo" class=someProp}} Foo{{/view}}')
   });
@@ -512,7 +512,7 @@ QUnit.test("bound properties should be available in the view", function() {
     lookupFactory: lookupFactory
   };
 
-  view = EmberView.extend({
+  view = NgularView.extend({
     template: compile("{{view 'fu' foo=view.someProp}}"),
     container: container,
     someProp: 'initial value'
@@ -530,7 +530,7 @@ QUnit.test("bound properties should be available in the view", function() {
 });
 
 QUnit.test('should escape HTML in normal mustaches', function() {
-  view = EmberView.create({
+  view = NgularView.create({
     template: compile('{{view.output}}'),
     output: 'you need to be more <b>bold</b>'
   });
@@ -548,7 +548,7 @@ QUnit.test('should escape HTML in normal mustaches', function() {
 });
 
 QUnit.test('should not escape HTML in triple mustaches', function() {
-  view = EmberView.create({
+  view = NgularView.create({
     template: compile('{{{view.output}}}'),
     output: 'you need to be more <b>bold</b>'
   });
@@ -565,7 +565,7 @@ QUnit.test('should not escape HTML in triple mustaches', function() {
 });
 
 QUnit.test('should not escape HTML if string is a Handlebars.SafeString', function() {
-  view = EmberView.create({
+  view = NgularView.create({
     template: compile('{{view.output}}'),
     output: new SafeString('you need to be more <b>bold</b>')
   });
@@ -582,7 +582,7 @@ QUnit.test('should not escape HTML if string is a Handlebars.SafeString', functi
 });
 
 QUnit.test('should teardown observers from bound properties on rerender', function() {
-  view = EmberView.create({
+  view = NgularView.create({
     template: compile('{{view.foo}}'),
     foo: 'bar'
   });
@@ -599,7 +599,7 @@ QUnit.test('should teardown observers from bound properties on rerender', functi
 });
 
 QUnit.test('should update bound values after the view is removed and then re-appended', function() {
-  view = EmberView.create({
+  view = NgularView.create({
     template: compile('{{#if view.showStuff}}{{view.boundValue}}{{else}}Not true.{{/if}}'),
     showStuff: true,
     boundValue: 'foo'
@@ -636,7 +636,7 @@ QUnit.test('should update bound values after the view is removed and then re-app
 QUnit.test('views set the template of their children to a passed block', function() {
   registry.register('template:parent', compile('<h1>{{#view}}<span>It worked!</span>{{/view}}</h1>'));
 
-  view = EmberView.create({
+  view = NgularView.create({
     container: container,
     templateName: 'parent'
   });
@@ -646,7 +646,7 @@ QUnit.test('views set the template of their children to a passed block', functio
 });
 
 QUnit.test('{{view}} should not override class bindings defined on a child view', function() {
-  var LabelView = EmberView.extend({
+  var LabelView = NgularView.extend({
     container:         container,
     classNameBindings: ['something'],
     something:         'visible'
@@ -657,7 +657,7 @@ QUnit.test('{{view}} should not override class bindings defined on a child view'
   registry.register('template:label', compile('<div id="child-view"></div>'));
   registry.register('template:nester', compile('{{render "label"}}'));
 
-  view = EmberView.create({
+  view = NgularView.create({
     container:    container,
     templateName: 'nester',
     controller:   Controller.create({
@@ -678,13 +678,13 @@ QUnit.test('child views can be inserted using the {{view}} helper', function() {
     world: 'world!'
   };
 
-  var LabelView = EmberView.extend({
+  var LabelView = NgularView.extend({
     container: container,
     tagName: 'aside',
     templateName: 'nested'
   });
 
-  view = EmberView.create({
+  view = NgularView.create({
     labelView: LabelView,
     container: container,
     templateName: 'nester',
@@ -701,16 +701,16 @@ QUnit.test('child views can be inserted using the {{view}} helper', function() {
 });
 
 QUnit.test('should be able to explicitly set a view\'s context', function() {
-  var context = EmberObject.create({
+  var context = NgularObject.create({
     test: 'test'
   });
 
-  var CustomContextView = EmberView.extend({
+  var CustomContextView = NgularView.extend({
     context: context,
     template: compile('{{test}}')
   });
 
-  view = EmberView.create({
+  view = NgularView.create({
     customContextView: CustomContextView,
     template: compile('{{view view.customContextView}}')
   });
@@ -724,12 +724,12 @@ QUnit.test('Template views add an elementId to child views created using the vie
   registry.register('template:parent', compile('<div>{{view view.childView}}</div>'));
   registry.register('template:child', compile('I can\'t believe it\'s not butter.'));
 
-  var ChildView = EmberView.extend({
+  var ChildView = NgularView.extend({
     container: container,
     templateName: 'child'
   });
 
-  view = EmberView.create({
+  view = NgularView.create({
     container: container,
     childView: ChildView,
     templateName: 'parent'
@@ -744,7 +744,7 @@ QUnit.test('Template views add an elementId to child views created using the vie
 QUnit.test('Child views created using the view helper should have their parent view set properly', function() {
   var template = '{{#view}}{{#view}}{{view}}{{/view}}{{/view}}';
 
-  view = EmberView.create({
+  view = NgularView.create({
     template: compile(template)
   });
 
@@ -757,7 +757,7 @@ QUnit.test('Child views created using the view helper should have their parent v
 QUnit.test('Child views created using the view helper should have their IDs registered for events', function() {
   var template = '{{view}}{{view id="templateViewTest"}}';
 
-  view = EmberView.create({
+  view = NgularView.create({
     template: compile(template)
   });
 
@@ -765,18 +765,18 @@ QUnit.test('Child views created using the view helper should have their IDs regi
 
   var childView = firstChild(view);
   var id = childView.$()[0].id;
-  equal(EmberView.views[id], childView, 'childView without passed ID is registered with View.views so that it can properly receive events from EventDispatcher');
+  equal(NgularView.views[id], childView, 'childView without passed ID is registered with View.views so that it can properly receive events from EventDispatcher');
 
   childView = nthChild(view, 1);
   id = childView.$()[0].id;
   equal(id, 'templateViewTest', 'precond -- id of childView should be set correctly');
-  equal(EmberView.views[id], childView, 'childView with passed ID is registered with View.views so that it can properly receive events from EventDispatcher');
+  equal(NgularView.views[id], childView, 'childView with passed ID is registered with View.views so that it can properly receive events from EventDispatcher');
 });
 
 QUnit.test('Child views created using the view helper and that have a viewName should be registered as properties on their parentView', function() {
   var template = '{{#view}}{{view viewName="ohai"}}{{/view}}';
 
-  view = EmberView.create({
+  view = NgularView.create({
     template: compile(template)
   });
 
@@ -791,9 +791,9 @@ QUnit.test('Child views created using the view helper and that have a viewName s
 QUnit.test('{{view}} id attribute should set id on layer', function() {
   registry.register('template:foo', compile('{{#view view.idView id="bar"}}baz{{/view}}'));
 
-  var IdView = EmberView;
+  var IdView = NgularView;
 
-  view = EmberView.create({
+  view = NgularView.create({
     idView: IdView,
     container: container,
     templateName: 'foo'
@@ -808,9 +808,9 @@ QUnit.test('{{view}} id attribute should set id on layer', function() {
 QUnit.test('{{view}} tag attribute should set tagName of the view', function() {
   registry.register('template:foo', compile('{{#view view.tagView tag="span"}}baz{{/view}}'));
 
-  var TagView = EmberView;
+  var TagView = NgularView;
 
-  view = EmberView.create({
+  view = NgularView.create({
     tagView: TagView,
     container: container,
     templateName: 'foo'
@@ -825,9 +825,9 @@ QUnit.test('{{view}} tag attribute should set tagName of the view', function() {
 QUnit.test('{{view}} class attribute should set class on layer', function() {
   registry.register('template:foo', compile('{{#view view.idView class="bar"}}baz{{/view}}'));
 
-  var IdView = EmberView;
+  var IdView = NgularView;
 
-  view = EmberView.create({
+  view = NgularView.create({
     idView: IdView,
     container: container,
     templateName: 'foo'
@@ -841,7 +841,7 @@ QUnit.test('{{view}} class attribute should set class on layer', function() {
 
 QUnit.test('{{view}} should not allow attributeBindings to be set', function() {
   expectAssertion(function() {
-    view = EmberView.create({
+    view = NgularView.create({
       template: compile('{{view attributeBindings="one two"}}')
     });
     runAppend(view);
@@ -849,10 +849,10 @@ QUnit.test('{{view}} should not allow attributeBindings to be set', function() {
 });
 
 QUnit.test('{{view}} should be able to point to a local view', function() {
-  view = EmberView.create({
+  view = NgularView.create({
     template: compile('{{view view.common}}'),
 
-    common: EmberView.extend({
+    common: NgularView.extend({
       template: compile('common')
     })
   });
@@ -874,7 +874,7 @@ QUnit.test('{{view}} should evaluate class bindings set to global paths DEPRECAT
     });
   });
 
-  view = EmberView.create({
+  view = NgularView.create({
     textField: TextField,
     template: compile('{{view view.textField class="unbound" classBinding="App.isGreat:great App.directClass App.isApp App.isEnabled:enabled:disabled"}}')
   });
@@ -903,7 +903,7 @@ QUnit.test('{{view}} should evaluate class bindings set to global paths DEPRECAT
 });
 
 QUnit.test('{{view}} should evaluate class bindings set in the current context', function() {
-  view = EmberView.create({
+  view = NgularView.create({
     isView:      true,
     isEditable:  true,
     directClass: 'view-direct',
@@ -941,7 +941,7 @@ QUnit.test('{{view}} should evaluate class bindings set with either classBinding
     });
   });
 
-  view = EmberView.create({
+  view = NgularView.create({
     textField: TextField,
     template: compile('{{view view.textField class="unbound" classBinding="App.isGreat:great App.isEnabled:enabled:disabled" classNameBindings="App.isGreat:really-great App.isEnabled:really-enabled:really-disabled"}}')
   });
@@ -977,7 +977,7 @@ QUnit.test('{{view}} should evaluate other attribute bindings set to global path
     });
   });
 
-  view = EmberView.create({
+  view = NgularView.create({
     textField: TextField,
     template: compile('{{view view.textField valueBinding="App.name"}}')
   });
@@ -992,7 +992,7 @@ QUnit.test('{{view}} should evaluate other attribute bindings set to global path
 });
 
 QUnit.test('{{view}} should evaluate other attributes bindings set in the current context', function() {
-  view = EmberView.create({
+  view = NgularView.create({
     name: 'myView',
     textField: TextField,
     template: compile('{{view view.textField value=view.name}}')
@@ -1006,9 +1006,9 @@ QUnit.test('{{view}} should evaluate other attributes bindings set in the curren
 QUnit.test('{{view}} should be able to bind class names to truthy properties', function() {
   registry.register('template:template', compile('{{#view view.classBindingView classBinding="view.number:is-truthy"}}foo{{/view}}'));
 
-  var ClassBindingView = EmberView.extend();
+  var ClassBindingView = NgularView.extend();
 
-  view = EmberView.create({
+  view = NgularView.create({
     classBindingView: ClassBindingView,
     container: container,
     number: 5,
@@ -1029,9 +1029,9 @@ QUnit.test('{{view}} should be able to bind class names to truthy properties', f
 QUnit.test('{{view}} should be able to bind class names to truthy or falsy properties', function() {
   registry.register('template:template', compile('{{#view view.classBindingView classBinding="view.number:is-truthy:is-falsy"}}foo{{/view}}'));
 
-  var ClassBindingView = EmberView.extend();
+  var ClassBindingView = NgularView.extend();
 
-  view = EmberView.create({
+  view = NgularView.create({
     classBindingView: ClassBindingView,
     container: container,
     number: 5,
@@ -1052,17 +1052,17 @@ QUnit.test('{{view}} should be able to bind class names to truthy or falsy prope
 });
 
 QUnit.test('a view helper\'s bindings are to the parent context', function() {
-  var Subview = EmberView.extend({
+  var Subview = NgularView.extend({
     classNameBindings: ['color'],
-    controller: EmberObject.create({
+    controller: NgularObject.create({
       color: 'green',
       name: 'bar'
     }),
     template: compile('{{view.someController.name}} {{name}}')
   });
 
-  var View = EmberView.extend({
-    controller: EmberObject.create({
+  var View = NgularView.extend({
+    controller: NgularObject.create({
       color: 'mauve',
       name: 'foo'
     }),
@@ -1079,9 +1079,9 @@ QUnit.test('a view helper\'s bindings are to the parent context', function() {
 
 QUnit.test('should expose a controller keyword when present on the view', function() {
   var templateString = '{{controller.foo}}{{#view}}{{controller.baz}}{{/view}}';
-  view = EmberView.create({
+  view = NgularView.create({
     container: container,
-    controller: EmberObject.create({
+    controller: NgularObject.create({
       foo: 'bar',
       baz: 'bang'
     }),
@@ -1104,7 +1104,7 @@ QUnit.test('should expose a controller keyword when present on the view', functi
 
   runDestroy(view);
 
-  view = EmberView.create({
+  view = NgularView.create({
     controller: 'aString',
     template: compile('{{controller}}')
   });
@@ -1116,9 +1116,9 @@ QUnit.test('should expose a controller keyword when present on the view', functi
 
 QUnit.test('should expose a controller keyword that can be used in conditionals', function() {
   var templateString = '{{#view}}{{#if controller}}{{controller.foo}}{{/if}}{{/view}}';
-  view = EmberView.create({
+  view = NgularView.create({
     container: container,
-    controller: EmberObject.create({
+    controller: NgularObject.create({
       foo: 'bar'
     }),
 
@@ -1136,12 +1136,12 @@ QUnit.test('should expose a controller keyword that can be used in conditionals'
   equal(view.$().text(), '', 'updates the DOM when the controller is changed');
 });
 
-QUnit.test('should expose a controller keyword that persists through Ember.ContainerView', function() {
+QUnit.test('should expose a controller keyword that persists through Ngular.ContainerView', function() {
   var templateString = '{{view view.containerView}}';
-  view = EmberView.create({
+  view = NgularView.create({
     containerView: ContainerView,
     container: container,
-    controller: EmberObject.create({
+    controller: NgularObject.create({
       foo: 'bar'
     }),
 
@@ -1151,7 +1151,7 @@ QUnit.test('should expose a controller keyword that persists through Ember.Conta
   runAppend(view);
 
   var containerView = get(view, 'childViews.firstObject');
-  var viewInstanceToBeInserted = EmberView.create({
+  var viewInstanceToBeInserted = NgularView.create({
     template: compile('{{controller.foo}}')
   });
 
@@ -1166,7 +1166,7 @@ QUnit.test('should work with precompiled templates', function() {
   var templateString = precompile('{{view.value}}');
   var compiledTemplate = template(eval(templateString));
 
-  view = EmberView.create({
+  view = NgularView.create({
     value: 'rendered',
     template: compiledTemplate
   });
@@ -1183,15 +1183,15 @@ QUnit.test('should work with precompiled templates', function() {
 });
 
 QUnit.test('bindings should be relative to the current context [DEPRECATED]', function() {
-  view = EmberView.create({
+  view = NgularView.create({
     museumOpen: true,
 
-    museumDetails: EmberObject.create({
+    museumDetails: NgularObject.create({
       name: 'SFMoMA',
       price: 20
     }),
 
-    museumView: EmberView.extend({
+    museumView: NgularView.extend({
       template: compile('Name: {{view.name}} Price: ${{view.dollars}}')
     }),
 
@@ -1206,18 +1206,18 @@ QUnit.test('bindings should be relative to the current context [DEPRECATED]', fu
 });
 
 QUnit.test('bindings should respect keywords [DEPRECATED]', function() {
-  view = EmberView.create({
+  view = NgularView.create({
     museumOpen: true,
 
     controller: {
       museumOpen: true,
-      museumDetails: EmberObject.create({
+      museumDetails: NgularObject.create({
         name: 'SFMoMA',
         price: 20
       })
     },
 
-    museumView: EmberView.extend({
+    museumView: NgularView.extend({
       template: compile('Name: {{view.name}} Price: ${{view.dollars}}')
     }),
 
@@ -1232,18 +1232,18 @@ QUnit.test('bindings should respect keywords [DEPRECATED]', function() {
 });
 
 QUnit.test('should respect keywords', function() {
-  view = EmberView.create({
+  view = NgularView.create({
     museumOpen: true,
 
     controller: {
       museumOpen: true,
-      museumDetails: EmberObject.create({
+      museumDetails: NgularObject.create({
         name: 'SFMoMA',
         price: 20
       })
     },
 
-    museumView: EmberView.extend({
+    museumView: NgularView.extend({
       template: compile('Name: {{view.name}} Price: ${{view.dollars}}')
     }),
 
@@ -1256,7 +1256,7 @@ QUnit.test('should respect keywords', function() {
 });
 
 QUnit.test('should bind to the property if no registered helper found for a mustache without parameters', function() {
-  view = EmberView.createWithMixins({
+  view = NgularView.createWithMixins({
     template: compile('{{view.foobarProperty}}'),
     foobarProperty: computed(function() {
       return 'foobarProperty';
@@ -1269,10 +1269,10 @@ QUnit.test('should bind to the property if no registered helper found for a must
 });
 
 QUnit.test('{{view}} should be able to point to a local instance of view', function() {
-  view = EmberView.create({
+  view = NgularView.create({
     template: compile("{{view view.common}}"),
 
-    common: EmberView.create({
+    common: NgularView.create({
       template: compile("common")
     })
   });
@@ -1282,8 +1282,8 @@ QUnit.test('{{view}} should be able to point to a local instance of view', funct
 });
 
 QUnit.test("{{view}} should be able to point to a local instance of subclass of view", function() {
-  var MyView = EmberView.extend();
-  view = EmberView.create({
+  var MyView = NgularView.extend();
+  view = NgularView.create({
     template: compile("{{view view.subclassed}}"),
     subclassed: MyView.create({
       template: compile("subclassed")
@@ -1295,8 +1295,8 @@ QUnit.test("{{view}} should be able to point to a local instance of subclass of 
 });
 
 QUnit.test("{{view}} asserts that a view class is present", function() {
-  var MyView = EmberObject.extend();
-  view = EmberView.create({
+  var MyView = NgularObject.extend();
+  view = NgularView.create({
     template: compile("{{view view.notView}}"),
     notView: MyView.extend({
       template: compile("notView")
@@ -1305,14 +1305,14 @@ QUnit.test("{{view}} asserts that a view class is present", function() {
 
   expectAssertion(function() {
     runAppend(view);
-  }, /must be a subclass or an instance of Ember.View/);
+  }, /must be a subclass or an instance of Ngular.View/);
 });
 
 QUnit.test("{{view}} asserts that a view class is present off controller", function() {
-  var MyView = EmberObject.extend();
-  view = EmberView.create({
+  var MyView = NgularObject.extend();
+  view = NgularView.create({
     template: compile("{{view notView}}"),
-    controller: EmberObject.create({
+    controller: NgularObject.create({
       notView: MyView.extend({
         template: compile("notView")
       })
@@ -1321,12 +1321,12 @@ QUnit.test("{{view}} asserts that a view class is present off controller", funct
 
   expectAssertion(function() {
     runAppend(view);
-  }, /must be a subclass or an instance of Ember.View/);
+  }, /must be a subclass or an instance of Ngular.View/);
 });
 
 QUnit.test("{{view}} asserts that a view instance is present", function() {
-  var MyView = EmberObject.extend();
-  view = EmberView.create({
+  var MyView = NgularObject.extend();
+  view = NgularView.create({
     template: compile("{{view view.notView}}"),
     notView: MyView.create({
       template: compile("notView")
@@ -1335,14 +1335,14 @@ QUnit.test("{{view}} asserts that a view instance is present", function() {
 
   expectAssertion(function() {
     runAppend(view);
-  }, /must be a subclass or an instance of Ember.View/);
+  }, /must be a subclass or an instance of Ngular.View/);
 });
 
 QUnit.test("{{view}} asserts that a view subclass instance is present off controller", function() {
-  var MyView = EmberObject.extend();
-  view = EmberView.create({
+  var MyView = NgularObject.extend();
+  view = NgularView.create({
     template: compile("{{view notView}}"),
-    controller: EmberObject.create({
+    controller: NgularObject.create({
       notView: MyView.create({
         template: compile("notView")
       })
@@ -1351,15 +1351,15 @@ QUnit.test("{{view}} asserts that a view subclass instance is present off contro
 
   expectAssertion(function() {
     runAppend(view);
-  }, /must be a subclass or an instance of Ember.View/);
+  }, /must be a subclass or an instance of Ngular.View/);
 });
 
 QUnit.test('Specifying `id` to {{view}} is set on the view.', function() {
-  registry.register('view:derp', EmberView.extend({
+  registry.register('view:derp', NgularView.extend({
     template: compile('<div id="view-id">{{view.id}}</div><div id="view-elementId">{{view.elementId}}</div>')
   }));
 
-  view = EmberView.create({
+  view = NgularView.create({
     container: container,
     foo: 'bar',
     template: compile('{{view "derp" id=view.foo}}')
@@ -1373,11 +1373,11 @@ QUnit.test('Specifying `id` to {{view}} is set on the view.', function() {
 });
 
 QUnit.test('Specifying `id` to {{view}} does not allow bound id changes.', function() {
-  registry.register('view:derp', EmberView.extend({
+  registry.register('view:derp', NgularView.extend({
     template: compile('<div id="view-id">{{view.id}}</div><div id="view-elementId">{{view.elementId}}</div>')
   }));
 
-  view = EmberView.create({
+  view = NgularView.create({
     container: container,
     foo: 'bar',
     template: compile('{{view "derp" id=view.foo}}')

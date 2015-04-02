@@ -1,9 +1,9 @@
-import EmberView from 'ember-views/views/view';
-import compile from "ember-template-compiler/system/compile";
-import { runAppend, runDestroy } from "ember-runtime/tests/utils";
+import NgularView from 'ngular-views/views/view';
+import compile from "ngular-template-compiler/system/compile";
+import { runAppend, runDestroy } from "ngular-runtime/tests/utils";
 
 function buildView(template, context) {
-  return EmberView.create({
+  return NgularView.create({
     template: compile(template),
     context: (context || {})
   });
@@ -11,16 +11,16 @@ function buildView(template, context) {
 
 var oldString;
 
-QUnit.module('ember-htmlbars: {{#loc}} helper', {
+QUnit.module('ngular-htmlbars: {{#loc}} helper', {
   setup() {
-    oldString = Ember.STRINGS;
-    Ember.STRINGS = {
+    oldString = Ngular.STRINGS;
+    Ngular.STRINGS = {
       '_Howdy Friend': 'Hallo Freund'
     };
   },
 
   teardown() {
-    Ember.STRINGS = oldString;
+    Ngular.STRINGS = oldString;
   }
 });
 

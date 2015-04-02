@@ -1,13 +1,13 @@
 /**
-@module ember-metal
+@module ngular-metal
 */
 
 /*
   JavaScript (before ES6) does not have a Map implementation. Objects,
   which are often used as dictionaries, may only have Strings as keys.
 
-  Because Ember has a way to get a unique identifier for every object
-  via `Ember.guidFor`, we can implement a performant Map with arbitrary
+  Because Ngular has a way to get a unique identifier for every object
+  via `Ngular.guidFor`, we can implement a performant Map with arbitrary
   keys. Because it is commonly used in low-level bookkeeping, Map is
   implemented as a pure JavaScript object for performance.
 
@@ -16,14 +16,14 @@
   with one exception:  as we do not have the luxury of in-VM iteration, we implement a
   forEach method for iteration.
 
-  Map is mocked out to look like an Ember object, so you can do
-  `Ember.Map.create()` for symmetry with other Ember classes.
+  Map is mocked out to look like an Ngular object, so you can do
+  `Ngular.Map.create()` for symmetry with other Ngular classes.
 */
 
-import { guidFor } from "ember-metal/utils";
-import { indexOf } from "ember-metal/array";
-import create from "ember-metal/platform/create";
-import { deprecateProperty } from "ember-metal/deprecate_property";
+import { guidFor } from "ngular-metal/utils";
+import { indexOf } from "ngular-metal/array";
+import create from "ngular-metal/platform/create";
+import { deprecateProperty } from "ngular-metal/deprecate_property";
 
 function missingFunction(fn) {
   throw new TypeError(`${Object.prototype.toString.call(fn)} is not a function`);
@@ -56,12 +56,12 @@ function copyMap(original, newObject) {
 }
 
 /**
-  This class is used internally by Ember and Ember Data.
+  This class is used internally by Ngular and Ngular Data.
   Please do not use it at this time. We plan to clean it up
   and add many tests soon.
 
   @class OrderedSet
-  @namespace Ember
+  @namespace Ngular
   @constructor
   @private
 */
@@ -78,7 +78,7 @@ function OrderedSet() {
 /**
   @method create
   @static
-  @return {Ember.OrderedSet}
+  @return {Ngular.OrderedSet}
 */
 OrderedSet.create = function() {
   var Constructor = this;
@@ -101,7 +101,7 @@ OrderedSet.prototype = {
     @method add
     @param obj
     @param guid (optional, and for internal use)
-    @return {Ember.OrderedSet}
+    @return {Ngular.OrderedSet}
   */
   add(obj, _guid) {
     var guid = _guid || guidFor(obj);
@@ -125,7 +125,7 @@ OrderedSet.prototype = {
     @return {Boolean}
   */
   remove(obj, _guid) {
-    Ember.deprecate('Calling `OrderedSet.prototype.remove` has been deprecated, please use `OrderedSet.prototype.delete` instead.', this._silenceRemoveDeprecation);
+    Ngular.deprecate('Calling `OrderedSet.prototype.remove` has been deprecated, please use `OrderedSet.prototype.delete` instead.', this._silenceRemoveDeprecation);
 
     return this.delete(obj, _guid);
   },
@@ -214,7 +214,7 @@ OrderedSet.prototype = {
 
   /**
     @method copy
-    @return {Ember.OrderedSet}
+    @return {Ngular.OrderedSet}
   */
   copy() {
     var Constructor = this.constructor;
@@ -239,7 +239,7 @@ deprecateProperty(OrderedSet.prototype, 'length', 'size');
   Internally, a Map has two data structures:
 
   1. `keys`: an OrderedSet of all of the existing keys
-  2. `values`: a JavaScript Object indexed by the `Ember.guidFor(key)`
+  2. `values`: a JavaScript Object indexed by the `Ngular.guidFor(key)`
 
   When a key/value pair is added for the first time, we
   add the key to the `keys` OrderedSet, and create or
@@ -247,7 +247,7 @@ deprecateProperty(OrderedSet.prototype, 'length', 'size');
   we delete its entry in `keys` and `values`.
 
   @class Map
-  @namespace Ember
+  @namespace Ngular
   @private
   @constructor
 */
@@ -262,7 +262,7 @@ function Map() {
   }
 }
 
-Ember.Map = Map;
+Ngular.Map = Map;
 
 /**
   @method create
@@ -309,7 +309,7 @@ Map.prototype = {
     @method set
     @param {*} key
     @param {*} value
-    @return {Ember.Map}
+    @return {Ngular.Map}
   */
   set(key, value) {
     var keys = this._keys;
@@ -337,7 +337,7 @@ Map.prototype = {
     @return {Boolean} true if an item was removed, false otherwise
   */
   remove(key) {
-    Ember.deprecate('Calling `Map.prototype.remove` has been deprecated, please use `Map.prototype.delete` instead.');
+    Ngular.deprecate('Calling `Map.prototype.remove` has been deprecated, please use `Map.prototype.delete` instead.');
 
     return this.delete(key);
   },
@@ -426,7 +426,7 @@ Map.prototype = {
 
   /**
     @method copy
-    @return {Ember.Map}
+    @return {Ngular.Map}
   */
   copy() {
     return copyMap(this, new Map());
@@ -437,8 +437,8 @@ deprecateProperty(Map.prototype, 'length', 'size');
 
 /**
   @class MapWithDefault
-  @namespace Ember
-  @extends Ember.Map
+  @namespace Ngular
+  @extends Ngular.Map
   @private
   @constructor
   @param [options]
@@ -454,8 +454,8 @@ function MapWithDefault(options) {
   @static
   @param [options]
     @param {*} [options.defaultValue]
-  @return {Ember.MapWithDefault|Ember.Map} If options are passed, returns
-    `Ember.MapWithDefault` otherwise returns `Ember.Map`
+  @return {Ngular.MapWithDefault|Ngular.Map} If options are passed, returns
+    `Ngular.MapWithDefault` otherwise returns `Ngular.Map`
 */
 MapWithDefault.create = function(options) {
   if (options) {
@@ -491,7 +491,7 @@ MapWithDefault.prototype.get = function(key) {
 
 /**
   @method copy
-  @return {Ember.MapWithDefault}
+  @return {Ngular.MapWithDefault}
 */
 MapWithDefault.prototype.copy = function() {
   var Constructor = this.constructor;

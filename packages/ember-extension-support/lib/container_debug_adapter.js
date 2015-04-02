@@ -1,22 +1,22 @@
-import Ember from "ember-metal/core";
-import { A as emberA } from "ember-runtime/system/native_array";
-import { typeOf } from "ember-metal/utils";
+import Ngular from "ngular-metal/core";
+import { A as ngularA } from "ngular-runtime/system/native_array";
+import { typeOf } from "ngular-metal/utils";
 import {
   dasherize,
   classify
-} from "ember-runtime/system/string";
-import Namespace from "ember-runtime/system/namespace";
-import EmberObject from "ember-runtime/system/object";
+} from "ngular-runtime/system/string";
+import Namespace from "ngular-runtime/system/namespace";
+import NgularObject from "ngular-runtime/system/object";
 
 /**
-@module ember
-@submodule ember-extension-support
+@module ngular
+@submodule ngular-extension-support
 */
 
 /**
   The `ContainerDebugAdapter` helps the container and resolver interface
-  with tools that debug Ember such as the
-  [Ember Extension](https://github.com/tildeio/ember-extension)
+  with tools that debug Ngular such as the
+  [Ngular Extension](https://github.com/tildeio/ngular-extension)
   for Chrome and Firefox.
 
   This class can be extended by a custom resolver implementer
@@ -43,11 +43,11 @@ import EmberObject from "ember-runtime/system/object";
   ```
 
   @class ContainerDebugAdapter
-  @namespace Ember
-  @extends Ember.Object
+  @namespace Ngular
+  @extends Ngular.Object
   @since 1.5.0
 */
-export default EmberObject.extend({
+export default NgularObject.extend({
   /**
     The container of the application being debugged.
     This property will be injected
@@ -92,12 +92,12 @@ export default EmberObject.extend({
     @return {Array} An array of strings.
   */
   catalogEntriesByType(type) {
-    var namespaces = emberA(Namespace.NAMESPACES);
-    var types = emberA();
+    var namespaces = ngularA(Namespace.NAMESPACES);
+    var types = ngularA();
     var typeSuffixRegex = new RegExp(`${classify(type)}$`);
 
     namespaces.forEach(function(namespace) {
-      if (namespace !== Ember) {
+      if (namespace !== Ngular) {
         for (var key in namespace) {
           if (!namespace.hasOwnProperty(key)) { continue; }
           if (typeSuffixRegex.test(key)) {

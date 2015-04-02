@@ -1,36 +1,36 @@
 /**
-@module ember
-@submodule ember-runtime
+@module ngular
+@submodule ngular-runtime
 */
 
-import Ember from 'ember-metal/core';
-import { get } from 'ember-metal/property_get';
+import Ngular from 'ngular-metal/core';
+import { get } from 'ngular-metal/property_get';
 import {
   forEach,
   replace
-} from 'ember-metal/enumerable_utils';
-import ArrayProxy from 'ember-runtime/system/array_proxy';
-import SortableMixin from 'ember-runtime/mixins/sortable';
-import ControllerMixin from 'ember-runtime/mixins/controller';
-import { computed } from 'ember-metal/computed';
-import EmberError from 'ember-metal/error';
-import EmberArray from 'ember-runtime/mixins/array';
+} from 'ngular-metal/enumerable_utils';
+import ArrayProxy from 'ngular-runtime/system/array_proxy';
+import SortableMixin from 'ngular-runtime/mixins/sortable';
+import ControllerMixin from 'ngular-runtime/mixins/controller';
+import { computed } from 'ngular-metal/computed';
+import NgularError from 'ngular-metal/error';
+import NgularArray from 'ngular-runtime/mixins/array';
 
 
 /**
-  `Ember.ArrayController` provides a way for you to publish a collection of
+  `Ngular.ArrayController` provides a way for you to publish a collection of
   objects so that you can easily bind to the collection from a Handlebars
-  `#each` helper, an `Ember.CollectionView`, or other controllers.
+  `#each` helper, an `Ngular.CollectionView`, or other controllers.
 
   The advantage of using an `ArrayController` is that you only have to set up
   your view bindings once; to change what's displayed, simply swap out the
   `model` property on the controller.
 
   For example, imagine you wanted to display a list of items fetched via an XHR
-  request. Create an `Ember.ArrayController` and set its `model` property:
+  request. Create an `Ngular.ArrayController` and set its `model` property:
 
   ```javascript
-  MyApp.listController = Ember.ArrayController.create();
+  MyApp.listController = Ngular.ArrayController.create();
 
   $.get('people.json', function(data) {
     MyApp.listController.set('model', data);
@@ -47,7 +47,7 @@ import EmberArray from 'ember-runtime/mixins/array';
 
   Although you are binding to the controller, the behavior of this controller
   is to pass through any methods or properties to the underlying array. This
-  capability comes from `Ember.ArrayProxy`, which this class inherits from.
+  capability comes from `Ngular.ArrayProxy`, which this class inherits from.
 
   Sometimes you want to display computed properties within the body of an
   `#each` helper that depend on the underlying items in `model`, but are not
@@ -63,11 +63,11 @@ import EmberArray from 'ember-runtime/mixins/array';
   ```
 
   ```javascript
-  App.PostsController = Ember.ArrayController.extend({
+  App.PostsController = Ngular.ArrayController.extend({
     itemController: 'post'
   });
 
-  App.PostController = Ember.ObjectController.extend({
+  App.PostController = Ngular.ObjectController.extend({
     // the `title` property will be proxied to the underlying post.
     titleLength: function() {
       return this.get('title').length;
@@ -82,7 +82,7 @@ import EmberArray from 'ember-runtime/mixins/array';
   For example:
 
   ```javascript
-  App.MyArrayController = Ember.ArrayController.extend({
+  App.MyArrayController = Ngular.ArrayController.extend({
     lookupItemController: function( object ) {
       if (object.get('isSpecial')) {
         return "special"; // use App.SpecialController
@@ -97,10 +97,10 @@ import EmberArray from 'ember-runtime/mixins/array';
   the `ArrayController` instance.
 
   @class ArrayController
-  @namespace Ember
-  @extends Ember.ArrayProxy
-  @uses Ember.SortableMixin
-  @uses Ember.ControllerMixin
+  @namespace Ngular
+  @extends Ngular.ArrayProxy
+  @uses Ngular.SortableMixin
+  @uses Ngular.ControllerMixin
 */
 
 export default ArrayProxy.extend(ControllerMixin, SortableMixin, {
@@ -111,7 +111,7 @@ export default ArrayProxy.extend(ControllerMixin, SortableMixin, {
     For example:
 
     ```javascript
-    App.MyArrayController = Ember.ArrayController.extend({
+    App.MyArrayController = Ngular.ArrayController.extend({
       itemController: 'myItem' // use App.MyItemController
     });
     ```
@@ -131,7 +131,7 @@ export default ArrayProxy.extend(ControllerMixin, SortableMixin, {
     For example:
 
     ```javascript
-    App.MyArrayController = Ember.ArrayController.extend({
+    App.MyArrayController = Ngular.ArrayController.extend({
       lookupItemController: function( object ) {
         if (object.get('isSpecial')) {
           return "special"; // use App.SpecialController
@@ -206,13 +206,13 @@ export default ArrayProxy.extend(ControllerMixin, SortableMixin, {
 
   model: computed({
     get: function(key) {
-      return Ember.A();
+      return Ngular.A();
     },
     set: function(key, value) {
-      Ember.assert(
-        'ArrayController expects `model` to implement the Ember.Array mixin. ' +
-        'This can often be fixed by wrapping your model with `Ember.A()`.',
-        EmberArray.detect(value)
+      Ngular.assert(
+        'ArrayController expects `model` to implement the Ngular.Array mixin. ' +
+        'This can often be fixed by wrapping your model with `Ngular.A()`.',
+        NgularArray.detect(value)
       );
 
       return value;
@@ -251,7 +251,7 @@ export default ArrayProxy.extend(ControllerMixin, SortableMixin, {
     fullName = 'controller:' + controllerClass;
 
     if (!container._registry.has(fullName)) {
-      throw new EmberError('Could not resolve itemController: "' + controllerClass + '"');
+      throw new NgularError('Could not resolve itemController: "' + controllerClass + '"');
     }
 
     subController = container.lookupFactory(fullName).create({

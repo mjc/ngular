@@ -1,13 +1,13 @@
-import EmberView from "ember-views/views/view";
+import NgularView from "ngular-views/views/view";
 import Registry from "container/registry";
-import compile from "ember-template-compiler/system/compile";
-import makeViewHelper from "ember-htmlbars/system/make-view-helper";
-import Component from "ember-views/views/component";
-import { runAppend, runDestroy } from "ember-runtime/tests/utils";
+import compile from "ngular-template-compiler/system/compile";
+import makeViewHelper from "ngular-htmlbars/system/make-view-helper";
+import Component from "ngular-views/views/component";
+import { runAppend, runDestroy } from "ngular-runtime/tests/utils";
 
 var registry, container, view;
 
-QUnit.module('ember-htmlbars: makeViewHelper compat', {
+QUnit.module('ngular-htmlbars: makeViewHelper compat', {
   setup() {
     registry = new Registry();
     container = registry.container();
@@ -30,7 +30,7 @@ QUnit.test('makeViewHelper', function() {
   var helper = makeViewHelper(ViewHelperComponent);
   registry.register('helper:view-helper', helper);
 
-  view = EmberView.extend({
+  view = NgularView.extend({
     template: compile('{{view-helper}}'),
     container: container
   }).create();

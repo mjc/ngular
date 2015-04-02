@@ -1,16 +1,16 @@
-import jQuery from "ember-views/system/jquery";
-import run from "ember-metal/run_loop";
-import EmberView from "ember-views/views/view";
-import { get } from "ember-metal/property_get";
-import { set } from "ember-metal/property_set";
-import compile from "ember-template-compiler/system/compile";
-import _MetamorphView from "ember-views/views/metamorph_view";
+import jQuery from "ngular-views/system/jquery";
+import run from "ngular-metal/run_loop";
+import NgularView from "ngular-views/views/view";
+import { get } from "ngular-metal/property_get";
+import { set } from "ngular-metal/property_set";
+import compile from "ngular-template-compiler/system/compile";
+import _MetamorphView from "ngular-views/views/metamorph_view";
 
 var view, childView, metamorphView;
 
 QUnit.module("Metamorph views", {
   setup() {
-    view = EmberView.create({
+    view = NgularView.create({
       render(buffer) {
         buffer.push("<h1>View</h1>");
         this.appendChild(metamorphView);
@@ -33,7 +33,7 @@ QUnit.module("Metamorph views", {
 });
 
 QUnit.test("a Metamorph view is not a view's parentView", function() {
-  childView = EmberView.create({
+  childView = NgularView.create({
     render(buffer) {
       buffer.push("<p>Bye bros</p>");
     }
@@ -60,7 +60,7 @@ QUnit.test("a Metamorph view is not a view's parentView", function() {
 
 QUnit.module("Metamorph views correctly handle DOM", {
   setup() {
-    view = EmberView.create({
+    view = NgularView.create({
       render(buffer) {
         buffer.push("<h1>View</h1>");
         this.appendChild(metamorphView);
@@ -126,8 +126,8 @@ QUnit.test("a metamorph view calls its children's willInsertElement and didInser
   var didInsertElementCalled = false;
   var didInsertElementSawElement = false;
 
-  parentView = EmberView.create({
-    ViewWithCallback: EmberView.extend({
+  parentView = NgularView.create({
+    ViewWithCallback: NgularView.extend({
       template: compile('<div id="do-i-exist"></div>'),
 
       willInsertElement() {
@@ -163,10 +163,10 @@ QUnit.test("a metamorph view calls its children's willInsertElement and didInser
 QUnit.test("replacing a Metamorph should invalidate childView elements", function() {
   var elementOnDidInsert;
 
-  view = EmberView.create({
+  view = NgularView.create({
     show: false,
 
-    CustomView: EmberView.extend({
+    CustomView: NgularView.extend({
       init() {
         this._super.apply(this, arguments);
         // This will be called in preRender
@@ -193,7 +193,7 @@ QUnit.test("replacing a Metamorph should invalidate childView elements", functio
 });
 
 QUnit.test("trigger rerender of parent and SimpleBoundView", function () {
-  var view = EmberView.create({
+  var view = NgularView.create({
     show: true,
     foo: 'bar',
     template: compile("{{#if view.show}}{{#if view.foo}}{{view.foo}}{{/if}}{{/if}}")
@@ -216,7 +216,7 @@ QUnit.test("trigger rerender of parent and SimpleBoundView", function () {
 });
 
 QUnit.test("re-rendering and then changing the property does not raise an exception", function() {
-  view = EmberView.create({
+  view = NgularView.create({
     show: true,
     foo: 'bar',
     metamorphView: _MetamorphView,

@@ -3,14 +3,14 @@
 //
 "REMOVE_USE_STRICT: true";
 
-import o_create from "ember-metal/platform/create";
+import o_create from "ngular-metal/platform/create";
 import {
   watch,
   unwatch
-} from "ember-metal/watching";
+} from "ngular-metal/watching";
 
 /**
-@module ember-metal
+@module ngular-metal
 */
 
 // ..........................................................

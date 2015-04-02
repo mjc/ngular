@@ -1,10 +1,10 @@
-import MutableEnumerableTests from 'ember-runtime/tests/suites/mutable_enumerable';
-import Set from "ember-runtime/system/set";
-import {get} from "ember-metal/property_get";
+import MutableEnumerableTests from 'ngular-runtime/tests/suites/mutable_enumerable';
+import Set from "ngular-runtime/system/set";
+import {get} from "ngular-metal/property_get";
 
 MutableEnumerableTests.extend({
 
-  name: 'Ember.Set',
+  name: 'Ngular.Set',
 
   newObject(ary) {
     var ret;

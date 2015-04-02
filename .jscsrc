@@ -1,6 +1,6 @@
 {
   "esnext": true,
-  "excludeFiles": ["ember-runtime/ext/rsvp.js"],
+  "excludeFiles": ["ngular-runtime/ext/rsvp.js"],
   "additionalRules": [ "lib/jscs-rules/*.js" ],
   "disallowSpacesInsideArrayBrackets": "all",
   "disallowMultipleVarDeclWithAssignment": true,

@@ -1,28 +1,28 @@
-import Ember from 'ember-metal/core'; // TEMPLATES
-import { set } from "ember-metal/property_set";
-import run from "ember-metal/run_loop";
-import { canDefineNonEnumerableProperties } from 'ember-metal/platform/define_property';
-import { observer } from 'ember-metal/mixin';
+import Ngular from 'ngular-metal/core'; // TEMPLATES
+import { set } from "ngular-metal/property_set";
+import run from "ngular-metal/run_loop";
+import { canDefineNonEnumerableProperties } from 'ngular-metal/platform/define_property';
+import { observer } from 'ngular-metal/mixin';
 
-import Namespace from "ember-runtime/system/namespace";
+import Namespace from "ngular-runtime/system/namespace";
 
-import EmberController from "ember-runtime/controllers/controller";
-import EmberArrayController from "ember-runtime/controllers/array_controller";
+import NgularController from "ngular-runtime/controllers/controller";
+import NgularArrayController from "ngular-runtime/controllers/array_controller";
 
-import { registerHelper } from "ember-htmlbars/helpers";
-import helpers from "ember-htmlbars/helpers";
-import compile from "ember-template-compiler/system/compile";
+import { registerHelper } from "ngular-htmlbars/helpers";
+import helpers from "ngular-htmlbars/helpers";
+import compile from "ngular-template-compiler/system/compile";
 
-import EmberView from "ember-views/views/view";
-import jQuery from "ember-views/system/jquery";
-import ActionManager from "ember-views/system/action_manager";
+import NgularView from "ngular-views/views/view";
+import jQuery from "ngular-views/system/jquery";
+import ActionManager from "ngular-views/system/action_manager";
 
-import { renderHelper } from "ember-routing-htmlbars/helpers/render";
-import { actionHelper } from "ember-routing-htmlbars/helpers/action";
-import { outletHelper } from "ember-routing-htmlbars/helpers/outlet";
+import { renderHelper } from "ngular-routing-htmlbars/helpers/render";
+import { actionHelper } from "ngular-routing-htmlbars/helpers/action";
+import { outletHelper } from "ngular-routing-htmlbars/helpers/outlet";
 
-import { buildRegistry } from "ember-routing-htmlbars/tests/utils";
-import { runAppend, runDestroy } from "ember-runtime/tests/utils";
+import { buildRegistry } from "ngular-routing-htmlbars/tests/utils";
+import { runAppend, runDestroy } from "ngular-runtime/tests/utils";
 
 function runSet(object, key, value) {
   run(function() {
@@ -32,7 +32,7 @@ function runSet(object, key, value) {
 
 var view, container, originalRenderHelper, originalActionHelper, originalOutletHelper;
 
-QUnit.module("ember-routing-htmlbars: {{render}} helper", {
+QUnit.module("ngular-routing-htmlbars: {{render}} helper", {
   setup() {
     originalOutletHelper = helpers['outlet'];
     registerHelper('outlet', outletHelper);
@@ -62,19 +62,19 @@ QUnit.module("ember-routing-htmlbars: {{render}} helper", {
     runDestroy(container);
     runDestroy(view);
 
-    Ember.TEMPLATES = {};
+    Ngular.TEMPLATES = {};
   }
 });
 
 QUnit.test("{{render}} helper should render given template", function() {
   var template = "<h1>HI</h1>{{render 'home'}}";
-  var controller = EmberController.extend({ container: container });
-  view = EmberView.create({
+  var controller = NgularController.extend({ container: container });
+  view = NgularView.create({
     controller: controller.create(),
     template: compile(template)
   });
 
-  Ember.TEMPLATES['home'] = compile("<p>BYE</p>");
+  Ngular.TEMPLATES['home'] = compile("<p>BYE</p>");
 
   runAppend(view);
 
@@ -84,8 +84,8 @@ QUnit.test("{{render}} helper should render given template", function() {
 
 QUnit.test("{{render}} helper should have assertion if neither template nor view exists", function() {
   var template = "<h1>HI</h1>{{render 'oops'}}";
-  var controller = EmberController.extend({ container: container });
-  view = EmberView.create({
+  var controller = NgularController.extend({ container: container });
+  view = NgularView.create({
     controller: controller.create(),
     template: compile(template)
   });
@@ -97,9 +97,9 @@ QUnit.test("{{render}} helper should have assertion if neither template nor view
 
 QUnit.test("{{render}} helper should not have assertion if template is supplied in block-form", function() {
   var template = "<h1>HI</h1>{{#render 'good'}} {{name}}{{/render}}";
-  var controller = EmberController.extend({ container: container });
-  container._registry.register('controller:good', EmberController.extend({ name: 'Rob' }));
-  view = EmberView.create({
+  var controller = NgularController.extend({ container: container });
+  container._registry.register('controller:good', NgularController.extend({ name: 'Rob' }));
+  view = NgularView.create({
     controller: controller.create(),
     template: compile(template)
   });
@@ -111,13 +111,13 @@ QUnit.test("{{render}} helper should not have assertion if template is supplied 
 
 QUnit.test("{{render}} helper should not have assertion if view exists without a template", function() {
   var template = "<h1>HI</h1>{{render 'oops'}}";
-  var controller = EmberController.extend({ container: container });
-  view = EmberView.create({
+  var controller = NgularController.extend({ container: container });
+  view = NgularView.create({
     controller: controller.create(),
     template: compile(template)
   });
 
-  container._registry.register('view:oops', EmberView.extend());
+  container._registry.register('view:oops', NgularView.extend());
 
   runAppend(view);
 
@@ -130,7 +130,7 @@ QUnit.test("{{render}} helper should render given template with a supplied model
     title: "Rails is omakase"
   };
 
-  var Controller = EmberController.extend({
+  var Controller = NgularController.extend({
     container: container,
     post: post
   });
@@ -138,15 +138,15 @@ QUnit.test("{{render}} helper should render given template with a supplied model
   var controller = Controller.create({
   });
 
-  view = EmberView.create({
+  view = NgularView.create({
     controller: controller,
     template: compile(template)
   });
 
-  var PostController = EmberController.extend();
+  var PostController = NgularController.extend();
   container._registry.register('controller:post', PostController);
 
-  Ember.TEMPLATES['post'] = compile("<p>{{model.title}}</p>");
+  Ngular.TEMPLATES['post'] = compile("<p>{{model.title}}</p>");
 
   runAppend(view);
 
@@ -171,15 +171,15 @@ QUnit.test("{{render}} helper with a supplied model should not fire observers on
     title: "Rails is omakase"
   };
 
-  view = EmberView.create({
-    controller: EmberController.create({
+  view = NgularView.create({
+    controller: NgularController.create({
       container: container,
       post: post
     }),
     template: compile(template)
   });
 
-  var PostController = EmberController.extend({
+  var PostController = NgularController.extend({
     modelDidChange: observer('model', function() {
       modelDidChange++;
     })
@@ -187,7 +187,7 @@ QUnit.test("{{render}} helper with a supplied model should not fire observers on
 
   container._registry.register('controller:post', PostController);
 
-  Ember.TEMPLATES['post'] = compile("<p>{{title}}</p>");
+  Ngular.TEMPLATES['post'] = compile("<p>{{title}}</p>");
 
   var modelDidChange = 0;
   runAppend(view);
@@ -197,14 +197,14 @@ QUnit.test("{{render}} helper with a supplied model should not fire observers on
 
 QUnit.test("{{render}} helper should raise an error when a given controller name does not resolve to a controller", function() {
   var template = '<h1>HI</h1>{{render "home" controller="postss"}}';
-  var controller = EmberController.extend({ container: container });
-  container._registry.register('controller:posts', EmberArrayController.extend());
-  view = EmberView.create({
+  var controller = NgularController.extend({ container: container });
+  container._registry.register('controller:posts', NgularArrayController.extend());
+  view = NgularView.create({
     controller: controller.create(),
     template: compile(template)
   });
 
-  Ember.TEMPLATES['home'] = compile("<p>BYE</p>");
+  Ngular.TEMPLATES['home'] = compile("<p>BYE</p>");
 
   expectAssertion(function() {
     runAppend(view);
@@ -213,14 +213,14 @@ QUnit.test("{{render}} helper should raise an error when a given controller name
 
 QUnit.test("{{render}} helper should render with given controller", function() {
   var template = '<h1>HI</h1>{{render "home" controller="posts"}}';
-  var controller = EmberController.extend({ container: container });
-  container._registry.register('controller:posts', EmberArrayController.extend());
-  view = EmberView.create({
+  var controller = NgularController.extend({ container: container });
+  container._registry.register('controller:posts', NgularArrayController.extend());
+  view = NgularView.create({
     controller: controller.create(),
     template: compile(template)
   });
 
-  Ember.TEMPLATES['home'] = compile("<p>BYE</p>");
+  Ngular.TEMPLATES['home'] = compile("<p>BYE</p>");
 
   runAppend(view);
 
@@ -230,13 +230,13 @@ QUnit.test("{{render}} helper should render with given controller", function() {
 
 QUnit.test("{{render}} helper should render a template without a model only once", function() {
   var template = "<h1>HI</h1>{{render 'home'}}<hr/>{{render 'home'}}";
-  var controller = EmberController.extend({ container: container });
-  view = EmberView.create({
+  var controller = NgularController.extend({ container: container });
+  view = NgularView.create({
     controller: controller.create(),
     template: compile(template)
   });
 
-  Ember.TEMPLATES['home'] = compile("<p>BYE</p>");
+  Ngular.TEMPLATES['home'] = compile("<p>BYE</p>");
 
   expectAssertion(function() {
     runAppend(view);
@@ -252,7 +252,7 @@ QUnit.test("{{render}} helper should render templates with models multiple times
     title: "Then me"
   };
 
-  var Controller = EmberController.extend({
+  var Controller = NgularController.extend({
     container: container,
     post1: post1,
     post2: post2
@@ -260,15 +260,15 @@ QUnit.test("{{render}} helper should render templates with models multiple times
 
   var controller = Controller.create();
 
-  view = EmberView.create({
+  view = NgularView.create({
     controller: controller,
     template: compile(template)
   });
 
-  var PostController = EmberController.extend();
+  var PostController = NgularController.extend();
   container._registry.register('controller:post', PostController, { singleton: false });
 
-  Ember.TEMPLATES['post'] = compile("<p>{{model.title}}</p>");
+  Ngular.TEMPLATES['post'] = compile("<p>{{model.title}}</p>");
 
   runAppend(view);
 
@@ -295,22 +295,22 @@ QUnit.test("{{render}} helper should not leak controllers", function() {
     title: "Me first"
   };
 
-  var Controller = EmberController.extend({
+  var Controller = NgularController.extend({
     container: container,
     post1: post1
   });
 
   var controller = Controller.create();
 
-  view = EmberView.create({
+  view = NgularView.create({
     controller: controller,
     template: compile(template)
   });
 
-  var PostController = EmberController.extend();
+  var PostController = NgularController.extend();
   container._registry.register('controller:post', PostController);
 
-  Ember.TEMPLATES['post'] = compile("<p>{{title}}</p>");
+  Ngular.TEMPLATES['post'] = compile("<p>{{title}}</p>");
 
   runAppend(view);
 
@@ -324,18 +324,18 @@ QUnit.test("{{render}} helper should not leak controllers", function() {
 QUnit.test("{{render}} helper should not treat invocations with falsy contexts as context-less", function() {
   var template = "<h1>HI</h1> {{render 'post' zero}} {{render 'post' nonexistent}}";
 
-  view = EmberView.create({
-    controller: EmberController.createWithMixins({
+  view = NgularView.create({
+    controller: NgularController.createWithMixins({
       container: container,
       zero: false
     }),
     template: compile(template)
   });
 
-  var PostController = EmberController.extend();
+  var PostController = NgularController.extend();
   container._registry.register('controller:post', PostController, { singleton: false });
 
-  Ember.TEMPLATES['post'] = compile("<p>{{#unless model}}NOTHING{{/unless}}</p>");
+  Ngular.TEMPLATES['post'] = compile("<p>{{#unless model}}NOTHING{{/unless}}</p>");
 
   runAppend(view);
 
@@ -353,22 +353,22 @@ QUnit.test("{{render}} helper should render templates both with and without mode
     title: "Rails is omakase"
   };
 
-  var Controller = EmberController.extend({
+  var Controller = NgularController.extend({
     container: container,
     post: post
   });
 
   var controller = Controller.create();
 
-  view = EmberView.create({
+  view = NgularView.create({
     controller: controller,
     template: compile(template)
   });
 
-  var PostController = EmberController.extend();
+  var PostController = NgularController.extend();
   container._registry.register('controller:post', PostController, { singleton: false });
 
-  Ember.TEMPLATES['post'] = compile("<p>Title:{{model.title}}</p>");
+  Ngular.TEMPLATES['post'] = compile("<p>Title:{{model.title}}</p>");
 
   runAppend(view);
 
@@ -393,7 +393,7 @@ QUnit.test("{{render}} helper should link child controllers to the parent contro
   var parentTriggered = 0;
 
   var template = '<h1>HI</h1>{{render "posts"}}';
-  var controller = EmberController.extend({
+  var controller = NgularController.extend({
     container: container,
     actions: {
       parentPlease() {
@@ -403,19 +403,19 @@ QUnit.test("{{render}} helper should link child controllers to the parent contro
     role: "Mom"
   });
 
-  container._registry.register('controller:posts', EmberArrayController.extend());
+  container._registry.register('controller:posts', NgularArrayController.extend());
 
-  view = EmberView.create({
+  view = NgularView.create({
     controller: controller.create(),
     template: compile(template)
   });
 
-  Ember.TEMPLATES['posts'] = compile('<button id="parent-action" {{action "parentPlease"}}>Go to {{parentController.role}}</button>');
+  Ngular.TEMPLATES['posts'] = compile('<button id="parent-action" {{action "parentPlease"}}>Go to {{parentController.role}}</button>');
 
   runAppend(view);
 
   var button = jQuery("#parent-action");
-  var actionId = button.data('ember-action');
+  var actionId = button.data('ngular-action');
   var action = ActionManager.registeredActions[actionId];
   var handler = action.handler;
 
@@ -427,12 +427,12 @@ QUnit.test("{{render}} helper should link child controllers to the parent contro
 });
 
 QUnit.test("{{render}} helper should be able to render a template again when it was removed", function() {
-  var controller = EmberController.extend({ container: container });
+  var controller = NgularController.extend({ container: container });
   var CoreOutlet = container.lookupFactory('view:core-outlet');
   view = CoreOutlet.create();
   runAppend(view);
 
-  Ember.TEMPLATES['home'] = compile("<p>BYE</p>");
+  Ngular.TEMPLATES['home'] = compile("<p>BYE</p>");
 
   var liveRoutes = {
     render: {
@@ -469,15 +469,15 @@ QUnit.test("{{render}} helper should be able to render a template again when it 
 QUnit.test("{{render}} works with dot notation", function() {
   var template = '<h1>BLOG</h1>{{render "blog.post"}}';
 
-  var controller = EmberController.extend({ container: container });
-  container._registry.register('controller:blog.post', EmberController.extend());
+  var controller = NgularController.extend({ container: container });
+  container._registry.register('controller:blog.post', NgularController.extend());
 
-  view = EmberView.create({
+  view = NgularView.create({
     controller: controller.create(),
     template: compile(template)
   });
 
-  Ember.TEMPLATES['blog.post'] = compile("<p>POST</p>");
+  Ngular.TEMPLATES['blog.post'] = compile("<p>POST</p>");
 
   runAppend(view);
 
@@ -489,15 +489,15 @@ QUnit.test("{{render}} works with dot notation", function() {
 QUnit.test("{{render}} works with slash notation", function() {
   var template = '<h1>BLOG</h1>{{render "blog/post"}}';
 
-  var controller = EmberController.extend({ container: container });
-  container._registry.register('controller:blog.post', EmberController.extend());
+  var controller = NgularController.extend({ container: container });
+  container._registry.register('controller:blog.post', NgularController.extend());
 
-  view = EmberView.create({
+  view = NgularView.create({
     controller: controller.create(),
     template: compile(template)
   });
 
-  Ember.TEMPLATES['blog.post'] = compile("<p>POST</p>");
+  Ngular.TEMPLATES['blog.post'] = compile("<p>POST</p>");
 
   runAppend(view);
 
@@ -508,13 +508,13 @@ QUnit.test("{{render}} works with slash notation", function() {
 
 QUnit.test("throws an assertion if {{render}} is called with an unquoted template name", function() {
   var template = '<h1>HI</h1>{{render home}}';
-  var controller = EmberController.extend({ container: container });
-  view = EmberView.create({
+  var controller = NgularController.extend({ container: container });
+  view = NgularView.create({
     controller: controller.create(),
     template: compile(template)
   });
 
-  Ember.TEMPLATES['home'] = compile("<p>BYE</p>");
+  Ngular.TEMPLATES['home'] = compile("<p>BYE</p>");
 
   expectAssertion(function() {
     runAppend(view);
@@ -523,13 +523,13 @@ QUnit.test("throws an assertion if {{render}} is called with an unquoted templat
 
 QUnit.test("throws an assertion if {{render}} is called with a literal for a model", function() {
   var template = '<h1>HI</h1>{{render "home" "model"}}';
-  var controller = EmberController.extend({ container: container });
-  view = EmberView.create({
+  var controller = NgularController.extend({ container: container });
+  view = NgularView.create({
     controller: controller.create(),
     template: compile(template)
   });
 
-  Ember.TEMPLATES['home'] = compile("<p>BYE</p>");
+  Ngular.TEMPLATES['home'] = compile("<p>BYE</p>");
 
   expectAssertion(function() {
     runAppend(view);
@@ -538,8 +538,8 @@ QUnit.test("throws an assertion if {{render}} is called with a literal for a mod
 
 QUnit.test("{{render}} helper should let view provide its own template", function() {
   var template = "{{render 'fish'}}";
-  var controller = EmberController.extend({ container: container });
-  view = EmberView.create({
+  var controller = NgularController.extend({ container: container });
+  view = NgularView.create({
     controller: controller.create(),
     template: compile(template)
   });
@@ -547,7 +547,7 @@ QUnit.test("{{render}} helper should let view provide its own template", functio
   container._registry.register('template:fish', compile('Hello fish!'));
   container._registry.register('template:other', compile('Hello other!'));
 
-  container._registry.register('view:fish', EmberView.extend({
+  container._registry.register('view:fish', NgularView.extend({
     templateName: 'other'
   }));
 

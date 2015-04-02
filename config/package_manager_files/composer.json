@@ -1,5 +1,5 @@
 {
-  "name": "components/ember",
+  "name": "components/ngular",
   "description": "A framework for creating ambitious web applications.",
   "type": "component",
   "license": "MIT",
@@ -9,15 +9,15 @@
   "extra": {
     "component": {
       "scripts": [
-        "ember.debug.js"
+        "ngular.debug.js"
       ],
       "files": [
-        "ember.debug.js",
-        "ember.prod.js",
-        "ember.min.js"
+        "ngular.debug.js",
+        "ngular.prod.js",
+        "ngular.min.js"
       ],
       "shim": {
-        "exports": "Ember",
+        "exports": "Ngular",
         "deps": [
           "jquery"
         ]

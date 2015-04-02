@@ -1,6 +1,6 @@
-import EmberView from "ember-views/views/view";
-import run from "ember-metal/run_loop";
-import compile from "ember-template-compiler/system/compile";
+import NgularView from "ngular-views/views/view";
+import run from "ngular-metal/run_loop";
+import compile from "ngular-template-compiler/system/compile";
 
 var view;
 
@@ -16,9 +16,9 @@ function canSetFalsyMaxLength() {
 }
 
 // jscs:disable validateIndentation
-if (Ember.FEATURES.isEnabled('ember-htmlbars-attribute-syntax')) {
+if (Ngular.FEATURES.isEnabled('ngular-htmlbars-attribute-syntax')) {
 
-QUnit.module("ember-htmlbars: property", {
+QUnit.module("ngular-htmlbars: property", {
   teardown() {
     if (view) {
       run(view, view.destroy);
@@ -27,7 +27,7 @@ QUnit.module("ember-htmlbars: property", {
 });
 
 QUnit.test("maxlength sets the property and attribute", function() {
-  view = EmberView.create({
+  view = NgularView.create({
     context: { length: 5 },
     template: compile("<input maxlength={{length}}>")
   });
@@ -35,12 +35,12 @@ QUnit.test("maxlength sets the property and attribute", function() {
   appendView(view);
   equal(view.element.firstChild.maxLength, 5);
 
-  Ember.run(view, view.set, 'context.length', 1);
+  Ngular.run(view, view.set, 'context.length', 1);
   equal(view.element.firstChild.maxLength, 1);
 });
 
 QUnit.test("quoted maxlength sets the property and attribute", function() {
-  view = EmberView.create({
+  view = NgularView.create({
     context: { length: 5 },
     template: compile("<input maxlength='{{length}}'>")
   });
@@ -49,23 +49,23 @@ QUnit.test("quoted maxlength sets the property and attribute", function() {
   equal(view.element.firstChild.maxLength, '5');
 
   if (canSetFalsyMaxLength()) {
-    Ember.run(view, view.set, 'context.length', null);
+    Ngular.run(view, view.set, 'context.length', null);
     equal(view.element.firstChild.maxLength, 0);
   } else {
-    Ember.run(view, view.set, 'context.length', 1);
+    Ngular.run(view, view.set, 'context.length', 1);
     equal(view.element.firstChild.maxLength, 1);
   }
 });
 
 QUnit.test("array value can be set as property", function() {
-  view = EmberView.create({
+  view = NgularView.create({
     context: {},
     template: compile("<input value={{items}}>")
   });
 
   appendView(view);
 
-  Ember.run(view, view.set, 'context.items', [4,5]);
+  Ngular.run(view, view.set, 'context.items', [4,5]);
   ok(true, "no legacy assertion prohibited setting an array");
 });
 

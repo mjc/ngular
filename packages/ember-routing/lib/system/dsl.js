@@ -1,9 +1,9 @@
-import Ember from "ember-metal/core"; // FEATURES, assert
-import { indexOf } from "ember-metal/array";
+import Ngular from "ngular-metal/core"; // FEATURES, assert
+import { indexOf } from "ngular-metal/array";
 
 /**
-@module ember
-@submodule ember-routing
+@module ngular
+@submodule ngular-routing
 */
 
 function DSL(name, options) {
@@ -26,7 +26,7 @@ DSL.prototype = {
     }
 
     var type = options.resetNamespace === true ? 'resource' : 'route';
-    Ember.assert(
+    Ngular.assert(
       `'${name}' cannot be used as a ${type} name.`,
       (function() {
         if (options.overrideNameAssertion === true) { return true; }
@@ -35,7 +35,7 @@ DSL.prototype = {
       })()
     );
 
-    if (Ember.FEATURES.isEnabled("ember-routing-named-substates")) {
+    if (Ngular.FEATURES.isEnabled("ngular-routing-named-substates")) {
       if (this.enableLoadingSubstates) {
         createRoute(this, `${name}_loading`, { resetNamespace: options.resetNamespace });
         createRoute(this, `${name}_error`, { path: dummyErrorRoute });

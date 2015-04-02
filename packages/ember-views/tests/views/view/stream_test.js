@@ -1,9 +1,9 @@
-import run from "ember-metal/run_loop";
-import EmberView from "ember-views/views/view";
+import run from "ngular-metal/run_loop";
+import NgularView from "ngular-views/views/view";
 
 var view;
 
-QUnit.module("ember-views: streams", {
+QUnit.module("ngular-views: streams", {
   teardown() {
     if (view) {
       run(view, 'destroy');
@@ -14,7 +14,7 @@ QUnit.module("ember-views: streams", {
 QUnit.test("can return a stream that is notified of changes", function() {
   expect(2);
 
-  view = EmberView.create({
+  view = NgularView.create({
     controller: {
       name: 'Robert'
     }
@@ -36,7 +36,7 @@ QUnit.test("a single stream is used for the same path", function() {
 
   var stream1, stream2;
 
-  view = EmberView.create({
+  view = NgularView.create({
     controller: {
       name: 'Robert'
     }
@@ -57,7 +57,7 @@ QUnit.test("the stream returned is labeled with the requested path", function() 
   expect(2);
   var stream;
 
-  view = EmberView.create({
+  view = NgularView.create({
     controller: {
       name: 'Robert'
     },

@@ -1,15 +1,15 @@
 /**
-@module ember-metal
+@module ngular-metal
 */
 
-import Ember from "ember-metal/core";
-import EmberError from "ember-metal/error";
+import Ngular from "ngular-metal/core";
+import NgularError from "ngular-metal/error";
 import {
   isGlobal as detectIsGlobal,
   isPath,
   hasThis as pathHasThis
-} from "ember-metal/path_cache";
-import { hasPropertyAccessors } from "ember-metal/platform/define_property";
+} from "ngular-metal/path_cache";
+import { hasPropertyAccessors } from "ngular-metal/platform/define_property";
 
 var FIRST_KEY = /^([^\.]+)/;
 
@@ -39,7 +39,7 @@ var FIRST_KEY = /^([^\.]+)/;
   an error.
 
   @method get
-  @for Ember
+  @for Ngular
   @param {Object} obj The object to retrieve from.
   @param {String} keyName The property key to retrieve
   @return {Object} the property value or `null`.
@@ -52,17 +52,17 @@ export function get(obj, keyName) {
 
   if (!keyName && 'string' === typeof obj) {
     keyName = obj;
-    obj = Ember.lookup;
+    obj = Ngular.lookup;
   }
 
-  Ember.assert(`Cannot call get with ${keyName} key.`, !!keyName);
-  Ember.assert(`Cannot call get with '${keyName}' on an undefined object.`, obj !== undefined);
+  Ngular.assert(`Cannot call get with ${keyName} key.`, !!keyName);
+  Ngular.assert(`Cannot call get with '${keyName}' on an undefined object.`, obj !== undefined);
 
   if (!obj) {
     return _getPath(obj, keyName);
   }
 
-  var meta = obj['__ember_meta__'];
+  var meta = obj['__ngular_meta__'];
   var possibleDesc = obj[keyName];
   var desc = (possibleDesc !== null && typeof possibleDesc === 'object' && possibleDesc.isDescriptor) ? possibleDesc : undefined;
   var ret;
@@ -74,7 +74,7 @@ export function get(obj, keyName) {
   if (desc) {
     return desc.get(obj, keyName);
   } else {
-    if (Ember.FEATURES.isEnabled('mandatory-setter')) {
+    if (Ngular.FEATURES.isEnabled('mandatory-setter')) {
       if (hasPropertyAccessors && meta && meta.watching[keyName] > 0) {
         ret = meta.values[keyName];
       } else {
@@ -101,7 +101,7 @@ export function get(obj, keyName) {
 
   @private
   @method normalizeTuple
-  @for Ember
+  @for Ngular
   @param {Object} target The current target. May be `null`.
   @param {String} path A path on the target or a global property path.
   @return {Array} a temporary array with the normalized target/path pair.
@@ -120,7 +120,7 @@ export function normalizeTuple(target, path) {
   }
 
   if (!target || isGlobal) {
-    target = Ember.lookup;
+    target = Ngular.lookup;
   }
 
   if (isGlobal && isPath(path)) {
@@ -138,7 +138,7 @@ export function normalizeTuple(target, path) {
 
 function validateIsPath(path) {
   if (!path || path.length===0) {
-    throw new EmberError(`Object in path ${path} could not be found or was destroyed.`);
+    throw new NgularError(`Object in path ${path} could not be found or was destroyed.`);
   }
 }
 

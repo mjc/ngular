@@ -1,11 +1,11 @@
-import Stream from "ember-metal/streams/stream";
+import Stream from "ngular-metal/streams/stream";
 import {
   read,
   subscribe,
   unsubscribe,
   isStream
-} from "ember-metal/streams/utils";
-import create from "ember-metal/platform/create";
+} from "ngular-metal/streams/utils";
+import create from "ngular-metal/platform/create";
 
 export default function conditional(test, consequent, alternate) {
   if (isStream(test)) {

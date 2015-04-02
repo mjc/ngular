@@ -1,9 +1,9 @@
-import Ember from "ember-metal/core";
-import EmberObject from "ember-runtime/system/object";
-import merge from "ember-metal/merge";
+import Ngular from "ngular-metal/core";
+import NgularObject from "ngular-runtime/system/object";
+import merge from "ngular-metal/merge";
 
-var RouterState = EmberObject.extend({
-  emberRouter: null,
+var RouterState = NgularObject.extend({
+  ngularRouter: null,
   routerJs: null,
   routerJsState: null,
 
@@ -11,13 +11,13 @@ var RouterState = EmberObject.extend({
     var state = this.routerJsState;
     if (!this.routerJs.isActiveIntent(routeName, models, null, state)) { return false; }
 
-    var emptyQueryParams = Ember.isEmpty(Ember.keys(queryParams));
+    var emptyQueryParams = Ngular.isEmpty(Ngular.keys(queryParams));
 
     if (queryParamsMustMatch && !emptyQueryParams) {
       var visibleQueryParams = {};
       merge(visibleQueryParams, queryParams);
 
-      this.emberRouter._prepareQueryParams(routeName, models, visibleQueryParams);
+      this.ngularRouter._prepareQueryParams(routeName, models, visibleQueryParams);
       return shallowEqual(visibleQueryParams, state.queryParams);
     }
 

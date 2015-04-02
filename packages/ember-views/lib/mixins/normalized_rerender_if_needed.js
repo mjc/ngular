@@ -1,15 +1,15 @@
 /**
-@module ember
-@submodule ember-views
+@module ngular
+@submodule ngular-views
 */
 
-import { get } from "ember-metal/property_get";
-import { Mixin } from 'ember-metal/mixin';
-import merge from "ember-metal/merge";
+import { get } from "ngular-metal/property_get";
+import { Mixin } from 'ngular-metal/mixin';
+import merge from "ngular-metal/merge";
 import {
   cloneStates,
   states as viewStates
-} from "ember-views/views/states";
+} from "ngular-views/views/states";
 
 var states = cloneStates(viewStates);
 

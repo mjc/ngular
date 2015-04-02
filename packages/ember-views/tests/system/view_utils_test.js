@@ -1,5 +1,5 @@
-import run from "ember-metal/run_loop";
-import View from "ember-views/views/view";
+import run from "ngular-metal/run_loop";
+import View from "ngular-views/views/view";
 
 var hasGetClientRects, hasGetBoundingClientRect;
 var ClientRectListCtor, ClientRectCtor;
@@ -47,7 +47,7 @@ QUnit.test("getViewClientRects", function() {
 
   run(function() { view.appendTo('#qunit-fixture'); });
 
-  ok(Ember.ViewUtils.getViewClientRects(view) instanceof ClientRectListCtor);
+  ok(Ngular.ViewUtils.getViewClientRects(view) instanceof ClientRectListCtor);
 });
 
 QUnit.test("getViewBoundingClientRect", function() {
@@ -64,5 +64,5 @@ QUnit.test("getViewBoundingClientRect", function() {
 
   run(function() { view.appendTo('#qunit-fixture'); });
 
-  ok(Ember.ViewUtils.getViewBoundingClientRect(view) instanceof ClientRectCtor);
+  ok(Ngular.ViewUtils.getViewBoundingClientRect(view) instanceof ClientRectCtor);
 });

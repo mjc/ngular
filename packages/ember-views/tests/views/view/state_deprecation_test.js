@@ -1,6 +1,6 @@
-import { hasPropertyAccessors } from "ember-metal/platform/define_property";
-import run from "ember-metal/run_loop";
-import EmberView from "ember-views/views/view";
+import { hasPropertyAccessors } from "ngular-metal/platform/define_property";
+import run from "ngular-metal/run_loop";
+import NgularView from "ngular-views/views/view";
 
 var view;
 
@@ -15,7 +15,7 @@ QUnit.module("views/view/state_deprecation", {
 if (hasPropertyAccessors) {
   QUnit.test("view.state should be an alias of view._state with a deprecation", function() {
     expect(2);
-    view = EmberView.create();
+    view = NgularView.create();
 
     expectDeprecation(function() {
       equal(view._state, view.state, '_state and state are aliased');
@@ -24,7 +24,7 @@ if (hasPropertyAccessors) {
 
   QUnit.test("view.states should be an alias of view._states with a deprecation", function() {
     expect(2);
-    view = EmberView.create();
+    view = NgularView.create();
 
     expectDeprecation(function() {
       equal(view._states, view.states, '_states and states are aliased');
@@ -36,7 +36,7 @@ QUnit.test("no deprecation is printed if view.state or view._state is not looked
   expect(2);
   expectNoDeprecation();
 
-  var view = EmberView.create();
+  var view = NgularView.create();
 
   ok(view, 'view was created');
 });

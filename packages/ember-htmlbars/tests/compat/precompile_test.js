@@ -1,10 +1,10 @@
-import EmberHandlebars from "ember-htmlbars/compat";
+import NgularHandlebars from "ngular-htmlbars/compat";
 
-var precompile = EmberHandlebars.precompile;
+var precompile = NgularHandlebars.precompile;
 var template = 'Hello World';
 var result;
 
-QUnit.module("ember-htmlbars: Ember.Handlebars.precompile");
+QUnit.module("ngular-htmlbars: Ngular.Handlebars.precompile");
 
 QUnit.test("precompile creates an object when asObject isn't defined", function() {
   result = precompile(template);

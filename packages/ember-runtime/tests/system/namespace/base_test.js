@@ -1,31 +1,31 @@
-import Ember from "ember-metal/core";
-import run from "ember-metal/run_loop";
-import {get} from "ember-metal/property_get";
-import EmberObject from "ember-runtime/system/object";
-import Namespace from "ember-runtime/system/namespace";
+import Ngular from "ngular-metal/core";
+import run from "ngular-metal/run_loop";
+import {get} from "ngular-metal/property_get";
+import NgularObject from "ngular-runtime/system/object";
+import Namespace from "ngular-runtime/system/namespace";
 
 var originalLookup, lookup;
 
 QUnit.module('Namespace', {
   setup() {
-    originalLookup = Ember.lookup;
-    Ember.BOOTED = false;
+    originalLookup = Ngular.lookup;
+    Ngular.BOOTED = false;
 
-    lookup = Ember.lookup = {};
+    lookup = Ngular.lookup = {};
   },
   teardown() {
-    Ember.BOOTED = false;
+    Ngular.BOOTED = false;
 
     for (var prop in lookup) {
       if (lookup[prop]) { run(lookup[prop], 'destroy'); }
     }
 
-    Ember.lookup = originalLookup;
+    Ngular.lookup = originalLookup;
   }
 });
 
-QUnit.test('Namespace should be a subclass of EmberObject', function() {
-  ok(EmberObject.detect(Namespace));
+QUnit.test('Namespace should be a subclass of NgularObject', function() {
+  ok(NgularObject.detect(Namespace));
 });
 
 QUnit.test("Namespace should be duck typed", function() {
@@ -42,21 +42,21 @@ QUnit.test('Namespace is found and named', function() {
 
 QUnit.test("Classes under an Namespace are properly named", function() {
   var nsA = lookup.NamespaceA = Namespace.create();
-  nsA.Foo = EmberObject.extend();
+  nsA.Foo = NgularObject.extend();
   equal(nsA.Foo.toString(), "NamespaceA.Foo", "Classes pick up their parent namespace");
 
-  nsA.Bar = EmberObject.extend();
+  nsA.Bar = NgularObject.extend();
   equal(nsA.Bar.toString(), "NamespaceA.Bar", "New Classes get the naming treatment too");
 
   var nsB = lookup.NamespaceB = Namespace.create();
-  nsB.Foo = EmberObject.extend();
+  nsB.Foo = NgularObject.extend();
   equal(nsB.Foo.toString(), "NamespaceB.Foo", "Classes in new namespaces get the naming treatment");
 });
 
-//test("Classes under Ember are properly named", function() {
+//test("Classes under Ngular are properly named", function() {
 //  // ES6TODO: This test does not work reliably when running independent package build with Broccoli config.
-//  Ember.TestObject = EmberObject.extend({});
-//  equal(Ember.TestObject.toString(), "Ember.TestObject", "class under Ember is given a string representation");
+//  Ngular.TestObject = NgularObject.extend({});
+//  equal(Ngular.TestObject.toString(), "Ngular.TestObject", "class under Ngular is given a string representation");
 //});
 
 QUnit.test("Lowercase namespaces are no longer supported", function() {
@@ -73,20 +73,20 @@ QUnit.test("A namespace can be assigned a custom name", function() {
     name: "CustomNamespaceB"
   });
 
-  nsA.Foo = EmberObject.extend();
-  nsB.Foo = EmberObject.extend();
+  nsA.Foo = NgularObject.extend();
+  nsB.Foo = NgularObject.extend();
 
   equal(nsA.Foo.toString(), "NamespaceA.Foo", "The namespace's name is used when the namespace is not in the lookup object");
   equal(nsB.Foo.toString(), "CustomNamespaceB.Foo", "The namespace's name is used when the namespace is in the lookup object");
 });
 
 QUnit.test("Calling namespace.nameClasses() eagerly names all classes", function() {
-  Ember.BOOTED = true;
+  Ngular.BOOTED = true;
 
   var namespace = lookup.NS = Namespace.create();
 
-  namespace.ClassA = EmberObject.extend();
-  namespace.ClassB = EmberObject.extend();
+  namespace.ClassA = NgularObject.extend();
+  namespace.ClassB = NgularObject.extend();
 
   Namespace.processAll();
 

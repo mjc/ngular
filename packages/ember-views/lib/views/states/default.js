@@ -1,15 +1,15 @@
-import EmberError from "ember-metal/error";
+import NgularError from "ngular-metal/error";
 
 function K() { return this; }
 
 /**
-@module ember
-@submodule ember-views
+@module ngular
+@submodule ngular-views
 */
 export default {
   // appendChild is only legal while rendering the buffer.
   appendChild() {
-    throw new EmberError("You can't use appendChild outside of the rendering process");
+    throw new NgularError("You can't use appendChild outside of the rendering process");
   },
 
   $() {
@@ -20,7 +20,7 @@ export default {
     return null;
   },
 
-  // Handle events from `Ember.EventDispatcher`
+  // Handle events from `Ngular.EventDispatcher`
   handleEvent() {
     return true; // continue event propagation
   },

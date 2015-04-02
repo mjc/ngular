@@ -1,10 +1,10 @@
-import EmberObject from "ember-runtime/system/object";
+import NgularObject from "ngular-runtime/system/object";
 
 function K() { return this; }
 
 /**
- @module ember
- @submodule ember-testing
+ @module ngular
+ @submodule ngular-testing
 */
 
 /**
@@ -12,9 +12,9 @@ function K() { return this; }
   by an adapter for various test frameworks.
 
   @class Adapter
-  @namespace Ember.Test
+  @namespace Ngular.Test
 */
-var Adapter = EmberObject.extend({
+var Adapter = NgularObject.extend({
   /**
     This callback will be called whenever an async operation is about to start.
 

@@ -1,13 +1,13 @@
 /**
-@module ember
-@submodule ember-views
+@module ngular
+@submodule ngular-views
 */
-import Ember from "ember-metal/core";
-import { computed  } from "ember-metal/computed";
-import environment from "ember-metal/environment";
-import create from "ember-metal/platform/create";
-import Component from "ember-views/views/component";
-import TextSupport from "ember-views/mixins/text_support";
+import Ngular from "ngular-metal/core";
+import { computed  } from "ngular-metal/computed";
+import environment from "ngular-metal/environment";
+import create from "ngular-metal/platform/create";
+import Component from "ngular-views/views/component";
+import TextSupport from "ngular-views/mixins/text_support";
 
 var inputTypeTestElement;
 var inputTypes = create(null);
@@ -36,7 +36,7 @@ function canSetTypeOfInput(type) {
 }
 
 function getTypeComputed() {
-  if (Ember.FEATURES.isEnabled('new-computed-syntax')) {
+  if (Ngular.FEATURES.isEnabled('new-computed-syntax')) {
     return computed({
       get: function() {
         return 'text';
@@ -70,23 +70,23 @@ function getTypeComputed() {
   The internal class used to create text inputs when the `{{input}}`
   helper is used with `type` of `text`.
 
-  See [Handlebars.helpers.input](/api/classes/Ember.Handlebars.helpers.html#method_input)  for usage details.
+  See [Handlebars.helpers.input](/api/classes/Ngular.Handlebars.helpers.html#method_input)  for usage details.
 
   ## Layout and LayoutName properties
 
   Because HTML `input` elements are self closing `layout` and `layoutName`
-  properties will not be applied. See [Ember.View](/api/classes/Ember.View.html)'s
+  properties will not be applied. See [Ngular.View](/api/classes/Ngular.View.html)'s
   layout section for more information.
 
   @class TextField
-  @namespace Ember
-  @extends Ember.Component
-  @uses Ember.TextSupport
+  @namespace Ngular
+  @extends Ngular.Component
+  @uses Ngular.TextSupport
 */
 export default Component.extend(TextSupport, {
   instrumentDisplay: '{{input type="text"}}',
 
-  classNames: ['ember-text-field'],
+  classNames: ['ngular-text-field'],
   tagName: "input",
   attributeBindings: [
     'accept',

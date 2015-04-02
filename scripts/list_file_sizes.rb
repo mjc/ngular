@@ -1,5 +1,5 @@
-files = Dir["packages/ember-*/lib/**/*.js"] - Dir["packages/ember-runtime/**/*.js"]
-files = Dir["packages/ember-{metal,views,handlebars}/lib/**/*.js"]
+files = Dir["packages/ngular-*/lib/**/*.js"] - Dir["packages/ngular-runtime/**/*.js"]
+files = Dir["packages/ngular-{metal,views,handlebars}/lib/**/*.js"]
 
 def uglify(string)
   IO.popen("uglifyjs", "r+") do |io|

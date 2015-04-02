@@ -1,14 +1,14 @@
 /**
-@module ember
-@submodule ember-runtime
+@module ngular
+@submodule ngular-runtime
 */
 
 
-import { get } from "ember-metal/property_get";
-import { Mixin } from "ember-metal/mixin";
-import { Freezable } from "ember-runtime/mixins/freezable";
-import { fmt } from "ember-runtime/system/string";
-import EmberError from 'ember-metal/error';
+import { get } from "ngular-metal/property_get";
+import { Mixin } from "ngular-metal/mixin";
+import { Freezable } from "ngular-runtime/mixins/freezable";
+import { fmt } from "ngular-runtime/system/string";
+import NgularError from 'ngular-metal/error';
 
 
 /**
@@ -20,11 +20,11 @@ import EmberError from 'ember-metal/error';
   receiver.
 
   Note that `frozenCopy()` will only work if you also implement
-  `Ember.Freezable`.
+  `Ngular.Freezable`.
 
   @class Copyable
-  @namespace Ember
-  @since Ember 0.9
+  @namespace Ngular
+  @since Ngular 0.9
 */
 export default Mixin.create({
   /**
@@ -40,7 +40,7 @@ export default Mixin.create({
   copy: null,
 
   /**
-    If the object implements `Ember.Freezable`, then this will return a new
+    If the object implements `Ngular.Freezable`, then this will return a new
     copy if the object is not frozen and the receiver if the object is frozen.
 
     Raises an exception if you try to call this method on a object that does
@@ -57,7 +57,7 @@ export default Mixin.create({
     if (Freezable && Freezable.detect(this)) {
       return get(this, 'isFrozen') ? this : this.copy().freeze();
     } else {
-      throw new EmberError(fmt("%@ does not support freezing", [this]));
+      throw new NgularError(fmt("%@ does not support freezing", [this]));
     }
   }
 });

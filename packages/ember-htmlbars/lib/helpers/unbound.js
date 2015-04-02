@@ -1,11 +1,11 @@
-import EmberError from "ember-metal/error";
-import { IS_BINDING } from "ember-metal/mixin";
-import { read } from "ember-metal/streams/utils";
-import lookupHelper from "ember-htmlbars/system/lookup-helper";
+import NgularError from "ngular-metal/error";
+import { IS_BINDING } from "ngular-metal/mixin";
+import { read } from "ngular-metal/streams/utils";
+import lookupHelper from "ngular-htmlbars/system/lookup-helper";
 
 /**
-@module ember
-@submodule ember-htmlbars
+@module ngular
+@submodule ngular-htmlbars
 */
 
 /**
@@ -24,12 +24,12 @@ import lookupHelper from "ember-htmlbars/system/lookup-helper";
   ```
 
   @method unbound
-  @for Ember.Handlebars.helpers
+  @for Ngular.Handlebars.helpers
   @param {String} property
   @return {String} HTML string
 */
 export function unboundHelper(params, hash, options, env) {
-  Ember.assert(
+  Ngular.assert(
     "The `unbound` helper expects at least one argument, " +
     "e.g. `{{unbound user.name}}`.",
     params.length > 0
@@ -45,7 +45,7 @@ export function unboundHelper(params, hash, options, env) {
     var helper = lookupHelper(helperName, view, env);
 
     if (!helper) {
-      throw new EmberError('HTMLBars error: Could not find component or helper named ' + helperName + '.');
+      throw new NgularError('HTMLBars error: Could not find component or helper named ' + helperName + '.');
     }
 
     return helper.helperFunction.call(this, readParams(params), readHash(hash, view), options, env);

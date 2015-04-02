@@ -1,33 +1,33 @@
-import EmberObject from "ember-runtime/system/object";
-import run from "ember-metal/run_loop";
-import EmberView from "ember-views/views/view";
-import jQuery from "ember-views/system/jquery";
+import NgularObject from "ngular-runtime/system/object";
+import run from "ngular-metal/run_loop";
+import NgularView from "ngular-views/views/view";
+import jQuery from "ngular-views/system/jquery";
 var trim = jQuery.trim;
-import { Registry } from "ember-runtime/system/container";
-import compile from "ember-template-compiler/system/compile";
-import { runAppend, runDestroy } from "ember-runtime/tests/utils";
+import { Registry } from "ngular-runtime/system/container";
+import compile from "ngular-template-compiler/system/compile";
+import { runAppend, runDestroy } from "ngular-runtime/tests/utils";
 
 var MyApp, lookup, view, registry, container;
-var originalLookup = Ember.lookup;
+var originalLookup = Ngular.lookup;
 
 QUnit.module("Support for {{partial}} helper", {
   setup() {
-    Ember.lookup = lookup = { Ember: Ember };
-    MyApp = lookup.MyApp = EmberObject.create({});
+    Ngular.lookup = lookup = { Ngular: Ngular };
+    MyApp = lookup.MyApp = NgularObject.create({});
     registry = new Registry();
     container = registry.container();
     registry.optionsForType('template', { instantiate: false });
   },
   teardown() {
     runDestroy(view);
-    Ember.lookup = originalLookup;
+    Ngular.lookup = originalLookup;
   }
 });
 
 QUnit.test("should render other templates registered with the container", function() {
   registry.register('template:_subTemplateFromContainer', compile('sub-template'));
 
-  view = EmberView.create({
+  view = NgularView.create({
     container: container,
     template: compile('This {{partial "subTemplateFromContainer"}} is pretty great.')
   });
@@ -40,7 +40,7 @@ QUnit.test("should render other templates registered with the container", functi
 QUnit.test("should render other slash-separated templates registered with the container", function() {
   registry.register('template:child/_subTemplateFromContainer', compile("sub-template"));
 
-  view = EmberView.create({
+  view = NgularView.create({
     container: container,
     template: compile('This {{partial "child/subTemplateFromContainer"}} is pretty great.')
   });
@@ -53,11 +53,11 @@ QUnit.test("should render other slash-separated templates registered with the co
 QUnit.test("should use the current view's context", function() {
   registry.register('template:_person_name', compile("{{firstName}} {{lastName}}"));
 
-  view = EmberView.create({
+  view = NgularView.create({
     container: container,
     template: compile('Who is {{partial "person_name"}}?')
   });
-  view.set('controller', EmberObject.create({
+  view.set('controller', NgularObject.create({
     firstName: 'Kris',
     lastName: 'Selden'
   }));
@@ -71,7 +71,7 @@ QUnit.test("Quoteless parameters passed to {{template}} perform a bound property
   registry.register('template:_subTemplate', compile("sub-template"));
   registry.register('template:_otherTemplate', compile("other-template"));
 
-  view = EmberView.create({
+  view = NgularView.create({
     container: container,
     template: compile('This {{partial view.partialName}} is pretty {{partial nonexistent}}great.'),
     partialName: 'subTemplate'

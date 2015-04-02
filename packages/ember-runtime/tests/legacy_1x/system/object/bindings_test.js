@@ -1,9 +1,9 @@
-import Ember from "ember-metal/core";
-import {get} from 'ember-metal/property_get';
-import {set} from 'ember-metal/property_set';
-import run from "ember-metal/run_loop";
-import {destroy} from "ember-metal/watching";
-import EmberObject from 'ember-runtime/system/object';
+import Ngular from "ngular-metal/core";
+import {get} from 'ngular-metal/property_get';
+import {set} from 'ngular-metal/property_set';
+import run from "ngular-metal/run_loop";
+import {destroy} from "ngular-metal/watching";
+import NgularObject from 'ngular-runtime/system/object';
 
 /*
   NOTE: This test is adapted from the 1.x series of unit tests.  The tests
@@ -12,14 +12,14 @@ import EmberObject from 'ember-runtime/system/object';
 
   CHANGES FROM 1.6:
 
-  * changed Ember.Bending.flushPendingChanges() -> run.sync();
-  * changes obj.set() and obj.get() to Ember.set() and Ember.get()
+  * changed Ngular.Bending.flushPendingChanges() -> run.sync();
+  * changes obj.set() and obj.get() to Ngular.set() and Ngular.get()
   * Fixed an actual bug in unit tests around line 133
   * fixed 'bindings should disconnect on destroy' test to use destroy.
 */
 
 // ========================================================================
-// EmberObject bindings Tests
+// NgularObject bindings Tests
 // ========================================================================
 
 var testObject, fromObject, extraObject, TestObject;
@@ -28,21 +28,21 @@ var TestNamespace, originalLookup, lookup;
 var bindModuleOpts = {
 
   setup() {
-    originalLookup = Ember.lookup;
-    Ember.lookup = lookup = {};
+    originalLookup = Ngular.lookup;
+    Ngular.lookup = lookup = {};
 
-    testObject = EmberObject.create({
+    testObject = NgularObject.create({
       foo: "bar",
       bar: "foo",
       extraObject: null
     });
 
-    fromObject = EmberObject.create({
+    fromObject = NgularObject.create({
       bar: "foo",
       extraObject: null
     });
 
-    extraObject = EmberObject.create({
+    extraObject = NgularObject.create({
       foo: "extraObjectValue"
     });
 
@@ -54,7 +54,7 @@ var bindModuleOpts = {
 
   teardown() {
     testObject = fromObject = extraObject = null;
-    Ember.lookup = originalLookup;
+    Ngular.lookup = originalLookup;
   }
 
 };
@@ -88,21 +88,21 @@ QUnit.test("bind(.bar) should bind to relative path", function() {
 var fooBindingModuleOpts = {
 
   setup() {
-    originalLookup = Ember.lookup;
-    Ember.lookup = lookup = {};
+    originalLookup = Ngular.lookup;
+    Ngular.lookup = lookup = {};
 
-    TestObject = EmberObject.extend({
+    TestObject = NgularObject.extend({
       foo: "bar",
       bar: "foo",
       extraObject: null
     });
 
-    fromObject = EmberObject.create({
+    fromObject = NgularObject.create({
       bar: "foo",
       extraObject: null
     });
 
-    extraObject = EmberObject.create({
+    extraObject = NgularObject.create({
       foo: "extraObjectValue"
     });
 
@@ -113,7 +113,7 @@ var fooBindingModuleOpts = {
   },
 
   teardown() {
-    Ember.lookup = originalLookup;
+    Ngular.lookup = originalLookup;
     TestObject = fromObject = extraObject = null;
     //  delete TestNamespace;
   }

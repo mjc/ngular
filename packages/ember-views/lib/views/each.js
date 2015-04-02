@@ -1,24 +1,24 @@
-import Ember from "ember-metal/core";
-import { fmt } from "ember-runtime/system/string";
-import { get } from "ember-metal/property_get";
-import { set } from "ember-metal/property_set";
-import CollectionView from "ember-views/views/collection_view";
-import { Binding } from "ember-metal/binding";
-import ControllerMixin from "ember-runtime/mixins/controller";
-import ArrayController from "ember-runtime/controllers/array_controller";
-import EmberArray from "ember-runtime/mixins/array";
+import Ngular from "ngular-metal/core";
+import { fmt } from "ngular-runtime/system/string";
+import { get } from "ngular-metal/property_get";
+import { set } from "ngular-metal/property_set";
+import CollectionView from "ngular-views/views/collection_view";
+import { Binding } from "ngular-metal/binding";
+import ControllerMixin from "ngular-runtime/mixins/controller";
+import ArrayController from "ngular-runtime/controllers/array_controller";
+import NgularArray from "ngular-runtime/mixins/array";
 
 import {
   addObserver,
   removeObserver,
   addBeforeObserver,
   removeBeforeObserver
-} from "ember-metal/observer";
+} from "ngular-metal/observer";
 
-import _MetamorphView from "ember-views/views/metamorph_view";
+import _MetamorphView from "ngular-views/views/metamorph_view";
 import {
   _Metamorph
-} from "ember-views/views/metamorph_view";
+} from "ngular-views/views/metamorph_view";
 
 export default CollectionView.extend(_Metamorph, {
 
@@ -53,17 +53,17 @@ export default CollectionView.extend(_Metamorph, {
   },
 
   _assertArrayLike(content) {
-    Ember.assert(fmt("The value that #each loops over must be an Array. You " +
+    Ngular.assert(fmt("The value that #each loops over must be an Array. You " +
                      "passed %@, but it should have been an ArrayController",
                      [content.constructor]),
                      !ControllerMixin.detect(content) ||
                        (content && content.isGenerated) ||
                        content instanceof ArrayController);
-    Ember.assert(fmt("The value that #each loops over must be an Array. You passed %@",
+    Ngular.assert(fmt("The value that #each loops over must be an Array. You passed %@",
                      [(ControllerMixin.detect(content) &&
                        content.get('model') !== undefined) ?
                        fmt("'%@' (wrapped in %@)", [content.get('model'), content]) : content]),
-                     EmberArray.detect(content));
+                     NgularArray.detect(content));
   },
 
   disableContentObservers(callback) {

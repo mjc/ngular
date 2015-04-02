@@ -1,10 +1,10 @@
-import create from "ember-metal/platform/create";
-import merge from "ember-metal/merge";
-import run from "ember-metal/run_loop";
-import Stream from "ember-metal/streams/stream";
+import create from "ngular-metal/platform/create";
+import merge from "ngular-metal/merge";
+import run from "ngular-metal/run_loop";
+import Stream from "ngular-metal/streams/stream";
 
 function StreamBinding(stream) {
-  Ember.assert("StreamBinding error: tried to bind to object that is not a stream", stream && stream.isStream);
+  Ngular.assert("StreamBinding error: tried to bind to object that is not a stream", stream && stream.isStream);
 
   this.init();
   this.stream = stream;

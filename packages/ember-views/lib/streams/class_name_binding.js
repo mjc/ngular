@@ -1,12 +1,12 @@
 import {
   chain,
   read
-} from "ember-metal/streams/utils";
-import { get } from "ember-metal/property_get";
-import { dasherize } from "ember-runtime/system/string";
+} from "ngular-metal/streams/utils";
+import { get } from "ngular-metal/property_get";
+import { dasherize } from "ngular-runtime/system/string";
 import {
   isArray
-} from "ember-metal/utils";
+} from "ngular-metal/utils";
 
 /**
   Parse a path and return an object which holds the parsed properties.
@@ -119,7 +119,7 @@ export function classStringForValue(path, val, className, falsyClassName) {
 
 export function streamifyClassNameBinding(view, classNameBinding, prefix) {
   prefix = prefix || '';
-  Ember.assert("classNameBindings must not have spaces in them. Multiple class name bindings can be provided as elements of an array, e.g. ['foo', ':bar']", classNameBinding.indexOf(' ') === -1);
+  Ngular.assert("classNameBindings must not have spaces in them. Multiple class name bindings can be provided as elements of an array, e.g. ['foo', ':bar']", classNameBinding.indexOf(' ') === -1);
   var parsedPath = parsePropertyPath(classNameBinding);
   if (parsedPath.path === '') {
     return classStringForValue(

@@ -1,6 +1,6 @@
-import EmberView from "ember-views/views/view";
-import run from "ember-metal/run_loop";
-import compile from "ember-template-compiler/system/compile";
+import NgularView from "ngular-views/views/view";
+import run from "ngular-metal/run_loop";
+import compile from "ngular-template-compiler/system/compile";
 import { equalInnerHTML } from "htmlbars-test-helpers";
 
 var view;
@@ -10,9 +10,9 @@ function appendView(view) {
 }
 
 // jscs:disable validateIndentation
-if (Ember.FEATURES.isEnabled('ember-htmlbars-attribute-syntax')) {
+if (Ngular.FEATURES.isEnabled('ngular-htmlbars-attribute-syntax')) {
 
-QUnit.module("ember-htmlbars: boolean attribute", {
+QUnit.module("ngular-htmlbars: boolean attribute", {
   teardown() {
     if (view) {
       run(view, view.destroy);
@@ -21,7 +21,7 @@ QUnit.module("ember-htmlbars: boolean attribute", {
 });
 
 QUnit.test("disabled property can be set true", function() {
-  view = EmberView.create({
+  view = NgularView.create({
     context: { isDisabled: true },
     template: compile("<input disabled={{isDisabled}}>")
   });
@@ -33,7 +33,7 @@ QUnit.test("disabled property can be set true", function() {
 });
 
 QUnit.test("disabled property can be set false with a blank string", function() {
-  view = EmberView.create({
+  view = NgularView.create({
     context: { isDisabled: '' },
     template: compile("<input disabled={{isDisabled}}>")
   });
@@ -45,7 +45,7 @@ QUnit.test("disabled property can be set false with a blank string", function() 
 });
 
 QUnit.test("disabled property can be set false", function() {
-  view = EmberView.create({
+  view = NgularView.create({
     context: { isDisabled: false },
     template: compile("<input disabled={{isDisabled}}>")
   });
@@ -58,7 +58,7 @@ QUnit.test("disabled property can be set false", function() {
 });
 
 QUnit.test("disabled property can be set true with a string", function() {
-  view = EmberView.create({
+  view = NgularView.create({
     context: { isDisabled: "oh, no a string" },
     template: compile("<input disabled={{isDisabled}}>")
   });
@@ -70,7 +70,7 @@ QUnit.test("disabled property can be set true with a string", function() {
 });
 
 QUnit.test("disabled attribute turns a value to a string", function() {
-  view = EmberView.create({
+  view = NgularView.create({
     context: { isDisabled: false },
     template: compile("<input disabled='{{isDisabled}}'>")
   });
@@ -82,7 +82,7 @@ QUnit.test("disabled attribute turns a value to a string", function() {
 });
 
 QUnit.test("disabled attribute preserves a blank string value", function() {
-  view = EmberView.create({
+  view = NgularView.create({
     context: { isDisabled: '' },
     template: compile("<input disabled='{{isDisabled}}'>")
   });

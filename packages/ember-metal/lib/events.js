@@ -4,16 +4,16 @@
 "REMOVE_USE_STRICT: true";
 
 /**
-@module ember-metal
+@module ngular-metal
 */
-import Ember from "ember-metal/core";
+import Ngular from "ngular-metal/core";
 import {
   meta as metaFor,
   tryFinally,
   apply,
   applyStr
-} from "ember-metal/utils";
-import create from "ember-metal/platform/create";
+} from "ngular-metal/utils";
+import create from "ngular-metal/platform/create";
 
 /* listener flags */
 var ONCE = 1;
@@ -81,7 +81,7 @@ function actionsFor(obj, eventName) {
 }
 
 export function accumulateListeners(obj, eventName, otherActions) {
-  var meta = obj['__ember_meta__'];
+  var meta = obj['__ngular_meta__'];
   var actions = meta && meta.listeners && meta.listeners[eventName];
 
   if (!actions) { return; }
@@ -107,7 +107,7 @@ export function accumulateListeners(obj, eventName, otherActions) {
   Add an event listener
 
   @method addListener
-  @for Ember
+  @for Ngular
   @param obj
   @param {String} eventName
   @param {Object|Function} target A target object or a function
@@ -115,7 +115,7 @@ export function accumulateListeners(obj, eventName, otherActions) {
   @param {Boolean} once A flag whether a function should only be called once
 */
 export function addListener(obj, eventName, target, method, once) {
-  Ember.assert("You must pass at least an object and event name to Ember.addListener", !!obj && !!eventName);
+  Ngular.assert("You must pass at least an object and event name to Ngular.addListener", !!obj && !!eventName);
 
   if (!method && 'function' === typeof target) {
     method = target;
@@ -144,17 +144,17 @@ export function addListener(obj, eventName, target, method, once) {
 /**
   Remove an event listener
 
-  Arguments should match those passed to `Ember.addListener`.
+  Arguments should match those passed to `Ngular.addListener`.
 
   @method removeListener
-  @for Ember
+  @for Ngular
   @param obj
   @param {String} eventName
   @param {Object|Function} target A target object or a function
   @param {Function|String} method A function or the name of a function to be called on `target`
 */
 function removeListener(obj, eventName, target, method) {
-  Ember.assert("You must pass at least an object and event name to Ember.removeListener", !!obj && !!eventName);
+  Ngular.assert("You must pass at least an object and event name to Ngular.removeListener", !!obj && !!eventName);
 
   if (!method && 'function' === typeof target) {
     method = target;
@@ -178,7 +178,7 @@ function removeListener(obj, eventName, target, method) {
   if (method) {
     _removeListener(target, method);
   } else {
-    var meta = obj['__ember_meta__'];
+    var meta = obj['__ngular_meta__'];
     var actions = meta && meta.listeners && meta.listeners[eventName];
 
     if (!actions) { return; }
@@ -197,7 +197,7 @@ function removeListener(obj, eventName, target, method) {
   setting that property.
 
   @method suspendListener
-  @for Ember
+  @for Ngular
 
   @private
   @param obj
@@ -229,7 +229,7 @@ export function suspendListener(obj, eventName, target, method, callback) {
   Suspends multiple listeners during a callback.
 
   @method suspendListeners
-  @for Ember
+  @for Ngular
 
   @private
   @param obj
@@ -277,11 +277,11 @@ export function suspendListeners(obj, eventNames, target, method, callback) {
 
   @private
   @method watchedEvents
-  @for Ember
+  @for Ngular
   @param obj
 */
 export function watchedEvents(obj) {
-  var listeners = obj['__ember_meta__'].listeners;
+  var listeners = obj['__ngular_meta__'].listeners;
   var ret = [];
 
   if (listeners) {
@@ -302,7 +302,7 @@ export function watchedEvents(obj) {
   is not passed, the actions stored on the passed object are invoked.
 
   @method sendEvent
-  @for Ember
+  @for Ngular
   @param obj
   @param {String} eventName
   @param {Array} params Optional parameters for each listener.
@@ -311,12 +311,12 @@ export function watchedEvents(obj) {
 */
 export function sendEvent(obj, eventName, params, actions) {
   // first give object a chance to handle it
-  if (obj !== Ember && 'function' === typeof obj.sendEvent) {
+  if (obj !== Ngular && 'function' === typeof obj.sendEvent) {
     obj.sendEvent(eventName, params);
   }
 
   if (!actions) {
-    var meta = obj['__ember_meta__'];
+    var meta = obj['__ngular_meta__'];
     actions = meta && meta.listeners && meta.listeners[eventName];
   }
 
@@ -351,12 +351,12 @@ export function sendEvent(obj, eventName, params, actions) {
 /**
   @private
   @method hasListeners
-  @for Ember
+  @for Ngular
   @param obj
   @param {String} eventName
 */
 export function hasListeners(obj, eventName) {
-  var meta = obj['__ember_meta__'];
+  var meta = obj['__ngular_meta__'];
   var actions = meta && meta.listeners && meta.listeners[eventName];
 
   return !!(actions && actions.length);
@@ -365,13 +365,13 @@ export function hasListeners(obj, eventName) {
 /**
   @private
   @method listenersFor
-  @for Ember
+  @for Ngular
   @param obj
   @param {String} eventName
 */
 export function listenersFor(obj, eventName) {
   var ret = [];
-  var meta = obj['__ember_meta__'];
+  var meta = obj['__ngular_meta__'];
   var actions = meta && meta.listeners && meta.listeners[eventName];
 
   if (!actions) { return ret; }
@@ -391,19 +391,19 @@ export function listenersFor(obj, eventName) {
 
 
   ``` javascript
-  var Job = Ember.Object.extend({
-    logCompleted: Ember.on('completed', function() {
+  var Job = Ngular.Object.extend({
+    logCompleted: Ngular.on('completed', function() {
       console.log('Job completed!');
     })
   });
 
   var job = Job.create();
 
-  Ember.sendEvent(job, 'completed'); // Logs 'Job completed!'
+  Ngular.sendEvent(job, 'completed'); // Logs 'Job completed!'
  ```
 
   @method on
-  @for Ember
+  @for Ngular
   @param {String} eventNames*
   @param {Function} func
   @return func
@@ -411,7 +411,7 @@ export function listenersFor(obj, eventName) {
 export function on(...args) {
   var func = args.pop();
   var events = args;
-  func.__ember_listens__ = events;
+  func.__ngular_listens__ = events;
   return func;
 }
 

@@ -1,14 +1,14 @@
 /**
-@module ember
-@submodule ember-views
+@module ngular
+@submodule ngular-views
 */
-import Ember from 'ember-metal/core';
-import { Mixin } from "ember-metal/mixin";
-import { get } from "ember-metal/property_get";
+import Ngular from 'ngular-metal/core';
+import { Mixin } from "ngular-metal/mixin";
+import { get } from "ngular-metal/property_get";
 
 /**
   @class LegacyViewSupport
-  @namespace Ember
+  @namespace Ngular
 */
 var LegacyViewSupport = Mixin.create({
   beforeRender(buffer) {},
@@ -32,7 +32,7 @@ var LegacyViewSupport = Mixin.create({
     Removes all children from the `parentView`.
 
     @method removeAllChildren
-    @return {Ember.View} receiver
+    @return {Ngular.View} receiver
   */
   removeAllChildren() {
     return this.mutateChildViews(function(parentView, view) {
@@ -51,12 +51,12 @@ var LegacyViewSupport = Mixin.create({
     `klass`.
 
     @method nearestChildOf
-    @param {Class} klass Subclass of Ember.View (or Ember.View itself)
-    @return Ember.View
+    @param {Class} klass Subclass of Ngular.View (or Ngular.View itself)
+    @return Ngular.View
     @deprecated
   */
   nearestChildOf(klass) {
-    Ember.deprecate("nearestChildOf has been deprecated.");
+    Ngular.deprecate("nearestChildOf has been deprecated.");
 
     var view = get(this, 'parentView');
 
@@ -71,12 +71,12 @@ var LegacyViewSupport = Mixin.create({
     class.
 
     @method nearestInstanceOf
-    @param {Class} klass Subclass of Ember.View (or Ember.View itself)
-    @return Ember.View
+    @param {Class} klass Subclass of Ngular.View (or Ngular.View itself)
+    @return Ngular.View
     @deprecated
   */
   nearestInstanceOf(klass) {
-    Ember.deprecate("nearestInstanceOf is deprecated and will be removed from future releases. Use nearestOfType.");
+    Ngular.deprecate("nearestInstanceOf is deprecated and will be removed from future releases. Use nearestOfType.");
     var view = get(this, 'parentView');
 
     while (view) {

@@ -1,16 +1,16 @@
-import { computed } from "ember-metal/computed";
-import { get as emberGet } from "ember-metal/property_get";
-import { observer } from "ember-metal/mixin";
-import { testWithDefault } from "ember-metal/tests/props_helper";
-import EmberObject from "ember-runtime/system/object";
+import { computed } from "ngular-metal/computed";
+import { get as ngularGet } from "ngular-metal/property_get";
+import { observer } from "ngular-metal/mixin";
+import { testWithDefault } from "ngular-metal/tests/props_helper";
+import NgularObject from "ngular-runtime/system/object";
 
 function K() { return this; }
 
-QUnit.module('EmberObject computed property');
+QUnit.module('NgularObject computed property');
 
 testWithDefault('computed property on instance', function(get, set) {
 
-  var MyClass = EmberObject.extend({
+  var MyClass = NgularObject.extend({
     foo: computed(function() { return 'FOO'; })
   });
 
@@ -21,7 +21,7 @@ testWithDefault('computed property on instance', function(get, set) {
 
 testWithDefault('computed property on subclass', function(get, set) {
 
-  var MyClass = EmberObject.extend({
+  var MyClass = NgularObject.extend({
     foo: computed(function() { return 'FOO'; })
   });
 
@@ -36,7 +36,7 @@ testWithDefault('computed property on subclass', function(get, set) {
 
 testWithDefault('replacing computed property with regular val', function(get, set) {
 
-  var MyClass = EmberObject.extend({
+  var MyClass = NgularObject.extend({
     foo: computed(function() { return 'FOO'; })
   });
 
@@ -50,7 +50,7 @@ testWithDefault('replacing computed property with regular val', function(get, se
 
 testWithDefault('complex depndent keys', function(get, set) {
 
-  var MyClass = EmberObject.extend({
+  var MyClass = NgularObject.extend({
 
     init() {
       this._super.apply(this, arguments);
@@ -61,7 +61,7 @@ testWithDefault('complex depndent keys', function(get, set) {
 
     foo: computed(function() {
       set(this, 'count', get(this, 'count')+1);
-      return emberGet(get(this, 'bar'), 'baz') + ' ' + get(this, 'count');
+      return ngularGet(get(this, 'bar'), 'baz') + ' ' + get(this, 'count');
     }).property('bar.baz')
 
   });
@@ -89,7 +89,7 @@ testWithDefault('complex depndent keys', function(get, set) {
 
 testWithDefault('complex dependent keys changing complex dependent keys', function(get, set) {
 
-  var MyClass = EmberObject.extend({
+  var MyClass = NgularObject.extend({
 
     init() {
       this._super.apply(this, arguments);
@@ -100,7 +100,7 @@ testWithDefault('complex dependent keys changing complex dependent keys', functi
 
     foo: computed(function() {
       set(this, 'count', get(this, 'count')+1);
-      return emberGet(get(this, 'bar'), 'baz') + ' ' + get(this, 'count');
+      return ngularGet(get(this, 'bar'), 'baz') + ' ' + get(this, 'count');
     }).property('bar.baz')
 
   });
@@ -116,7 +116,7 @@ testWithDefault('complex dependent keys changing complex dependent keys', functi
 
     foo: computed(function() {
       set(this, 'count', get(this, 'count')+1);
-      return emberGet(get(this, 'bar2'), 'baz') + ' ' + get(this, 'count');
+      return ngularGet(get(this, 'bar2'), 'baz') + ' ' + get(this, 'count');
     }).property('bar2.baz')
   });
 
@@ -132,14 +132,14 @@ testWithDefault('complex dependent keys changing complex dependent keys', functi
 });
 
 QUnit.test("can retrieve metadata for a computed property", function() {
-  var MyClass = EmberObject.extend({
+  var MyClass = NgularObject.extend({
     computedProperty: computed(function() {
     }).meta({ key: 'keyValue' })
   });
 
-  equal(emberGet(MyClass.metaForProperty('computedProperty'), 'key'), 'keyValue', "metadata saved on the computed property can be retrieved");
+  equal(ngularGet(MyClass.metaForProperty('computedProperty'), 'key'), 'keyValue', "metadata saved on the computed property can be retrieved");
 
-  var ClassWithNoMetadata = EmberObject.extend({
+  var ClassWithNoMetadata = NgularObject.extend({
     computedProperty: computed(function() {
     }).volatile(),
 
@@ -158,7 +158,7 @@ QUnit.test("can retrieve metadata for a computed property", function() {
 });
 
 QUnit.test("can iterate over a list of computed properties for a class", function() {
-  var MyClass = EmberObject.extend({
+  var MyClass = NgularObject.extend({
     foo: computed(function() {
 
     }),
@@ -208,7 +208,7 @@ QUnit.test("can iterate over a list of computed properties for a class", functio
 });
 
 QUnit.test("list of properties updates when an additional property is added (such cache busting)", function() {
-  var MyClass = EmberObject.extend({
+  var MyClass = NgularObject.extend({
     foo: computed(K),
 
     fooDidChange: observer('foo', function() {

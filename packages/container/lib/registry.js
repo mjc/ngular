@@ -1,11 +1,11 @@
-import Ember from 'ember-metal/core'; // Ember.assert
-import dictionary from 'ember-metal/dictionary';
+import Ngular from 'ngular-metal/core'; // Ngular.assert
+import dictionary from 'ngular-metal/dictionary';
 import Container from './container';
 
 var VALID_FULL_NAME_REGEXP = /^[^:]+.+:[^:]+$/;
 
 var instanceInitializersFeatureEnabled;
-if (Ember.FEATURES.isEnabled('ember-application-instance-initializers')) {
+if (Ngular.FEATURES.isEnabled('ngular-application-instance-initializers')) {
   instanceInitializersFeatureEnabled = true;
 }
 
@@ -131,7 +131,7 @@ Registry.prototype = {
    The first container created for this registry.
 
    This allows deprecated access to `lookup` and `lookupFactory` to avoid
-   breaking compatibility for Ember 1.x initializers.
+   breaking compatibility for Ngular 1.x initializers.
 
    @private
    @property _defaultContainer
@@ -158,7 +158,7 @@ Registry.prototype = {
   /**
    Register the first container created for a registery to allow deprecated
    access to its `lookup` and `lookupFactory` methods to avoid breaking
-   compatibility for Ember 1.x initializers.
+   compatibility for Ngular 1.x initializers.
 
    2.0TODO: Remove this method. The bookkeeping is only needed to support
             deprecated behavior.
@@ -175,20 +175,20 @@ Registry.prototype = {
   },
 
   lookup(fullName, options) {
-    Ember.assert('Create a container on the registry (with `registry.container()`) before calling `lookup`.', this._defaultContainer);
+    Ngular.assert('Create a container on the registry (with `registry.container()`) before calling `lookup`.', this._defaultContainer);
 
     if (instanceInitializersFeatureEnabled) {
-      Ember.deprecate('`lookup` was called on a Registry. The `initializer` API no longer receives a container, and you should use an `instanceInitializer` to look up objects from the container.', { url: "http://emberjs.com/guides/deprecations#toc_deprecate-access-to-instances-in-initializers" });
+      Ngular.deprecate('`lookup` was called on a Registry. The `initializer` API no longer receives a container, and you should use an `instanceInitializer` to look up objects from the container.', { url: "http://github.com/mjc/ngular/guides/deprecations#toc_deprecate-access-to-instances-in-initializers" });
     }
 
     return this._defaultContainer.lookup(fullName, options);
   },
 
   lookupFactory(fullName) {
-    Ember.assert('Create a container on the registry (with `registry.container()`) before calling `lookupFactory`.', this._defaultContainer);
+    Ngular.assert('Create a container on the registry (with `registry.container()`) before calling `lookupFactory`.', this._defaultContainer);
 
     if (instanceInitializersFeatureEnabled) {
-      Ember.deprecate('`lookupFactory` was called on a Registry. The `initializer` API no longer receives a container, and you should use an `instanceInitializer` to look up objects from the container.', { url: "http://emberjs.com/guides/deprecations#toc_deprecate-access-to-instances-in-initializers" });
+      Ngular.deprecate('`lookupFactory` was called on a Registry. The `initializer` API no longer receives a container, and you should use an `instanceInitializer` to look up objects from the container.', { url: "http://github.com/mjc/ngular/guides/deprecations#toc_deprecate-access-to-instances-in-initializers" });
     }
 
     return this._defaultContainer.lookupFactory(fullName);
@@ -213,7 +213,7 @@ Registry.prototype = {
    @param {Object} options
    */
   register(fullName, factory, options) {
-    Ember.assert('fullName must be a proper full name', this.validateFullName(fullName));
+    Ngular.assert('fullName must be a proper full name', this.validateFullName(fullName));
 
     if (factory === undefined) {
       throw new TypeError('Attempting to register an unknown factory: `' + fullName + '`');
@@ -246,7 +246,7 @@ Registry.prototype = {
    @param {String} fullName
    */
   unregister(fullName) {
-    Ember.assert('fullName must be a proper full name', this.validateFullName(fullName));
+    Ngular.assert('fullName must be a proper full name', this.validateFullName(fullName));
 
     var normalizedName = this.normalize(fullName);
 
@@ -288,7 +288,7 @@ Registry.prototype = {
    @return {Function} fullName's factory
    */
   resolve(fullName) {
-    Ember.assert('fullName must be a proper full name', this.validateFullName(fullName));
+    Ngular.assert('fullName must be a proper full name', this.validateFullName(fullName));
     var factory = resolve(this, this.normalize(fullName));
     if (factory === undefined && this.fallback) {
       factory = this.fallback.resolve(fullName);
@@ -300,8 +300,8 @@ Registry.prototype = {
    A hook that can be used to describe how the resolver will
    attempt to find the factory.
 
-   For example, the default Ember `.describe` returns the full
-   class name (including namespace) where Ember's resolver expects
+   For example, the default Ngular `.describe` returns the full
+   class name (including namespace) where Ngular's resolver expects
    to find the `fullName`.
 
    @method describe
@@ -356,7 +356,7 @@ Registry.prototype = {
    @return {Boolean}
    */
   has(fullName) {
-    Ember.assert('fullName must be a proper full name', this.validateFullName(fullName));
+    Ngular.assert('fullName must be a proper full name', this.validateFullName(fullName));
     return has(this, this.normalize(fullName));
   },
 
@@ -439,7 +439,7 @@ Registry.prototype = {
   },
 
   option(fullName, optionName) {
-    Ember.deprecate('`Registry.option()` has been deprecated. Call `Registry.getOption()` instead.');
+    Ngular.deprecate('`Registry.option()` has been deprecated. Call `Registry.getOption()` instead.');
     return this.getOption(fullName, optionName);
   },
 
@@ -480,7 +480,7 @@ Registry.prototype = {
    @param {String} fullName
    */
   typeInjection(type, property, fullName) {
-    Ember.assert('fullName must be a proper full name', this.validateFullName(fullName));
+    Ngular.assert('fullName must be a proper full name', this.validateFullName(fullName));
 
     var fullNameType = fullName.split(':')[0];
     if (fullNameType === type) {
@@ -550,7 +550,7 @@ Registry.prototype = {
       return this.typeInjection(fullName, property, normalizedInjectionName);
     }
 
-    Ember.assert('fullName must be a proper full name', this.validateFullName(fullName));
+    Ngular.assert('fullName must be a proper full name', this.validateFullName(fullName));
     var normalizedName = this.normalize(fullName);
 
     var injections = this._injections[normalizedName] ||
@@ -696,7 +696,7 @@ Registry.prototype = {
 
     for (var key in hash) {
       if (hash.hasOwnProperty(key)) {
-        Ember.assert("Expected a proper full name, given '" + hash[key] + "'", this.validateFullName(hash[key]));
+        Ngular.assert("Expected a proper full name, given '" + hash[key] + "'", this.validateFullName(hash[key]));
 
         injections.push({
           property: key,

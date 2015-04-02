@@ -1,19 +1,19 @@
-import Ember from "ember-metal/core"; // Ember.A
-import { get } from "ember-metal/property_get";
-import { set } from "ember-metal/property_set";
-import { addObserver } from "ember-metal/observer";
-import { observer as emberObserver } from "ember-metal/mixin";
-import { computed } from "ember-metal/computed";
-import { testBoth } from "ember-metal/tests/props_helper";
-import { ArrayTests } from "ember-runtime/tests/suites/array";
-import EmberObject from "ember-runtime/system/object";
-import EmberArray from "ember-runtime/mixins/array";
+import Ngular from "ngular-metal/core"; // Ngular.A
+import { get } from "ngular-metal/property_get";
+import { set } from "ngular-metal/property_set";
+import { addObserver } from "ngular-metal/observer";
+import { observer as ngularObserver } from "ngular-metal/mixin";
+import { computed } from "ngular-metal/computed";
+import { testBoth } from "ngular-metal/tests/props_helper";
+import { ArrayTests } from "ngular-runtime/tests/suites/array";
+import NgularObject from "ngular-runtime/system/object";
+import NgularArray from "ngular-runtime/mixins/array";
 
 /*
   Implement a basic fake mutable array.  This validates that any non-native
   enumerable can impl this API.
 */
-var TestArray = EmberObject.extend(EmberArray, {
+var TestArray = NgularObject.extend(NgularArray, {
 
   _content: null,
 
@@ -67,12 +67,12 @@ ArrayTests.extend({
 
 }).run();
 
-QUnit.test("the return value of slice has Ember.Array applied", function() {
-  var x = EmberObject.createWithMixins(EmberArray, {
+QUnit.test("the return value of slice has Ngular.Array applied", function() {
+  var x = NgularObject.createWithMixins(NgularArray, {
     length: 0
   });
   var y = x.slice(1);
-  equal(EmberArray.detect(y), true, "mixin should be applied");
+  equal(NgularArray.detect(y), true, "mixin should be applied");
 });
 
 QUnit.test("slice supports negative index arguments", function() {
@@ -97,7 +97,7 @@ QUnit.test("slice supports negative index arguments", function() {
 // CONTENT DID CHANGE
 //
 
-var DummyArray = EmberObject.extend(EmberArray, {
+var DummyArray = NgularObject.extend(NgularArray, {
   nextObject() {},
   length: 0,
   objectAt(idx) { return 'ITEM-'+idx; }
@@ -116,7 +116,7 @@ QUnit.test('should notify observers of []', function() {
 
   obj = DummyArray.createWithMixins({
     _count: 0,
-    enumerablePropertyDidChange: emberObserver('[]', function() {
+    enumerablePropertyDidChange: ngularObserver('[]', function() {
       this._count++;
     })
   });
@@ -138,7 +138,7 @@ QUnit.module('notify observers of length', {
   setup() {
     obj = DummyArray.createWithMixins({
       _after: 0,
-      lengthDidChange: emberObserver('length', function() {
+      lengthDidChange: ngularObserver('length', function() {
         this._after++;
       })
 
@@ -186,7 +186,7 @@ QUnit.module('notify array observers', {
   setup() {
     obj = DummyArray.create();
 
-    observer = EmberObject.createWithMixins({
+    observer = NgularObject.createWithMixins({
       _before: null,
       _after: null,
 
@@ -251,7 +251,7 @@ QUnit.module('notify enumerable observers as well', {
   setup() {
     obj = DummyArray.create();
 
-    observer = EmberObject.createWithMixins({
+    observer = NgularObject.createWithMixins({
       _before: null,
       _after: null,
 
@@ -314,7 +314,7 @@ QUnit.test('removing enumerable observer should disable', function() {
 
 var ary;
 
-QUnit.module('EmberArray.@each support', {
+QUnit.module('NgularArray.@each support', {
   setup() {
     ary = new TestArray([
       { isDone: true, desc: 'Todo 1' },
@@ -333,7 +333,7 @@ QUnit.test('adding an object should notify (@each)', function() {
 
   var called = 0;
 
-  var observerObject = EmberObject.create({
+  var observerObject = NgularObject.create({
     wasCalled() {
       called++;
     }
@@ -342,7 +342,7 @@ QUnit.test('adding an object should notify (@each)', function() {
   // get(ary, '@each');
   addObserver(ary, '@each', observerObject, 'wasCalled');
 
-  ary.addObject(EmberObject.create({
+  ary.addObject(NgularObject.create({
     desc: "foo",
     isDone: false
   }));
@@ -355,7 +355,7 @@ QUnit.test('adding an object should notify (@each.isDone)', function() {
 
   var called = 0;
 
-  var observerObject = EmberObject.create({
+  var observerObject = NgularObject.create({
     wasCalled() {
       called++;
     }
@@ -363,7 +363,7 @@ QUnit.test('adding an object should notify (@each.isDone)', function() {
 
   addObserver(ary, '@each.isDone', observerObject, 'wasCalled');
 
-  ary.addObject(EmberObject.create({
+  ary.addObject(NgularObject.create({
     desc: "foo",
     isDone: false
   }));
@@ -376,7 +376,7 @@ QUnit.test('using @each to observe arrays that does not return objects raise err
 
   var called = 0;
 
-  var observerObject = EmberObject.create({
+  var observerObject = NgularObject.create({
     wasCalled() {
       called++;
     }
@@ -391,7 +391,7 @@ QUnit.test('using @each to observe arrays that does not return objects raise err
   addObserver(ary, '@each.isDone', observerObject, 'wasCalled');
 
   expectAssertion(function() {
-    ary.addObject(EmberObject.create({
+    ary.addObject(NgularObject.create({
       desc: "foo",
       isDone: false
     }));
@@ -419,9 +419,9 @@ QUnit.test('modifying the array should also indicate the isDone prop itself has 
 
 
 testBoth("should be clear caches for computed properties that have dependent keys on arrays that are changed after object initialization", function(get, set) {
-  var obj = EmberObject.createWithMixins({
+  var obj = NgularObject.createWithMixins({
     init() {
-      set(this, 'resources', Ember.A());
+      set(this, 'resources', Ngular.A());
     },
 
     common: computed(function() {
@@ -429,7 +429,7 @@ testBoth("should be clear caches for computed properties that have dependent key
     }).property('resources.@each.common')
   });
 
-  get(obj, 'resources').pushObject(EmberObject.create({ common: "HI!" }));
+  get(obj, 'resources').pushObject(NgularObject.create({ common: "HI!" }));
   equal("HI!", get(obj, 'common'));
 
   set(get(obj, 'resources').objectAt(0), 'common', "BYE!");
@@ -439,19 +439,19 @@ testBoth("should be clear caches for computed properties that have dependent key
 testBoth("observers that contain @each in the path should fire only once the first time they are accessed", function(get, set) {
   var count = 0;
 
-  var obj = EmberObject.createWithMixins({
+  var obj = NgularObject.createWithMixins({
     init() {
       // Observer does not fire on init
-      set(this, 'resources', Ember.A());
+      set(this, 'resources', Ngular.A());
     },
 
-    commonDidChange: emberObserver('resources.@each.common', function() {
+    commonDidChange: ngularObserver('resources.@each.common', function() {
       count++;
     })
   });
 
   // Observer fires second time when new object is added
-  get(obj, 'resources').pushObject(EmberObject.create({ common: "HI!" }));
+  get(obj, 'resources').pushObject(NgularObject.create({ common: "HI!" }));
   // Observer fires third time when property on an object is changed
   set(get(obj, 'resources').objectAt(0), 'common', "BYE!");
 

@@ -1,4 +1,4 @@
-import {SuiteModuleBuilder} from 'ember-runtime/tests/suites/suite';
+import {SuiteModuleBuilder} from 'ngular-runtime/tests/suites/suite';
 
 var suite = SuiteModuleBuilder.create();
 
@@ -16,7 +16,7 @@ suite.test("[].clear() => [] + notify", function () {
   equal(obj.clear(), obj, 'return self');
 
   deepEqual(this.toArray(obj), after, 'post item results');
-  equal(Ember.get(obj, 'length'), after.length, 'length');
+  equal(Ngular.get(obj, 'length'), after.length, 'length');
 
   equal(observer.validate('[]'), false, 'should NOT have notified [] once');
   equal(observer.validate('@each'), false, 'should NOT have notified @each once');
@@ -37,7 +37,7 @@ suite.test("[X].clear() => [] + notify", function () {
   equal(obj.clear(), obj, 'return self');
 
   deepEqual(this.toArray(obj), after, 'post item results');
-  equal(Ember.get(obj, 'length'), after.length, 'length');
+  equal(Ngular.get(obj, 'length'), after.length, 'length');
 
   equal(observer.timesCalled('[]'), 1, 'should have notified [] once');
   equal(observer.timesCalled('@each'), 1, 'should have notified @each once');

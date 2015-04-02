@@ -1,29 +1,29 @@
-import "ember";
+import "ngular";
 
-import EmberHandlebars from "ember-htmlbars/compat";
+import NgularHandlebars from "ngular-htmlbars/compat";
 
-var compile = EmberHandlebars.compile;
+var compile = NgularHandlebars.compile;
 
 var App, $fixture;
 
 function setupExample() {
   // setup templates
-  Ember.TEMPLATES.application = compile("{{outlet}}");
-  Ember.TEMPLATES.index = compile("<h1>People</h1><ul>{{#each person in model}}<li>Hello, <b>{{person.fullName}}</b>!</li>{{/each}}</ul>");
+  Ngular.TEMPLATES.application = compile("{{outlet}}");
+  Ngular.TEMPLATES.index = compile("<h1>People</h1><ul>{{#each person in model}}<li>Hello, <b>{{person.fullName}}</b>!</li>{{/each}}</ul>");
 
 
-  App.Person = Ember.Object.extend({
+  App.Person = Ngular.Object.extend({
     firstName: null,
     lastName: null,
 
-    fullName: Ember.computed('firstName', 'lastName', function() {
+    fullName: Ngular.computed('firstName', 'lastName', function() {
       return this.get('firstName') + " " + this.get('lastName');
     })
   });
 
-  App.IndexRoute = Ember.Route.extend({
+  App.IndexRoute = Ngular.Route.extend({
     model() {
-      var people = Ember.A([
+      var people = Ngular.A([
         App.Person.create({
           firstName: "Tom",
           lastName: "Dale"
@@ -40,8 +40,8 @@ function setupExample() {
 
 QUnit.module("Homepage Example", {
   setup() {
-    Ember.run(function() {
-      App = Ember.Application.create({
+    Ngular.run(function() {
+      App = Ngular.Application.create({
         name: "App",
         rootElement: '#qunit-fixture'
       });
@@ -51,27 +51,27 @@ QUnit.module("Homepage Example", {
         location: 'none'
       });
 
-      App.LoadingRoute = Ember.Route.extend();
+      App.LoadingRoute = Ngular.Route.extend();
     });
 
-    $fixture = Ember.$('#qunit-fixture');
+    $fixture = Ngular.$('#qunit-fixture');
     setupExample();
   },
 
   teardown() {
-    Ember.run(function() {
+    Ngular.run(function() {
       App.destroy();
     });
 
     App = null;
 
-    Ember.TEMPLATES = {};
+    Ngular.TEMPLATES = {};
   }
 });
 
 
 QUnit.test("The example renders correctly", function() {
-  Ember.run(App, 'advanceReadiness');
+  Ngular.run(App, 'advanceReadiness');
 
   equal($fixture.find('h1:contains(People)').length, 1);
   equal($fixture.find('li').length, 2);

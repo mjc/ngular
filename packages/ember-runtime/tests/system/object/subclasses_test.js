@@ -1,13 +1,13 @@
-import run from "ember-metal/run_loop";
-import {computed} from "ember-metal/computed";
-import EmberObject from "ember-runtime/system/object";
+import run from "ngular-metal/run_loop";
+import {computed} from "ngular-metal/computed";
+import NgularObject from "ngular-runtime/system/object";
 
 QUnit.module('system/object/subclasses');
 
 QUnit.test('chains should copy forward to subclasses when prototype created', function () {
   var ObjectWithChains, objWithChains, SubWithChains, SubSub, subSub;
   run(function () {
-    ObjectWithChains = EmberObject.extend({
+    ObjectWithChains = NgularObject.extend({
       obj: {
         a: 'a',
         hi: 'hi'

@@ -1,10 +1,10 @@
 import {
   set,
   trySet
-} from 'ember-metal/property_set';
-import { get } from 'ember-metal/property_get';
+} from 'ngular-metal/property_set';
+import { get } from 'ngular-metal/property_get';
 
-var originalLookup = Ember.lookup;
+var originalLookup = Ngular.lookup;
 
 var obj;
 function commonSetup() {
@@ -16,7 +16,7 @@ function commonSetup() {
     }
   };
 
-  Ember.lookup = {
+  Ngular.lookup = {
     Foo: {
       bar: {
         baz: { biff: 'FooBiff' }
@@ -33,7 +33,7 @@ function commonSetup() {
 
 function commonTeardown() {
   obj = null;
-  Ember.lookup = originalLookup;
+  Ngular.lookup = originalLookup;
 }
 
 QUnit.module('set with path', {
@@ -42,10 +42,10 @@ QUnit.module('set with path', {
 });
 
 QUnit.test('[Foo, bar] -> Foo.bar', function() {
-  Ember.lookup.Foo = { toString() { return 'Foo'; } }; // Behave like an Ember.Namespace
+  Ngular.lookup.Foo = { toString() { return 'Foo'; } }; // Behave like an Ngular.Namespace
 
-  set(Ember.lookup.Foo, 'bar', 'baz');
-  equal(get(Ember.lookup.Foo, 'bar'), 'baz');
+  set(Ngular.lookup.Foo, 'bar', 'baz');
+  equal(get(Ngular.lookup.Foo, 'bar'), 'baz');
 });
 
 // ..........................................................
@@ -78,7 +78,7 @@ QUnit.test('[obj, this.foo.bar] -> obj.foo.bar', function() {
 
 QUnit.test('[null, Foo.bar] -> Foo.bar', function() {
   set(null, 'Foo.bar', "BAM");
-  equal(get(Ember.lookup.Foo, 'bar'), "BAM");
+  equal(get(Ngular.lookup.Foo, 'bar'), "BAM");
 });
 
 // ..........................................................

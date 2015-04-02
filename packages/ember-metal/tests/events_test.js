@@ -1,6 +1,6 @@
-import { Mixin } from 'ember-metal/mixin';
-import create from 'ember-metal/platform/create';
-import { meta } from 'ember-metal/utils';
+import { Mixin } from 'ngular-metal/mixin';
+import create from 'ngular-metal/platform/create';
+import { meta } from 'ngular-metal/utils';
 
 import {
   on,
@@ -10,7 +10,7 @@ import {
   suspendListeners,
   sendEvent,
   hasListeners
-} from "ember-metal/events";
+} from "ngular-metal/events";
 
 QUnit.module('system/props/events_test');
 

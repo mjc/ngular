@@ -1,13 +1,13 @@
-import Ember from "ember-metal/core";
+import Ngular from "ngular-metal/core";
 import {
   forEach,
   indexOf
-} from "ember-metal/enumerable_utils";
+} from "ngular-metal/enumerable_utils";
 
 /**
-  Helper class that allows you to register your library with Ember.
+  Helper class that allows you to register your library with Ngular.
 
-  Singleton created at `Ember.libraries`.
+  Singleton created at `Ngular.libraries`.
 
   @class Libraries
   @constructor
@@ -41,7 +41,7 @@ Libraries.prototype = {
       }
       this._registry.splice(index, 0, { name: name, version: version });
     } else {
-      Ember.warn(`Library "${name}" is already registered with Ember.`);
+      Ngular.warn(`Library "${name}" is already registered with Ngular.`);
     }
   },
 
@@ -60,14 +60,14 @@ Libraries.prototype = {
   },
 
   each(callback) {
-    Ember.deprecate('Using Ember.libraries.each() is deprecated. Access to a list of registered libraries is currently a private API. If you are not knowingly accessing this method, your out-of-date Ember Inspector may be doing so.');
+    Ngular.deprecate('Using Ngular.libraries.each() is deprecated. Access to a list of registered libraries is currently a private API. If you are not knowingly accessing this method, your out-of-date Ngular Inspector may be doing so.');
     forEach(this._registry, (lib) => {
       callback(lib.name, lib.version);
     });
   }
 };
 
-if (Ember.FEATURES.isEnabled("ember-libraries-isregistered")) {
+if (Ngular.FEATURES.isEnabled("ngular-libraries-isregistered")) {
   Libraries.prototype.isRegistered = function(name) {
     return !!this._getLibraryByName(name);
   };

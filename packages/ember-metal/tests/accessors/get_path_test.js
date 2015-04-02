@@ -1,6 +1,6 @@
 /*globals Foo:true $foo:true */
 
-import { get } from 'ember-metal/property_get';
+import { get } from 'ngular-metal/property_get';
 
 var obj;
 var moduleOpts = {
@@ -45,7 +45,7 @@ var moduleOpts = {
   }
 };
 
-QUnit.module('Ember.get with path', moduleOpts);
+QUnit.module('Ngular.get with path', moduleOpts);
 
 // ..........................................................
 // LOCAL PATHS

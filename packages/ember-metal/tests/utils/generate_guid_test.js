@@ -1,6 +1,6 @@
-import { generateGuid } from "ember-metal/utils";
+import { generateGuid } from "ngular-metal/utils";
 
-QUnit.module("Ember.generateGuid");
+QUnit.module("Ngular.generateGuid");
 
 QUnit.test("Prefix", function() {
   var a = {};

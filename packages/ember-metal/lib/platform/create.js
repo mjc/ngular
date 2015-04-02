@@ -3,11 +3,11 @@
 //
 "REMOVE_USE_STRICT: true";
 
-import defineProperties from 'ember-metal/platform/define_properties';
+import defineProperties from 'ngular-metal/platform/define_properties';
 
 /**
 @class platform
-@namespace Ember
+@namespace Ngular
 @static
 */
 
@@ -16,7 +16,7 @@ import defineProperties from 'ember-metal/platform/define_properties';
 
   @since 1.8.0
   @method create
-  @for Ember
+  @for Ngular
 */
 var create;
 // ES5 15.2.3.5

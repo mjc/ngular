@@ -1,19 +1,19 @@
 /**
-@module ember
-@submodule ember-htmlbars
+@module ngular
+@submodule ngular-htmlbars
 */
 
-import Ember from "ember-metal/core"; // Ember.assert
-import conditional from "ember-metal/streams/conditional";
-import shouldDisplay from "ember-views/streams/should_display";
-import { get } from "ember-metal/property_get";
-import { isStream } from "ember-metal/streams/utils";
-import BoundIfView from "ember-views/views/bound_if_view";
-import emptyTemplate from "ember-htmlbars/templates/empty";
+import Ngular from "ngular-metal/core"; // Ngular.assert
+import conditional from "ngular-metal/streams/conditional";
+import shouldDisplay from "ngular-views/streams/should_display";
+import { get } from "ngular-metal/property_get";
+import { isStream } from "ngular-metal/streams/utils";
+import BoundIfView from "ngular-views/views/bound_if_view";
+import emptyTemplate from "ngular-htmlbars/templates/empty";
 
 /**
   @method if
-  @for Ember.Handlebars.helpers
+  @for Ngular.Handlebars.helpers
 */
 function ifHelper(params, hash, options, env) {
   var helperName = options.helperName || 'if';
@@ -22,7 +22,7 @@ function ifHelper(params, hash, options, env) {
 
 /**
   @method unless
-  @for Ember.Handlebars.helpers
+  @for Ngular.Handlebars.helpers
 */
 function unlessHelper(params, hash, options, env) {
   var helperName = options.helperName || 'unless';
@@ -31,9 +31,9 @@ function unlessHelper(params, hash, options, env) {
 
 
 function assertInlineIfNotEnabled() {
-  Ember.assert(
+  Ngular.assert(
     "To use the inline forms of the `if` and `unless` helpers you must " +
-    "enable the `ember-htmlbars-inline-if-helper` feature flag."
+    "enable the `ngular-htmlbars-inline-if-helper` feature flag."
   );
 }
 
@@ -43,7 +43,7 @@ function appendConditional(inverted, helperName, params, hash, options, env) {
   if (options.isBlock) {
     return appendBlockConditional(view, inverted, helperName, params, hash, options, env);
   } else {
-    if (Ember.FEATURES.isEnabled('ember-htmlbars-inline-if-helper')) {
+    if (Ngular.FEATURES.isEnabled('ngular-htmlbars-inline-if-helper')) {
       return appendInlineConditional(view, inverted, helperName, params, hash, options, env);
     } else {
       assertInlineIfNotEnabled();
@@ -52,7 +52,7 @@ function appendConditional(inverted, helperName, params, hash, options, env) {
 }
 
 function appendBlockConditional(view, inverted, helperName, params, hash, options, env) {
-  Ember.assert(
+  Ngular.assert(
     "The block form of the `if` and `unless` helpers expect exactly one " +
     "argument, e.g. `{{#if newMessages}} You have new messages. {{/if}}.`",
     params.length === 1
@@ -80,7 +80,7 @@ function appendBlockConditional(view, inverted, helperName, params, hash, option
 }
 
 function appendInlineConditional(view, inverted, helperName, params) {
-  Ember.assert(
+  Ngular.assert(
     "The inline form of the `if` and `unless` helpers expect two or " +
     "three arguments, e.g. `{{if trialExpired 'Expired' expiryDate}}` " +
     "or `{{unless isFirstLogin 'Welcome back!'}}`.",

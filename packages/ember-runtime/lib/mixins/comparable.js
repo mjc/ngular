@@ -1,8 +1,8 @@
-import { Mixin } from "ember-metal/mixin";
+import { Mixin } from "ngular-metal/mixin";
 
 /**
-@module ember
-@submodule ember-runtime
+@module ngular
+@submodule ngular-runtime
 */
 
 /**
@@ -12,8 +12,8 @@ import { Mixin } from "ember-metal/mixin";
   You should implement the `compare()` method.
 
   @class Comparable
-  @namespace Ember
-  @since Ember 0.9
+  @namespace Ngular
+  @since Ngular 0.9
 */
 export default Mixin.create({
 

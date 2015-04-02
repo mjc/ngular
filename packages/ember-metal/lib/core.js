@@ -1,18 +1,18 @@
-/*globals Ember:true,ENV,EmberENV */
+/*globals Ngular:true,ENV,NgularENV */
 
 /**
-@module ember
-@submodule ember-metal
+@module ngular
+@submodule ngular-metal
 */
 
 /**
-  All Ember methods and functions are defined inside of this namespace. You
+  All Ngular methods and functions are defined inside of this namespace. You
   generally should not add new properties to this namespace as it may be
-  overwritten by future versions of Ember.
+  overwritten by future versions of Ngular.
 
-  You can also use the shorthand `Em` instead of `Ember`.
+  You can also use the shorthand `Em` instead of `Ngular`.
 
-  Ember-Runtime is a framework that provides core functions for Ember including
+  Ngular-Runtime is a framework that provides core functions for Ngular including
   cross-platform functions, support for property observing and objects. Its
   focus is on small size and performance. You can use this in place of or
   along-side other cross-platform libraries such as jQuery.
@@ -20,31 +20,31 @@
   The core Runtime framework is based on the jQuery API with a number of
   performance optimizations.
 
-  @class Ember
+  @class Ngular
   @static
   @version VERSION_STRING_PLACEHOLDER
 */
 
-if ('undefined' === typeof Ember) {
-  // Create core object. Make it act like an instance of Ember.Namespace so that
+if ('undefined' === typeof Ngular) {
+  // Create core object. Make it act like an instance of Ngular.Namespace so that
   // objects assigned to it are given a sane string representation.
-  Ember = {};
+  Ngular = {};
 }
 
 // Default imports, exports and lookup to the global object;
 var global = mainContext || {}; // jshint ignore:line
-Ember.imports = Ember.imports || global;
-Ember.lookup  = Ember.lookup  || global;
-var emExports   = Ember.exports = Ember.exports || global;
+Ngular.imports = Ngular.imports || global;
+Ngular.lookup  = Ngular.lookup  || global;
+var emExports   = Ngular.exports = Ngular.exports || global;
 
 // aliases needed to keep minifiers from removing the global context
-emExports.Em = emExports.Ember = Ember;
+emExports.Em = emExports.Ngular = Ngular;
 
-// Make sure these are set whether Ember was already defined or not
+// Make sure these are set whether Ngular was already defined or not
 
-Ember.isNamespace = true;
+Ngular.isNamespace = true;
 
-Ember.toString = function() { return 'Ember'; };
+Ngular.toString = function() { return 'Ngular'; };
 
 
 /**
@@ -53,79 +53,79 @@ Ember.toString = function() { return 'Ember'; };
   @default 'VERSION_STRING_PLACEHOLDER'
   @static
 */
-Ember.VERSION = 'VERSION_STRING_PLACEHOLDER';
+Ngular.VERSION = 'VERSION_STRING_PLACEHOLDER';
 
 /**
-  Standard environmental variables. You can define these in a global `EmberENV`
-  variable before loading Ember to control various configuration settings.
+  Standard environmental variables. You can define these in a global `NgularENV`
+  variable before loading Ngular to control various configuration settings.
 
-  For backwards compatibility with earlier versions of Ember the global `ENV`
-  variable will be used if `EmberENV` is not defined.
+  For backwards compatibility with earlier versions of Ngular the global `ENV`
+  variable will be used if `NgularENV` is not defined.
 
   @property ENV
   @type Hash
 */
 
-if (Ember.ENV) {
-  // do nothing if Ember.ENV is already setup
-  Ember.assert('Ember.ENV should be an object.', 'object' !== typeof Ember.ENV);
-} else if ('undefined' !== typeof EmberENV) {
-  Ember.ENV = EmberENV;
+if (Ngular.ENV) {
+  // do nothing if Ngular.ENV is already setup
+  Ngular.assert('Ngular.ENV should be an object.', 'object' !== typeof Ngular.ENV);
+} else if ('undefined' !== typeof NgularENV) {
+  Ngular.ENV = NgularENV;
 } else if ('undefined' !== typeof ENV) {
-  Ember.ENV = ENV;
+  Ngular.ENV = ENV;
 } else {
-  Ember.ENV = {};
+  Ngular.ENV = {};
 }
 
-Ember.config = Ember.config || {};
+Ngular.config = Ngular.config || {};
 
 // We disable the RANGE API by default for performance reasons
-if ('undefined' === typeof Ember.ENV.DISABLE_RANGE_API) {
-  Ember.ENV.DISABLE_RANGE_API = true;
+if ('undefined' === typeof Ngular.ENV.DISABLE_RANGE_API) {
+  Ngular.ENV.DISABLE_RANGE_API = true;
 }
 
 /**
   Hash of enabled Canary features. Add to this before creating your application.
 
-  You can also define `EmberENV.FEATURES` if you need to enable features flagged at runtime.
+  You can also define `NgularENV.FEATURES` if you need to enable features flagged at runtime.
 
   @class FEATURES
-  @namespace Ember
+  @namespace Ngular
   @static
   @since 1.1.0
 */
 
-Ember.FEATURES = Ember.ENV.FEATURES;
+Ngular.FEATURES = Ngular.ENV.FEATURES;
 
-if (!Ember.FEATURES) {
-  Ember.FEATURES = DEFAULT_FEATURES; //jshint ignore:line
+if (!Ngular.FEATURES) {
+  Ngular.FEATURES = DEFAULT_FEATURES; //jshint ignore:line
 }
 
 /**
-  Test that a feature is enabled. Parsed by Ember's build tools to leave
+  Test that a feature is enabled. Parsed by Ngular's build tools to leave
   experimental features out of beta/stable builds.
 
   You can define the following configuration options:
 
-  * `EmberENV.ENABLE_ALL_FEATURES` - force all features to be enabled.
-  * `EmberENV.ENABLE_OPTIONAL_FEATURES` - enable any features that have not been explicitly
+  * `NgularENV.ENABLE_ALL_FEATURES` - force all features to be enabled.
+  * `NgularENV.ENABLE_OPTIONAL_FEATURES` - enable any features that have not been explicitly
     enabled/disabled.
 
   @method isEnabled
   @param {String} feature
   @return {Boolean}
-  @for Ember.FEATURES
+  @for Ngular.FEATURES
   @since 1.1.0
 */
 
-Ember.FEATURES.isEnabled = function(feature) {
-  var featureValue = Ember.FEATURES[feature];
+Ngular.FEATURES.isEnabled = function(feature) {
+  var featureValue = Ngular.FEATURES[feature];
 
-  if (Ember.ENV.ENABLE_ALL_FEATURES) {
+  if (Ngular.ENV.ENABLE_ALL_FEATURES) {
     return true;
   } else if (featureValue === true || featureValue === false || featureValue === undefined) {
     return featureValue;
-  } else if (Ember.ENV.ENABLE_OPTIONAL_FEATURES) {
+  } else if (Ngular.ENV.ENABLE_OPTIONAL_FEATURES) {
     return true;
   } else {
     return false;
@@ -137,52 +137,52 @@ Ember.FEATURES.isEnabled = function(feature) {
 //
 
 /**
-  Determines whether Ember should enhance some built-in object prototypes to
+  Determines whether Ngular should enhance some built-in object prototypes to
   provide a more friendly API. If enabled, a few methods will be added to
   `Function`, `String`, and `Array`. `Object.prototype` will not be enhanced,
   which is the one that causes most trouble for people.
 
   In general we recommend leaving this option set to true since it rarely
   conflicts with other code. If you need to turn it off however, you can
-  define an `EmberENV.EXTEND_PROTOTYPES` config to disable it.
+  define an `NgularENV.EXTEND_PROTOTYPES` config to disable it.
 
   @property EXTEND_PROTOTYPES
   @type Boolean
   @default true
-  @for Ember
+  @for Ngular
 */
-Ember.EXTEND_PROTOTYPES = Ember.ENV.EXTEND_PROTOTYPES;
+Ngular.EXTEND_PROTOTYPES = Ngular.ENV.EXTEND_PROTOTYPES;
 
-if (typeof Ember.EXTEND_PROTOTYPES === 'undefined') {
-  Ember.EXTEND_PROTOTYPES = true;
+if (typeof Ngular.EXTEND_PROTOTYPES === 'undefined') {
+  Ngular.EXTEND_PROTOTYPES = true;
 }
 
 /**
-  Determines whether Ember logs a full stack trace during deprecation warnings
+  Determines whether Ngular logs a full stack trace during deprecation warnings
 
   @property LOG_STACKTRACE_ON_DEPRECATION
   @type Boolean
   @default true
 */
-Ember.LOG_STACKTRACE_ON_DEPRECATION = (Ember.ENV.LOG_STACKTRACE_ON_DEPRECATION !== false);
+Ngular.LOG_STACKTRACE_ON_DEPRECATION = (Ngular.ENV.LOG_STACKTRACE_ON_DEPRECATION !== false);
 
 /**
-  Determines whether Ember should add ECMAScript 5 Array shims to older browsers.
+  Determines whether Ngular should add ECMAScript 5 Array shims to older browsers.
 
   @property SHIM_ES5
   @type Boolean
-  @default Ember.EXTEND_PROTOTYPES
+  @default Ngular.EXTEND_PROTOTYPES
 */
-Ember.SHIM_ES5 = (Ember.ENV.SHIM_ES5 === false) ? false : Ember.EXTEND_PROTOTYPES;
+Ngular.SHIM_ES5 = (Ngular.ENV.SHIM_ES5 === false) ? false : Ngular.EXTEND_PROTOTYPES;
 
 /**
-  Determines whether Ember logs info about version of used libraries
+  Determines whether Ngular logs info about version of used libraries
 
   @property LOG_VERSION
   @type Boolean
   @default true
 */
-Ember.LOG_VERSION = (Ember.ENV.LOG_VERSION === false) ? false : true;
+Ngular.LOG_VERSION = (Ngular.ENV.LOG_VERSION === false) ? false : true;
 
 /**
   Empty function. Useful for some operations. Always returns `this`.
@@ -193,18 +193,18 @@ Ember.LOG_VERSION = (Ember.ENV.LOG_VERSION === false) ? false : true;
 */
 function K() { return this; }
 export { K };
-Ember.K = K;
+Ngular.K = K;
 //TODO: ES6 GLOBAL TODO
 
-// Stub out the methods defined by the ember-debug package in case it's not loaded
+// Stub out the methods defined by the ngular-debug package in case it's not loaded
 
-if ('undefined' === typeof Ember.assert) { Ember.assert = K; }
-if ('undefined' === typeof Ember.warn) { Ember.warn = K; }
-if ('undefined' === typeof Ember.debug) { Ember.debug = K; }
-if ('undefined' === typeof Ember.runInDebug) { Ember.runInDebug = K; }
-if ('undefined' === typeof Ember.deprecate) { Ember.deprecate = K; }
-if ('undefined' === typeof Ember.deprecateFunc) {
-  Ember.deprecateFunc = function(_, func) { return func; };
+if ('undefined' === typeof Ngular.assert) { Ngular.assert = K; }
+if ('undefined' === typeof Ngular.warn) { Ngular.warn = K; }
+if ('undefined' === typeof Ngular.debug) { Ngular.debug = K; }
+if ('undefined' === typeof Ngular.runInDebug) { Ngular.runInDebug = K; }
+if ('undefined' === typeof Ngular.deprecate) { Ngular.deprecate = K; }
+if ('undefined' === typeof Ngular.deprecateFunc) {
+  Ngular.deprecateFunc = function(_, func) { return func; };
 }
 
-export default Ember;
+export default Ngular;

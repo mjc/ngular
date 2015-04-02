@@ -1,17 +1,17 @@
-import Ember from "ember-metal/core"; // Ember.assert
-import { indexOf } from "ember-metal/enumerable_utils";
-import InjectedProperty from "ember-metal/injected_property";
-import keys from "ember-metal/keys";
+import Ngular from "ngular-metal/core"; // Ngular.assert
+import { indexOf } from "ngular-metal/enumerable_utils";
+import InjectedProperty from "ngular-metal/injected_property";
+import keys from "ngular-metal/keys";
 
 /**
   Namespace for injection helper methods.
 
   @class inject
-  @namespace Ember
+  @namespace Ngular
   @static
   */
 function inject() {
-  Ember.assert("Injected properties must be created through helpers, see `" +
+  Ngular.assert("Injected properties must be created through helpers, see `" +
                keys(inject).join("`, `") + "`");
 }
 
@@ -19,14 +19,14 @@ function inject() {
 var typeValidators = {};
 
 /**
-  This method allows other Ember modules to register injection helpers for a
+  This method allows other Ngular modules to register injection helpers for a
   given container type. Helpers are exported to the `inject` namespace as the
   container type itself.
 
   @private
   @method createInjectionHelper
   @since 1.10.0
-  @for Ember
+  @for Ngular
   @param {String} type The container type the helper will inject
   @param {Function} validator A validation callback that is executed at mixin-time
 */
@@ -45,7 +45,7 @@ export function createInjectionHelper(type, validator) {
   @private
   @method validatePropertyInjections
   @since 1.10.0
-  @for Ember
+  @for Ngular
   @param {Object} factory The factory object
 */
 export function validatePropertyInjections(factory) {

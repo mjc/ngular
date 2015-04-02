@@ -1,5 +1,5 @@
-import Stream from "ember-metal/streams/stream";
-import SimpleStream from "ember-metal/streams/simple";
+import Stream from "ngular-metal/streams/stream";
+import SimpleStream from "ngular-metal/streams/simple";
 
 var source, value;
 

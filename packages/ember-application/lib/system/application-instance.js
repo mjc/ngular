@@ -1,14 +1,14 @@
 /**
-@module ember
-@submodule ember-application
+@module ngular
+@submodule ngular-application
 @private
 */
 
-import { get } from "ember-metal/property_get";
-import { set } from "ember-metal/property_set";
-import EmberObject from "ember-runtime/system/object";
-import run from "ember-metal/run_loop";
-import { computed } from "ember-metal/computed";
+import { get } from "ngular-metal/property_get";
+import { set } from "ngular-metal/property_set";
+import NgularObject from "ngular-runtime/system/object";
+import run from "ngular-metal/run_loop";
+import { computed } from "ngular-metal/computed";
 import Registry from 'container/registry';
 
 /**
@@ -32,12 +32,12 @@ import Registry from 'container/registry';
   it once the particular test run or FastBoot request has finished.
 */
 
-export default EmberObject.extend({
+export default NgularObject.extend({
   /**
     The application instance's container. The container stores all of the
     instance-specific state for this application run.
 
-    @property {Ember.Container} container
+    @property {Ngular.Container} container
   */
   container: null,
 
@@ -45,7 +45,7 @@ export default EmberObject.extend({
     The application's registry. The registry contains the classes, templates,
     and other code that makes up the application.
 
-    @property {Ember.Registry} registry
+    @property {Ngular.Registry} registry
   */
   applicationRegistry: null,
 
@@ -53,16 +53,16 @@ export default EmberObject.extend({
     The registry for this application instance. It should use the
     `applicationRegistry` as a fallback.
 
-    @property {Ember.Registry} registry
+    @property {Ngular.Registry} registry
   */
   registry: null,
 
   /**
     The DOM events for which the event dispatcher should listen.
 
-    By default, the application's `Ember.EventDispatcher` listens
+    By default, the application's `Ngular.EventDispatcher` listens
     for a set of standard DOM events, such as `mousedown` and
-    `keyup`, and delegates them to your application's `Ember.View`
+    `keyup`, and delegates them to your application's `Ngular.View`
     instances.
 
     @private
@@ -134,7 +134,7 @@ export default EmberObject.extend({
     custom behavior, such as serializing to a string and sending over an HTTP
     socket rather than appending to DOM.
 
-    @param view {Ember.View} the root-most view
+    @param view {Ngular.View} the root-most view
     @private
   */
   didCreateRootView(view) {

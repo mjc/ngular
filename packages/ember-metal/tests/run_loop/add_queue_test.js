@@ -1,5 +1,5 @@
-import run from 'ember-metal/run_loop';
-import { indexOf } from "ember-metal/array";
+import run from 'ngular-metal/run_loop';
+import { indexOf } from "ngular-metal/array";
 
 var originalQueues = run.queues;
 var queues;

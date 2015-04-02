@@ -1,24 +1,24 @@
 /**
-@module ember
-@submodule ember-views
+@module ngular
+@submodule ngular-views
 */
-import Ember from 'ember-metal/core';
-import { Mixin } from "ember-metal/mixin";
-import { computed } from "ember-metal/computed";
-import { get } from "ember-metal/property_get";
-import { set } from "ember-metal/property_set";
-import setProperties from "ember-metal/set_properties";
-import EmberError from "ember-metal/error";
-import { forEach, removeObject } from "ember-metal/enumerable_utils";
-import { A as emberA } from "ember-runtime/system/native_array";
+import Ngular from 'ngular-metal/core';
+import { Mixin } from "ngular-metal/mixin";
+import { computed } from "ngular-metal/computed";
+import { get } from "ngular-metal/property_get";
+import { set } from "ngular-metal/property_set";
+import setProperties from "ngular-metal/set_properties";
+import NgularError from "ngular-metal/error";
+import { forEach, removeObject } from "ngular-metal/enumerable_utils";
+import { A as ngularA } from "ngular-runtime/system/native_array";
 
 /**
   @class ViewChildViewsSupport
-  @namespace Ember
+  @namespace Ngular
 */
 var childViewsProperty = computed(function() {
   var childViews = this._childViews;
-  var ret = emberA();
+  var ret = ngularA();
 
   forEach(childViews, function(view) {
     var currentChildViews;
@@ -32,7 +32,7 @@ var childViewsProperty = computed(function() {
   });
 
   ret.replace = function (idx, removedCount, addedViews) {
-    throw new EmberError("childViews is immutable");
+    throw new NgularError("childViews is immutable");
   };
 
   return ret;
@@ -69,8 +69,8 @@ var ViewChildViewsSupport = Mixin.create({
     Removes the child view from the parent view.
 
     @method removeChild
-    @param {Ember.View} view
-    @return {Ember.View} receiver
+    @param {Ngular.View} view
+    @return {Ngular.View} receiver
   */
   removeChild(view) {
     // If we're destroying, the entire subtree will be
@@ -101,7 +101,7 @@ var ViewChildViewsSupport = Mixin.create({
     @method createChildView
     @param {Class|String} viewClass
     @param {Hash} [attrs] Attributes to add
-    @return {Ember.View} new instance
+    @return {Ngular.View} new instance
   */
   createChildView(maybeViewClass, _attrs) {
     if (!maybeViewClass) {
@@ -131,12 +131,12 @@ var ViewChildViewsSupport = Mixin.create({
       var fullName = 'view:' + maybeViewClass;
       var ViewKlass = this.container.lookupFactory(fullName);
 
-      Ember.assert("Could not find view: '" + fullName + "'", !!ViewKlass);
+      Ngular.assert("Could not find view: '" + fullName + "'", !!ViewKlass);
 
       view = ViewKlass.create(attrs);
     } else {
       view = maybeViewClass;
-      Ember.assert('You must pass instance or subclass of View', view.isView);
+      Ngular.assert('You must pass instance or subclass of View', view.isView);
 
       attrs.container = this.container;
       setProperties(view, attrs);

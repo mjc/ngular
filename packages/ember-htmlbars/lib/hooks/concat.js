@@ -1,11 +1,11 @@
 /**
-@module ember
-@submodule ember-htmlbars
+@module ngular
+@submodule ngular-htmlbars
 */
 
 import {
   concat as streamConcat
-} from "ember-metal/streams/utils";
+} from "ngular-metal/streams/utils";
 
 export default function concat(env, parts) {
   return streamConcat(parts, '');

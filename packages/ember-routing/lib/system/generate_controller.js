@@ -1,10 +1,10 @@
-import Ember from "ember-metal/core"; // Logger
-import { get } from "ember-metal/property_get";
-import { isArray } from "ember-metal/utils";
+import Ngular from "ngular-metal/core"; // Logger
+import { get } from "ngular-metal/property_get";
+import { isArray } from "ngular-metal/utils";
 
 /**
-@module ember
-@submodule ember-routing
+@module ngular
+@submodule ngular-routing
 */
 
 /**
@@ -18,7 +18,7 @@ import { isArray } from "ember-metal/utils";
   You can customize your generated controllers by defining
   `App.ObjectController` or `App.ArrayController`.
 
-  @for Ember
+  @for Ngular
   @method generateControllerFactory
   @private
 */
@@ -58,7 +58,7 @@ export function generateControllerFactory(container, controllerName, context) {
   is generated, if an object, an object controller otherwise, a basic
   controller is generated.
 
-  @for Ember
+  @for Ngular
   @method generateController
   @private
   @since 1.3.0
@@ -69,7 +69,7 @@ export default function generateController(container, controllerName, context) {
   var instance = container.lookup(fullName);
 
   if (get(instance, 'namespace.LOG_ACTIVE_GENERATION')) {
-    Ember.Logger.info(`generated -> ${fullName}`, { fullName: fullName });
+    Ngular.Logger.info(`generated -> ${fullName}`, { fullName: fullName });
   }
 
   return instance;

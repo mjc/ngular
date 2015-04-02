@@ -1,9 +1,9 @@
-import { isArray } from 'ember-metal/utils';
-QUnit.module("Ember Type Checking");
+import { isArray } from 'ngular-metal/utils';
+QUnit.module("Ngular Type Checking");
 
 var global = this;
 
-QUnit.test("Ember.isArray", function() {
+QUnit.test("Ngular.isArray", function() {
   var numarray      = [1,2,3];
   var number        = 23;
   var strarray      = ["Hello", "Hi"];

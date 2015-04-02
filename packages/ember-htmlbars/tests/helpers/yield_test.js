@@ -1,25 +1,25 @@
 /*jshint newcap:false*/
-import run from "ember-metal/run_loop";
-import EmberView from "ember-views/views/view";
-import { computed } from "ember-metal/computed";
-import { Registry } from "ember-runtime/system/container";
-import { get } from "ember-metal/property_get";
-import { set } from "ember-metal/property_set";
-import { A } from "ember-runtime/system/native_array";
-import Component from "ember-views/views/component";
-import EmberError from "ember-metal/error";
-import helpers from "ember-htmlbars/helpers";
+import run from "ngular-metal/run_loop";
+import NgularView from "ngular-views/views/view";
+import { computed } from "ngular-metal/computed";
+import { Registry } from "ngular-runtime/system/container";
+import { get } from "ngular-metal/property_get";
+import { set } from "ngular-metal/property_set";
+import { A } from "ngular-runtime/system/native_array";
+import Component from "ngular-views/views/component";
+import NgularError from "ngular-metal/error";
+import helpers from "ngular-htmlbars/helpers";
 import {
   registerHelper
-} from "ember-htmlbars/helpers";
-import makeViewHelper from "ember-htmlbars/system/make-view-helper";
+} from "ngular-htmlbars/helpers";
+import makeViewHelper from "ngular-htmlbars/system/make-view-helper";
 
-import compile from "ember-template-compiler/system/compile";
-import { runAppend, runDestroy } from "ember-runtime/tests/utils";
+import compile from "ngular-template-compiler/system/compile";
+import { runAppend, runDestroy } from "ngular-runtime/tests/utils";
 
 var view, registry, container;
 
-QUnit.module("ember-htmlbars: Support for {{yield}} helper", {
+QUnit.module("ngular-htmlbars: Support for {{yield}} helper", {
   setup() {
     registry = new Registry();
     container = registry.container();
@@ -27,7 +27,7 @@ QUnit.module("ember-htmlbars: Support for {{yield}} helper", {
   },
   teardown() {
     run(function() {
-      Ember.TEMPLATES = {};
+      Ngular.TEMPLATES = {};
     });
     runDestroy(view);
     runDestroy(container);
@@ -36,11 +36,11 @@ QUnit.module("ember-htmlbars: Support for {{yield}} helper", {
 });
 
 QUnit.test("a view with a layout set renders its template where the {{yield}} helper appears", function() {
-  var ViewWithLayout = EmberView.extend({
+  var ViewWithLayout = NgularView.extend({
     layout: compile('<div class="wrapper"><h1>{{title}}</h1>{{yield}}</div>')
   });
 
-  view = EmberView.create({
+  view = NgularView.create({
     withLayout: ViewWithLayout,
     template: compile('{{#view view.withLayout title="My Fancy Page"}}<div class="page-body">Show something interesting here</div>{{/view}}')
   });
@@ -54,12 +54,12 @@ QUnit.test("block should work properly even when templates are not hard-coded", 
   registry.register('template:nester', compile('<div class="wrapper"><h1>{{title}}</h1>{{yield}}</div>'));
   registry.register('template:nested', compile('{{#view "with-layout" title="My Fancy Page"}}<div class="page-body">Show something interesting here</div>{{/view}}'));
 
-  registry.register('view:with-layout', EmberView.extend({
+  registry.register('view:with-layout', NgularView.extend({
     container: container,
     layoutName: 'nester'
   }));
 
-  view = EmberView.create({
+  view = NgularView.create({
     container: container,
     templateName: 'nested'
   });
@@ -71,7 +71,7 @@ QUnit.test("block should work properly even when templates are not hard-coded", 
 });
 
 QUnit.test("templates should yield to block, when the yield is embedded in a hierarchy of virtual views", function() {
-  var TimesView = EmberView.extend({
+  var TimesView = NgularView.extend({
     layout: compile('<div class="times">{{#each item in view.index}}{{yield}}{{/each}}</div>'),
     n: null,
     index: computed(function() {
@@ -84,7 +84,7 @@ QUnit.test("templates should yield to block, when the yield is embedded in a hie
     })
   });
 
-  view = EmberView.create({
+  view = NgularView.create({
     timesView: TimesView,
     template: compile('<div id="container"><div class="title">Counting to 5</div>{{#view view.timesView n=5}}<div class="times-item">Hello</div>{{/view}}</div>')
   });
@@ -95,11 +95,11 @@ QUnit.test("templates should yield to block, when the yield is embedded in a hie
 });
 
 QUnit.test("templates should yield to block, when the yield is embedded in a hierarchy of non-virtual views", function() {
-  var NestingView = EmberView.extend({
+  var NestingView = NgularView.extend({
     layout: compile('{{#view tagName="div" classNames="nesting"}}{{yield}}{{/view}}')
   });
 
-  view = EmberView.create({
+  view = NgularView.create({
     nestingView: NestingView,
     template: compile('<div id="container">{{#view view.nestingView}}<div id="block">Hello</div>{{/view}}</div>')
   });
@@ -110,11 +110,11 @@ QUnit.test("templates should yield to block, when the yield is embedded in a hie
 });
 
 QUnit.test("block should not be required", function() {
-  var YieldingView = EmberView.extend({
+  var YieldingView = NgularView.extend({
     layout: compile('{{#view tagName="div" classNames="yielding"}}{{yield}}{{/view}}')
   });
 
-  view = EmberView.create({
+  view = NgularView.create({
     yieldingView: YieldingView,
     template: compile('<div id="container">{{view view.yieldingView}}</div>')
   });
@@ -130,7 +130,7 @@ QUnit.test("yield uses the outer context", function() {
     layout: compile("<p>{{boundText}}</p><p>{{yield}}</p>")
   });
 
-  view = EmberView.create({
+  view = NgularView.create({
     controller: { boundText: "outer", component: component },
     template: compile('{{#view component}}{{boundText}}{{/view}}')
   });
@@ -149,7 +149,7 @@ QUnit.test("yield inside a conditional uses the outer context [DEPRECATED]", fun
     layout: compile("<p>{{boundText}}</p><p>{{#if truthy}}{{#with obj}}{{yield}}{{/with}}{{/if}}</p>")
   });
 
-  view = EmberView.create({
+  view = NgularView.create({
     controller: { boundText: "outer", truthy: true, obj: { component: component, truthy: true, boundText: 'insideWith' } },
     template: compile('{{#with obj}}{{#if truthy}}{{#view component}}{{#if truthy}}{{boundText}}{{/if}}{{/view}}{{/if}}{{/with}}')
   });
@@ -167,7 +167,7 @@ QUnit.test("outer keyword doesn't mask inner component property", function () {
     layout: compile("<p>{{item}}</p><p>{{yield}}</p>")
   });
 
-  view = EmberView.create({
+  view = NgularView.create({
     controller: { boundText: "outer", component: component },
     template: compile('{{#with boundText as item}}{{#view component}}{{item}}{{/view}}{{/with}}')
   });
@@ -183,7 +183,7 @@ QUnit.test("inner keyword doesn't mask yield property", function() {
     layout: compile("{{#with boundText as item}}<p>{{item}}</p><p>{{yield}}</p>{{/with}}")
   });
 
-  view = EmberView.create({
+  view = NgularView.create({
     controller: { item: "outer", component: component },
     template: compile('{{#view component}}{{item}}{{/view}}')
   });
@@ -199,7 +199,7 @@ QUnit.test("can bind a keyword to a component and use it in yield", function() {
     layout: compile("<p>{{content}}</p><p>{{yield}}</p>")
   });
 
-  view = EmberView.create({
+  view = NgularView.create({
     controller: { boundText: "outer", component: component },
     template: compile('{{#with boundText as item}}{{#view component content=item}}{{item}}{{/view}}{{/with}}')
   });
@@ -222,7 +222,7 @@ QUnit.test("yield view should be a virtual view", function() {
     layout: compile('{{yield}}')
   });
 
-  view = EmberView.create({
+  view = NgularView.create({
     template: compile('{{#view component}}{{view includedComponent}}{{/view}}'),
     controller: {
       component: component,
@@ -241,11 +241,11 @@ QUnit.test("yield view should be a virtual view", function() {
 
 
 QUnit.test("adding a layout should not affect the context of normal views", function() {
-  var parentView = EmberView.create({
+  var parentView = NgularView.create({
     context: "ParentContext"
   });
 
-  view = EmberView.create({
+  view = NgularView.create({
     template:     compile("View context: {{this}}"),
     context:      "ViewContext",
     _parentView:  parentView
@@ -271,7 +271,7 @@ QUnit.test("adding a layout should not affect the context of normal views", func
 });
 
 QUnit.test("yield should work for views even if _parentView is null", function() {
-  view = EmberView.create({
+  view = NgularView.create({
     layout:   compile('Layout: {{yield}}'),
     template: compile("View Content")
   });
@@ -285,7 +285,7 @@ QUnit.test("yield should work for views even if _parentView is null", function()
 });
 
 QUnit.test("simple bindings inside of a yielded template should work properly when the yield is nested inside of another view", function() {
-  view = EmberView.create({
+  view = NgularView.create({
     layout:   compile('{{#if view.falsy}}{{else}}{{yield}}{{/if}}'),
     template: compile("{{view.text}}"),
     text: "ohai"
@@ -299,7 +299,7 @@ QUnit.test("simple bindings inside of a yielded template should work properly wh
 });
 
 QUnit.test("nested simple bindings inside of a yielded template should work properly when the yield is nested inside of another view", function() {
-  view = EmberView.create({
+  view = NgularView.create({
     layout:   compile('{{#if view.falsy}}{{else}}{{yield}}{{/if}}'),
     template: compile("{{#if view.falsy}}{{else}}{{view.text}}{{/if}}"),
     text: "ohai"
@@ -312,7 +312,7 @@ QUnit.test("nested simple bindings inside of a yielded template should work prop
   equal(view.$().text(), "ohai");
 });
 
-QUnit.module("ember-htmlbars: Component {{yield}}", {
+QUnit.module("ngular-htmlbars: Component {{yield}}", {
   setup() {},
   teardown() {
     runDestroy(view);
@@ -328,7 +328,7 @@ QUnit.test("yield with nested components (#3220)", function() {
     _yield(context, options, morph) {
       count++;
       if (count > 1) {
-        throw new EmberError('is looping');
+        throw new NgularError('is looping');
       }
 
       return this._super(context, options, morph);
@@ -343,7 +343,7 @@ QUnit.test("yield with nested components (#3220)", function() {
 
   registerHelper('outer-component', makeViewHelper(OuterComponent));
 
-  view = EmberView.create({
+  view = NgularView.create({
     template: compile(
       "{{#outer-component}}Hello world{{/outer-component}}"
     )
@@ -354,13 +354,13 @@ QUnit.test("yield with nested components (#3220)", function() {
   equal(view.$('div > span').text(), "Hello world");
 });
 
-QUnit.test("yield works inside a conditional in a component that has Ember._Metamorph mixed in", function() {
-  var component = Component.extend(Ember._Metamorph, {
+QUnit.test("yield works inside a conditional in a component that has Ngular._Metamorph mixed in", function() {
+  var component = Component.extend(Ngular._Metamorph, {
     item: "inner",
     layout: compile("<p>{{item}}</p>{{#if item}}<p>{{yield}}</p>{{/if}}")
   });
 
-  view = Ember.View.create({
+  view = Ngular.View.create({
     controller: { item: "outer", component: component },
     template: compile('{{#view component}}{{item}}{{/view}}')
   });
@@ -375,7 +375,7 @@ QUnit.test("view keyword works inside component yield", function () {
     layout: compile("<p>{{yield}}</p>")
   });
 
-  view = EmberView.create({
+  view = NgularView.create({
     dummyText: 'hello',
     component: component,
     template: compile('{{#view view.component}}{{view.dummyText}}{{/view}}')

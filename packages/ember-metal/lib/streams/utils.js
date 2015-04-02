@@ -4,7 +4,7 @@ import Stream from "./stream";
  Check whether an object is a stream or not
 
  @public
- @for Ember.stream
+ @for Ngular.stream
  @function isStream
  @param {Object|Stream} object object to check whether it is a stream
  @return {Boolean} `true` if the object is a stream, `false` otherwise
@@ -18,7 +18,7 @@ export function isStream(object) {
  object. If a non-stream object is passed, the function does nothing.
 
  @public
- @for Ember.stream
+ @for Ngular.stream
  @function subscribe
  @param {Object|Stream} object object or stream to potentially subscribe to
  @param {Function} callback function to run when stream value changes
@@ -36,7 +36,7 @@ export function subscribe(object, callback, context) {
  object. If a non-stream object is passed, the function does nothing.
 
  @public
- @for Ember.stream
+ @for Ngular.stream
  @function unsubscribe
  @param {Object|Stream} object object or stream to potentially unsubscribe from
  @param {Function} callback function originally passed to `subscribe()`
@@ -53,7 +53,7 @@ export function unsubscribe(object, callback, context) {
  return the object itself.
 
  @public
- @for Ember.stream
+ @for Ngular.stream
  @function read
  @param {Object|Stream} object object to return the value of
  @return the stream's current value, or the non-stream object itself
@@ -70,7 +70,7 @@ export function read(object) {
  Map an array, replacing any streams with their values.
 
  @public
- @for Ember.stream
+ @for Ngular.stream
  @function readArray
  @param {Array} array The array to read values from
  @return {Array} a new array of the same length with the values of non-stream
@@ -92,7 +92,7 @@ export function readArray(array) {
  stream.
 
  @public
- @for Ember.stream
+ @for Ngular.stream
  @function readHash
  @param {Object} object The hash to read keys and values from
  @return {Object} a new object with the same keys as the passed object. The
@@ -112,7 +112,7 @@ export function readHash(object) {
  Check whether an array contains any stream values
 
  @public
- @for Ember.stream
+ @for Ngular.stream
  @function scanArray
  @param {Array} array array given to a handlebars helper
  @return {Boolean} `true` if the array contains a stream/bound value, `false`
@@ -136,7 +136,7 @@ export function scanArray(array) {
  Check whether a hash has any stream property values
 
  @public
- @for Ember.stream
+ @for Ngular.stream
  @function scanHash
  @param {Object} hash "hash" argument given to a handlebars helper
  @return {Boolean} `true` if the object contains a stream/bound value, `false`
@@ -159,13 +159,13 @@ export function scanHash(hash) {
  Join an array, with any streams replaced by their current values
 
  @public
- @for Ember.stream
+ @for Ngular.stream
  @function concat
  @param {Array} array An array containing zero or more stream objects and
                       zero or more non-stream objects
  @param {String} separator string to be used to join array elements
  @return {String} String with array elements concatenated and joined by the
-                  provided separator, and any stream array members having been
+                  provided separator, and any stream array mngulars having been
                   replaced by the current value of the stream
  */
 export function concat(array, separator) {
@@ -209,7 +209,7 @@ export function concat(array, separator) {
  source was numeric.
 
  @public
- @for Ember.stream
+ @for Ngular.stream
  @function chain
  @param {Object|Stream} value A stream or non-stream object
  @param {Function} fn function to be run when the stream value changes, or to

@@ -1,19 +1,19 @@
-import EmberView from "ember-views/views/view";
-import EmberObject from "ember-runtime/system/object";
-import jQuery from "ember-views/system/jquery";
+import NgularView from "ngular-views/views/view";
+import NgularObject from "ngular-runtime/system/object";
+import jQuery from "ngular-views/system/jquery";
 var trim = jQuery.trim;
 
-import { Registry } from "ember-runtime/system/container";
-import compile from "ember-template-compiler/system/compile";
-import { runAppend, runDestroy } from "ember-runtime/tests/utils";
+import { Registry } from "ngular-runtime/system/container";
+import compile from "ngular-template-compiler/system/compile";
+import { runAppend, runDestroy } from "ngular-runtime/tests/utils";
 
 var MyApp, lookup, view, registry, container;
-var originalLookup = Ember.lookup;
+var originalLookup = Ngular.lookup;
 
 QUnit.module("Support for {{template}} helper", {
   setup() {
-    Ember.lookup = lookup = { Ember: Ember };
-    MyApp = lookup.MyApp = EmberObject.create({});
+    Ngular.lookup = lookup = { Ngular: Ngular };
+    MyApp = lookup.MyApp = NgularObject.create({});
     registry = new Registry();
     container = registry.container();
     registry.optionsForType('template', { instantiate: false });
@@ -22,14 +22,14 @@ QUnit.module("Support for {{template}} helper", {
     runDestroy(view);
     runDestroy(container);
     registry = container = view = null;
-    Ember.lookup = originalLookup;
+    Ngular.lookup = originalLookup;
   }
 });
 
 QUnit.test("should render other templates via the container (DEPRECATED)", function() {
   registry.register('template:sub_template_from_container', compile('sub-template'));
 
-  view = EmberView.create({
+  view = NgularView.create({
     container: container,
     template: compile('This {{template "sub_template_from_container"}} is pretty great.')
   });
@@ -44,11 +44,11 @@ QUnit.test("should render other templates via the container (DEPRECATED)", funct
 QUnit.test("should use the current view's context (DEPRECATED)", function() {
   registry.register('template:person_name', compile("{{firstName}} {{lastName}}"));
 
-  view = EmberView.create({
+  view = NgularView.create({
     container: container,
     template: compile('Who is {{template "person_name"}}?')
   });
-  view.set('controller', EmberObject.create({
+  view.set('controller', NgularObject.create({
     firstName: 'Kris',
     lastName: 'Selden'
   }));

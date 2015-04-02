@@ -1,39 +1,39 @@
 /*globals CustomEvent */
 
-import Ember from "ember-metal/core"; // Ember.ENV.EMBER_LOAD_HOOKS
-import { forEach } from "ember-metal/array";
-import "ember-runtime/system/native_array"; // make sure Ember.A is setup.
+import Ngular from "ngular-metal/core"; // Ngular.ENV.NGULAR_LOAD_HOOKS
+import { forEach } from "ngular-metal/array";
+import "ngular-runtime/system/native_array"; // make sure Ngular.A is setup.
 
 /**
-  @module ember
-  @submodule ember-runtime
+  @module ngular
+  @submodule ngular-runtime
 */
 
-var loadHooks = Ember.ENV.EMBER_LOAD_HOOKS || {};
+var loadHooks = Ngular.ENV.NGULAR_LOAD_HOOKS || {};
 var loaded = {};
 
 /**
-  Detects when a specific package of Ember (e.g. 'Ember.Handlebars')
+  Detects when a specific package of Ngular (e.g. 'Ngular.Handlebars')
   has fully loaded and is available for extension.
 
   The provided `callback` will be called with the `name` passed
   resolved from a string into the object:
 
   ``` javascript
-  Ember.onLoad('Ember.Handlebars' function(hbars) {
+  Ngular.onLoad('Ngular.Handlebars' function(hbars) {
     hbars.registerHelper(...);
   });
   ```
 
   @method onLoad
-  @for Ember
+  @for Ngular
   @param name {String} name of hook
   @param callback {Function} callback to be called
 */
 export function onLoad(name, callback) {
   var object;
 
-  loadHooks[name] = loadHooks[name] || Ember.A();
+  loadHooks[name] = loadHooks[name] || Ngular.A();
   loadHooks[name].pushObject(callback);
 
   if (object = loaded[name]) {
@@ -42,11 +42,11 @@ export function onLoad(name, callback) {
 }
 
 /**
-  Called when an Ember.js package (e.g Ember.Handlebars) has finished
+  Called when an Ngular.js package (e.g Ngular.Handlebars) has finished
   loading. Triggers any callbacks registered for this event.
 
   @method runLoadHooks
-  @for Ember
+  @for Ngular
   @param name {String} name of hook
   @param object {Object} object to pass to callbacks
 */

@@ -1,6 +1,6 @@
-import template from "ember-template-compiler/system/template";
+import template from "ngular-template-compiler/system/template";
 
-QUnit.module('ember-htmlbars: template');
+QUnit.module('ngular-htmlbars: template');
 
 QUnit.test('sets `isTop` on the provided function', function() {
   function test() { }

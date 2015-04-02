@@ -1,11 +1,11 @@
-import { Suite } from 'ember-runtime/tests/suites/suite';
-import EmberObject from "ember-runtime/system/object";
-import {guidFor, generateGuid} from "ember-metal/utils";
-import {computed} from "ember-metal/computed";
-import {get} from "ember-metal/property_get";
-import { addBeforeObserver } from 'ember-metal/observer';
+import { Suite } from 'ngular-runtime/tests/suites/suite';
+import NgularObject from "ngular-runtime/system/object";
+import {guidFor, generateGuid} from "ngular-metal/utils";
+import {computed} from "ngular-metal/computed";
+import {get} from "ngular-metal/property_get";
+import { addBeforeObserver } from 'ngular-metal/observer';
 
-var ObserverClass = EmberObject.extend({
+var ObserverClass = NgularObject.extend({
 
   _keysBefore: null,
   _keys: null,
@@ -65,7 +65,7 @@ var ObserverClass = EmberObject.extend({
     Begins observing the passed key names on the passed object.  Any changes
     on the named properties will be recorded.
 
-    @param {Ember.Enumerable} obj
+    @param {Ngular.Enumerable} obj
       The enumerable to observe.
 
     @returns {Object} receiver
@@ -169,7 +169,7 @@ var EnumerableTests = Suite.extend({
     @param {Array} content
       An array of items to include in the enumerable optionally.
 
-    @returns {Ember.Enumerable} a new enumerable
+    @returns {Ngular.Enumerable} a new enumerable
   */
   newObject: null,
 
@@ -218,7 +218,7 @@ var EnumerableTests = Suite.extend({
     containing the objects in the enumerable.  This is used only for testing
     so performance is not important.
 
-    @param {Ember.Enumerable} enumerable
+    @param {Ngular.Enumerable} enumerable
       The enumerable to convert.
 
     @returns {Array} array of items
@@ -235,7 +235,7 @@ var EnumerableTests = Suite.extend({
     If you do not define this optional method, then mutation-related tests
     will be skipped.
 
-    @param {Ember.Enumerable} enumerable
+    @param {Ngular.Enumerable} enumerable
       The enumerable to mutate
 
     @returns {void}
@@ -280,25 +280,25 @@ var EnumerableTests = Suite.extend({
   observerClass: ObserverClass
 });
 
-import anyTests         from 'ember-runtime/tests/suites/enumerable/any';
-import isAnyTests       from 'ember-runtime/tests/suites/enumerable/is_any';
-import compactTests     from 'ember-runtime/tests/suites/enumerable/compact';
-import containsTests    from 'ember-runtime/tests/suites/enumerable/contains';
-import everyTests       from 'ember-runtime/tests/suites/enumerable/every';
-import filterTests      from 'ember-runtime/tests/suites/enumerable/filter';
-import findTests        from 'ember-runtime/tests/suites/enumerable/find';
-import firstObjectTests from 'ember-runtime/tests/suites/enumerable/firstObject';
-import forEachTests     from 'ember-runtime/tests/suites/enumerable/forEach';
-import mapByTests       from 'ember-runtime/tests/suites/enumerable/mapBy';
-import invokeTests      from 'ember-runtime/tests/suites/enumerable/invoke';
-import lastObjectTests  from 'ember-runtime/tests/suites/enumerable/lastObject';
-import mapTests         from 'ember-runtime/tests/suites/enumerable/map';
-import reduceTests      from 'ember-runtime/tests/suites/enumerable/reduce';
-import rejectTests      from 'ember-runtime/tests/suites/enumerable/reject';
-import sortByTests      from 'ember-runtime/tests/suites/enumerable/sortBy';
-import toArrayTests     from 'ember-runtime/tests/suites/enumerable/toArray';
-import uniqTests        from 'ember-runtime/tests/suites/enumerable/uniq';
-import withoutTests     from 'ember-runtime/tests/suites/enumerable/without';
+import anyTests         from 'ngular-runtime/tests/suites/enumerable/any';
+import isAnyTests       from 'ngular-runtime/tests/suites/enumerable/is_any';
+import compactTests     from 'ngular-runtime/tests/suites/enumerable/compact';
+import containsTests    from 'ngular-runtime/tests/suites/enumerable/contains';
+import everyTests       from 'ngular-runtime/tests/suites/enumerable/every';
+import filterTests      from 'ngular-runtime/tests/suites/enumerable/filter';
+import findTests        from 'ngular-runtime/tests/suites/enumerable/find';
+import firstObjectTests from 'ngular-runtime/tests/suites/enumerable/firstObject';
+import forEachTests     from 'ngular-runtime/tests/suites/enumerable/forEach';
+import mapByTests       from 'ngular-runtime/tests/suites/enumerable/mapBy';
+import invokeTests      from 'ngular-runtime/tests/suites/enumerable/invoke';
+import lastObjectTests  from 'ngular-runtime/tests/suites/enumerable/lastObject';
+import mapTests         from 'ngular-runtime/tests/suites/enumerable/map';
+import reduceTests      from 'ngular-runtime/tests/suites/enumerable/reduce';
+import rejectTests      from 'ngular-runtime/tests/suites/enumerable/reject';
+import sortByTests      from 'ngular-runtime/tests/suites/enumerable/sortBy';
+import toArrayTests     from 'ngular-runtime/tests/suites/enumerable/toArray';
+import uniqTests        from 'ngular-runtime/tests/suites/enumerable/uniq';
+import withoutTests     from 'ngular-runtime/tests/suites/enumerable/without';
 
 EnumerableTests.importModuleTests(anyTests);
 EnumerableTests.importModuleTests(isAnyTests);

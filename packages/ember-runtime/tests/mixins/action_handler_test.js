@@ -1,5 +1,5 @@
-import run from "ember-metal/run_loop";
-import Controller from "ember-runtime/controllers/controller";
+import run from "ngular-metal/run_loop";
+import Controller from "ngular-runtime/controllers/controller";
 
 QUnit.module("ActionHandler");
 

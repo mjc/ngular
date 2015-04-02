@@ -1,15 +1,15 @@
-import "ember";
-import compile from "ember-template-compiler/system/compile";
+import "ngular";
+import compile from "ngular-template-compiler/system/compile";
 
 var Router, router, App, container;
 
 function bootApplication() {
   router = container.lookup('router:main');
-  Ember.run(App, 'advanceReadiness');
+  Ngular.run(App, 'advanceReadiness');
 }
 
 function handleURL(path) {
-  return Ember.run(function() {
+  return Ngular.run(function() {
     return router.handleURL(path).then(function(value) {
       ok(true, 'url: `' + path + '` was handled');
       return value;
@@ -22,8 +22,8 @@ function handleURL(path) {
 
 QUnit.module("Router.map", {
   setup() {
-    Ember.run(function() {
-      App = Ember.Application.create({
+    Ngular.run(function() {
+      App = Ngular.Application.create({
         name: "App",
         rootElement: '#qunit-fixture'
       });
@@ -41,31 +41,31 @@ QUnit.module("Router.map", {
   },
 
   teardown() {
-    Ember.run(function() {
+    Ngular.run(function() {
       App.destroy();
       App = null;
 
-      Ember.TEMPLATES = {};
-      //Ember.Logger.error = originalLoggerError;
+      Ngular.TEMPLATES = {};
+      //Ngular.Logger.error = originalLoggerError;
     });
   }
 });
 
-QUnit.test("Router.map returns an Ember Router class", function () {
+QUnit.test("Router.map returns an Ngular Router class", function () {
   expect(1);
 
   var ret = App.Router.map(function() {
     this.route('hello');
   });
 
-  ok(Ember.Router.detect(ret));
+  ok(Ngular.Router.detect(ret));
 });
 
 QUnit.test("Router.map can be called multiple times", function () {
   expect(4);
 
-  Ember.TEMPLATES.hello = compile("Hello!");
-  Ember.TEMPLATES.goodbye = compile("Goodbye!");
+  Ngular.TEMPLATES.hello = compile("Hello!");
+  Ngular.TEMPLATES.goodbye = compile("Goodbye!");
 
   App.Router.map(function() {
     this.route('hello');
@@ -79,9 +79,9 @@ QUnit.test("Router.map can be called multiple times", function () {
 
   handleURL('/hello');
 
-  equal(Ember.$('#qunit-fixture').text(), "Hello!", "The hello template was rendered");
+  equal(Ngular.$('#qunit-fixture').text(), "Hello!", "The hello template was rendered");
 
   handleURL('/goodbye');
 
-  equal(Ember.$('#qunit-fixture').text(), "Goodbye!", "The goodbye template was rendered");
+  equal(Ngular.$('#qunit-fixture').text(), "Goodbye!", "The goodbye template was rendered");
 });

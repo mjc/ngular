@@ -1,12 +1,12 @@
-import { get } from "ember-metal/property_get";
-import run from "ember-metal/run_loop";
-import EmberView from "ember-views/views/view";
-import ContainerView from "ember-views/views/container_view";
-import { equalHTML } from "ember-metal-views/tests/test_helpers";
+import { get } from "ngular-metal/property_get";
+import run from "ngular-metal/run_loop";
+import NgularView from "ngular-views/views/view";
+import ContainerView from "ngular-views/views/container_view";
+import { equalHTML } from "ngular-metal-views/tests/test_helpers";
 
 var view;
 
-QUnit.module("Ember.View#createElement", {
+QUnit.module("Ngular.View#createElement", {
   teardown() {
     run(function() {
       view.destroy();
@@ -17,7 +17,7 @@ QUnit.module("Ember.View#createElement", {
 QUnit.test("returns the receiver", function() {
   var ret;
 
-  view = EmberView.create();
+  view = NgularView.create();
 
   run(function() {
     ret = view.createElement();
@@ -29,7 +29,7 @@ QUnit.test("returns the receiver", function() {
 QUnit.test('should assert if `tagName` is an empty string and `classNameBindings` are specified', function() {
   expect(1);
 
-  view = EmberView.create({
+  view = NgularView.create({
     tagName: '',
     foo: true,
     classNameBindings: ['foo:is-foo:is-bar']
@@ -43,7 +43,7 @@ QUnit.test('should assert if `tagName` is an empty string and `classNameBindings
 });
 
 QUnit.test("calls render and turns resultant string into element", function() {
-  view = EmberView.create({
+  view = NgularView.create({
     tagName: 'span',
 
     render(buffer) {
@@ -68,7 +68,7 @@ QUnit.test("calls render and parses the buffer string in the right context", fun
 
   view = ContainerView.create({
     tagName: 'table',
-    childViews: [EmberView.create({
+    childViews: [NgularView.create({
       tagName: '',
       render(buffer) {
         // Emulate a metamorph
@@ -97,13 +97,13 @@ QUnit.test("does not wrap many tr children in tbody elements", function() {
   view = ContainerView.create({
     tagName: 'table',
     childViews: [
-      EmberView.create({
+      NgularView.create({
         tagName: '',
         render(buffer) {
           // Emulate a metamorph
           buffer.push("<script></script><tr><td>snorfblax</td></tr>");
         } }),
-      EmberView.create({
+      NgularView.create({
         tagName: '',
         render(buffer) {
           // Emulate a metamorph
@@ -128,7 +128,7 @@ QUnit.test("generated element include HTML from child views as well", function()
   expectDeprecation("Setting `childViews` on a Container is deprecated.");
 
   view = ContainerView.create({
-    childViews: [EmberView.create({ elementId: "foo" })]
+    childViews: [NgularView.create({ elementId: "foo" })]
   });
 
   run(function() {

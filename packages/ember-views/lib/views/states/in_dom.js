@@ -1,12 +1,12 @@
-import create from 'ember-metal/platform/create';
-import merge from "ember-metal/merge";
-import EmberError from "ember-metal/error";
-import { addBeforeObserver } from 'ember-metal/observer';
+import create from 'ngular-metal/platform/create';
+import merge from "ngular-metal/merge";
+import NgularError from "ngular-metal/error";
+import { addBeforeObserver } from 'ngular-metal/observer';
 
-import hasElement from "ember-views/views/states/has_element";
+import hasElement from "ngular-views/views/states/has_element";
 /**
-@module ember
-@submodule ember-views
+@module ngular
+@submodule ngular-views
 */
 
 var inDOM = create(hasElement);
@@ -14,14 +14,14 @@ var inDOM = create(hasElement);
 merge(inDOM, {
   enter(view) {
     // Register the view for event handling. This hash is used by
-    // Ember.EventDispatcher to dispatch incoming events.
+    // Ngular.EventDispatcher to dispatch incoming events.
     if (!view.isVirtual) {
       view._register();
     }
 
-    Ember.runInDebug(function() {
+    Ngular.runInDebug(function() {
       addBeforeObserver(view, 'elementId', function() {
-        throw new EmberError("Changing a view's elementId after creation is not allowed");
+        throw new NgularError("Changing a view's elementId after creation is not allowed");
       });
     });
   },

@@ -1,4 +1,4 @@
-import { defineProperty } from 'ember-metal/platform/define_property';
+import { defineProperty } from 'ngular-metal/platform/define_property';
 
 var defineProperties = Object.defineProperties;
 

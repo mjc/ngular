@@ -2,7 +2,7 @@
 
 /**
 @class platform
-@namespace Ember
+@namespace Ngular
 @static
 */
 

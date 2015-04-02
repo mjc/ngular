@@ -1,12 +1,12 @@
-import { computed } from "ember-metal/computed";
-import { addObserver } from "ember-metal/observer";
-import EmberObject from "ember-runtime/system/object";
-import { testBoth } from "ember-metal/tests/props_helper";
+import { computed } from "ngular-metal/computed";
+import { addObserver } from "ngular-metal/observer";
+import NgularObject from "ngular-runtime/system/object";
+import { testBoth } from "ngular-metal/tests/props_helper";
 
 QUnit.module('mixins/observable');
 
 QUnit.test('should be able to use getProperties to get a POJO of provided keys', function() {
-  var obj = EmberObject.create({
+  var obj = NgularObject.create({
     firstName: "Steve",
     lastName: "Jobs",
     companyName: "Apple, Inc."
@@ -18,7 +18,7 @@ QUnit.test('should be able to use getProperties to get a POJO of provided keys',
 });
 
 QUnit.test('should be able to use getProperties with array parameter to get a POJO of provided keys', function() {
-  var obj = EmberObject.create({
+  var obj = NgularObject.create({
     firstName: "Steve",
     lastName: "Jobs",
     companyName: "Apple, Inc."
@@ -30,7 +30,7 @@ QUnit.test('should be able to use getProperties with array parameter to get a PO
 });
 
 QUnit.test('should be able to use setProperties to set multiple properties at once', function() {
-  var obj = EmberObject.create({
+  var obj = NgularObject.create({
     firstName: "Steve",
     lastName: "Jobs",
     companyName: "Apple, Inc."
@@ -43,7 +43,7 @@ QUnit.test('should be able to use setProperties to set multiple properties at on
 
 testBoth('calling setProperties completes safely despite exceptions', function(get, set) {
   var exc = new Error("Something unexpected happened!");
-  var obj = EmberObject.createWithMixins({
+  var obj = NgularObject.createWithMixins({
     firstName: "Steve",
     lastName: "Jobs",
     companyName: computed({
@@ -72,7 +72,7 @@ testBoth('calling setProperties completes safely despite exceptions', function(g
 });
 
 testBoth("should be able to retrieve cached values of computed properties without invoking the computed property", function(get) {
-  var obj = EmberObject.createWithMixins({
+  var obj = NgularObject.createWithMixins({
     foo: computed(function() {
       return "foo";
     }),
@@ -90,7 +90,7 @@ testBoth("should be able to retrieve cached values of computed properties withou
 });
 
 QUnit.test('incrementProperty should work even if value is number in string', function() {
-  var obj = EmberObject.create({
+  var obj = NgularObject.create({
     age: "24"
   });
   obj.incrementProperty('age');

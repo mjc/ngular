@@ -1,5 +1,5 @@
-import { guidFor } from "ember-metal/utils";
-import { sendEvent } from "ember-metal/events";
+import { guidFor } from "ngular-metal/utils";
+import { sendEvent } from "ngular-metal/events";
 
 /*
   this.observerSet = {

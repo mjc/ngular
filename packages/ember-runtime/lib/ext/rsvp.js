@@ -1,38 +1,38 @@
 /* globals RSVP:true */
 
-import Ember from 'ember-metal/core';
-import Logger from 'ember-metal/logger';
-import run from "ember-metal/run_loop";
+import Ngular from 'ngular-metal/core';
+import Logger from 'ngular-metal/logger';
+import run from "ngular-metal/run_loop";
 import * as RSVP from 'rsvp';
 
-var testModuleName = 'ember-testing/test';
+var testModuleName = 'ngular-testing/test';
 var Test;
 
 var asyncStart = function() {
-  if (Ember.Test && Ember.Test.adapter) {
-    Ember.Test.adapter.asyncStart();
+  if (Ngular.Test && Ngular.Test.adapter) {
+    Ngular.Test.adapter.asyncStart();
   }
 };
 
 var asyncEnd = function() {
-  if (Ember.Test && Ember.Test.adapter) {
-    Ember.Test.adapter.asyncEnd();
+  if (Ngular.Test && Ngular.Test.adapter) {
+    Ngular.Test.adapter.asyncEnd();
   }
 };
 
 RSVP.configure('async', function(callback, promise) {
   var async = !run.currentRunLoop;
 
-  if (Ember.testing && async) { asyncStart(); }
+  if (Ngular.testing && async) { asyncStart(); }
 
   run.backburner.schedule('actions', function() {
-    if (Ember.testing && async) { asyncEnd(); }
+    if (Ngular.testing && async) { asyncEnd(); }
     callback(promise);
   });
 });
 
 RSVP.Promise.prototype.fail = function(callback, label) {
-  Ember.deprecate('RSVP.Promise.fail has been renamed as RSVP.Promise.catch');
+  Ngular.deprecate('RSVP.Promise.fail has been renamed as RSVP.Promise.catch');
   return this['catch'](callback, label);
 };
 
@@ -51,9 +51,9 @@ export function onerrorDefault(e) {
   }
 
   if (error && error.name !== 'TransitionAborted') {
-    if (Ember.testing) {
+    if (Ngular.testing) {
       // ES6TODO: remove when possible
-      if (!Test && Ember.__loader.registry[testModuleName]) {
+      if (!Test && Ngular.__loader.registry[testModuleName]) {
         Test = requireModule(testModuleName)['default'];
       }
 
@@ -63,8 +63,8 @@ export function onerrorDefault(e) {
       } else {
         throw error;
       }
-    } else if (Ember.onerror) {
-      Ember.onerror(error);
+    } else if (Ngular.onerror) {
+      Ngular.onerror(error);
     } else {
       Logger.error(error.stack);
     }

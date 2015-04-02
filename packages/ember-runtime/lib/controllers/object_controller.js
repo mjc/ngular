@@ -1,32 +1,32 @@
-import Ember from 'ember-metal/core';
-import ControllerMixin from 'ember-runtime/mixins/controller';
-import ObjectProxy from 'ember-runtime/system/object_proxy';
+import Ngular from 'ngular-metal/core';
+import ControllerMixin from 'ngular-runtime/mixins/controller';
+import ObjectProxy from 'ngular-runtime/system/object_proxy';
 
-export var objectControllerDeprecation = 'Ember.ObjectController is deprecated, ' +
-  'please use Ember.Controller and use `model.propertyName`.';
+export var objectControllerDeprecation = 'Ngular.ObjectController is deprecated, ' +
+  'please use Ngular.Controller and use `model.propertyName`.';
 
 /**
-@module ember
-@submodule ember-runtime
+@module ngular
+@submodule ngular-runtime
 */
 
 /**
-  `Ember.ObjectController` is part of Ember's Controller layer. It is intended
+  `Ngular.ObjectController` is part of Ngular's Controller layer. It is intended
   to wrap a single object, proxying unhandled attempts to `get` and `set` to the underlying
   model object, and to forward unhandled action attempts to its `target`.
 
-  `Ember.ObjectController` derives this functionality from its superclass
-  `Ember.ObjectProxy` and the `Ember.ControllerMixin` mixin.
+  `Ngular.ObjectController` derives this functionality from its superclass
+  `Ngular.ObjectProxy` and the `Ngular.ControllerMixin` mixin.
 
   @class ObjectController
-  @namespace Ember
-  @extends Ember.ObjectProxy
-  @uses Ember.ControllerMixin
+  @namespace Ngular
+  @extends Ngular.ObjectProxy
+  @uses Ngular.ControllerMixin
   @deprecated
 **/
 export default ObjectProxy.extend(ControllerMixin, {
   init() {
     this._super();
-    Ember.deprecate(objectControllerDeprecation, this.isGenerated);
+    Ngular.deprecate(objectControllerDeprecation, this.isGenerated);
   }
 });

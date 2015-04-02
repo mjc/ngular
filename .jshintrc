@@ -3,7 +3,7 @@
         "QUnit",
         "define",
         "console",
-        "Ember",
+        "Ngular",
         "DS",
         "Handlebars",
         "Metamorph",

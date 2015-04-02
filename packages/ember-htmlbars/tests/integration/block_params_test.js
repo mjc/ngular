@@ -1,11 +1,11 @@
 import Registry from "container/registry";
-import run from "ember-metal/run_loop";
-import ComponentLookup from 'ember-views/component_lookup';
-import View from "ember-views/views/view";
-import compile from "ember-template-compiler/system/compile";
-import helpers from "ember-htmlbars/helpers";
-import { registerHelper } from "ember-htmlbars/helpers";
-import { runAppend, runDestroy } from "ember-runtime/tests/utils";
+import run from "ngular-metal/run_loop";
+import ComponentLookup from 'ngular-views/component_lookup';
+import View from "ngular-views/views/view";
+import compile from "ngular-template-compiler/system/compile";
+import helpers from "ngular-htmlbars/helpers";
+import { registerHelper } from "ngular-htmlbars/helpers";
+import { runAppend, runDestroy } from "ngular-runtime/tests/utils";
 
 var registry, container, view;
 
@@ -20,7 +20,7 @@ function aliasHelper(params, hash, options, env) {
   });
 }
 
-QUnit.module("ember-htmlbars: block params", {
+QUnit.module("ngular-htmlbars: block params", {
   setup() {
     registerHelper('alias', aliasHelper);
 

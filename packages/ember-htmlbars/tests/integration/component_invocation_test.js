@@ -1,9 +1,9 @@
-import EmberView from "ember-views/views/view";
+import NgularView from "ngular-views/views/view";
 import Registry from "container/registry";
-import jQuery from "ember-views/system/jquery";
-import compile from "ember-template-compiler/system/compile";
-import ComponentLookup from 'ember-views/component_lookup';
-import { runAppend, runDestroy } from "ember-runtime/tests/utils";
+import jQuery from "ngular-views/system/jquery";
+import compile from "ngular-template-compiler/system/compile";
+import ComponentLookup from 'ngular-views/component_lookup';
+import { runAppend, runDestroy } from "ngular-runtime/tests/utils";
 
 var registry, container, view;
 
@@ -30,7 +30,7 @@ QUnit.test('non-block without properties', function() {
 
   registry.register('template:components/non-block', compile('In layout'));
 
-  view = EmberView.extend({
+  view = NgularView.extend({
     template: compile('{{non-block}}'),
     container: container
   }).create();
@@ -45,7 +45,7 @@ QUnit.test('block without properties', function() {
 
   registry.register('template:components/with-block', compile('In layout - {{yield}}'));
 
-  view = EmberView.extend({
+  view = NgularView.extend({
     template: compile('{{#with-block}}In template{{/with-block}}'),
     container: container
   }).create();
@@ -60,7 +60,7 @@ QUnit.test('non-block with properties', function() {
 
   registry.register('template:components/non-block', compile('In layout - someProp: {{someProp}}'));
 
-  view = EmberView.extend({
+  view = NgularView.extend({
     template: compile('{{non-block someProp="something here"}}'),
     container: container
   }).create();
@@ -75,7 +75,7 @@ QUnit.test('block with properties', function() {
 
   registry.register('template:components/with-block', compile('In layout - someProp: {{someProp}} - {{yield}}'));
 
-  view = EmberView.extend({
+  view = NgularView.extend({
     template: compile('{{#with-block someProp="something here"}}In template{{/with-block}}'),
     container: container
   }).create();
@@ -85,13 +85,13 @@ QUnit.test('block with properties', function() {
   equal(jQuery('#qunit-fixture').text(), 'In layout - someProp: something here - In template');
 });
 
-if (Ember.FEATURES.isEnabled('ember-views-component-block-info')) {
+if (Ngular.FEATURES.isEnabled('ngular-views-component-block-info')) {
   QUnit.test('`Component.prototype.hasBlock` when block supplied', function() {
     expect(1);
 
     registry.register('template:components/with-block', compile('{{#if hasBlock}}{{yield}}{{else}}No Block!{{/if}}'));
 
-    view = EmberView.extend({
+    view = NgularView.extend({
       template: compile('{{#with-block}}In template{{/with-block}}'),
       container: container
     }).create();
@@ -106,7 +106,7 @@ if (Ember.FEATURES.isEnabled('ember-views-component-block-info')) {
 
     registry.register('template:components/with-block', compile('{{#if hasBlock}}{{yield}}{{else}}No Block!{{/if}}'));
 
-    view = EmberView.extend({
+    view = NgularView.extend({
       template: compile('{{with-block}}'),
       container: container
     }).create();
@@ -121,7 +121,7 @@ if (Ember.FEATURES.isEnabled('ember-views-component-block-info')) {
 
     registry.register('template:components/with-block', compile('{{#if hasBlockParams}}{{yield this}} - In Component{{else}}{{yield}} No Block!{{/if}}'));
 
-    view = EmberView.extend({
+    view = NgularView.extend({
       template: compile('{{#with-block as |something|}}In template{{/with-block}}'),
       container: container
     }).create();
@@ -136,7 +136,7 @@ if (Ember.FEATURES.isEnabled('ember-views-component-block-info')) {
 
     registry.register('template:components/with-block', compile('{{#if hasBlockParams}}{{yield this}}{{else}}{{yield}} No Block Param!{{/if}}'));
 
-    view = EmberView.extend({
+    view = NgularView.extend({
       template: compile('{{#with-block}}In block{{/with-block}}'),
       container: container
     }).create();

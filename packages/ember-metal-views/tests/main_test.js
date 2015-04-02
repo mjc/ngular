@@ -3,11 +3,11 @@ import {
   equalHTML,
   setElementText,
   testsFor
-} from "ember-metal-views/tests/test_helpers";
+} from "ngular-metal-views/tests/test_helpers";
 
 var view;
 
-testsFor("ember-metal-views", {
+testsFor("ngular-metal-views", {
   teardown(renderer) {
     if (view) { renderer.removeAndDestroy(view); }
     view = null;

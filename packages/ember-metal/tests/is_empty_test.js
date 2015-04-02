@@ -1,12 +1,12 @@
-import isEmpty from 'ember-metal/is_empty';
+import isEmpty from 'ngular-metal/is_empty';
 import {
   Map,
   OrderedSet
-} from 'ember-metal/map';
+} from 'ngular-metal/map';
 
-QUnit.module("Ember.isEmpty");
+QUnit.module("Ngular.isEmpty");
 
-QUnit.test("Ember.isEmpty", function() {
+QUnit.test("Ngular.isEmpty", function() {
   var string = "string";
   var fn = function() {};
   var object = { length: 0 };
@@ -24,14 +24,14 @@ QUnit.test("Ember.isEmpty", function() {
   equal(true, isEmpty(object), "for an Object that has zero 'length'");
 });
 
-QUnit.test("Ember.isEmpty Ember.Map", function() {
+QUnit.test("Ngular.isEmpty Ngular.Map", function() {
   var map = new Map();
   equal(true, isEmpty(map), "Empty map is empty");
   map.set('foo', 'bar');
   equal(false, isEmpty(map), "Map is not empty");
 });
 
-QUnit.test("Ember.isEmpty Ember.OrderedSet", function() {
+QUnit.test("Ngular.isEmpty Ngular.OrderedSet", function() {
   var orderedSet = new OrderedSet();
   equal(true, isEmpty(orderedSet), "Empty ordered set is empty");
   orderedSet.add('foo');

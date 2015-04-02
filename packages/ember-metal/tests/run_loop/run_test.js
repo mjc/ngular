@@ -1,8 +1,8 @@
-import run from 'ember-metal/run_loop';
+import run from 'ngular-metal/run_loop';
 
 QUnit.module('system/run_loop/run_test');
 
-QUnit.test('Ember.run invokes passed function, returning value', function() {
+QUnit.test('Ngular.run invokes passed function, returning value', function() {
   var obj = {
     foo() { return [this.bar, 'FOO']; },
     bar: 'BAR',

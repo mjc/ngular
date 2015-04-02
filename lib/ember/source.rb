@@ -1,6 +1,6 @@
-require 'ember/version'
+require 'ngular/version'
 
-module Ember
+module Ngular
   module Source
     def self.bundled_path_for(distro)
       File.expand_path("../../../dist/#{distro}", __FILE__)

@@ -1,7 +1,7 @@
-import EnumerableUtils from "ember-metal/enumerable_utils";
-import {get} from "ember-metal/property_get";
-import {addObserver} from "ember-metal/observer";
-import Set from "ember-runtime/system/set";
+import EnumerableUtils from "ngular-metal/enumerable_utils";
+import {get} from "ngular-metal/property_get";
+import {addObserver} from "ngular-metal/observer";
+import Set from "ngular-runtime/system/set";
 
 QUnit.module('Set.init');
 

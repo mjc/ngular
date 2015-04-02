@@ -1,13 +1,13 @@
-import _default from "ember-views/views/states/default";
-import EmberError from "ember-metal/error";
+import _default from "ngular-views/views/states/default";
+import NgularError from "ngular-metal/error";
 
-import jQuery from "ember-views/system/jquery";
-import create from 'ember-metal/platform/create';
-import merge from "ember-metal/merge";
+import jQuery from "ngular-views/system/jquery";
+import create from 'ngular-metal/platform/create';
+import merge from "ngular-metal/merge";
 
 /**
-@module ember
-@submodule ember-views
+@module ngular
+@submodule ngular-views
 */
 
 var inBuffer = create(_default);
@@ -25,7 +25,7 @@ merge(inBuffer, {
   // when a view is rendered in a buffer, rerendering it simply
   // replaces the existing buffer with a new one
   rerender(view) {
-    throw new EmberError("Something you did caused a view to re-render after it rendered but before it was inserted into the DOM.");
+    throw new NgularError("Something you did caused a view to re-render after it rendered but before it was inserted into the DOM.");
   },
 
   // when a view is rendered in a buffer, appending a child
@@ -56,7 +56,7 @@ merge(inBuffer, {
     _attrNodes.push(attrNode);
 
     if (!attrNode._morph) {
-      Ember.assert("bound attributes that do not have a morph must have a buffer", !!buffer);
+      Ngular.assert("bound attributes that do not have a morph must have a buffer", !!buffer);
       buffer.pushAttrNode(attrNode);
     }
 

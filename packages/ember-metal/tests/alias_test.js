@@ -1,14 +1,14 @@
-import alias from "ember-metal/alias";
-import { defineProperty } from "ember-metal/properties";
-import { get } from 'ember-metal/property_get';
-import { set } from 'ember-metal/property_set';
-import { meta } from 'ember-metal/utils';
-import { isWatching } from "ember-metal/watching";
-import { addObserver, removeObserver } from "ember-metal/observer";
+import alias from "ngular-metal/alias";
+import { defineProperty } from "ngular-metal/properties";
+import { get } from 'ngular-metal/property_get';
+import { set } from 'ngular-metal/property_set';
+import { meta } from 'ngular-metal/utils';
+import { isWatching } from "ngular-metal/watching";
+import { addObserver, removeObserver } from "ngular-metal/observer";
 
 var obj, count;
 
-QUnit.module('ember-metal/alias', {
+QUnit.module('ngular-metal/alias', {
   setup() {
     obj = { foo: { faz: 'FOO' } };
     count = 0;

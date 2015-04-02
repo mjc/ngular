@@ -1,27 +1,27 @@
 /*global jQuery*/
-import Ember from 'ember-metal/core';
+import Ngular from 'ngular-metal/core';
 import {
   canDefineNonEnumerableProperties
-} from 'ember-metal/platform/define_property';
-import create from 'ember-metal/platform/create';
+} from 'ngular-metal/platform/define_property';
+import create from 'ngular-metal/platform/create';
 import {
   getMeta,
   setMeta,
   meta,
   metaPath
-} from 'ember-metal/utils';
+} from 'ngular-metal/utils';
 
-QUnit.module("Ember.meta");
+QUnit.module("Ngular.meta");
 
 QUnit.test("should return the same hash for an object", function() {
   var obj = {};
 
   meta(obj).foo = "bar";
 
-  equal(meta(obj).foo, "bar", "returns same hash with multiple calls to Ember.meta()");
+  equal(meta(obj).foo, "bar", "returns same hash with multiple calls to Ngular.meta()");
 });
 
-QUnit.module("Ember.metaPath");
+QUnit.module("Ngular.metaPath");
 
 QUnit.test("should not create nested objects if writable is false", function() {
   var obj = {};
@@ -52,7 +52,7 @@ QUnit.test("getMeta and setMeta", function() {
   equal(getMeta(obj, 'foo'), "bar", "foo property on meta now exists");
 });
 
-QUnit.module("Ember.meta enumerable");
+QUnit.module("Ngular.meta enumerable");
 
 if (canDefineNonEnumerableProperties) {
   QUnit.test("meta is not enumerable", function () {
@@ -76,9 +76,9 @@ if (canDefineNonEnumerableProperties) {
     }
   });
 } else {
-  // Tests fix for https://github.com/emberjs/ember.js/issues/344
+  // Tests fix for https://github.com/ngularjs/ngular.js/issues/344
   // This is primarily for older browsers such as IE8
-  if (Ember.imports.jQuery) {
+  if (Ngular.imports.jQuery) {
     QUnit.test("meta is not jQuery.isPlainObject", function () {
       var proto, obj;
       proto = { foo: 'bar' };

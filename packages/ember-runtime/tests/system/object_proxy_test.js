@@ -1,8 +1,8 @@
-import { addObserver, removeObserver } from "ember-metal/observer";
-import { computed } from "ember-metal/computed";
-import { isWatching } from "ember-metal/watching";
-import { testBoth } from "ember-metal/tests/props_helper";
-import ObjectProxy from "ember-runtime/system/object_proxy";
+import { addObserver, removeObserver } from "ngular-metal/observer";
+import { computed } from "ngular-metal/computed";
+import { isWatching } from "ngular-metal/watching";
+import { testBoth } from "ngular-metal/tests/props_helper";
+import ObjectProxy from "ngular-runtime/system/object_proxy";
 
 QUnit.module("ObjectProxy");
 
@@ -187,7 +187,7 @@ testBoth("should transition between watched and unwatched strategies", function(
 testBoth('setting `undefined` to a proxied content property should override its existing value', function(get, set) {
   var proxyObject = ObjectProxy.create({
     content: {
-      prop: 'emberjs'
+      prop: 'ngularjs'
     }
   });
   set(proxyObject, 'prop', undefined);

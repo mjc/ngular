@@ -1,15 +1,15 @@
-/*globals EmberDev */
+/*globals NgularDev */
 
-import { get } from "ember-metal/property_get";
-import { set } from "ember-metal/property_set";
-import run from "ember-metal/run_loop";
+import { get } from "ngular-metal/property_get";
+import { set } from "ngular-metal/property_set";
+import run from "ngular-metal/run_loop";
 
-import EmberView from "ember-views/views/view";
-import ContainerView from "ember-views/views/container_view";
+import NgularView from "ngular-views/views/view";
+import ContainerView from "ngular-views/views/container_view";
 
 var parentView, view;
 
-QUnit.module("Ember.View#element", {
+QUnit.module("Ngular.View#element", {
   teardown() {
     run(function() {
       if (parentView) { parentView.destroy(); }
@@ -19,7 +19,7 @@ QUnit.module("Ember.View#element", {
 });
 
 QUnit.test("returns null if the view has no element and no parent view", function() {
-  view = EmberView.create();
+  view = NgularView.create();
   equal(get(view, 'parentView'), null, 'precond - has no parentView');
   equal(get(view, 'element'), null, 'has no element');
 });
@@ -28,7 +28,7 @@ QUnit.test("returns null if the view has no element and parent view has no eleme
   expectDeprecation("Setting `childViews` on a Container is deprecated.");
 
   parentView = ContainerView.create({
-    childViews: [EmberView.extend()]
+    childViews: [NgularView.extend()]
   });
   view = get(parentView, 'childViews').objectAt(0);
 
@@ -38,7 +38,7 @@ QUnit.test("returns null if the view has no element and parent view has no eleme
 });
 
 QUnit.test("returns element if you set the value", function() {
-  view = EmberView.create();
+  view = NgularView.create();
   equal(get(view, 'element'), null, 'precond- has no element');
 
   var dom = document.createElement('div');
@@ -47,9 +47,9 @@ QUnit.test("returns element if you set the value", function() {
   equal(get(view, 'element'), dom, 'now has set element');
 });
 
-if (EmberDev && !EmberDev.runningProdBuild) {
+if (NgularDev && !NgularDev.runningProdBuild) {
   QUnit.test("should not allow the elementId to be changed after inserted", function() {
-    view = EmberView.create({
+    view = NgularView.create({
       elementId: 'one'
     });
 

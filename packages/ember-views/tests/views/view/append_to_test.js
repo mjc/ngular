@@ -1,15 +1,15 @@
-import { get } from "ember-metal/property_get";
-import run from "ember-metal/run_loop";
+import { get } from "ngular-metal/property_get";
+import run from "ngular-metal/run_loop";
 
-import jQuery from "ember-views/system/jquery";
-import EmberView from "ember-views/views/view";
-import ContainerView from "ember-views/views/container_view";
+import jQuery from "ngular-views/system/jquery";
+import NgularView from "ngular-views/views/view";
+import ContainerView from "ngular-views/views/container_view";
 
 var View, view, willDestroyCalled, childView;
 
-QUnit.module("EmberView - append() and appendTo()", {
+QUnit.module("NgularView - append() and appendTo()", {
   setup() {
-    View = EmberView.extend({});
+    View = NgularView.extend({});
   },
 
   teardown() {
@@ -74,7 +74,7 @@ QUnit.test("append calls willInsertElement and didInsertElement callbacks", func
       didInsertElementCalled = true;
     },
     render(buffer) {
-      this.appendChild(EmberView.create({
+      this.appendChild(NgularView.create({
         willInsertElement() {
           willInsertElementCalledInChild = true;
         }
@@ -115,7 +115,7 @@ QUnit.test("remove removes an element from the DOM", function() {
   });
 
   ok(jQuery("#" + get(view, 'elementId')).length === 0, "remove removes an element from the DOM");
-  ok(EmberView.views[get(view, 'elementId')] === undefined, "remove does not remove the view from the view hash");
+  ok(NgularView.views[get(view, 'elementId')] === undefined, "remove does not remove the view from the view hash");
   ok(!get(view, 'element'), "remove nulls out the element");
   equal(willDestroyCalled, 1, "the willDestroyElement hook was called once");
 });
@@ -142,19 +142,19 @@ QUnit.test("destroy more forcibly removes the view", function() {
   });
 
   ok(jQuery("#" + get(view, 'elementId')).length === 0, "destroy removes an element from the DOM");
-  ok(EmberView.views[get(view, 'elementId')] === undefined, "destroy removes a view from the global views hash");
+  ok(NgularView.views[get(view, 'elementId')] === undefined, "destroy removes a view from the global views hash");
   equal(get(view, 'isDestroyed'), true, "the view is marked as destroyed");
   ok(!get(view, 'element'), "the view no longer has an element");
   equal(willDestroyCalled, 1, "the willDestroyElement hook was called once");
 });
 
-QUnit.module("EmberView - append() and appendTo() in a view hierarchy", {
+QUnit.module("NgularView - append() and appendTo() in a view hierarchy", {
   setup() {
     expectDeprecation("Setting `childViews` on a Container is deprecated.");
 
     View = ContainerView.extend({
       childViews: ['child'],
-      child: EmberView.extend({
+      child: NgularView.extend({
         elementId: 'child'
       })
     });
@@ -197,7 +197,7 @@ QUnit.test("should be added to the document body when calling append()", functio
   ok(viewElem.length > 0, "creates and appends the view's element");
 });
 
-QUnit.module("EmberView - removing views in a view hierarchy", {
+QUnit.module("NgularView - removing views in a view hierarchy", {
   setup() {
     expectDeprecation("Setting `childViews` on a Container is deprecated.");
 
@@ -205,7 +205,7 @@ QUnit.module("EmberView - removing views in a view hierarchy", {
 
     view = ContainerView.create({
       childViews: ['child'],
-      child: EmberView.create({
+      child: NgularView.create({
         willDestroyElement() {
           willDestroyCalled++;
         }
@@ -237,7 +237,7 @@ QUnit.test("remove removes child elements from the DOM", function() {
   });
 
   ok(jQuery("#" + get(childView, 'elementId')).length === 0, "remove removes child elements the DOM");
-  ok(EmberView.views[get(childView, 'elementId')] === undefined, "remove does not remove child views from the view hash");
+  ok(NgularView.views[get(childView, 'elementId')] === undefined, "remove does not remove child views from the view hash");
   ok(!get(childView, 'element'), "remove nulls out child elements");
   equal(willDestroyCalled, 1, "the willDestroyElement hook was called once");
 });
@@ -258,7 +258,7 @@ QUnit.test("destroy more forcibly removes child views", function() {
   });
 
   ok(jQuery("#" + get(childView, 'elementId')).length === 0, "destroy removes child elements from the DOM");
-  ok(EmberView.views[get(childView, 'elementId')] === undefined, "destroy removes a child views from the global views hash");
+  ok(NgularView.views[get(childView, 'elementId')] === undefined, "destroy removes a child views from the global views hash");
   equal(get(childView, 'isDestroyed'), true, "child views are marked as destroyed");
   ok(!get(childView, 'element'), "child views no longer have an element");
   equal(willDestroyCalled, 1, "the willDestroyElement hook was called once on children");

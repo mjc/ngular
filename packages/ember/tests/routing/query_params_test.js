@@ -1,31 +1,31 @@
-import "ember";
-import { computed } from "ember-metal/computed";
-import { canDefineNonEnumerableProperties } from 'ember-metal/platform/define_property';
-import { capitalize } from "ember-runtime/system/string";
+import "ngular";
+import { computed } from "ngular-metal/computed";
+import { canDefineNonEnumerableProperties } from 'ngular-metal/platform/define_property';
+import { capitalize } from "ngular-runtime/system/string";
 
-import EmberHandlebars from "ember-htmlbars/compat";
+import NgularHandlebars from "ngular-htmlbars/compat";
 
-var compile = EmberHandlebars.compile;
+var compile = NgularHandlebars.compile;
 
 var Router, App, router, registry, container;
-var get = Ember.get;
+var get = Ngular.get;
 
 function withoutMeta(object) {
   if (canDefineNonEnumerableProperties) {
     return object;
   }
-  var newObject = Ember.$.extend(true, {}, object);
-  delete newObject['__ember_meta__'];
+  var newObject = Ngular.$.extend(true, {}, object);
+  delete newObject['__ngular_meta__'];
   return newObject;
 }
 
 function bootApplication() {
   router = container.lookup('router:main');
-  Ember.run(App, 'advanceReadiness');
+  Ngular.run(App, 'advanceReadiness');
 }
 
 function handleURL(path) {
-  return Ember.run(function() {
+  return Ngular.run(function() {
     return router.handleURL(path).then(function(value) {
       ok(true, 'url: `' + path + '` was handled');
       return value;
@@ -40,10 +40,10 @@ var startingURL = '';
 var expectedReplaceURL, expectedPushURL;
 
 function setAndFlush(obj, prop, value) {
-  Ember.run(obj, 'set', prop, value);
+  Ngular.run(obj, 'set', prop, value);
 }
 
-var TestLocation = Ember.NoneLocation.extend({
+var TestLocation = Ngular.NoneLocation.extend({
   initState() {
     this.set('path', startingURL);
   },
@@ -72,8 +72,8 @@ var TestLocation = Ember.NoneLocation.extend({
 });
 
 function sharedSetup() {
-  Ember.run(function() {
-    App = Ember.Application.create({
+  Ngular.run(function() {
+    App = Ngular.Application.create({
       name: "App",
       rootElement: '#qunit-fixture'
     });
@@ -93,20 +93,20 @@ function sharedSetup() {
 
     Router = App.Router;
 
-    App.LoadingRoute = Ember.Route.extend({
+    App.LoadingRoute = Ngular.Route.extend({
     });
 
-    Ember.TEMPLATES.application = compile("{{outlet}}");
-    Ember.TEMPLATES.home = compile("<h3>Hours</h3>");
+    Ngular.TEMPLATES.application = compile("{{outlet}}");
+    Ngular.TEMPLATES.home = compile("<h3>Hours</h3>");
   });
 }
 
 function sharedTeardown() {
-  Ember.run(function() {
+  Ngular.run(function() {
     App.destroy();
     App = null;
 
-    Ember.TEMPLATES = {};
+    Ngular.TEMPLATES = {};
   });
 }
 
@@ -121,13 +121,13 @@ QUnit.module("Routing w/ Query Params", {
 });
 
 QUnit.test("Single query params can be set on ObjectController [DEPRECATED]", function() {
-  expectDeprecation("Ember.ObjectController is deprecated, please use Ember.Controller and use `model.propertyName`.");
+  expectDeprecation("Ngular.ObjectController is deprecated, please use Ngular.Controller and use `model.propertyName`.");
 
   Router.map(function() {
     this.route("home", { path: '/' });
   });
 
-  App.HomeController = Ember.ObjectController.extend({
+  App.HomeController = Ngular.ObjectController.extend({
     queryParams: ['foo'],
     foo: "123"
   });
@@ -149,7 +149,7 @@ QUnit.test("Single query params can be set", function() {
     this.route("home", { path: '/' });
   });
 
-  App.HomeController = Ember.Controller.extend({
+  App.HomeController = Ngular.Controller.extend({
     queryParams: ['foo'],
     foo: "123"
   });
@@ -167,7 +167,7 @@ QUnit.test("Single query params can be set", function() {
 });
 
 QUnit.test("Query params can map to different url keys", function() {
-  App.IndexController = Ember.Controller.extend({
+  App.IndexController = Ngular.Controller.extend({
     queryParams: [{ foo: 'other_foo', bar: { as: 'other_bar' } }],
     foo: "FOO",
     bar: "BAR"
@@ -183,20 +183,20 @@ QUnit.test("Query params can map to different url keys", function() {
   setAndFlush(controller, 'foo', 'WOO');
   equal(router.get('location.path'), "/?other_foo=WOO");
 
-  Ember.run(router, 'transitionTo', '/?other_foo=NAW');
+  Ngular.run(router, 'transitionTo', '/?other_foo=NAW');
   equal(controller.get('foo'), "NAW");
 
   setAndFlush(controller, 'bar', 'NERK');
-  Ember.run(router, 'transitionTo', '/?other_bar=NERK&other_foo=NAW');
+  Ngular.run(router, 'transitionTo', '/?other_bar=NERK&other_foo=NAW');
 });
 
 
 QUnit.test("Routes have overridable serializeQueryParamKey hook", function() {
-  App.IndexRoute = Ember.Route.extend({
-    serializeQueryParamKey: Ember.String.dasherize
+  App.IndexRoute = Ngular.Route.extend({
+    serializeQueryParamKey: Ngular.String.dasherize
   });
 
-  App.IndexController = Ember.Controller.extend({
+  App.IndexController = Ngular.Controller.extend({
     queryParams: 'funTimes',
     funTimes: ""
   });
@@ -213,7 +213,7 @@ QUnit.test("Routes have overridable serializeQueryParamKey hook", function() {
 QUnit.test("No replaceURL occurs on startup because default values don't show up in URL", function() {
   expect(0);
 
-  App.IndexController = Ember.Controller.extend({
+  App.IndexController = Ngular.Controller.extend({
     queryParams: ['foo'],
     foo: "123"
   });
@@ -225,12 +225,12 @@ QUnit.test("No replaceURL occurs on startup because default values don't show up
 
 QUnit.test("Can override inherited QP behavior by specifying queryParams as a computed property", function() {
   expect(0);
-  var SharedMixin = Ember.Mixin.create({
+  var SharedMixin = Ngular.Mixin.create({
     queryParams: ['a'],
     a: 0
   });
 
-  App.IndexController = Ember.Controller.extend(SharedMixin, {
+  App.IndexController = Ngular.Controller.extend(SharedMixin, {
     queryParams: computed(function() {
       return ['c'];
     }),
@@ -241,16 +241,16 @@ QUnit.test("Can override inherited QP behavior by specifying queryParams as a co
   var indexController = container.lookup('controller:index');
 
   expectedReplaceURL = "not gonna happen";
-  Ember.run(indexController, 'set', 'a', 1);
+  Ngular.run(indexController, 'set', 'a', 1);
 });
 
 QUnit.test("model hooks receives query params", function() {
-  App.IndexController = Ember.Controller.extend({
+  App.IndexController = Ngular.Controller.extend({
     queryParams: ['omg'],
     omg: 'lol'
   });
 
-  App.IndexRoute = Ember.Route.extend({
+  App.IndexRoute = Ngular.Route.extend({
     model(params) {
       deepEqual(params, { omg: 'lol' });
     }
@@ -271,22 +271,22 @@ QUnit.test("controllers won't be eagerly instantiated by internal query params l
     this.route("about");
   });
 
-  Ember.TEMPLATES.home = compile("<h3>{{link-to 'About' 'about' (query-params lol='wat') id='link-to-about'}}</h3>");
-  Ember.TEMPLATES.about = compile("<h3>{{link-to 'Home' 'home'  (query-params foo='naw')}}</h3>");
-  Ember.TEMPLATES['cats/index'] = compile("<h3>{{link-to 'Cats' 'cats'  (query-params name='domino') id='cats-link'}}</h3>");
+  Ngular.TEMPLATES.home = compile("<h3>{{link-to 'About' 'about' (query-params lol='wat') id='link-to-about'}}</h3>");
+  Ngular.TEMPLATES.about = compile("<h3>{{link-to 'Home' 'home'  (query-params foo='naw')}}</h3>");
+  Ngular.TEMPLATES['cats/index'] = compile("<h3>{{link-to 'Cats' 'cats'  (query-params name='domino') id='cats-link'}}</h3>");
 
   var homeShouldBeCreated = false;
   var aboutShouldBeCreated = false;
   var catsIndexShouldBeCreated = false;
 
-  App.HomeRoute = Ember.Route.extend({
+  App.HomeRoute = Ngular.Route.extend({
     setup() {
       homeShouldBeCreated = true;
       this._super.apply(this, arguments);
     }
   });
 
-  App.HomeController = Ember.Controller.extend({
+  App.HomeController = Ngular.Controller.extend({
     queryParams: ['foo'],
     foo: "123",
     init() {
@@ -295,14 +295,14 @@ QUnit.test("controllers won't be eagerly instantiated by internal query params l
     }
   });
 
-  App.AboutRoute = Ember.Route.extend({
+  App.AboutRoute = Ngular.Route.extend({
     setup() {
       aboutShouldBeCreated = true;
       this._super.apply(this, arguments);
     }
   });
 
-  App.AboutController = Ember.Controller.extend({
+  App.AboutController = Ngular.Controller.extend({
     queryParams: ['lol'],
     lol: "haha",
     init() {
@@ -311,7 +311,7 @@ QUnit.test("controllers won't be eagerly instantiated by internal query params l
     }
   });
 
-  App.CatsIndexRoute = Ember.Route.extend({
+  App.CatsIndexRoute = Ngular.Route.extend({
     model() {
       return [];
     },
@@ -324,7 +324,7 @@ QUnit.test("controllers won't be eagerly instantiated by internal query params l
     }
   });
 
-  App.CatsIndexController = Ember.Controller.extend({
+  App.CatsIndexController = Ngular.Controller.extend({
     queryParams: ['breed', 'name'],
     breed: 'Golden',
     name: null,
@@ -340,26 +340,26 @@ QUnit.test("controllers won't be eagerly instantiated by internal query params l
   var controller = container.lookup('controller:home');
   setAndFlush(controller, 'foo', '456');
   equal(router.get('location.path'), "/?foo=456", 'url is correct');
-  equal(Ember.$('#link-to-about').attr('href'), "/about?lol=wat", "link to about is correct");
+  equal(Ngular.$('#link-to-about').attr('href'), "/about?lol=wat", "link to about is correct");
 
-  Ember.run(router, 'transitionTo', 'about');
+  Ngular.run(router, 'transitionTo', 'about');
   equal(router.get('location.path'), "/about", 'url is correct');
 
-  Ember.run(router, 'transitionTo', 'cats');
+  Ngular.run(router, 'transitionTo', 'cats');
 
   equal(router.get('location.path'), "/cats", 'url is correct');
-  equal(Ember.$('#cats-link').attr('href'), "/cats?name=domino", "link to cats is correct");
-  Ember.run(Ember.$('#cats-link'), 'click');
+  equal(Ngular.$('#cats-link').attr('href'), "/cats?name=domino", "link to cats is correct");
+  Ngular.run(Ngular.$('#cats-link'), 'click');
   equal(router.get('location.path'), "/cats?name=domino", 'url is correct');
 });
 
 QUnit.test("model hooks receives query params (overridden by incoming url value)", function() {
-  App.IndexController = Ember.Controller.extend({
+  App.IndexController = Ngular.Controller.extend({
     queryParams: ['omg'],
     omg: 'lol'
   });
 
-  App.IndexRoute = Ember.Route.extend({
+  App.IndexRoute = Ngular.Route.extend({
     model(params) {
       deepEqual(params, { omg: 'yes' });
     }
@@ -378,12 +378,12 @@ QUnit.test("Route#paramsFor fetches query params", function() {
     this.route('index', { path: '/:something' });
   });
 
-  App.IndexController = Ember.Controller.extend({
+  App.IndexController = Ngular.Controller.extend({
     queryParams: ['foo'],
     foo: 'fooapp'
   });
 
-  App.IndexRoute = Ember.Route.extend({
+  App.IndexRoute = Ngular.Route.extend({
     model(params, transition) {
       deepEqual(this.paramsFor('index'), { something: 'omg', foo: 'fooapp' }, "could retrieve params for index");
     }
@@ -396,12 +396,12 @@ QUnit.test("Route#paramsFor fetches query params", function() {
 QUnit.test("Route#paramsFor fetches falsy query params", function() {
   expect(1);
 
-  App.IndexController = Ember.Controller.extend({
+  App.IndexController = Ngular.Controller.extend({
     queryParams: ['foo'],
     foo: true
   });
 
-  App.IndexRoute = Ember.Route.extend({
+  App.IndexRoute = Ngular.Route.extend({
     model(params, transition) {
       equal(params.foo, false);
     }
@@ -412,23 +412,23 @@ QUnit.test("Route#paramsFor fetches falsy query params", function() {
 });
 
 QUnit.test("model hook can query prefix-less application params", function() {
-  App.ApplicationController = Ember.Controller.extend({
+  App.ApplicationController = Ngular.Controller.extend({
     queryParams: ['appomg'],
     appomg: 'applol'
   });
 
-  App.IndexController = Ember.Controller.extend({
+  App.IndexController = Ngular.Controller.extend({
     queryParams: ['omg'],
     omg: 'lol'
   });
 
-  App.ApplicationRoute = Ember.Route.extend({
+  App.ApplicationRoute = Ngular.Route.extend({
     model(params) {
       deepEqual(params, { appomg: 'applol' });
     }
   });
 
-  App.IndexRoute = Ember.Route.extend({
+  App.IndexRoute = Ngular.Route.extend({
     model(params) {
       deepEqual(params, { omg: 'lol' });
       deepEqual(this.paramsFor('application'), { appomg: 'applol' });
@@ -441,23 +441,23 @@ QUnit.test("model hook can query prefix-less application params", function() {
 });
 
 QUnit.test("model hook can query prefix-less application params (overridden by incoming url value)", function() {
-  App.ApplicationController = Ember.Controller.extend({
+  App.ApplicationController = Ngular.Controller.extend({
     queryParams: ['appomg'],
     appomg: 'applol'
   });
 
-  App.IndexController = Ember.Controller.extend({
+  App.IndexController = Ngular.Controller.extend({
     queryParams: ['omg'],
     omg: 'lol'
   });
 
-  App.ApplicationRoute = Ember.Route.extend({
+  App.ApplicationRoute = Ngular.Route.extend({
     model(params) {
       deepEqual(params, { appomg: 'appyes' });
     }
   });
 
-  App.IndexRoute = Ember.Route.extend({
+  App.IndexRoute = Ngular.Route.extend({
     model(params) {
       deepEqual(params, { omg: 'yes' });
       deepEqual(this.paramsFor('application'), { appomg: 'appyes' });
@@ -472,25 +472,25 @@ QUnit.test("model hook can query prefix-less application params (overridden by i
 
 QUnit.test("can opt into full transition by setting refreshModel in route queryParams", function() {
   expect(6);
-  App.ApplicationController = Ember.Controller.extend({
+  App.ApplicationController = Ngular.Controller.extend({
     queryParams: ['appomg'],
     appomg: 'applol'
   });
 
-  App.IndexController = Ember.Controller.extend({
+  App.IndexController = Ngular.Controller.extend({
     queryParams: ['omg'],
     omg: 'lol'
   });
 
   var appModelCount = 0;
-  App.ApplicationRoute = Ember.Route.extend({
+  App.ApplicationRoute = Ngular.Route.extend({
     model(params) {
       appModelCount++;
     }
   });
 
   var indexModelCount = 0;
-  App.IndexRoute = Ember.Route.extend({
+  App.IndexRoute = Ngular.Route.extend({
     queryParams: {
       omg: {
         refreshModel: true
@@ -519,28 +519,28 @@ QUnit.test("can opt into full transition by setting refreshModel in route queryP
   equal(indexModelCount, 2);
 });
 
-QUnit.test("Use Ember.get to retrieve query params 'refreshModel' configuration", function() {
+QUnit.test("Use Ngular.get to retrieve query params 'refreshModel' configuration", function() {
   expect(6);
-  App.ApplicationController = Ember.Controller.extend({
+  App.ApplicationController = Ngular.Controller.extend({
     queryParams: ['appomg'],
     appomg: 'applol'
   });
 
-  App.IndexController = Ember.Controller.extend({
+  App.IndexController = Ngular.Controller.extend({
     queryParams: ['omg'],
     omg: 'lol'
   });
 
   var appModelCount = 0;
-  App.ApplicationRoute = Ember.Route.extend({
+  App.ApplicationRoute = Ngular.Route.extend({
     model(params) {
       appModelCount++;
     }
   });
 
   var indexModelCount = 0;
-  App.IndexRoute = Ember.Route.extend({
-    queryParams: Ember.Object.create({
+  App.IndexRoute = Ngular.Route.extend({
+    queryParams: Ngular.Object.create({
       unknownProperty(keyName) {
         return { refreshModel: true };
       }
@@ -571,13 +571,13 @@ QUnit.test("Use Ember.get to retrieve query params 'refreshModel' configuration"
 QUnit.test("can use refreshModel even w URL changes that remove QPs from address bar", function() {
   expect(4);
 
-  App.IndexController = Ember.Controller.extend({
+  App.IndexController = Ngular.Controller.extend({
     queryParams: ['omg'],
     omg: 'lol'
   });
 
   var indexModelCount = 0;
-  App.IndexRoute = Ember.Route.extend({
+  App.IndexRoute = Ngular.Route.extend({
     queryParams: {
       omg: {
         refreshModel: true
@@ -608,7 +608,7 @@ QUnit.test("can use refreshModel even w URL changes that remove QPs from address
 QUnit.test("warn user that routes query params configuration must be an Object, not an Array", function() {
   expect(1);
 
-  App.ApplicationRoute = Ember.Route.extend({
+  App.ApplicationRoute = Ngular.Route.extend({
     queryParams: [
       { commitBy: { replace: true } }
     ]
@@ -621,12 +621,12 @@ QUnit.test("warn user that routes query params configuration must be an Object, 
 
 QUnit.test("can opt into a replace query by specifying replace:true in the Router config hash", function() {
   expect(2);
-  App.ApplicationController = Ember.Controller.extend({
+  App.ApplicationController = Ngular.Controller.extend({
     queryParams: ['alex'],
     alex: 'matchneer'
   });
 
-  App.ApplicationRoute = Ember.Route.extend({
+  App.ApplicationRoute = Ngular.Route.extend({
     queryParams: {
       alex: {
         replace: true
@@ -645,13 +645,13 @@ QUnit.test("can opt into a replace query by specifying replace:true in the Route
 
 QUnit.test("Route query params config can be configured using property name instead of URL key", function() {
   expect(2);
-  App.ApplicationController = Ember.Controller.extend({
+  App.ApplicationController = Ngular.Controller.extend({
     queryParams: [
       { commitBy: 'commit_by' }
     ]
   });
 
-  App.ApplicationRoute = Ember.Route.extend({
+  App.ApplicationRoute = Ngular.Route.extend({
     queryParams: {
       commitBy: {
         replace: true
@@ -670,13 +670,13 @@ QUnit.test("Route query params config can be configured using property name inst
 
 QUnit.test("An explicit replace:false on a changed QP always wins and causes a pushState", function() {
   expect(3);
-  App.ApplicationController = Ember.Controller.extend({
+  App.ApplicationController = Ngular.Controller.extend({
     queryParams: ['alex', 'steely'],
     alex: 'matchneer',
     steely: 'dan'
   });
 
-  App.ApplicationRoute = Ember.Route.extend({
+  App.ApplicationRoute = Ngular.Route.extend({
     queryParams: {
       alex: {
         replace: true
@@ -691,18 +691,18 @@ QUnit.test("An explicit replace:false on a changed QP always wins and causes a p
 
   var appController = container.lookup('controller:application');
   expectedPushURL = "/?alex=wallace&steely=jan";
-  Ember.run(appController, 'setProperties', { alex: 'wallace', steely: 'jan' });
+  Ngular.run(appController, 'setProperties', { alex: 'wallace', steely: 'jan' });
 
   expectedPushURL = "/?alex=wallace&steely=fran";
-  Ember.run(appController, 'setProperties', { steely: 'fran' });
+  Ngular.run(appController, 'setProperties', { steely: 'fran' });
 
   expectedReplaceURL = "/?alex=sriracha&steely=fran";
-  Ember.run(appController, 'setProperties', { alex: 'sriracha' });
+  Ngular.run(appController, 'setProperties', { alex: 'sriracha' });
 });
 
 QUnit.test("can opt into full transition by setting refreshModel in route queryParams when transitioning from child to parent", function() {
-  Ember.TEMPLATES.parent = compile('{{outlet}}');
-  Ember.TEMPLATES['parent/child'] = compile("{{link-to 'Parent' 'parent' (query-params foo='change') id='parent-link'}}");
+  Ngular.TEMPLATES.parent = compile('{{outlet}}');
+  Ngular.TEMPLATES['parent/child'] = compile("{{link-to 'Parent' 'parent' (query-params foo='change') id='parent-link'}}");
 
   App.Router.map(function() {
     this.resource('parent', function() {
@@ -711,7 +711,7 @@ QUnit.test("can opt into full transition by setting refreshModel in route queryP
   });
 
   var parentModelCount = 0;
-  App.ParentRoute = Ember.Route.extend({
+  App.ParentRoute = Ngular.Route.extend({
     model() {
       parentModelCount++;
     },
@@ -722,7 +722,7 @@ QUnit.test("can opt into full transition by setting refreshModel in route queryP
     }
   });
 
-  App.ParentController = Ember.Controller.extend({
+  App.ParentController = Ngular.Controller.extend({
     queryParams: ['foo'],
     foo: 'abc'
   });
@@ -734,20 +734,20 @@ QUnit.test("can opt into full transition by setting refreshModel in route queryP
 
   container.lookup('controller:parent');
 
-  Ember.run(Ember.$('#parent-link'), 'click');
+  Ngular.run(Ngular.$('#parent-link'), 'click');
 
   equal(parentModelCount, 2);
 });
 
-QUnit.test("Use Ember.get to retrieve query params 'replace' configuration", function() {
+QUnit.test("Use Ngular.get to retrieve query params 'replace' configuration", function() {
   expect(2);
-  App.ApplicationController = Ember.Controller.extend({
+  App.ApplicationController = Ngular.Controller.extend({
     queryParams: ['alex'],
     alex: 'matchneer'
   });
 
-  App.ApplicationRoute = Ember.Route.extend({
-    queryParams: Ember.Object.create({
+  App.ApplicationRoute = Ngular.Route.extend({
+    queryParams: Ngular.Object.create({
       unknownProperty(keyName) {
         // We are simulating all qps requiring refresh
         return { replace: true };
@@ -771,12 +771,12 @@ QUnit.test("can override incoming QP values in setupController", function() {
     this.route('about');
   });
 
-  App.IndexController = Ember.Controller.extend({
+  App.IndexController = Ngular.Controller.extend({
     queryParams: ['omg'],
     omg: 'lol'
   });
 
-  App.IndexRoute = Ember.Route.extend({
+  App.IndexRoute = Ngular.Route.extend({
     setupController(controller) {
       ok(true, "setupController called");
       controller.set('omg', 'OVERRIDE');
@@ -791,7 +791,7 @@ QUnit.test("can override incoming QP values in setupController", function() {
   startingURL = "/about";
   bootApplication();
   equal(router.get('location.path'), "/about");
-  Ember.run(router, 'transitionTo', 'index');
+  Ngular.run(router, 'transitionTo', 'index');
   equal(router.get('location.path'), "/?omg=OVERRIDE");
 });
 
@@ -802,12 +802,12 @@ QUnit.test("can override incoming QP array values in setupController", function(
     this.route('about');
   });
 
-  App.IndexController = Ember.Controller.extend({
+  App.IndexController = Ngular.Controller.extend({
     queryParams: ['omg'],
     omg: ['lol']
   });
 
-  App.IndexRoute = Ember.Route.extend({
+  App.IndexRoute = Ngular.Route.extend({
     setupController(controller) {
       ok(true, "setupController called");
       controller.set('omg', ['OVERRIDE']);
@@ -822,14 +822,14 @@ QUnit.test("can override incoming QP array values in setupController", function(
   startingURL = "/about";
   bootApplication();
   equal(router.get('location.path'), "/about");
-  Ember.run(router, 'transitionTo', 'index');
+  Ngular.run(router, 'transitionTo', 'index');
   equal(router.get('location.path'), "/?omg=" + encodeURIComponent(JSON.stringify(['OVERRIDE'])));
 });
 
 QUnit.test("URL transitions that remove QPs still register as QP changes", function() {
   expect(2);
 
-  App.IndexController = Ember.Controller.extend({
+  App.IndexController = Ngular.Controller.extend({
     queryParams: ['omg'],
     omg: 'lol'
   });
@@ -839,7 +839,7 @@ QUnit.test("URL transitions that remove QPs still register as QP changes", funct
 
   var indexController = container.lookup('controller:index');
   equal(indexController.get('omg'), 'borf');
-  Ember.run(router, 'transitionTo', '/');
+  Ngular.run(router, 'transitionTo', '/');
   equal(indexController.get('omg'), 'lol');
 });
 
@@ -851,31 +851,31 @@ QUnit.test("Subresource naming style is supported", function() {
     });
   });
 
-  Ember.TEMPLATES.application = compile("{{link-to 'A' 'abc.def' (query-params foo='123') id='one'}}{{link-to 'B' 'abc.def.zoo' (query-params foo='123' bar='456') id='two'}}{{outlet}}");
+  Ngular.TEMPLATES.application = compile("{{link-to 'A' 'abc.def' (query-params foo='123') id='one'}}{{link-to 'B' 'abc.def.zoo' (query-params foo='123' bar='456') id='two'}}{{outlet}}");
 
-  App.AbcDefController = Ember.Controller.extend({
+  App.AbcDefController = Ngular.Controller.extend({
     queryParams: ['foo'],
     foo: 'lol'
   });
 
-  App.AbcDefZooController = Ember.Controller.extend({
+  App.AbcDefZooController = Ngular.Controller.extend({
     queryParams: ['bar'],
     bar: 'haha'
   });
 
   bootApplication();
   equal(router.get('location.path'), "");
-  equal(Ember.$('#one').attr('href'), "/abcdef?foo=123");
-  equal(Ember.$('#two').attr('href'), "/abcdef/zoo?bar=456&foo=123");
+  equal(Ngular.$('#one').attr('href'), "/abcdef?foo=123");
+  equal(Ngular.$('#two').attr('href'), "/abcdef/zoo?bar=456&foo=123");
 
-  Ember.run(Ember.$('#one'), 'click');
+  Ngular.run(Ngular.$('#one'), 'click');
   equal(router.get('location.path'), "/abcdef?foo=123");
-  Ember.run(Ember.$('#two'), 'click');
+  Ngular.run(Ngular.$('#two'), 'click');
   equal(router.get('location.path'), "/abcdef/zoo?bar=456&foo=123");
 });
 
 QUnit.test("transitionTo supports query params", function() {
-  App.IndexController = Ember.Controller.extend({
+  App.IndexController = Ngular.Controller.extend({
     queryParams: ['foo'],
     foo: 'lol'
   });
@@ -884,18 +884,18 @@ QUnit.test("transitionTo supports query params", function() {
 
   equal(router.get('location.path'), "");
 
-  Ember.run(router, 'transitionTo', { queryParams: { foo: "borf" } });
+  Ngular.run(router, 'transitionTo', { queryParams: { foo: "borf" } });
   equal(router.get('location.path'), "/?foo=borf", "shorthand supported");
-  Ember.run(router, 'transitionTo', { queryParams: { 'index:foo': "blaf" } });
+  Ngular.run(router, 'transitionTo', { queryParams: { 'index:foo': "blaf" } });
   equal(router.get('location.path'), "/?foo=blaf", "longform supported");
-  Ember.run(router, 'transitionTo', { queryParams: { 'index:foo': false } });
+  Ngular.run(router, 'transitionTo', { queryParams: { 'index:foo': false } });
   equal(router.get('location.path'), "/?foo=false", "longform supported (bool)");
-  Ember.run(router, 'transitionTo', { queryParams: { foo: false } });
+  Ngular.run(router, 'transitionTo', { queryParams: { foo: false } });
   equal(router.get('location.path'), "/?foo=false", "shorhand supported (bool)");
 });
 
 QUnit.test("transitionTo supports query params (multiple)", function() {
-  App.IndexController = Ember.Controller.extend({
+  App.IndexController = Ngular.Controller.extend({
     queryParams: ['foo', 'bar'],
     foo: 'lol',
     bar: 'wat'
@@ -905,19 +905,19 @@ QUnit.test("transitionTo supports query params (multiple)", function() {
 
   equal(router.get('location.path'), "");
 
-  Ember.run(router, 'transitionTo', { queryParams: { foo: "borf" } });
+  Ngular.run(router, 'transitionTo', { queryParams: { foo: "borf" } });
   equal(router.get('location.path'), "/?foo=borf", "shorthand supported");
-  Ember.run(router, 'transitionTo', { queryParams: { 'index:foo': "blaf" } });
+  Ngular.run(router, 'transitionTo', { queryParams: { 'index:foo': "blaf" } });
   equal(router.get('location.path'), "/?foo=blaf", "longform supported");
-  Ember.run(router, 'transitionTo', { queryParams: { 'index:foo': false } });
+  Ngular.run(router, 'transitionTo', { queryParams: { 'index:foo': false } });
   equal(router.get('location.path'), "/?foo=false", "longform supported (bool)");
-  Ember.run(router, 'transitionTo', { queryParams: { foo: false } });
+  Ngular.run(router, 'transitionTo', { queryParams: { foo: false } });
   equal(router.get('location.path'), "/?foo=false", "shorhand supported (bool)");
 });
 
 QUnit.test("setting controller QP to empty string doesn't generate null in URL", function() {
   expect(1);
-  App.IndexController = Ember.Controller.extend({
+  App.IndexController = Ngular.Controller.extend({
     queryParams: ['foo'],
     foo: "123"
   });
@@ -930,12 +930,12 @@ QUnit.test("setting controller QP to empty string doesn't generate null in URL",
 });
 
 QUnit.test("A default boolean value deserializes QPs as booleans rather than strings", function() {
-  App.IndexController = Ember.Controller.extend({
+  App.IndexController = Ngular.Controller.extend({
     queryParams: ['foo'],
     foo: false
   });
 
-  App.IndexRoute = Ember.Route.extend({
+  App.IndexRoute = Ngular.Route.extend({
     model(params) {
       equal(params.foo, true, "model hook received foo as boolean true");
     }
@@ -952,7 +952,7 @@ QUnit.test("A default boolean value deserializes QPs as booleans rather than str
 });
 
 QUnit.test("Query param without value are empty string", function() {
-  App.IndexController = Ember.Controller.extend({
+  App.IndexController = Ngular.Controller.extend({
     queryParams: ['foo'],
     foo: ''
   });
@@ -969,7 +969,7 @@ QUnit.test("Array query params can be set", function() {
     this.route("home", { path: '/' });
   });
 
-  App.HomeController = Ember.Controller.extend({
+  App.HomeController = Ngular.Controller.extend({
     queryParams: ['foo'],
     foo: []
   });
@@ -987,7 +987,7 @@ QUnit.test("Array query params can be set", function() {
 });
 
 QUnit.test("(de)serialization: arrays", function() {
-  App.IndexController = Ember.Controller.extend({
+  App.IndexController = Ngular.Controller.extend({
     queryParams: ['foo'],
     foo: [1]
   });
@@ -996,16 +996,16 @@ QUnit.test("(de)serialization: arrays", function() {
 
   equal(router.get('location.path'), "");
 
-  Ember.run(router, 'transitionTo', { queryParams: { foo: [2,3] } });
+  Ngular.run(router, 'transitionTo', { queryParams: { foo: [2,3] } });
   equal(router.get('location.path'), "/?foo=%5B2%2C3%5D", "shorthand supported");
-  Ember.run(router, 'transitionTo', { queryParams: { 'index:foo': [4,5] } });
+  Ngular.run(router, 'transitionTo', { queryParams: { 'index:foo': [4,5] } });
   equal(router.get('location.path'), "/?foo=%5B4%2C5%5D", "longform supported");
-  Ember.run(router, 'transitionTo', { queryParams: { foo: [] } });
+  Ngular.run(router, 'transitionTo', { queryParams: { foo: [] } });
   equal(router.get('location.path'), "/?foo=%5B%5D", "longform supported");
 });
 
 QUnit.test("Url with array query param sets controller property to array", function() {
-  App.IndexController = Ember.Controller.extend({
+  App.IndexController = Ngular.Controller.extend({
     queryParams: ['foo'],
     foo: ''
   });
@@ -1022,9 +1022,9 @@ QUnit.test("Array query params can be pushed/popped", function() {
     this.route("home", { path: '/' });
   });
 
-  App.HomeController = Ember.Controller.extend({
+  App.HomeController = Ngular.Controller.extend({
     queryParams: ['foo'],
-    foo: Ember.A([])
+    foo: Ngular.A([])
   });
 
   bootApplication();
@@ -1033,28 +1033,28 @@ QUnit.test("Array query params can be pushed/popped", function() {
 
   var controller = container.lookup('controller:home');
 
-  Ember.run(controller.foo, 'pushObject', 1);
+  Ngular.run(controller.foo, 'pushObject', 1);
   equal(router.get('location.path'), "/?foo=%5B1%5D");
   deepEqual(controller.foo, [1]);
-  Ember.run(controller.foo, 'popObject');
+  Ngular.run(controller.foo, 'popObject');
   equal(router.get('location.path'), "/");
   deepEqual(controller.foo, []);
-  Ember.run(controller.foo, 'pushObject', 1);
+  Ngular.run(controller.foo, 'pushObject', 1);
   equal(router.get('location.path'), "/?foo=%5B1%5D");
   deepEqual(controller.foo, [1]);
-  Ember.run(controller.foo, 'popObject');
+  Ngular.run(controller.foo, 'popObject');
   equal(router.get('location.path'), "/");
   deepEqual(controller.foo, []);
-  Ember.run(controller.foo, 'pushObject', 1);
+  Ngular.run(controller.foo, 'pushObject', 1);
   equal(router.get('location.path'), "/?foo=%5B1%5D");
   deepEqual(controller.foo, [1]);
-  Ember.run(controller.foo, 'pushObject', 2);
+  Ngular.run(controller.foo, 'pushObject', 2);
   equal(router.get('location.path'), "/?foo=%5B1%2C2%5D");
   deepEqual(controller.foo, [1, 2]);
-  Ember.run(controller.foo, 'popObject');
+  Ngular.run(controller.foo, 'popObject');
   equal(router.get('location.path'), "/?foo=%5B1%5D");
   deepEqual(controller.foo, [1]);
-  Ember.run(controller.foo, 'unshiftObject', 'lol');
+  Ngular.run(controller.foo, 'unshiftObject', 'lol');
   equal(router.get('location.path'), "/?foo=%5B%22lol%22%2C1%5D");
   deepEqual(controller.foo, ['lol', 1]);
 });
@@ -1067,22 +1067,22 @@ QUnit.test("Overwriting with array with same content shouldn't refire update", f
     this.route("home", { path: '/' });
   });
 
-  App.HomeRoute = Ember.Route.extend({
+  App.HomeRoute = Ngular.Route.extend({
     model() {
       modelCount++;
     }
   });
 
-  App.HomeController = Ember.Controller.extend({
+  App.HomeController = Ngular.Controller.extend({
     queryParams: ['foo'],
-    foo: Ember.A([1])
+    foo: Ngular.A([1])
   });
 
   bootApplication();
 
   equal(modelCount, 1);
   var controller = container.lookup('controller:home');
-  setAndFlush(controller, 'model', Ember.A([1]));
+  setAndFlush(controller, 'model', Ngular.A([1]));
   equal(modelCount, 1);
   equal(router.get('location.path'), "");
 });
@@ -1098,37 +1098,37 @@ QUnit.test("Defaulting to params hash as the model should not result in that par
   // model if no other model could be resolved given the provided
   // params (and no custom model hook was defined), to be watched,
   // unless we return a copy of the params hash.
-  App.ApplicationController = Ember.Controller.extend({
+  App.ApplicationController = Ngular.Controller.extend({
     queryParams: ['woot'],
     woot: 'wat'
   });
 
-  App.OtherRoute = Ember.Route.extend({
+  App.OtherRoute = Ngular.Route.extend({
     model(p, trans) {
-      var m = Ember.meta(trans.params.application);
+      var m = Ngular.meta(trans.params.application);
       ok(!m.watching.woot, "A meta object isn't constructed for this params POJO");
     }
   });
 
   bootApplication();
 
-  Ember.run(router, 'transitionTo', 'other');
+  Ngular.run(router, 'transitionTo', 'other');
 });
 
 QUnit.test("A child of a resource route still defaults to parent route's model even if the child route has a query param", function() {
   expect(1);
 
-  App.IndexController = Ember.Controller.extend({
+  App.IndexController = Ngular.Controller.extend({
     queryParams: ['woot']
   });
 
-  App.ApplicationRoute = Ember.Route.extend({
+  App.ApplicationRoute = Ngular.Route.extend({
     model(p, trans) {
       return { woot: true };
     }
   });
 
-  App.IndexRoute = Ember.Route.extend({
+  App.IndexRoute = Ngular.Route.extend({
     setupController(controller, model) {
       deepEqual(withoutMeta(model), { woot: true }, "index route inherited model route from parent route");
     }
@@ -1139,7 +1139,7 @@ QUnit.test("A child of a resource route still defaults to parent route's model e
 
 QUnit.test("opting into replace does not affect transitions between routes", function() {
   expect(5);
-  Ember.TEMPLATES.application = compile(
+  Ngular.TEMPLATES.application = compile(
     "{{link-to 'Foo' 'foo' id='foo-link'}}" +
     "{{link-to 'Bar' 'bar' id='bar-no-qp-link'}}" +
     "{{link-to 'Bar' 'bar' (query-params raytiley='isanerd') id='bar-link'}}" +
@@ -1150,12 +1150,12 @@ QUnit.test("opting into replace does not affect transitions between routes", fun
     this.route('bar');
   });
 
-  App.BarController = Ember.Controller.extend({
+  App.BarController = Ngular.Controller.extend({
     queryParams: ['raytiley'],
     raytiley: 'isadork'
   });
 
-  App.BarRoute = Ember.Route.extend({
+  App.BarRoute = Ngular.Route.extend({
     queryParams: {
       raytiley: {
         replace: true
@@ -1167,19 +1167,19 @@ QUnit.test("opting into replace does not affect transitions between routes", fun
   var controller = container.lookup('controller:bar');
 
   expectedPushURL = '/foo';
-  Ember.run(Ember.$('#foo-link'), 'click');
+  Ngular.run(Ngular.$('#foo-link'), 'click');
 
   expectedPushURL = '/bar';
-  Ember.run(Ember.$('#bar-no-qp-link'), 'click');
+  Ngular.run(Ngular.$('#bar-no-qp-link'), 'click');
 
   expectedReplaceURL = '/bar?raytiley=boo';
   setAndFlush(controller, 'raytiley', 'boo');
 
   expectedPushURL = '/foo';
-  Ember.run(Ember.$('#foo-link'), 'click');
+  Ngular.run(Ngular.$('#foo-link'), 'click');
 
   expectedPushURL = '/bar?raytiley=isanerd';
-  Ember.run(Ember.$('#bar-link'), 'click');
+  Ngular.run(Ngular.$('#bar-link'), 'click');
 });
 
 QUnit.test("Undefined isn't deserialized into a string", function() {
@@ -1188,14 +1188,14 @@ QUnit.test("Undefined isn't deserialized into a string", function() {
     this.route("example");
   });
 
-  Ember.TEMPLATES.application = compile("{{link-to 'Example' 'example' id='the-link'}}");
+  Ngular.TEMPLATES.application = compile("{{link-to 'Example' 'example' id='the-link'}}");
 
-  App.ExampleController = Ember.Controller.extend({
+  App.ExampleController = Ngular.Controller.extend({
     queryParams: ['foo']
     // uncommon to not support default value, but should assume undefined.
   });
 
-  App.ExampleRoute = Ember.Route.extend({
+  App.ExampleRoute = Ngular.Route.extend({
     model(params) {
       deepEqual(params, { foo: undefined });
     }
@@ -1203,9 +1203,9 @@ QUnit.test("Undefined isn't deserialized into a string", function() {
 
   bootApplication();
 
-  var $link = Ember.$('#the-link');
+  var $link = Ngular.$('#the-link');
   equal($link.attr('href'), "/example");
-  Ember.run($link, 'click');
+  Ngular.run($link, 'click');
 
   var controller = container.lookup('controller:example');
   equal(get(controller, 'foo'), undefined);
@@ -1214,12 +1214,12 @@ QUnit.test("Undefined isn't deserialized into a string", function() {
 QUnit.test("query params have been set by the time setupController is called", function() {
   expect(1);
 
-  App.ApplicationController = Ember.Controller.extend({
+  App.ApplicationController = Ngular.Controller.extend({
     queryParams: ['foo'],
     foo: "wat"
   });
 
-  App.ApplicationRoute = Ember.Route.extend({
+  App.ApplicationRoute = Ngular.Route.extend({
     setupController(controller) {
       equal(controller.get('foo'), 'YEAH', "controller's foo QP property set before setupController called");
     }
@@ -1233,9 +1233,9 @@ var testParamlessLinks = function(routeName) {
   QUnit.test("param-less links in an app booted with query params in the URL don't reset the query params: " + routeName, function() {
     expect(1);
 
-    Ember.TEMPLATES[routeName] = compile("{{link-to 'index' 'index' id='index-link'}}");
+    Ngular.TEMPLATES[routeName] = compile("{{link-to 'index' 'index' id='index-link'}}");
 
-    App[capitalize(routeName) + "Controller"] = Ember.Controller.extend({
+    App[capitalize(routeName) + "Controller"] = Ngular.Controller.extend({
       queryParams: ['foo'],
       foo: "wat"
     });
@@ -1243,7 +1243,7 @@ var testParamlessLinks = function(routeName) {
     startingURL = '/?foo=YEAH';
     bootApplication();
 
-    equal(Ember.$('#index-link').attr('href'), '/?foo=YEAH');
+    equal(Ngular.$('#index-link').attr('href'), '/?foo=YEAH');
   });
 };
 
@@ -1260,14 +1260,14 @@ QUnit.module("Model Dep Query Params", {
       });
     });
 
-    var articles = this.articles = Ember.A([{ id: 'a-1' }, { id: 'a-2' }, { id: 'a-3' }]);
+    var articles = this.articles = Ngular.A([{ id: 'a-1' }, { id: 'a-2' }, { id: 'a-3' }]);
 
-    App.ApplicationController = Ember.Controller.extend({
+    App.ApplicationController = Ngular.Controller.extend({
       articles: this.articles
     });
 
     var self = this;
-    App.ArticleRoute = Ember.Route.extend({
+    App.ArticleRoute = Ngular.Route.extend({
       queryParams: {},
       model(params) {
         if (self.expectedModelHookParams) {
@@ -1278,25 +1278,25 @@ QUnit.module("Model Dep Query Params", {
       }
     });
 
-    App.ArticleController = Ember.Controller.extend({
+    App.ArticleController = Ngular.Controller.extend({
       queryParams: ['q', 'z'],
       q: 'wat',
       z: 0
     });
 
-    App.CommentsController = Ember.Controller.extend({
+    App.CommentsController = Ngular.Controller.extend({
       queryParams: 'page',
       page: 1
     });
 
-    Ember.TEMPLATES.application = compile("{{#each a in articles}} {{link-to 'Article' 'article' a id=a.id}} {{/each}} {{outlet}}");
+    Ngular.TEMPLATES.application = compile("{{#each a in articles}} {{link-to 'Article' 'article' a id=a.id}} {{/each}} {{outlet}}");
 
     this.boot = function() {
       bootApplication();
 
-      self.$link1 = Ember.$('#a-1');
-      self.$link2 = Ember.$('#a-2');
-      self.$link3 = Ember.$('#a-3');
+      self.$link1 = Ngular.$('#a-1');
+      self.$link2 = Ngular.$('#a-2');
+      self.$link3 = Ngular.$('#a-3');
 
       equal(self.$link1.attr('href'), '/a/a-1');
       equal(self.$link2.attr('href'), '/a/a-2');
@@ -1315,7 +1315,7 @@ QUnit.module("Model Dep Query Params", {
 QUnit.test("query params have 'model' stickiness by default", function() {
   this.boot();
 
-  Ember.run(this.$link1, 'click');
+  Ngular.run(this.$link1, 'click');
   equal(router.get('location.path'), '/a/a-1');
 
   setAndFlush(this.controller, 'q', 'lol');
@@ -1324,7 +1324,7 @@ QUnit.test("query params have 'model' stickiness by default", function() {
   equal(this.$link2.attr('href'), '/a/a-2');
   equal(this.$link3.attr('href'), '/a/a-3');
 
-  Ember.run(this.$link2, 'click');
+  Ngular.run(this.$link2, 'click');
 
   equal(this.controller.get('q'), 'wat');
   equal(this.controller.get('z'), 0);
@@ -1370,12 +1370,12 @@ QUnit.test("query params have 'model' stickiness by default (url changes)", func
 
 
 QUnit.test("query params have 'model' stickiness by default (params-based transitions)", function() {
-  Ember.TEMPLATES.application = compile("{{#each a in articles}} {{link-to 'Article' 'article' a.id id=a.id}} {{/each}}");
+  Ngular.TEMPLATES.application = compile("{{#each a in articles}} {{link-to 'Article' 'article' a.id id=a.id}} {{/each}}");
 
   this.boot();
 
   this.expectedModelHookParams = { id: 'a-1', q: 'wat', z: 0 };
-  Ember.run(router, 'transitionTo', 'article', 'a-1');
+  Ngular.run(router, 'transitionTo', 'article', 'a-1');
 
   deepEqual(withoutMeta(this.controller.get('model')), { id: 'a-1' });
   equal(this.controller.get('q'), 'wat');
@@ -1385,7 +1385,7 @@ QUnit.test("query params have 'model' stickiness by default (params-based transi
   equal(this.$link3.attr('href'), '/a/a-3');
 
   this.expectedModelHookParams = { id: 'a-2', q: 'lol', z: 0 };
-  Ember.run(router, 'transitionTo', 'article', 'a-2', { queryParams: { q: 'lol' } });
+  Ngular.run(router, 'transitionTo', 'article', 'a-2', { queryParams: { q: 'lol' } });
 
   deepEqual(withoutMeta(this.controller.get('model')), { id: 'a-2' });
   equal(this.controller.get('q'), 'lol');
@@ -1395,7 +1395,7 @@ QUnit.test("query params have 'model' stickiness by default (params-based transi
   equal(this.$link3.attr('href'), '/a/a-3');
 
   this.expectedModelHookParams = { id: 'a-3', q: 'hay', z: 0 };
-  Ember.run(router, 'transitionTo', 'article', 'a-3', { queryParams: { q: 'hay' } });
+  Ngular.run(router, 'transitionTo', 'article', 'a-3', { queryParams: { q: 'hay' } });
 
   deepEqual(withoutMeta(this.controller.get('model')), { id: 'a-3' });
   equal(this.controller.get('q'), 'hay');
@@ -1405,7 +1405,7 @@ QUnit.test("query params have 'model' stickiness by default (params-based transi
   equal(this.$link3.attr('href'), '/a/a-3?q=hay');
 
   this.expectedModelHookParams = { id: 'a-2', q: 'lol', z: 1 };
-  Ember.run(router, 'transitionTo', 'article', 'a-2', { queryParams: { z: 1 } });
+  Ngular.run(router, 'transitionTo', 'article', 'a-2', { queryParams: { z: 1 } });
 
   deepEqual(withoutMeta(this.controller.get('model')), { id: 'a-2' });
   equal(this.controller.get('q'), 'lol');
@@ -1422,7 +1422,7 @@ QUnit.test("'controller' stickiness shares QP state between models", function() 
 
   this.boot();
 
-  Ember.run(this.$link1, 'click');
+  Ngular.run(this.$link1, 'click');
   equal(router.get('location.path'), '/a/a-1');
 
   setAndFlush(this.controller, 'q', 'lol');
@@ -1431,7 +1431,7 @@ QUnit.test("'controller' stickiness shares QP state between models", function() 
   equal(this.$link2.attr('href'), '/a/a-2?q=lol');
   equal(this.$link3.attr('href'), '/a/a-3?q=lol');
 
-  Ember.run(this.$link2, 'click');
+  Ngular.run(this.$link2, 'click');
 
   equal(this.controller.get('q'), 'lol');
   equal(this.controller.get('z'), 0);
@@ -1462,7 +1462,7 @@ QUnit.test("'controller' stickiness shares QP state between models", function() 
 QUnit.test("'model' stickiness is scoped to current or first dynamic parent route", function() {
   this.boot();
 
-  Ember.run(router, 'transitionTo', 'comments', 'a-1');
+  Ngular.run(router, 'transitionTo', 'comments', 'a-1');
 
   var commentsCtrl = container.lookup('controller:comments');
   equal(commentsCtrl.get('page'), 1);
@@ -1474,11 +1474,11 @@ QUnit.test("'model' stickiness is scoped to current or first dynamic parent rout
   setAndFlush(commentsCtrl, 'page', 3);
   equal(router.get('location.path'), '/a/a-1/comments?page=3');
 
-  Ember.run(router, 'transitionTo', 'comments', 'a-2');
+  Ngular.run(router, 'transitionTo', 'comments', 'a-2');
   equal(commentsCtrl.get('page'), 1);
   equal(router.get('location.path'), '/a/a-2/comments');
 
-  Ember.run(router, 'transitionTo', 'comments', 'a-1');
+  Ngular.run(router, 'transitionTo', 'comments', 'a-1');
   equal(commentsCtrl.get('page'), 3);
   equal(router.get('location.path'), '/a/a-1/comments?page=3');
 });
@@ -1500,11 +1500,11 @@ QUnit.test("can reset query params using the resetController hook", function() {
     }
   });
 
-  Ember.TEMPLATES.about = compile("{{link-to 'A' 'comments' 'a-1' id='one'}} {{link-to 'B' 'comments' 'a-2' id='two'}}");
+  Ngular.TEMPLATES.about = compile("{{link-to 'A' 'comments' 'a-1' id='one'}} {{link-to 'B' 'comments' 'a-2' id='two'}}");
 
   this.boot();
 
-  Ember.run(router, 'transitionTo', 'comments', 'a-1');
+  Ngular.run(router, 'transitionTo', 'comments', 'a-1');
 
   var commentsCtrl = container.lookup('controller:comments');
   equal(commentsCtrl.get('page'), 1);
@@ -1513,19 +1513,19 @@ QUnit.test("can reset query params using the resetController hook", function() {
   setAndFlush(commentsCtrl, 'page', 2);
   equal(router.get('location.path'), '/a/a-1/comments?page=2');
 
-  Ember.run(router, 'transitionTo', 'comments', 'a-2');
+  Ngular.run(router, 'transitionTo', 'comments', 'a-2');
   equal(commentsCtrl.get('page'), 1);
   equal(this.controller.get('q'), 'wat');
 
-  Ember.run(router, 'transitionTo', 'comments', 'a-1');
+  Ngular.run(router, 'transitionTo', 'comments', 'a-1');
 
   equal(router.get('location.path'), '/a/a-1/comments');
   equal(commentsCtrl.get('page'), 1);
 
-  Ember.run(router, 'transitionTo', 'about');
+  Ngular.run(router, 'transitionTo', 'about');
 
-  equal(Ember.$('#one').attr('href'), "/a/a-1/comments?q=imdone");
-  equal(Ember.$('#two').attr('href'), "/a/a-2/comments");
+  equal(Ngular.$('#one').attr('href'), "/a/a-1/comments?q=imdone");
+  equal(Ngular.$('#two').attr('href'), "/a/a-2/comments");
 });
 
 QUnit.test("can unit test without bucket cache", function() {
@@ -1548,7 +1548,7 @@ QUnit.module("Query Params - overlapping query param property names", {
 
     this.boot = function() {
       bootApplication();
-      Ember.run(router, 'transitionTo', 'parent.child');
+      Ngular.run(router, 'transitionTo', 'parent.child');
     };
   },
 
@@ -1558,12 +1558,12 @@ QUnit.module("Query Params - overlapping query param property names", {
 });
 
 QUnit.test("can remap same-named qp props", function() {
-  App.ParentController = Ember.Controller.extend({
+  App.ParentController = Ngular.Controller.extend({
     queryParams: { page: 'parentPage' },
     page: 1
   });
 
-  App.ParentChildController = Ember.Controller.extend({
+  App.ParentChildController = Ngular.Controller.extend({
     queryParams: { page: 'childPage' },
     page: 1
   });
@@ -1585,14 +1585,14 @@ QUnit.test("can remap same-named qp props", function() {
   setAndFlush(parentChildController, 'page', 1);
   equal(router.get('location.path'), '/parent/child');
 
-  Ember.run(function() {
+  Ngular.run(function() {
     parentController.set('page', 2);
     parentChildController.set('page', 2);
   });
 
   equal(router.get('location.path'), '/parent/child?childPage=2&parentPage=2');
 
-  Ember.run(function() {
+  Ngular.run(function() {
     parentController.set('page', 1);
     parentChildController.set('page', 1);
   });
@@ -1601,12 +1601,12 @@ QUnit.test("can remap same-named qp props", function() {
 });
 
 QUnit.test("query params in the same route hierarchy with the same url key get auto-scoped", function() {
-  App.ParentController = Ember.Controller.extend({
+  App.ParentController = Ngular.Controller.extend({
     queryParams: { foo: 'shared' },
     foo: 1
   });
 
-  App.ParentChildController = Ember.Controller.extend({
+  App.ParentChildController = Ngular.Controller.extend({
     queryParams: { bar: 'shared' },
     bar: 1
   });
@@ -1619,16 +1619,16 @@ QUnit.test("query params in the same route hierarchy with the same url key get a
 
 QUnit.test("Support shared but overridable mixin pattern", function() {
 
-  var HasPage = Ember.Mixin.create({
+  var HasPage = Ngular.Mixin.create({
     queryParams: 'page',
     page: 1
   });
 
-  App.ParentController = Ember.Controller.extend(HasPage, {
+  App.ParentController = Ngular.Controller.extend(HasPage, {
     queryParams: { page: 'yespage' }
   });
 
-  App.ParentChildController = Ember.Controller.extend(HasPage);
+  App.ParentChildController = Ngular.Controller.extend(HasPage);
 
   this.boot();
 

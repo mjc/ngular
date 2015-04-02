@@ -1,8 +1,8 @@
-import isBlank from 'ember-metal/is_blank';
+import isBlank from 'ngular-metal/is_blank';
 
-QUnit.module("Ember.isBlank");
+QUnit.module("Ngular.isBlank");
 
-QUnit.test("Ember.isBlank", function() {
+QUnit.test("Ngular.isBlank", function() {
   var string = "string";
   var fn = function() {};
   var object = { length: 0 };

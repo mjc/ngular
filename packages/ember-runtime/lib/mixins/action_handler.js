@@ -1,26 +1,26 @@
 /**
-@module ember
-@submodule ember-runtime
+@module ngular
+@submodule ngular-runtime
 */
-import merge from "ember-metal/merge";
-import { Mixin } from 'ember-metal/mixin';
-import { get } from "ember-metal/property_get";
-import { typeOf } from "ember-metal/utils";
+import merge from "ngular-metal/merge";
+import { Mixin } from 'ngular-metal/mixin';
+import { get } from "ngular-metal/property_get";
+import { typeOf } from "ngular-metal/utils";
 
 /**
-  The `Ember.ActionHandler` mixin implements support for moving an `actions`
+  The `Ngular.ActionHandler` mixin implements support for moving an `actions`
   property to an `_actions` property at extend time, and adding `_actions`
   to the object's mergedProperties list.
 
-  `Ember.ActionHandler` is available on some familiar classes including
-  `Ember.Route`, `Ember.View`, `Ember.Component`, and controllers such as
-  `Ember.Controller` and `Ember.ObjectController`.
-  (Internally the mixin is used by `Ember.CoreView`, `Ember.ControllerMixin`,
-  and `Ember.Route` and available to the above classes through
+  `Ngular.ActionHandler` is available on some familiar classes including
+  `Ngular.Route`, `Ngular.View`, `Ngular.Component`, and controllers such as
+  `Ngular.Controller` and `Ngular.ObjectController`.
+  (Internally the mixin is used by `Ngular.CoreView`, `Ngular.ControllerMixin`,
+  and `Ngular.Route` and available to the above classes through
   inheritance.)
 
   @class ActionHandler
-  @namespace Ember
+  @namespace Ngular
 */
 var ActionHandler = Mixin.create({
   mergedProperties: ['_actions'],
@@ -40,7 +40,7 @@ var ActionHandler = Mixin.create({
     or mixins rather than just replace the entire hash, e.g.:
 
     ```js
-    App.CanDisplayBanner = Ember.Mixin.create({
+    App.CanDisplayBanner = Ngular.Mixin.create({
       actions: {
         displayBanner: function(msg) {
           // ...
@@ -48,7 +48,7 @@ var ActionHandler = Mixin.create({
       }
     });
 
-    App.WelcomeRoute = Ember.Route.extend(App.CanDisplayBanner, {
+    App.WelcomeRoute = Ngular.Route.extend(App.CanDisplayBanner, {
       actions: {
         playMusic: function() {
           // ...
@@ -68,7 +68,7 @@ var ActionHandler = Mixin.create({
     Component object:
 
     ```js
-    App.SongRoute = Ember.Route.extend({
+    App.SongRoute = Ngular.Route.extend({
       actions: {
         myAction: function() {
           this.controllerFor("song");
@@ -86,7 +86,7 @@ var ActionHandler = Mixin.create({
     Take for example the following routes:
 
     ```js
-    App.DebugRoute = Ember.Mixin.create({
+    App.DebugRoute = Ngular.Mixin.create({
       actions: {
         debugRouteInformation: function() {
           console.debug("trololo");
@@ -94,7 +94,7 @@ var ActionHandler = Mixin.create({
       }
     });
 
-    App.AnnoyingDebugRoute = Ember.Route.extend(App.DebugRoute, {
+    App.AnnoyingDebugRoute = Ngular.Route.extend(App.DebugRoute, {
       actions: {
         debugRouteInformation: function() {
           // also call the debugRouteInformation of mixed in App.DebugRoute
@@ -120,14 +120,14 @@ var ActionHandler = Mixin.create({
       });
     });
 
-    App.AlbumRoute = Ember.Route.extend({
+    App.AlbumRoute = Ngular.Route.extend({
       actions: {
         startPlaying: function() {
         }
       }
     });
 
-    App.AlbumSongRoute = Ember.Route.extend({
+    App.AlbumSongRoute = Ngular.Route.extend({
       actions: {
         startPlaying: function() {
           // ...
@@ -157,12 +157,12 @@ var ActionHandler = Mixin.create({
     var hashName;
 
     if (!props._actions) {
-      Ember.assert("'actions' should not be a function", typeof(props.actions) !== 'function');
+      Ngular.assert("'actions' should not be a function", typeof(props.actions) !== 'function');
 
       if (typeOf(props.actions) === 'object') {
         hashName = 'actions';
       } else if (typeOf(props.events) === 'object') {
-        Ember.deprecate('Action handlers contained in an `events` object are deprecated in favor' +
+        Ngular.deprecate('Action handlers contained in an `events` object are deprecated in favor' +
                         ' of putting them in an `actions` object', false);
         hashName = 'events';
       }
@@ -188,7 +188,7 @@ var ActionHandler = Mixin.create({
     Example
 
     ```js
-    App.WelcomeRoute = Ember.Route.extend({
+    App.WelcomeRoute = Ngular.Route.extend({
       actions: {
         playTheme: function() {
            this.send('playMusic', 'theme.mp3');
@@ -213,7 +213,7 @@ var ActionHandler = Mixin.create({
     }
 
     if (target = get(this, 'target')) {
-      Ember.assert("The `target` for " + this + " (" + target +
+      Ngular.assert("The `target` for " + this + " (" + target +
                    ") does not have a `send` method", typeof target.send === 'function');
       target.send(...arguments);
     }

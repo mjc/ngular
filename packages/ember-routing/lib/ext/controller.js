@@ -1,15 +1,15 @@
-import Ember from "ember-metal/core"; // FEATURES, deprecate
-import { get } from "ember-metal/property_get";
-import { set } from "ember-metal/property_set";
-import { computed } from "ember-metal/computed";
-import { typeOf, meta } from "ember-metal/utils";
-import merge from "ember-metal/merge";
+import Ngular from "ngular-metal/core"; // FEATURES, deprecate
+import { get } from "ngular-metal/property_get";
+import { set } from "ngular-metal/property_set";
+import { computed } from "ngular-metal/computed";
+import { typeOf, meta } from "ngular-metal/utils";
+import merge from "ngular-metal/merge";
 
-import ControllerMixin from "ember-runtime/mixins/controller";
+import ControllerMixin from "ngular-runtime/mixins/controller";
 
 /**
-@module ember
-@submodule ember-routing
+@module ngular
+@submodule ngular-routing
 */
 
 ControllerMixin.reopen({
@@ -217,14 +217,14 @@ ControllerMixin.reopen({
     aController.transitionToRoute({queryParams: {sort: 'date'}});
     ```
 
-    See also [replaceRoute](/api/classes/Ember.ControllerMixin.html#method_replaceRoute).
+    See also [replaceRoute](/api/classes/Ngular.ControllerMixin.html#method_replaceRoute).
 
     @param {String} name the name of the route or a URL
     @param {...Object} models the model(s) or identifier(s) to be used
       while transitioning to the route.
     @param {Object} [options] optional hash with a queryParams property
       containing a mapping of query parameters
-    @for Ember.ControllerMixin
+    @for Ngular.ControllerMixin
     @method transitionToRoute
   */
   transitionToRoute() {
@@ -236,11 +236,11 @@ ControllerMixin.reopen({
 
   /**
     @deprecated
-    @for Ember.ControllerMixin
+    @for Ngular.ControllerMixin
     @method transitionTo
   */
   transitionTo() {
-    Ember.deprecate("transitionTo is deprecated. Please use transitionToRoute.");
+    Ngular.deprecate("transitionTo is deprecated. Please use transitionToRoute.");
     return this.transitionToRoute(...arguments);
   },
 
@@ -296,7 +296,7 @@ ControllerMixin.reopen({
     @param {String} name the name of the route or a URL
     @param {...Object} models the model(s) or identifier(s) to be used
     while transitioning to the route.
-    @for Ember.ControllerMixin
+    @for Ngular.ControllerMixin
     @method replaceRoute
   */
   replaceRoute() {
@@ -308,11 +308,11 @@ ControllerMixin.reopen({
 
   /**
     @deprecated
-    @for Ember.ControllerMixin
+    @for Ngular.ControllerMixin
     @method replaceWith
   */
   replaceWith() {
-    Ember.deprecate("replaceWith is deprecated. Please use replaceRoute.");
+    Ngular.deprecate("replaceWith is deprecated. Please use replaceRoute.");
     return this.replaceRoute(...arguments);
   }
 });

@@ -1,14 +1,14 @@
-import "ember-routing-htmlbars";
-import run from "ember-metal/run_loop";
-import EmberView from "ember-views/views/view";
-import compile from "ember-template-compiler/system/compile";
-import { set } from "ember-metal/property_set";
-import Controller from "ember-runtime/controllers/controller";
-import { runAppend, runDestroy } from "ember-runtime/tests/utils";
+import "ngular-routing-htmlbars";
+import run from "ngular-metal/run_loop";
+import NgularView from "ngular-views/views/view";
+import compile from "ngular-template-compiler/system/compile";
+import { set } from "ngular-metal/property_set";
+import Controller from "ngular-runtime/controllers/controller";
+import { runAppend, runDestroy } from "ngular-runtime/tests/utils";
 
 var view;
 
-QUnit.module("ember-routing-htmlbars: link-to helper", {
+QUnit.module("ngular-routing-htmlbars: link-to helper", {
   teardown() {
     runDestroy(view);
   }
@@ -17,7 +17,7 @@ QUnit.module("ember-routing-htmlbars: link-to helper", {
 
 QUnit.test("should be able to be inserted in DOM when the router is not present", function() {
   var template = "{{#link-to 'index'}}Go to Index{{/link-to}}";
-  view = EmberView.create({
+  view = NgularView.create({
     template: compile(template)
   });
 
@@ -28,7 +28,7 @@ QUnit.test("should be able to be inserted in DOM when the router is not present"
 
 QUnit.test("re-renders when title changes", function() {
   var template = "{{link-to title routeName}}";
-  view = EmberView.create({
+  view = NgularView.create({
     controller: {
       title: 'foo',
       routeName: 'index'
@@ -49,7 +49,7 @@ QUnit.test("re-renders when title changes", function() {
 
 QUnit.test("can read bound title", function() {
   var template = "{{link-to title routeName}}";
-  view = EmberView.create({
+  view = NgularView.create({
     controller: {
       title: 'foo',
       routeName: 'index'
@@ -63,7 +63,7 @@ QUnit.test("can read bound title", function() {
 });
 
 QUnit.test("escaped inline form (double curlies) escapes link title", function() {
-  view = EmberView.create({
+  view = NgularView.create({
     title: "<b>blah</b>",
     template: compile("{{link-to view.title}}")
   });
@@ -74,7 +74,7 @@ QUnit.test("escaped inline form (double curlies) escapes link title", function()
 });
 
 QUnit.test("unescaped inline form (triple curlies) does not escape link title", function() {
-  view = EmberView.create({
+  view = NgularView.create({
     title: "<b>blah</b>",
     template: compile("{{{link-to view.title}}}")
   });
@@ -87,7 +87,7 @@ QUnit.test("unescaped inline form (triple curlies) does not escape link title", 
 QUnit.test("unwraps controllers", function() {
   var template = "{{#link-to 'index' view.otherController}}Text{{/link-to}}";
 
-  view = EmberView.create({
+  view = NgularView.create({
     otherController: Controller.create({
       model: 'foo'
     }),

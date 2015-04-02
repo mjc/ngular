@@ -1,6 +1,6 @@
-import Ember from 'ember-metal/core'; // Ember.assert
-import emberKeys from "ember-metal/keys";
-import dictionary from 'ember-metal/dictionary';
+import Ngular from 'ngular-metal/core'; // Ngular.assert
+import ngularKeys from "ngular-metal/keys";
+import dictionary from 'ngular-metal/dictionary';
 
 // TODO - Temporary workaround for v0.4.0 of the ES6 transpiler, which lacks support for circular dependencies.
 // See the below usage of requireModule. Instead, it should be possible to simply `import Registry from './registry';`
@@ -21,7 +21,7 @@ var Registry;
  */
 function Container(registry, options) {
   this._registry = registry || (function() {
-    Ember.deprecate("A container should only be created for an already instantiated registry. For backward compatibility, an isolated registry will be instantiated just for this container.");
+    Ngular.deprecate("A container should only be created for an already instantiated registry. For backward compatibility, an isolated registry will be instantiated just for this container.");
 
     // TODO - See note above about transpiler import workaround.
     if (!Registry) { Registry = requireModule('container/registry')['default']; }
@@ -106,7 +106,7 @@ Container.prototype = {
    @return {any}
    */
   lookup(fullName, options) {
-    Ember.assert('fullName must be a proper full name', this._registry.validateFullName(fullName));
+    Ngular.assert('fullName must be a proper full name', this._registry.validateFullName(fullName));
     return lookup(this, this._registry.normalize(fullName), options);
   },
 
@@ -118,7 +118,7 @@ Container.prototype = {
    @return {any}
    */
   lookupFactory(fullName) {
-    Ember.assert('fullName must be a proper full name', this._registry.validateFullName(fullName));
+    Ngular.assert('fullName must be a proper full name', this._registry.validateFullName(fullName));
     return factoryFor(this, this._registry.normalize(fullName));
   },
 
@@ -146,7 +146,7 @@ Container.prototype = {
    */
   reset(fullName) {
     if (arguments.length > 0) {
-      resetMember(this, this._registry.normalize(fullName));
+      resetMngular(this, this._registry.normalize(fullName));
     } else {
       resetCache(this);
     }
@@ -170,7 +170,7 @@ Container.prototype = {
 
   function exposeRegistryMethod(method) {
     Container.prototype[method] = function() {
-      Ember.deprecate(method + ' should be called on the registry instead of the container');
+      Ngular.deprecate(method + ' should be called on the registry instead of the container');
       return this._registry[method].apply(this._registry, arguments);
     };
   }
@@ -233,7 +233,7 @@ function factoryFor(container, fullName) {
   if (factory === undefined) { return; }
 
   var type = fullName.split(':')[0];
-  if (!factory || typeof factory.extend !== 'function' || (!Ember.MODEL_FACTORY_INJECTIONS && type === 'model')) {
+  if (!factory || typeof factory.extend !== 'function' || (!Ngular.MODEL_FACTORY_INJECTIONS && type === 'model')) {
     if (factory && typeof factory._onLookup === 'function') {
       factory._onLookup(fullName);
     }
@@ -329,7 +329,7 @@ function instantiate(container, fullName) {
 
 function eachDestroyable(container, callback) {
   var cache = container.cache;
-  var keys = emberKeys(cache);
+  var keys = ngularKeys(cache);
   var key, value;
 
   for (var i = 0, l = keys.length; i < l; i++) {
@@ -352,16 +352,16 @@ function resetCache(container) {
   container.cache.dict = dictionary(null);
 }
 
-function resetMember(container, fullName) {
-  var member = container.cache[fullName];
+function resetMngular(container, fullName) {
+  var mngular = container.cache[fullName];
 
   delete container.factoryCache[fullName];
 
-  if (member) {
+  if (mngular) {
     delete container.cache[fullName];
 
-    if (member.destroy) {
-      member.destroy();
+    if (mngular.destroy) {
+      mngular.destroy();
     }
   }
 }

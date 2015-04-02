@@ -1,14 +1,14 @@
-import { get } from "ember-metal/property_get";
-import run from "ember-metal/run_loop";
-import jQuery from "ember-views/system/jquery";
-import EmberView from "ember-views/views/view";
-import ContainerView from "ember-views/views/container_view";
+import { get } from "ngular-metal/property_get";
+import run from "ngular-metal/run_loop";
+import jQuery from "ngular-views/system/jquery";
+import NgularView from "ngular-views/views/view";
+import ContainerView from "ngular-views/views/container_view";
 
 var View, view;
 
-QUnit.module("EmberView - replaceIn()", {
+QUnit.module("NgularView - replaceIn()", {
   setup() {
-    View = EmberView.extend({});
+    View = NgularView.extend({});
   },
 
   teardown() {
@@ -71,13 +71,13 @@ QUnit.test("should move the view to the inDOM state after replacing", function()
   equal(view.currentState, view._states.inDOM, "the view is in the inDOM state");
 });
 
-QUnit.module("EmberView - replaceIn() in a view hierarchy", {
+QUnit.module("NgularView - replaceIn() in a view hierarchy", {
   setup() {
     expectDeprecation("Setting `childViews` on a Container is deprecated.");
 
     View = ContainerView.extend({
       childViews: ['child'],
-      child: EmberView.extend({
+      child: NgularView.extend({
         elementId: 'child'
       })
     });

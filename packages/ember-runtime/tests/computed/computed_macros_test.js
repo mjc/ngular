@@ -1,21 +1,21 @@
 import {
   empty,
   notEmpty
-} from "ember-metal/computed_macros";
-import EmberObject from "ember-runtime/system/object";
-import { testBoth } from "ember-metal/tests/props_helper";
+} from "ngular-metal/computed_macros";
+import NgularObject from "ngular-runtime/system/object";
+import { testBoth } from "ngular-metal/tests/props_helper";
 
 QUnit.module('CP macros');
 
-testBoth('Ember.computed.empty', function (get, set) {
-  var obj = EmberObject.extend({
+testBoth('Ngular.computed.empty', function (get, set) {
+  var obj = NgularObject.extend({
     bestLannister: null,
     lannisters: null,
 
     bestLannisterUnspecified: empty('bestLannister'),
     noLannistersKnown: empty('lannisters')
   }).create({
-    lannisters: Ember.A([])
+    lannisters: Ngular.A([])
   });
 
   equal(get(obj, 'bestLannisterUnspecified'), true, "bestLannister initially empty");
@@ -28,15 +28,15 @@ testBoth('Ember.computed.empty', function (get, set) {
   equal(get(obj, 'noLannistersKnown'), false, "empty respects array mutations");
 });
 
-testBoth('Ember.computed.notEmpty', function(get, set) {
-  var obj = EmberObject.extend({
+testBoth('Ngular.computed.notEmpty', function(get, set) {
+  var obj = NgularObject.extend({
     bestLannister: null,
     lannisters: null,
 
     bestLannisterSpecified: notEmpty('bestLannister'),
     LannistersKnown: notEmpty('lannisters')
   }).create({
-    lannisters: Ember.A([])
+    lannisters: Ngular.A([])
   });
 
   equal(get(obj, 'bestLannisterSpecified'), false, "bestLannister initially empty");

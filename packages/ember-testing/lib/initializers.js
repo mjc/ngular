@@ -1,8 +1,8 @@
-import { onLoad } from "ember-runtime/system/lazy_load";
+import { onLoad } from "ngular-runtime/system/lazy_load";
 
 var name = 'deferReadiness in `testing` mode';
 
-onLoad('Ember.Application', function(Application) {
+onLoad('Ngular.Application', function(Application) {
   if (!Application.initializers[name]) {
     Application.initializer({
       name: name,

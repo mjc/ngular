@@ -1,8 +1,8 @@
 {
-  "name": "ember",
+  "name": "ngular",
   "version": "VERSION_STRING_PLACEHOLDER",
   "main": [
-    "./ember.debug.js"
+    "./ngular.debug.js"
   ],
   "dependencies": {
     "jquery": ">= 1.7.0 < 2.2.0"

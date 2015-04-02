@@ -1,26 +1,26 @@
 
 /**
-@module ember
-@submodule ember-views
+@module ngular
+@submodule ngular-views
 */
 
-import Ember from "ember-metal/core"; // Ember.assert
-import { isGlobalPath } from "ember-metal/binding";
-import { get } from "ember-metal/property_get";
-import { set } from "ember-metal/property_set";
-import { fmt } from "ember-runtime/system/string";
-import ContainerView from "ember-views/views/container_view";
-import CoreView from "ember-views/views/core_view";
-import View from "ember-views/views/view";
+import Ngular from "ngular-metal/core"; // Ngular.assert
+import { isGlobalPath } from "ngular-metal/binding";
+import { get } from "ngular-metal/property_get";
+import { set } from "ngular-metal/property_set";
+import { fmt } from "ngular-runtime/system/string";
+import ContainerView from "ngular-views/views/container_view";
+import CoreView from "ngular-views/views/core_view";
+import View from "ngular-views/views/view";
 import {
   observer,
   beforeObserver
-} from "ember-metal/mixin";
-import { readViewFactory } from "ember-views/streams/utils";
-import EmberArray from "ember-runtime/mixins/array";
+} from "ngular-metal/mixin";
+import { readViewFactory } from "ngular-views/streams/utils";
+import NgularArray from "ngular-runtime/mixins/array";
 
 /**
-  `Ember.CollectionView` is an `Ember.View` descendent responsible for managing
+  `Ngular.CollectionView` is an `Ngular.View` descendent responsible for managing
   a collection (an array or array-like object) by maintaining a child view object
   and associated DOM representation for each item in the array and ensuring
   that child views and their associated rendered HTML are updated when items in
@@ -28,11 +28,11 @@ import EmberArray from "ember-runtime/mixins/array";
 
   ## Setting content
 
-  The managed collection of objects is referenced as the `Ember.CollectionView`
+  The managed collection of objects is referenced as the `Ngular.CollectionView`
   instance's `content` property.
 
   ```javascript
-  someItemsView = Ember.CollectionView.create({
+  someItemsView = Ngular.CollectionView.create({
     content: ['A', 'B','C']
   })
   ```
@@ -43,18 +43,18 @@ import EmberArray from "ember-runtime/mixins/array";
   ## Specifying `itemViewClass`
 
   By default the view class for each item in the managed collection will be an
-  instance of `Ember.View`. You can supply a different class by setting the
+  instance of `Ngular.View`. You can supply a different class by setting the
   `CollectionView`'s `itemViewClass` property.
 
   Given the following application code:
 
   ```javascript
-  var App = Ember.Application.create();
-  App.ItemListView = Ember.CollectionView.extend({
+  var App = Ngular.Application.create();
+  App.ItemListView = Ngular.CollectionView.extend({
     classNames: ['a-collection'],
     content: ['A','B','C'],
-    itemViewClass: Ember.View.extend({
-      template: Ember.Handlebars.compile("the letter: {{view.content}}")
+    itemViewClass: Ngular.View.extend({
+      template: Ngular.Handlebars.compile("the letter: {{view.content}}")
     })
   });
   ```
@@ -68,10 +68,10 @@ import EmberArray from "ember-runtime/mixins/array";
   The following HTML will result:
 
   ```html
-  <div class="ember-view a-collection">
-    <div class="ember-view">the letter: A</div>
-    <div class="ember-view">the letter: B</div>
-    <div class="ember-view">the letter: C</div>
+  <div class="ngular-view a-collection">
+    <div class="ngular-view">the letter: A</div>
+    <div class="ngular-view">the letter: B</div>
+    <div class="ngular-view">the letter: C</div>
   </div>
   ```
 
@@ -84,12 +84,12 @@ import EmberArray from "ember-runtime/mixins/array";
   Given the following application code:
 
   ```javascript
-  var App = Ember.Application.create();
-  App.UnorderedListView = Ember.CollectionView.create({
+  var App = Ngular.Application.create();
+  App.UnorderedListView = Ngular.CollectionView.create({
     tagName: 'ul',
     content: ['A','B','C'],
-    itemViewClass: Ember.View.extend({
-      template: Ember.Handlebars.compile("the letter: {{view.content}}")
+    itemViewClass: Ngular.View.extend({
+      template: Ngular.Handlebars.compile("the letter: {{view.content}}")
     })
   });
   ```
@@ -103,18 +103,18 @@ import EmberArray from "ember-runtime/mixins/array";
   The following HTML will result:
 
   ```html
-  <ul class="ember-view a-collection">
-    <li class="ember-view">the letter: A</li>
-    <li class="ember-view">the letter: B</li>
-    <li class="ember-view">the letter: C</li>
+  <ul class="ngular-view a-collection">
+    <li class="ngular-view">the letter: A</li>
+    <li class="ngular-view">the letter: B</li>
+    <li class="ngular-view">the letter: C</li>
   </ul>
   ```
 
   Additional `tagName` pairs can be provided by adding to
-  `Ember.CollectionView.CONTAINER_MAP`. For example:
+  `Ngular.CollectionView.CONTAINER_MAP`. For example:
 
   ```javascript
-  Ember.CollectionView.CONTAINER_MAP['article'] = 'section'
+  Ngular.CollectionView.CONTAINER_MAP['article'] = 'section'
   ```
 
   ## Programmatic creation of child views
@@ -124,7 +124,7 @@ import EmberArray from "ember-runtime/mixins/array";
   `createChildView` method can be overridden:
 
   ```javascript
-  App.CustomCollectionView = Ember.CollectionView.extend({
+  App.CustomCollectionView = Ngular.CollectionView.extend({
     createChildView: function(viewClass, attrs) {
       if (attrs.content.kind == 'album') {
         viewClass = App.AlbumView;
@@ -138,18 +138,18 @@ import EmberArray from "ember-runtime/mixins/array";
 
   ## Empty View
 
-  You can provide an `Ember.View` subclass to the `Ember.CollectionView`
+  You can provide an `Ngular.View` subclass to the `Ngular.CollectionView`
   instance as its `emptyView` property. If the `content` property of a
   `CollectionView` is set to `null` or an empty array, an instance of this view
   will be the `CollectionView`s only child.
 
   ```javascript
-  var App = Ember.Application.create();
-  App.ListWithNothing = Ember.CollectionView.create({
+  var App = Ngular.Application.create();
+  App.ListWithNothing = Ngular.CollectionView.create({
     classNames: ['nothing'],
     content: null,
-    emptyView: Ember.View.extend({
-      template: Ember.Handlebars.compile("The collection is empty")
+    emptyView: Ngular.View.extend({
+      template: Ngular.Handlebars.compile("The collection is empty")
     })
   });
   ```
@@ -163,8 +163,8 @@ import EmberArray from "ember-runtime/mixins/array";
   The following HTML will result:
 
   ```html
-  <div class="ember-view nothing">
-    <div class="ember-view">
+  <div class="ngular-view nothing">
+    <div class="ngular-view">
       The collection is empty
     </div>
   </div>
@@ -178,17 +178,17 @@ import EmberArray from "ember-runtime/mixins/array";
 
 
   @class CollectionView
-  @namespace Ember
-  @extends Ember.ContainerView
-  @since Ember 0.9
+  @namespace Ngular
+  @extends Ngular.ContainerView
+  @since Ngular 0.9
 */
 var CollectionView = ContainerView.extend({
 
   /**
-    A list of items to be displayed by the `Ember.CollectionView`.
+    A list of items to be displayed by the `Ngular.CollectionView`.
 
     @property content
-    @type Ember.Array
+    @type Ngular.Array
     @default null
   */
   content: null,
@@ -207,15 +207,15 @@ var CollectionView = ContainerView.extend({
     An optional view to display if content is set to an empty array.
 
     @property emptyView
-    @type Ember.View
+    @type Ngular.View
     @default null
   */
   emptyView: null,
 
   /**
     @property itemViewClass
-    @type Ember.View
-    @default Ember.View
+    @type Ngular.View
+    @default Ngular.View
   */
   itemViewClass: View,
 
@@ -267,13 +267,13 @@ var CollectionView = ContainerView.extend({
   }),
 
   /**
-    Ensure that the content implements Ember.Array
+    Ensure that the content implements Ngular.Array
 
     @private
     @method _assertArrayLike
   */
   _assertArrayLike(content) {
-    Ember.assert(fmt("an Ember.CollectionView's content must implement Ember.Array. You passed %@", [content]), EmberArray.detect(content));
+    Ngular.assert(fmt("an Ngular.CollectionView's content must implement Ngular.Array. You passed %@", [content]), NgularArray.detect(content));
   },
 
   /**
@@ -331,7 +331,7 @@ var CollectionView = ContainerView.extend({
     Called when a mutation to the underlying content array occurs.
 
     This method will replay that mutation against the views that compose the
-    `Ember.CollectionView`, ensuring that the view reflects the model.
+    `Ngular.CollectionView`, ensuring that the view reflects the model.
 
     This array observer is added in `contentDidChange`.
 
@@ -361,7 +361,7 @@ var CollectionView = ContainerView.extend({
 
         view = this.createChildView(itemViewClass, itemViewProps);
 
-        if (Ember.FEATURES.isEnabled('ember-htmlbars-each-with-index')) {
+        if (Ngular.FEATURES.isEnabled('ngular-htmlbars-each-with-index')) {
           if (this.blockParams > 1) {
             view._blockArguments = [item, view.getStream('_view.contentIndex')];
           } else if (this.blockParams === 1) {
@@ -378,7 +378,7 @@ var CollectionView = ContainerView.extend({
 
       this.replace(start, 0, addedViews);
 
-      if (Ember.FEATURES.isEnabled('ember-htmlbars-each-with-index')) {
+      if (Ngular.FEATURES.isEnabled('ngular-htmlbars-each-with-index')) {
         if (this.blockParams > 1) {
           var childViews = this._childViews;
           for (idx = start+added; idx < len; idx++) {
@@ -422,7 +422,7 @@ var CollectionView = ContainerView.extend({
     @method createChildView
     @param {Class} viewClass
     @param {Hash} [attrs] Attributes to add
-    @return {Ember.View} new instance
+    @return {Ngular.View} new instance
   */
   createChildView(_view, attrs) {
     var view = this._super(_view, attrs);

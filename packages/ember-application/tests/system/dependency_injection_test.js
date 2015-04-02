@@ -1,24 +1,24 @@
-import run from "ember-metal/run_loop";
-import EmberObject from "ember-runtime/system/object";
-import Application from "ember-application/system/application";
+import run from "ngular-metal/run_loop";
+import NgularObject from "ngular-runtime/system/object";
+import Application from "ngular-application/system/application";
 
-var EmberApplication = Application;
+var NgularApplication = Application;
 
-var originalLookup = Ember.lookup;
+var originalLookup = Ngular.lookup;
 var registry, locator, lookup, application, originalModelInjections;
 
-QUnit.module("Ember.Application Dependency Injection", {
+QUnit.module("Ngular.Application Dependency Injection", {
   setup() {
-    originalModelInjections = Ember.MODEL_FACTORY_INJECTIONS;
-    Ember.MODEL_FACTORY_INJECTIONS = true;
+    originalModelInjections = Ngular.MODEL_FACTORY_INJECTIONS;
+    Ngular.MODEL_FACTORY_INJECTIONS = true;
 
-    application = run(EmberApplication, 'create');
+    application = run(NgularApplication, 'create');
 
-    application.Person              = EmberObject.extend({});
-    application.Orange              = EmberObject.extend({});
-    application.Email               = EmberObject.extend({});
-    application.User                = EmberObject.extend({});
-    application.PostIndexController = EmberObject.extend({});
+    application.Person              = NgularObject.extend({});
+    application.Orange              = NgularObject.extend({});
+    application.Email               = NgularObject.extend({});
+    application.User                = NgularObject.extend({});
+    application.PostIndexController = NgularObject.extend({});
 
     application.register('model:person', application.Person, { singleton: false });
     application.register('model:user', application.User, { singleton: false });
@@ -29,13 +29,13 @@ QUnit.module("Ember.Application Dependency Injection", {
     registry = application.registry;
     locator = application.__container__;
 
-    lookup = Ember.lookup = {};
+    lookup = Ngular.lookup = {};
   },
   teardown() {
     run(application, 'destroy');
     application = locator = null;
-    Ember.lookup = originalLookup;
-    Ember.MODEL_FACTORY_INJECTIONS = originalModelInjections;
+    Ngular.lookup = originalLookup;
+    Ngular.MODEL_FACTORY_INJECTIONS = originalModelInjections;
   }
 });
 

@@ -1,5 +1,5 @@
-import { get } from 'ember-metal/property_get';
-import { set } from 'ember-metal/property_set';
+import { get } from 'ngular-metal/property_get';
+import { set } from 'ngular-metal/property_set';
 
 QUnit.module('set');
 
@@ -14,7 +14,7 @@ QUnit.test('should set arbitrary properties on an object', function() {
   };
 
   var newObj = {
-    undefinedValue: 'emberjs'
+    undefinedValue: 'ngularjs'
   };
 
   for (var key in obj) {

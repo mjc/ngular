@@ -1,5 +1,5 @@
-import EmberObject from "ember-runtime/system/object";
-import Evented from "ember-runtime/mixins/evented";
+import NgularObject from "ngular-runtime/system/object";
+import Evented from "ngular-runtime/mixins/evented";
 
 QUnit.module("Object events");
 
@@ -7,7 +7,7 @@ QUnit.test("a listener can be added to an object", function() {
   var count = 0;
   var F = function() { count++; };
 
-  var obj = EmberObject.createWithMixins(Evented);
+  var obj = NgularObject.createWithMixins(Evented);
 
   obj.on('event!', F);
   obj.trigger('event!');
@@ -23,7 +23,7 @@ QUnit.test("a listener can be added and removed automatically the first time it 
   var count = 0;
   var F = function() { count++; };
 
-  var obj = EmberObject.createWithMixins(Evented);
+  var obj = NgularObject.createWithMixins(Evented);
 
   obj.one('event!', F);
   obj.trigger('event!');
@@ -38,7 +38,7 @@ QUnit.test("a listener can be added and removed automatically the first time it 
 QUnit.test("triggering an event can have arguments", function() {
   var self, args;
 
-  var obj = EmberObject.createWithMixins(Evented);
+  var obj = NgularObject.createWithMixins(Evented);
 
   obj.on('event!', function() {
     args = [].slice.call(arguments);
@@ -55,7 +55,7 @@ QUnit.test("a listener can be added and removed automatically and have arguments
   var self, args;
   var count = 0;
 
-  var obj = EmberObject.createWithMixins(Evented);
+  var obj = NgularObject.createWithMixins(Evented);
 
   obj.one('event!', function() {
     args = [].slice.call(arguments);
@@ -79,7 +79,7 @@ QUnit.test("a listener can be added and removed automatically and have arguments
 QUnit.test("binding an event can specify a different target", function() {
   var self, args;
 
-  var obj = EmberObject.createWithMixins(Evented);
+  var obj = NgularObject.createWithMixins(Evented);
   var target = {};
 
   obj.on('event!', target, function() {
@@ -98,7 +98,7 @@ QUnit.test("a listener registered with one can take method as string and can be 
   var target = {};
   target.fn = function() { count++; };
 
-  var obj = EmberObject.createWithMixins(Evented);
+  var obj = NgularObject.createWithMixins(Evented);
 
   obj.one('event!', target, 'fn');
   obj.trigger('event!');
@@ -111,7 +111,7 @@ QUnit.test("a listener registered with one can take method as string and can be 
 });
 
 QUnit.test("a listener registered with one can be removed with off", function() {
-  var obj = EmberObject.createWithMixins(Evented, {
+  var obj = NgularObject.createWithMixins(Evented, {
     F() {}
   });
   var F = function() {};
@@ -128,7 +128,7 @@ QUnit.test("a listener registered with one can be removed with off", function() 
 });
 
 QUnit.test("adding and removing listeners should be chainable", function() {
-  var obj = EmberObject.createWithMixins(Evented);
+  var obj = NgularObject.createWithMixins(Evented);
   var F = function() {};
 
   var ret = obj.on('event!', F);

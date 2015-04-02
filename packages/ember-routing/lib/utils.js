@@ -1,4 +1,4 @@
-import { typeOf } from 'ember-metal/utils';
+import { typeOf } from 'ngular-metal/utils';
 
 export function routeArgs(targetRouteName, models, queryParams) {
   var args = [];

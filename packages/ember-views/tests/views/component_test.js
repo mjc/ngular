@@ -1,19 +1,19 @@
-import { set } from "ember-metal/property_set";
-import run from "ember-metal/run_loop";
-import EmberObject from "ember-runtime/system/object";
-import Service from "ember-runtime/system/service";
-import { Registry } from "ember-runtime/system/container";
-import inject from "ember-runtime/inject";
-import { get } from "ember-metal/property_get";
+import { set } from "ngular-metal/property_set";
+import run from "ngular-metal/run_loop";
+import NgularObject from "ngular-runtime/system/object";
+import Service from "ngular-runtime/system/service";
+import { Registry } from "ngular-runtime/system/container";
+import inject from "ngular-runtime/inject";
+import { get } from "ngular-metal/property_get";
 
-import EmberView from "ember-views/views/view";
-import Component from "ember-views/views/component";
+import NgularView from "ngular-views/views/view";
+import Component from "ngular-views/views/component";
 
 var a_slice = Array.prototype.slice;
 
 var component, controller, actionCounts, sendCount, actionArguments;
 
-QUnit.module("Ember.Component", {
+QUnit.module("Ngular.Component", {
   setup() {
     component = Component.create();
   },
@@ -25,11 +25,11 @@ QUnit.module("Ember.Component", {
   }
 });
 
-QUnit.test("The context of an Ember.Component is itself", function() {
+QUnit.test("The context of an Ngular.Component is itself", function() {
   strictEqual(component, component.get('context'), "A component's context is itself");
 });
 
-QUnit.test("The controller (target of `action`) of an Ember.Component is itself", function() {
+QUnit.test("The controller (target of `action`) of an Ngular.Component is itself", function() {
   strictEqual(component, component.get('controller'), "A component's controller is itself");
 });
 
@@ -92,13 +92,13 @@ QUnit.test("Specifying a templateName on a component with a layoutName specified
   equal(get(component, 'layoutName'), 'hum-drum');
 });
 
-QUnit.module("Ember.Component - Actions", {
+QUnit.module("Ngular.Component - Actions", {
   setup() {
     actionCounts = {};
     sendCount = 0;
     actionArguments = null;
 
-    controller = EmberObject.create({
+    controller = NgularObject.create({
       send(actionName) {
         sendCount++;
         actionCounts[actionName] = actionCounts[actionName] || 0;
@@ -108,7 +108,7 @@ QUnit.module("Ember.Component - Actions", {
     });
 
     component = Component.create({
-      _parentView: EmberView.create({
+      _parentView: NgularView.create({
         controller: controller
       })
     });
@@ -172,7 +172,7 @@ QUnit.test("Calling sendAction when the action name is not a string raises an ex
 QUnit.test("Calling sendAction on a component with a context", function() {
   set(component, 'playing', "didStartPlaying");
 
-  var testContext = { song: 'She Broke My Ember' };
+  var testContext = { song: 'She Broke My Ngular' };
 
   component.sendAction('playing', testContext);
 
@@ -182,15 +182,15 @@ QUnit.test("Calling sendAction on a component with a context", function() {
 QUnit.test("Calling sendAction on a component with multiple parameters", function() {
   set(component, 'playing', "didStartPlaying");
 
-  var firstContext  = { song: 'She Broke My Ember' };
-  var secondContext = { song: 'My Achey Breaky Ember' };
+  var firstContext  = { song: 'She Broke My Ngular' };
+  var secondContext = { song: 'My Achey Breaky Ngular' };
 
   component.sendAction('playing', firstContext, secondContext);
 
   deepEqual(actionArguments, [firstContext, secondContext], "arguments were sent to the action");
 });
 
-QUnit.module('Ember.Component - injected properties');
+QUnit.module('Ngular.Component - injected properties');
 
 QUnit.test("services can be injected into components", function() {
   var registry = new Registry();
@@ -208,7 +208,7 @@ QUnit.test("services can be injected into components", function() {
   equal(profilerService, appComponent.get('profilerService'), "service.profiler is injected");
 });
 
-QUnit.module('Ember.Component - subscribed and sent actions trigger errors');
+QUnit.module('Ngular.Component - subscribed and sent actions trigger errors');
 
 QUnit.test('something', function() {
   expect(2);
@@ -245,7 +245,7 @@ QUnit.test('component with target', function() {
   appComponent.send('foo', 'baz');
 });
 
-if (Ember.FEATURES.isEnabled('ember-views-component-has-block')) {
+if (Ngular.FEATURES.isEnabled('ngular-views-component-has-block')) {
   QUnit.test('component with a template will report hasBlock: true', function() {
     expect(1);
 

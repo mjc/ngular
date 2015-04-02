@@ -1,9 +1,9 @@
 /**
-@module ember
-@submodule ember-htmlbars
+@module ngular
+@submodule ngular-htmlbars
 */
-import Logger from "ember-metal/logger";
-import { read } from "ember-metal/streams/utils";
+import Logger from "ngular-metal/logger";
+import { read } from "ngular-metal/streams/utils";
 
 /**
   `log` allows you to output the value of variables in the current rendering
@@ -14,7 +14,7 @@ import { read } from "ember-metal/streams/utils";
   ```
 
   @method log
-  @for Ember.Handlebars.helpers
+  @for Ngular.Handlebars.helpers
   @param {String} property
 */
 export function logHelper(params, hash, options, env) {

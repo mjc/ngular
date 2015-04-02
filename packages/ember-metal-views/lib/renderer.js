@@ -1,5 +1,5 @@
 import DOMHelper from "dom-helper";
-import environment from "ember-metal/environment";
+import environment from "ngular-metal/environment";
 
 var domHelper = environment.hasDOM ? new DOMHelper() : null;
 
@@ -66,7 +66,7 @@ function Renderer_renderTree(_view, _parentView, _refMorph) {
       // This code path is used by view.createElement(), which has two purposes:
       //
       // 1. Legacy usage of `createElement()`. Nobody really knows what the point
-      //    of that is. This usage may be removed in Ember 2.0.
+      //    of that is. This usage may be removed in Ngular 2.0.
       // 2. FastBoot, which creates an element and has no DOM to insert it into.
       //
       // For FastBoot purposes, rendering the DOM without a contextual element
@@ -147,7 +147,7 @@ Renderer.prototype.scheduleInsert =
     if (view._morph || view._elementCreated) {
       throw new Error("You cannot insert a View that has already been rendered");
     }
-    Ember.assert("You cannot insert a View without a morph", morph);
+    Ngular.assert("You cannot insert a View without a morph", morph);
     view._morph = morph;
     var viewId = this.uuid(view);
     this._inserts[viewId] = this.scheduleRender(this, function scheduledRenderTree() {

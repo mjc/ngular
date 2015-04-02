@@ -1,8 +1,8 @@
-import Ember from "ember-metal/core";
-import { get } from "ember-metal/property_get";
-import { guidFor } from "ember-metal/utils";
-import run from "ember-metal/run_loop";
-import HashLocation from "ember-routing/location/hash_location";
+import Ngular from "ngular-metal/core";
+import { get } from "ngular-metal/property_get";
+import { guidFor } from "ngular-metal/utils";
+import run from "ngular-metal/run_loop";
+import HashLocation from "ngular-routing/location/hash_location";
 
 var HashTestLocation, location;
 
@@ -32,7 +32,7 @@ function mockBrowserLocation(path) {
   };
 }
 
-QUnit.module("Ember.HashLocation", {
+QUnit.module("Ngular.HashLocation", {
   setup() {
     HashTestLocation = HashLocation.extend({
       _location: {
@@ -124,13 +124,13 @@ QUnit.test("HashLocation.replaceURL() correctly replaces to the path with a page
 QUnit.test("HashLocation.onUpdateURL() registers a hashchange callback", function() {
   expect(3);
 
-  var oldJquery = Ember.$;
+  var oldJquery = Ngular.$;
 
-  Ember.$ = function (element) {
+  Ngular.$ = function (element) {
     equal(element, window);
     return {
       on(eventName, callback) {
-        equal(eventName, 'hashchange.ember-location-' + guid);
+        equal(eventName, 'hashchange.ngular-location-' + guid);
         equal(Object.prototype.toString.call(callback), '[object Function]');
       }
     };
@@ -146,7 +146,7 @@ QUnit.test("HashLocation.onUpdateURL() registers a hashchange callback", functio
   location.onUpdateURL(function () {});
 
   // clean up
-  Ember.$ = oldJquery;
+  Ngular.$ = oldJquery;
 });
 
 QUnit.test("HashLocation.onUpdateURL callback executes as expected", function() {
@@ -162,7 +162,7 @@ QUnit.test("HashLocation.onUpdateURL callback executes as expected", function() 
 
   location.onUpdateURL(callback);
 
-  Ember.$(window).trigger('hashchange');
+  Ngular.$(window).trigger('hashchange');
 });
 
 QUnit.test("HashLocation.onUpdateURL doesnt execute callback if lastSetURL === path", function() {
@@ -181,7 +181,7 @@ QUnit.test("HashLocation.onUpdateURL doesnt execute callback if lastSetURL === p
 
   location.onUpdateURL(callback);
 
-  Ember.$(window).trigger('hashchange');
+  Ngular.$(window).trigger('hashchange');
 });
 
 QUnit.test("HashLocation.formatURL() prepends a # to the provided string", function() {
@@ -195,14 +195,14 @@ QUnit.test("HashLocation.formatURL() prepends a # to the provided string", funct
 QUnit.test("HashLocation.willDestroy() cleans up hashchange event listener", function() {
   expect(2);
 
-  var oldJquery = Ember.$;
+  var oldJquery = Ngular.$;
 
-  Ember.$ = function (element) {
+  Ngular.$ = function (element) {
     equal(element, window);
 
     return {
       off(eventName) {
-        equal(eventName, 'hashchange.ember-location-' + guid);
+        equal(eventName, 'hashchange.ngular-location-' + guid);
       }
     };
   };
@@ -217,5 +217,5 @@ QUnit.test("HashLocation.willDestroy() cleans up hashchange event listener", fun
   location.willDestroy = function() {};
 
   // clean up
-  Ember.$ = oldJquery;
+  Ngular.$ = oldJquery;
 });

@@ -1,12 +1,12 @@
-import Ember from 'ember-metal/core';
+import Ngular from 'ngular-metal/core';
 import {
   GUID_KEY
-} from 'ember-metal/utils';
-import { indexOf } from 'ember-metal/array';
+} from 'ngular-metal/utils';
+import { indexOf } from 'ngular-metal/array';
 import {
   beginPropertyChanges,
   endPropertyChanges
-} from 'ember-metal/property_events';
+} from 'ngular-metal/property_events';
 import Backburner from 'backburner';
 
 function onBegin(current) {
@@ -27,7 +27,7 @@ var backburner = new Backburner(['sync', 'actions', 'destroy'], {
   defaultQueue: 'actions',
   onBegin: onBegin,
   onEnd: onEnd,
-  onErrorTarget: Ember,
+  onErrorTarget: Ngular,
   onErrorMethod: 'onerror'
 });
 
@@ -52,7 +52,7 @@ var backburner = new Backburner(['sync', 'actions', 'destroy'], {
   ```
 
   @class run
-  @namespace Ember
+  @namespace Ngular
   @static
   @constructor
   @param {Object} [target] target of method to call
@@ -95,7 +95,7 @@ function run() {
   ```
 
   @method join
-  @namespace Ember
+  @namespace Ngular
   @param {Object} [target] target of method to call
   @param {Function|String} method Method to invoke.
     May be a function or a string. If you pass a string
@@ -110,9 +110,9 @@ run.join = function() {
 
 /**
   Allows you to specify which context to call the specified function in while
-  adding the execution of that function to the Ember run loop. This ability
+  adding the execution of that function to the Ngular run loop. This ability
   makes this method a great way to asynchronously integrate third-party libraries
-  into your Ember application.
+  into your Ngular application.
 
   `run.bind` takes two main arguments, the desired context and the function to
   invoke in that context. Any additional arguments will be supplied as arguments
@@ -125,11 +125,11 @@ run.join = function() {
   The component itself could look something like the following:
 
   ```javascript
-  App.RichTextEditorComponent = Ember.Component.extend({
+  App.RichTextEditorComponent = Ngular.Component.extend({
     initializeTinyMCE: function() {
       tinymce.init({
         selector: '#' + this.$().prop('id'),
-        setup: Ember.run.bind(this, this.setupEditor)
+        setup: Ngular.run.bind(this, this.setupEditor)
       });
     }.on('didInsertElement'),
 
@@ -143,12 +143,12 @@ run.join = function() {
   });
   ```
 
-  In this example, we use Ember.run.bind to bind the setupEditor message to the
+  In this example, we use Ngular.run.bind to bind the setupEditor message to the
   context of the App.RichTextEditorComponent and to have the invocation of that
-  method be safely handled and executed by the Ember run loop.
+  method be safely handled and executed by the Ngular run loop.
 
   @method bind
-  @namespace Ember
+  @namespace Ngular
   @param {Object} [target] target of method to call
   @param {Function|String} method Method to invoke.
     May be a function or a string. If you pass a string
@@ -273,7 +273,7 @@ run.cancelTimers = function() {
 
   You should call this method anytime you need any changed state to propagate
   throughout the app immediately without repainting the UI (which happens
-  in the later 'render' queue added by the `ember-views` package).
+  in the later 'render' queue added by the `ngular-views` package).
 
   ```javascript
   run.sync();
@@ -412,11 +412,11 @@ run.scheduleOnce = function(/*queue, target, method*/) {
   For instance, if you'd like to schedule an operation to happen
   after all DOM element operations have completed within the current
   run loop, you can make use of the `afterRender` run loop queue (added
-  by the `ember-views` package, along with the preceding `render` queue
+  by the `ngular-views` package, along with the preceding `render` queue
   where all the DOM element operations happen). Example:
 
   ```javascript
-  App.MyCollectionView = Ember.CollectionView.extend({
+  App.MyCollectionView = Ngular.CollectionView.extend({
     didInsertElement: function() {
       run.scheduleOnce('afterRender', this, 'processChildElements');
     },
@@ -623,8 +623,8 @@ run.throttle = function() {
 // Make sure it's not an autorun during testing
 function checkAutoRun() {
   if (!run.currentRunLoop) {
-    Ember.assert(`You have turned on testing mode, which disabled the run-loop's autorun.
-                  You will need to wrap any code with asynchronous side-effects in a run`, !Ember.testing);
+    Ngular.assert(`You have turned on testing mode, which disabled the run-loop's autorun.
+                  You will need to wrap any code with asynchronous side-effects in a run`, !Ngular.testing);
   }
 }
 

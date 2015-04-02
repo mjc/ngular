@@ -3,16 +3,16 @@
 // To create fast production builds (without ES3 support, minification, derequire, or JSHint)
 // run the following:
 //
-// DISABLE_ES3=true DISABLE_JSCS=true DISABLE_JSHINT=true DISABLE_MIN=true DISABLE_DEREQUIRE=true ember serve --environment=production
+// DISABLE_ES3=true DISABLE_JSCS=true DISABLE_JSHINT=true DISABLE_MIN=true DISABLE_DEREQUIRE=true ngular serve --environment=production
 
-var EmberBuild = require('emberjs-build');
+var NgularBuild = require('ngularjs-build');
 var packages   = require('./lib/packages');
 
-var vendoredPackage    = require('emberjs-build/lib/vendored-package');
-var htmlbarsPackage    = require('emberjs-build/lib/htmlbars-package');
-var vendoredES6Package = require('emberjs-build/lib/es6-vendored-package');
+var vendoredPackage    = require('ngularjs-build/lib/vendored-package');
+var htmlbarsPackage    = require('ngularjs-build/lib/htmlbars-package');
+var vendoredES6Package = require('ngularjs-build/lib/es6-vendored-package');
 
-var emberBuild = new EmberBuild({
+var ngularBuild = new NgularBuild({
   htmlbars: require('htmlbars'),
   packages: packages,
   vendoredPackages: {
@@ -34,4 +34,4 @@ var emberBuild = new EmberBuild({
     }
 });
 
-module.exports = emberBuild.getDistTrees();
+module.exports = ngularBuild.getDistTrees();

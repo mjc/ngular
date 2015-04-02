@@ -1,4 +1,4 @@
-import { Mixin } from 'ember-metal/mixin';
+import { Mixin } from 'ngular-metal/mixin';
 
 QUnit.test('without should create a new mixin excluding named properties', function() {
 

@@ -1,12 +1,12 @@
-import { get } from "ember-metal/property_get";
-import { set } from "ember-metal/property_set";
-import { watch } from "ember-metal/watching";
+import { get } from "ngular-metal/property_get";
+import { set } from "ngular-metal/property_set";
+import { watch } from "ngular-metal/watching";
 import {
   hasPropertyAccessors,
   defineProperty
-} from "ember-metal/platform/define_property";
-import create from 'ember-metal/platform/create';
-import { meta as metaFor } from "ember-metal/utils";
+} from "ngular-metal/platform/define_property";
+import create from 'ngular-metal/platform/create';
+import { meta as metaFor } from "ngular-metal/utils";
 
 QUnit.module('mandatory-setters');
 
@@ -16,7 +16,7 @@ function hasMandatorySetter(object, property) {
   return property in meta.values;
 }
 
-if (Ember.FEATURES.isEnabled('mandatory-setter')) {
+if (Ngular.FEATURES.isEnabled('mandatory-setter')) {
   if (hasPropertyAccessors) {
     QUnit.test('does not assert if property is not being watched', function() {
       var obj = {
@@ -74,7 +74,7 @@ if (Ember.FEATURES.isEnabled('mandatory-setter')) {
       obj.someProp = 'foo-bar';
     });
 
-    QUnit.test('should assert if set without Ember.set when property is being watched', function() {
+    QUnit.test('should assert if set without Ngular.set when property is being watched', function() {
       var obj = {
         someProp: null,
         toString() {
@@ -86,10 +86,10 @@ if (Ember.FEATURES.isEnabled('mandatory-setter')) {
 
       expectAssertion(function() {
         obj.someProp = 'foo-bar';
-      }, 'You must use Ember.set() to set the `someProp` property (of custom-object) to `foo-bar`.');
+      }, 'You must use Ngular.set() to set the `someProp` property (of custom-object) to `foo-bar`.');
     });
 
-    QUnit.test('should not assert if set with Ember.set when property is being watched', function() {
+    QUnit.test('should not assert if set with Ngular.set when property is being watched', function() {
       var obj = {
         someProp: null,
         toString() {
@@ -141,7 +141,7 @@ if (Ember.FEATURES.isEnabled('mandatory-setter')) {
 
       expectAssertion(function() {
         obj2.someProp = 'foo-bar';
-      }, 'You must use Ember.set() to set the `someProp` property (of custom-object) to `foo-bar`.');
+      }, 'You must use Ngular.set() to set the `someProp` property (of custom-object) to `foo-bar`.');
     });
   }
 } else {

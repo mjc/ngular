@@ -1,5 +1,5 @@
 /**
-@module ember-metal
+@module ngular-metal
 */
 
 var ArrayPrototype = Array.prototype;
@@ -110,7 +110,7 @@ var filter = defineNativeShim(ArrayPrototype.filter, function(fn, context) {
   return result;
 });
 
-if (Ember.SHIM_ES5) {
+if (Ngular.SHIM_ES5) {
   ArrayPrototype.map = ArrayPrototype.map || map;
   ArrayPrototype.forEach = ArrayPrototype.forEach || forEach;
   ArrayPrototype.filter = ArrayPrototype.filter || filter;
@@ -121,7 +121,7 @@ if (Ember.SHIM_ES5) {
 /**
   Array polyfills to support ES5 features in older browsers.
 
-  @namespace Ember
+  @namespace Ngular
   @property ArrayPolyfills
 */
 export {

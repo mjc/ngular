@@ -1,11 +1,11 @@
-import { get } from "ember-metal/property_get";
-import run from "ember-metal/run_loop";
-import EmberView from "ember-views/views/view";
-import ContainerView from "ember-views/views/container_view";
+import { get } from "ngular-metal/property_get";
+import run from "ngular-metal/run_loop";
+import NgularView from "ngular-views/views/view";
+import ContainerView from "ngular-views/views/container_view";
 
 var view;
 
-QUnit.module("EmberView#destroyElement", {
+QUnit.module("NgularView#destroyElement", {
   teardown() {
     run(function() {
       view.destroy();
@@ -15,7 +15,7 @@ QUnit.module("EmberView#destroyElement", {
 
 QUnit.test("if it has no element, does nothing", function() {
   var callCount = 0;
-  view = EmberView.create({
+  view = NgularView.create({
     willDestroyElement() { callCount++; }
   });
 
@@ -38,7 +38,7 @@ QUnit.test("if it has a element, calls willDestroyElement on receiver and child 
     willDestroyElement() { parentCount++; },
     childViews: [ContainerView.extend({
       // no willDestroyElement here... make sure no errors are thrown
-      childViews: [EmberView.extend({
+      childViews: [NgularView.extend({
         willDestroyElement() { childCount++; }
       })]
     })]
@@ -62,7 +62,7 @@ QUnit.test("if it has a element, calls willDestroyElement on receiver and child 
 
 QUnit.test("returns receiver", function() {
   var ret;
-  view = EmberView.create();
+  view = NgularView.create();
 
   run(function() {
     view.createElement();
@@ -73,7 +73,7 @@ QUnit.test("returns receiver", function() {
 });
 
 QUnit.test("removes element from parentNode if in DOM", function() {
-  view = EmberView.create();
+  view = NgularView.create();
 
   run(function() {
     view.append();

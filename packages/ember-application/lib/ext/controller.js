@@ -1,15 +1,15 @@
 /**
-@module ember
-@submodule ember-application
+@module ngular
+@submodule ngular-application
 */
 
-import Ember from "ember-metal/core"; // Ember.assert
-import { get } from "ember-metal/property_get";
-import EmberError from "ember-metal/error";
-import { inspect } from "ember-metal/utils";
-import { computed } from "ember-metal/computed";
-import ControllerMixin from "ember-runtime/mixins/controller";
-import controllerFor from "ember-routing/system/controller_for";
+import Ngular from "ngular-metal/core"; // Ngular.assert
+import { get } from "ngular-metal/property_get";
+import NgularError from "ngular-metal/error";
+import { inspect } from "ngular-metal/utils";
+import { computed } from "ngular-metal/computed";
+import ControllerMixin from "ngular-runtime/mixins/controller";
+import controllerFor from "ngular-routing/system/controller_for";
 
 function verifyNeedsDependencies(controller, container, needs) {
   var dependency, i, l;
@@ -18,7 +18,7 @@ function verifyNeedsDependencies(controller, container, needs) {
   for (i=0, l=needs.length; i<l; i++) {
     dependency = needs[i];
 
-    Ember.assert(inspect(controller) + "#needs must not specify dependencies with periods in their names (" +
+    Ngular.assert(inspect(controller) + "#needs must not specify dependencies with periods in their names (" +
                  dependency + ")", dependency.indexOf('.') === -1);
 
     if (dependency.indexOf(':') === -1) {
@@ -31,7 +31,7 @@ function verifyNeedsDependencies(controller, container, needs) {
     }
   }
   if (missing.length) {
-    throw new EmberError(inspect(controller) + " needs [ " + missing.join(', ') +
+    throw new NgularError(inspect(controller) + " needs [ " + missing.join(', ') +
                          " ] but " + (missing.length > 1 ? 'they' : 'it') + " could not be found");
   }
 }
@@ -69,7 +69,7 @@ var defaultControllersComputedProperty = computed(function() {
 
 /**
   @class ControllerMixin
-  @namespace Ember
+  @namespace Ngular
 */
 ControllerMixin.reopen({
   concatenatedProperties: ['needs'],
@@ -82,7 +82,7 @@ ControllerMixin.reopen({
     For example, when you define a controller:
 
     ```javascript
-    App.CommentsController = Ember.ArrayController.extend({
+    App.CommentsController = Ngular.ArrayController.extend({
       needs: ['post']
     });
     ```
@@ -98,14 +98,14 @@ ControllerMixin.reopen({
     Given that you have a nested controller (nested resource):
 
     ```javascript
-    App.CommentsNewController = Ember.ObjectController.extend({
+    App.CommentsNewController = Ngular.ObjectController.extend({
     });
     ```
 
     When you define a controller that requires access to a nested one:
 
     ```javascript
-    App.IndexController = Ember.ObjectController.extend({
+    App.IndexController = Ngular.ObjectController.extend({
       needs: ['commentsNew']
     });
     ```
@@ -128,7 +128,7 @@ ControllerMixin.reopen({
     var length = get(needs, 'length');
 
     if (length > 0) {
-      Ember.assert(' `' + inspect(this) + ' specifies `needs`, but does ' +
+      Ngular.assert(' `' + inspect(this) + ' specifies `needs`, but does ' +
                    "not have a container. Please ensure this controller was " +
                    "instantiated with a container.",
                    this.container || this.controllers !== defaultControllersComputedProperty);
@@ -146,11 +146,11 @@ ControllerMixin.reopen({
 
   /**
     @method controllerFor
-    @see {Ember.Route#controllerFor}
+    @see {Ngular.Route#controllerFor}
     @deprecated Use `needs` instead
   */
   controllerFor(controllerName) {
-    Ember.deprecate("Controller#controllerFor is deprecated, please use Controller#needs instead");
+    Ngular.deprecate("Controller#controllerFor is deprecated, please use Controller#needs instead");
     return controllerFor(get(this, 'container'), controllerName);
   },
 
@@ -160,7 +160,7 @@ ControllerMixin.reopen({
     property will be accessible by name through this property.
 
     ```javascript
-    App.CommentsController = Ember.ArrayController.extend({
+    App.CommentsController = Ngular.ArrayController.extend({
       needs: ['post'],
       postTitle: function() {
         var currentPost = this.get('controllers.post'); // instance of App.PostController
@@ -169,7 +169,7 @@ ControllerMixin.reopen({
     });
     ```
 
-    @see {Ember.ControllerMixin#needs}
+    @see {Ngular.ControllerMixin#needs}
     @property {Object} controllers
     @default null
   */

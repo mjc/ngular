@@ -1,9 +1,9 @@
 /**
-@module ember
-@submodule ember-routing-htmlbars
+@module ngular
+@submodule ngular-routing-htmlbars
 */
 
-import Ember from "ember-metal/core"; // assert
+import Ngular from "ngular-metal/core"; // assert
 
 /**
   The `outlet` helper is a placeholder that the router will fill in with
@@ -13,7 +13,7 @@ import Ember from "ember-metal/core"; // assert
   {{outlet}}
   ```
 
-  By default, a template based on Ember's naming conventions will be rendered
+  By default, a template based on Ngular's naming conventions will be rendered
   into the `outlet` (e.g. `App.PostsRoute` will render the `posts` template).
 
   You can render a different template by using the `render()` method in the
@@ -21,7 +21,7 @@ import Ember from "ember-metal/core"; // assert
   template into the `outlet`.
 
   ``` javascript
-  App.PostsRoute = Ember.Route.extend({
+  App.PostsRoute = Ngular.Route.extend({
     renderTemplate: function() {
       this.render('favoritePost');
     }
@@ -40,7 +40,7 @@ import Ember from "ember-metal/core"; // assert
 
 
   ``` javascript
-  App.PostsRoute = Ember.Route.extend({
+  App.PostsRoute = Ngular.Route.extend({
     renderTemplate: function() {
       this.render('favoritePost', { outlet: 'favoritePost' });
       this.render('posts', { outlet: 'posts' });
@@ -56,14 +56,14 @@ import Ember from "ember-metal/core"; // assert
   ```
 
   ``` javascript
-  App.SectionContainer = Ember.ContainerView.extend({
+  App.SectionContainer = Ngular.ContainerView.extend({
     tagName: 'section',
     classNames: ['special']
   });
   ```
 
   @method outlet
-  @for Ember.Handlebars.helpers
+  @for Ngular.Handlebars.helpers
   @param {String} property the property on the controller
     that holds the view for this outlet
   @return {String} HTML string
@@ -74,7 +74,7 @@ export function outletHelper(params, hash, options, env) {
   var viewFullName;
   var view = env.data.view;
 
-  Ember.assert(
+  Ngular.assert(
     "Using {{outlet}} with an unquoted name is not supported.",
     params.length === 0 || typeof params[0] === 'string'
   );
@@ -87,12 +87,12 @@ export function outletHelper(params, hash, options, env) {
 
   if (viewName) {
     viewFullName = 'view:' + viewName;
-    Ember.assert(
+    Ngular.assert(
       "Using a quoteless view parameter with {{outlet}} is not supported." +
       " Please update to quoted usage '{{outlet ... view=\"" + viewName + "\"}}.",
       typeof hash.view === 'string'
     );
-    Ember.assert(
+    Ngular.assert(
       "The view name you supplied '" + viewName + "' did not resolve to a view.",
       view.container._registry.has(viewFullName)
     );

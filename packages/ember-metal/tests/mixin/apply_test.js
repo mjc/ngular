@@ -1,10 +1,10 @@
-import get from 'ember-metal/property_get';
+import get from 'ngular-metal/property_get';
 import {
   Mixin,
   mixin
-} from 'ember-metal/mixin';
+} from 'ngular-metal/mixin';
 
-QUnit.module('Ember.Mixin.apply');
+QUnit.module('Ngular.Mixin.apply');
 
 function K() {}
 

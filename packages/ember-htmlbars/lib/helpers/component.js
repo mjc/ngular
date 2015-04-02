@@ -1,18 +1,18 @@
 /**
-@module ember
-@submodule ember-htmlbars
+@module ngular
+@submodule ngular-htmlbars
 */
-import Ember from "ember-metal/core"; // Ember.warn, Ember.assert
-import { isStream, read } from "ember-metal/streams/utils";
-import { readComponentFactory } from "ember-views/streams/utils";
-import EmberError from "ember-metal/error";
-import BoundComponentView from "ember-views/views/bound_component_view";
-import mergeViewBindings from "ember-htmlbars/system/merge-view-bindings";
-import appendTemplatedView from "ember-htmlbars/system/append-templated-view";
+import Ngular from "ngular-metal/core"; // Ngular.warn, Ngular.assert
+import { isStream, read } from "ngular-metal/streams/utils";
+import { readComponentFactory } from "ngular-views/streams/utils";
+import NgularError from "ngular-metal/error";
+import BoundComponentView from "ngular-views/views/bound_component_view";
+import mergeViewBindings from "ngular-htmlbars/system/merge-view-bindings";
+import appendTemplatedView from "ngular-htmlbars/system/append-templated-view";
 
 /**
-  The `{{component}}` helper lets you add instances of `Ember.Component` to a
-  template. See [Ember.Component](/api/classes/Ember.Component.html) for
+  The `{{component}}` helper lets you add instances of `Ngular.Component` to a
+  template. See [Ngular.Component](/api/classes/Ngular.Component.html) for
   additional information on how a `Component` functions.
 
   `{{component}}`'s primary use is for cases where you want to dynamically
@@ -31,8 +31,8 @@ import appendTemplatedView from "ember-htmlbars/system/append-templated-view";
   And the following application code
 
   ```javascript
-  App = Ember.Application.create();
-  App.ApplicationController = Ember.Controller.extend({
+  App = Ngular.Application.create();
+  App.ApplicationController = Ngular.Controller.extend({
     infographicComponentName: function() {
       if (this.get('isMarketOpen')) {
         return "live-updating-chart";
@@ -58,10 +58,10 @@ import appendTemplatedView from "ember-htmlbars/system/append-templated-view";
 
   @method component
   @since 1.11.0
-  @for Ember.Handlebars.helpers
+  @for Ngular.Handlebars.helpers
 */
 export function componentHelper(params, hash, options, env) {
-  Ember.assert(
+  Ngular.assert(
     "The `component` helper expects exactly one argument, plus name/property values.",
     params.length === 1
   );
@@ -80,12 +80,12 @@ export function componentHelper(params, hash, options, env) {
   var viewClass;
   if (isStream(componentNameParam)) {
     viewClass = BoundComponentView;
-    props = { _boundComponentOptions: Ember.merge(hash, props) };
+    props = { _boundComponentOptions: Ngular.merge(hash, props) };
     props._boundComponentOptions.componentNameStream = componentNameParam;
   } else {
     viewClass = readComponentFactory(componentNameParam, container);
     if (!viewClass) {
-      throw new EmberError('HTMLBars error: Could not find component named "' + componentNameParam + '".');
+      throw new NgularError('HTMLBars error: Could not find component named "' + componentNameParam + '".');
     }
     mergeViewBindings(view, props, hash);
   }

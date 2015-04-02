@@ -5,11 +5,11 @@ echo -e "PULL_REQUEST: ${TRAVIS_PULL_REQUEST}\n"
 
 if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
 
-  if [ "$EMBER_ENV" != "production" ]; then
-    ember build --environment=production
+  if [ "$NGULAR_ENV" != "production" ]; then
+    ngular build --environment=production
   fi
 
   npm run docs # generate documentation to be published
   ./bin/publish_to_s3.js
-  ./bin/bower_ember_build
+  ./bin/bower_ngular_build
 fi

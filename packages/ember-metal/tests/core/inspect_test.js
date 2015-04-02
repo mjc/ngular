@@ -1,7 +1,7 @@
-import { inspect } from "ember-metal/utils";
-import create from 'ember-metal/platform/create';
+import { inspect } from "ngular-metal/utils";
+import create from 'ngular-metal/platform/create';
 
-QUnit.module("Ember.inspect");
+QUnit.module("Ngular.inspect");
 
 QUnit.test("strings", function() {
   equal(inspect("foo"), "foo");

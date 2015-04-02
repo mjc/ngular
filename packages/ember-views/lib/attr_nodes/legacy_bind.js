@@ -1,13 +1,13 @@
 /**
-@module ember
-@submodule ember-htmlbars
+@module ngular
+@submodule ngular-htmlbars
 */
 
 import AttrNode from "./attr_node";
-import { fmt } from "ember-runtime/system/string";
-import { typeOf } from "ember-metal/utils";
-import { read } from "ember-metal/streams/utils";
-import o_create from "ember-metal/platform/create";
+import { fmt } from "ngular-runtime/system/string";
+import { typeOf } from "ngular-metal/utils";
+import { read } from "ngular-metal/streams/utils";
+import o_create from "ngular-metal/platform/create";
 
 function LegacyBindAttrNode(attrName, attrValue) {
   this.init(attrName, attrValue);
@@ -30,7 +30,7 @@ LegacyBindAttrNode.prototype.render = function render(buffer) {
     value = '';
   }
 
-  Ember.assert(fmt("Attributes must be numbers, strings or booleans, not %@", [value]),
+  Ngular.assert(fmt("Attributes must be numbers, strings or booleans, not %@", [value]),
                value === null || value === undefined || typeOf(value) === 'number' || typeOf(value) === 'string' || typeOf(value) === 'boolean' || !!(value && value.toHTML));
 
   if (this.lastValue !== null || value !== null) {

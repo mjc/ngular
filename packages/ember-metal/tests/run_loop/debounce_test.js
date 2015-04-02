@@ -1,8 +1,8 @@
-import run from 'ember-metal/run_loop';
+import run from 'ngular-metal/run_loop';
 
 var originalDebounce = run.backburner.debounce;
 var wasCalled = false;
-QUnit.module('Ember.run.debounce', {
+QUnit.module('Ngular.run.debounce', {
   setup() {
     run.backburner.debounce = function() { wasCalled = true; };
   },
@@ -11,8 +11,8 @@ QUnit.module('Ember.run.debounce', {
   }
 });
 
-QUnit.test('Ember.run.debounce uses Backburner.debounce', function() {
+QUnit.test('Ngular.run.debounce uses Backburner.debounce', function() {
   run.debounce(function() {});
-  ok(wasCalled, 'Ember.run.debounce used');
+  ok(wasCalled, 'Ngular.run.debounce used');
 });
 

@@ -1,8 +1,8 @@
-import run from "ember-metal/run_loop";
-import { Mixin } from "ember-metal/mixin";
-import Controller from "ember-runtime/controllers/controller";
-import EmberObject from "ember-runtime/system/object";
-import View from "ember-views/views/view";
+import run from "ngular-metal/run_loop";
+import { Mixin } from "ngular-metal/mixin";
+import Controller from "ngular-runtime/controllers/controller";
+import NgularObject from "ngular-runtime/system/object";
+import View from "ngular-views/views/view";
 
 var view;
 
@@ -93,8 +93,8 @@ QUnit.test("Actions cannot be provided at create time", function() {
       }
     });
   });
-  // but should be OK on an object that doesn't mix in Ember.ActionHandler
-  EmberObject.create({
+  // but should be OK on an object that doesn't mix in Ngular.ActionHandler
+  NgularObject.create({
     actions: ['foo']
   });
 });

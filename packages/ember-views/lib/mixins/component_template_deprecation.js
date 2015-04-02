@@ -1,6 +1,6 @@
-import Ember from 'ember-metal/core'; // Ember.deprecate
-import { get } from "ember-metal/property_get";
-import { Mixin } from 'ember-metal/mixin';
+import Ngular from 'ngular-metal/core'; // Ngular.deprecate
+import { get } from "ngular-metal/property_get";
+import { Mixin } from 'ngular-metal/mixin';
 
 /*
   The ComponentTemplateDeprecation mixin is used to provide a useful
@@ -8,7 +8,7 @@ import { Mixin } from 'ember-metal/mixin';
   a component. The `template` and `templateName` properties specified at
   extend time are moved to `layout` and `layoutName` respectively.
 
-  This is used internally by Ember in `Ember.Component`.
+  This is used internally by Ngular in `Ngular.Component`.
 */
 export default Mixin.create({
   /**
@@ -51,6 +51,6 @@ export default Mixin.create({
       delete props['template'];
     }
 
-    Ember.deprecate('Do not specify ' + deprecatedProperty + ' on a Component, use ' + replacementProperty + ' instead.', !deprecatedProperty);
+    Ngular.deprecate('Do not specify ' + deprecatedProperty + ' on a Component, use ' + replacementProperty + ' instead.', !deprecatedProperty);
   }
 });

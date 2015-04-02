@@ -1,5 +1,5 @@
-import Object from "ember-runtime/system/object";
-import { createInjectionHelper } from 'ember-runtime/inject';
+import Object from "ngular-runtime/system/object";
+import { createInjectionHelper } from 'ngular-runtime/inject';
 
 
 /**
@@ -9,8 +9,8 @@ import { createInjectionHelper } from 'ember-runtime/inject';
   Example:
 
   ```javascript
-  App.ApplicationRoute = Ember.Route.extend({
-    authManager: Ember.inject.service('auth'),
+  App.ApplicationRoute = Ngular.Route.extend({
+    authManager: Ngular.inject.service('auth'),
 
     model: function() {
       return this.get('authManager').findCurrentUser();
@@ -24,17 +24,17 @@ import { createInjectionHelper } from 'ember-runtime/inject';
 
   @method service
   @since 1.10.0
-  @for Ember.inject
+  @for Ngular.inject
   @param {String} name (optional) name of the service to inject, defaults to
          the property's name
-  @return {Ember.InjectedProperty} injection descriptor instance
+  @return {Ngular.InjectedProperty} injection descriptor instance
 */
 createInjectionHelper('service');
 
 /**
   @class Service
-  @namespace Ember
-  @extends Ember.Object
+  @namespace Ngular
+  @extends Ngular.Object
   @since 1.10.0
 */
 export default Object.extend();

@@ -1,8 +1,8 @@
-import Ember from "ember-metal/core";
-import isNone from 'ember-metal/is_none';
-import Set from "ember-runtime/system/set";
-import EmberObject from 'ember-runtime/system/object';
-import EmberArray from "ember-runtime/mixins/array";
+import Ngular from "ngular-metal/core";
+import isNone from 'ngular-metal/is_none';
+import Set from "ngular-runtime/system/set";
+import NgularObject from 'ngular-runtime/system/object';
+import NgularArray from "ngular-runtime/mixins/array";
 
 // NOTE: This test is adapted from the 1.x series of unit tests.  The tests
 // are the same except for places where we intend to break the API we instead
@@ -42,7 +42,7 @@ QUnit.test("new Set() should create empty set", function() {
 
 QUnit.test("new Set([1,2,3]) should create set with three items in them", function() {
   ignoreDeprecation(function() {
-    var set = new Set(Ember.A([a,b,c]));
+    var set = new Set(Ngular.A([a,b,c]));
     equal(set.length, 3);
     equal(set.contains(a), true);
     equal(set.contains(b), true);
@@ -50,8 +50,8 @@ QUnit.test("new Set([1,2,3]) should create set with three items in them", functi
   });
 });
 
-QUnit.test("new Set() should accept anything that implements EmberArray", function() {
-  var arrayLikeObject = EmberObject.createWithMixins(EmberArray, {
+QUnit.test("new Set() should accept anything that implements NgularArray", function() {
+  var arrayLikeObject = NgularObject.createWithMixins(NgularArray, {
     _content: [a,b,c],
     length: 3,
     objectAt(idx) { return this._content[idx]; }
@@ -84,8 +84,8 @@ QUnit.module("Set.add + Set.contains", {
 
 });
 
-QUnit.test("should add an EmberObject", function() {
-  var obj = EmberObject.create();
+QUnit.test("should add an NgularObject", function() {
+  var obj = NgularObject.create();
 
   var oldLength = set.length;
   set.add(obj);
@@ -181,8 +181,8 @@ QUnit.module("Set.remove + Set.contains", {
   // ones we add in the tests below...
   setup() {
     ignoreDeprecation(function() {
-      set = new Set(Ember.A([
-        EmberObject.create({ dummy: true }),
+      set = new Set(Ngular.A([
+        NgularObject.create({ dummy: true }),
         { isHash: true },
         "Not the String",
         16, true, false, 0]));
@@ -195,8 +195,8 @@ QUnit.module("Set.remove + Set.contains", {
 
 });
 
-QUnit.test("should remove an EmberObject and reduce length", function() {
-  var obj = EmberObject.create();
+QUnit.test("should remove an NgularObject and reduce length", function() {
+  var obj = NgularObject.create();
   set.add(obj);
   equal(set.contains(obj), true);
   var oldLength = set.length;
@@ -281,7 +281,7 @@ QUnit.test("should NOT remove an undefined", function() {
 });
 
 QUnit.test("should ignore removing an object not in the set", function() {
-  var obj = EmberObject.create();
+  var obj = NgularObject.create();
   var oldLength = set.length;
   set.remove(obj);
   equal(set.length, oldLength);
@@ -292,8 +292,8 @@ QUnit.module("Set.pop + Set.copy", {
   // ones we add in the tests below...
   setup() {
     ignoreDeprecation(function() {
-      set = new Set(Ember.A([
-        EmberObject.create({ dummy: true }),
+      set = new Set(Ngular.A([
+        NgularObject.create({ dummy: true }),
         { isHash: true },
         "Not the String",
         16, false]));
@@ -314,10 +314,10 @@ QUnit.test("the pop() should remove an arbitrary object from the set", function(
 
 QUnit.test("should pop false and 0", function() {
   ignoreDeprecation(function() {
-    set = new Set(Ember.A([false]));
+    set = new Set(Ngular.A([false]));
     ok(set.pop() === false, "should pop false");
 
-    set = new Set(Ember.A([0]));
+    set = new Set(Ngular.A([0]));
     ok(set.pop() === 0, "should pop 0");
   });
 });

@@ -1,19 +1,19 @@
-import run from "ember-metal/run_loop";
+import run from "ngular-metal/run_loop";
 
-import EmberView from "ember-views/views/view";
+import NgularView from "ngular-views/views/view";
 
 var parentView, childView;
 
 QUnit.module('tests/views/view/child_views_tests.js', {
   setup() {
-    parentView = EmberView.create({
+    parentView = NgularView.create({
       render(buffer) {
         buffer.push('Em');
         this.appendChild(childView);
       }
     });
 
-    childView = EmberView.create({
+    childView = NgularView.create({
       template() { return 'ber'; }
     });
   },
@@ -35,27 +35,27 @@ QUnit.test("should render an inserted child view when the child is inserted befo
     parentView.append();
   });
 
-  equal(parentView.$().text(), 'Ember', 'renders the child view after the parent view');
+  equal(parentView.$().text(), 'Ngular', 'renders the child view after the parent view');
 });
 
 QUnit.test("should not duplicate childViews when rerendering", function() {
 
-  var Inner = EmberView.extend({
+  var Inner = NgularView.extend({
     template() { return ''; }
   });
 
-  var Inner2 = EmberView.extend({
+  var Inner2 = NgularView.extend({
     template() { return ''; }
   });
 
-  var Middle = EmberView.extend({
+  var Middle = NgularView.extend({
     render(buffer) {
       this.appendChild(Inner);
       this.appendChild(Inner2);
     }
   });
 
-  var outer = EmberView.create({
+  var outer = NgularView.create({
     render(buffer) {
       this.middle = this.appendChild(Middle);
     }

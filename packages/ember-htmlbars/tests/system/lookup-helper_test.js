@@ -1,7 +1,7 @@
-import lookupHelper from "ember-htmlbars/system/lookup-helper";
-import ComponentLookup from "ember-views/component_lookup";
+import lookupHelper from "ngular-htmlbars/system/lookup-helper";
+import ComponentLookup from "ngular-views/component_lookup";
 import Registry from "container/registry";
-import Component from "ember-views/views/component";
+import Component from "ngular-views/views/component";
 
 function generateEnv(helpers) {
   return {
@@ -20,7 +20,7 @@ function generateContainer() {
   return container;
 }
 
-QUnit.module('ember-htmlbars: lookupHelper hook');
+QUnit.module('ngular-htmlbars: lookupHelper hook');
 
 QUnit.test('looks for helpers in the provided `env.helpers`', function() {
   var env = generateEnv({

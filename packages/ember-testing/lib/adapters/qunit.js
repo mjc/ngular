@@ -1,13 +1,13 @@
-import Adapter from "ember-testing/adapters/adapter";
-import { inspect } from "ember-metal/utils";
+import Adapter from "ngular-testing/adapters/adapter";
+import { inspect } from "ngular-metal/utils";
 
 /**
-  This class implements the methods defined by Ember.Test.Adapter for the
+  This class implements the methods defined by Ngular.Test.Adapter for the
   QUnit testing framework.
 
   @class QUnitAdapter
-  @namespace Ember.Test
-  @extends Ember.Test.Adapter
+  @namespace Ngular.Test
+  @extends Ngular.Test.Adapter
 */
 export default Adapter.extend({
   asyncStart() {

@@ -1,12 +1,12 @@
 import Registry from "container/registry";
-import run from "ember-metal/run_loop";
+import run from "ngular-metal/run_loop";
 
-import EmberView from "ember-views/views/view";
-import compile from "ember-template-compiler/system/compile";
+import NgularView from "ngular-views/views/view";
+import compile from "ngular-template-compiler/system/compile";
 
 var registry, container, view;
 
-QUnit.module("EmberView - Nested View Ordering", {
+QUnit.module("NgularView - Nested View Ordering", {
   setup() {
     registry = new Registry();
     container = registry.container();
@@ -23,7 +23,7 @@ QUnit.module("EmberView - Nested View Ordering", {
 QUnit.test("should call didInsertElement on child views before parent", function() {
   var insertedLast;
 
-  view = EmberView.create({
+  view = NgularView.create({
     didInsertElement() {
       insertedLast = "outer";
     },
@@ -31,7 +31,7 @@ QUnit.test("should call didInsertElement on child views before parent", function
     template: compile("{{view \"inner\"}}")
   });
 
-  registry.register("view:inner", EmberView.extend({
+  registry.register("view:inner", NgularView.extend({
     didInsertElement() {
       insertedLast = "inner";
     }

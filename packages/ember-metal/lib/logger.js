@@ -1,12 +1,12 @@
-import Ember from "ember-metal/core"; // Ember.imports
-import EmberError from "ember-metal/error";
+import Ngular from "ngular-metal/core"; // Ngular.imports
+import NgularError from "ngular-metal/error";
 
 function K() { return this; }
 
 function consoleMethod(name) {
   var consoleObj, logToConsole;
-  if (Ember.imports.console) {
-    consoleObj = Ember.imports.console;
+  if (Ngular.imports.console) {
+    consoleObj = Ngular.imports.console;
   } else if (typeof console !== 'undefined') {
     consoleObj = console;
   }
@@ -38,7 +38,7 @@ function assertPolyfill(test, message) {
   if (!test) {
     try {
       // attempt to preserve the stack
-      throw new EmberError("assertion failed: " + message);
+      throw new NgularError("assertion failed: " + message);
     } catch(error) {
       setTimeout(() => {
         throw error;
@@ -48,11 +48,11 @@ function assertPolyfill(test, message) {
 }
 
 /**
-  Inside Ember-Metal, simply uses the methods from `imports.console`.
+  Inside Ngular-Metal, simply uses the methods from `imports.console`.
   Override this to provide more robust logging functionality.
 
   @class Logger
-  @namespace Ember
+  @namespace Ngular
 */
 export default {
   /**
@@ -61,12 +61,12 @@ export default {
 
     ```javascript
     var foo = 1;
-    Ember.Logger.log('log value of foo:', foo);
+    Ngular.Logger.log('log value of foo:', foo);
     // "log value of foo: 1" will be printed to the console
     ```
 
    @method log
-   @for Ember.Logger
+   @for Ngular.Logger
    @param {*} arguments
   */
   log:   consoleMethod('log')   || K,
@@ -76,12 +76,12 @@ export default {
    You can pass as many arguments as you want and they will be joined together with a space.
 
     ```javascript
-    Ember.Logger.warn('Something happened!');
+    Ngular.Logger.warn('Something happened!');
     // "Something happened!" will be printed to the console with a warning icon.
     ```
 
    @method warn
-   @for Ember.Logger
+   @for Ngular.Logger
    @param {*} arguments
   */
   warn:  consoleMethod('warn')  || K,
@@ -91,12 +91,12 @@ export default {
    You can pass as many arguments as you want and they will be joined together with a space.
 
     ```javascript
-    Ember.Logger.error('Danger! Danger!');
+    Ngular.Logger.error('Danger! Danger!');
     // "Danger! Danger!" will be printed to the console in red text.
     ```
 
    @method error
-   @for Ember.Logger
+   @for Ngular.Logger
    @param {*} arguments
   */
   error: consoleMethod('error') || K,
@@ -107,12 +107,12 @@ export default {
 
     ```javascript
     var foo = 1;
-    Ember.Logger.info('log value of foo:', foo);
+    Ngular.Logger.info('log value of foo:', foo);
     // "log value of foo: 1" will be printed to the console
     ```
 
    @method info
-   @for Ember.Logger
+   @for Ngular.Logger
    @param {*} arguments
   */
   info:  consoleMethod('info')  || K,
@@ -123,26 +123,26 @@ export default {
 
     ```javascript
     var foo = 1;
-    Ember.Logger.debug('log value of foo:', foo);
+    Ngular.Logger.debug('log value of foo:', foo);
     // "log value of foo: 1" will be printed to the console
     ```
 
    @method debug
-   @for Ember.Logger
+   @for Ngular.Logger
    @param {*} arguments
   */
   debug: consoleMethod('debug') || consoleMethod('info') || K,
 
   /**
-   If the value passed into `Ember.Logger.assert` is not truthy it will throw an error with a stack trace.
+   If the value passed into `Ngular.Logger.assert` is not truthy it will throw an error with a stack trace.
 
     ```javascript
-    Ember.Logger.assert(true); // undefined
-    Ember.Logger.assert(true === false); // Throws an Assertion failed error.
+    Ngular.Logger.assert(true); // undefined
+    Ngular.Logger.assert(true === false); // Throws an Assertion failed error.
     ```
 
    @method assert
-   @for Ember.Logger
+   @for Ngular.Logger
    @param {Boolean} bool Value to test
   */
   assert: consoleMethod('assert') || assertPolyfill

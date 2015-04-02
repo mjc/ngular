@@ -1,12 +1,12 @@
 import {
   guidFor,
   tryFinally
-} from "ember-metal/utils";
+} from "ngular-metal/utils";
 import {
   sendEvent,
   accumulateListeners
-} from "ember-metal/events";
-import ObserverSet from "ember-metal/observer_set";
+} from "ngular-metal/events";
+import ObserverSet from "ngular-metal/observer_set";
 
 var beforeObserverSet = new ObserverSet();
 var observerSet = new ObserverSet();
@@ -22,17 +22,17 @@ var deferred = 0;
 
   Normally you will not need to call this method directly but if for some
   reason you can't directly watch a property you can invoke this method
-  manually along with `Ember.propertyDidChange()` which you should call just
+  manually along with `Ngular.propertyDidChange()` which you should call just
   after the property value changes.
 
   @method propertyWillChange
-  @for Ember
+  @for Ngular
   @param {Object} obj The object with the property that will change
   @param {String} keyName The property key (or path) that will change.
   @return {void}
 */
 function propertyWillChange(obj, keyName) {
-  var m = obj['__ember_meta__'];
+  var m = obj['__ngular_meta__'];
   var watching = (m && m.watching[keyName] > 0) || keyName === 'length';
   var proto = m && m.proto;
   var possibleDesc = obj[keyName];
@@ -61,17 +61,17 @@ function propertyWillChange(obj, keyName) {
 
   Normally you will not need to call this method directly but if for some
   reason you can't directly watch a property you can invoke this method
-  manually along with `Ember.propertyWillChange()` which you should call just
+  manually along with `Ngular.propertyWillChange()` which you should call just
   before the property value changes.
 
   @method propertyDidChange
-  @for Ember
+  @for Ngular
   @param {Object} obj The object with the property that will change
   @param {String} keyName The property key (or path) that will change.
   @return {void}
 */
 function propertyDidChange(obj, keyName) {
-  var m = obj['__ember_meta__'];
+  var m = obj['__ngular_meta__'];
   var watching = (m && m.watching[keyName] > 0) || keyName === 'length';
   var proto = m && m.proto;
   var possibleDesc = obj[keyName];
@@ -254,7 +254,7 @@ function endPropertyChanges() {
   exception-safe way.
 
   ```javascript
-  Ember.changeProperties(function() {
+  Ngular.changeProperties(function() {
     obj1.set('foo', mayBlowUpWhenSet);
     obj2.set('bar', baz);
   });

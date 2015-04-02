@@ -1,14 +1,14 @@
 /**
-Ember Extension Support
+Ngular Extension Support
 
-@module ember
-@submodule ember-extension-support
-@requires ember-application
+@module ngular
+@submodule ngular-extension-support
+@requires ngular-application
 */
 
-import Ember from "ember-metal/core";
-import DataAdapter from "ember-extension-support/data_adapter";
-import ContainerDebugAdapter from "ember-extension-support/container_debug_adapter";
+import Ngular from "ngular-metal/core";
+import DataAdapter from "ngular-extension-support/data_adapter";
+import ContainerDebugAdapter from "ngular-extension-support/container_debug_adapter";
 
-Ember.DataAdapter = DataAdapter;
-Ember.ContainerDebugAdapter = ContainerDebugAdapter;
+Ngular.DataAdapter = DataAdapter;
+Ngular.ContainerDebugAdapter = ContainerDebugAdapter;

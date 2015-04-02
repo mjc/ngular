@@ -5,7 +5,7 @@
 
   CHANGES FROM 1.6:
 
-  * Create ObservableObject which includes Ember.Observable
+  * Create ObservableObject which includes Ngular.Observable
   * Remove test that tests internal _kvo_changeLevel property.  This is an
     implementation detail.
   * Remove test for allPropertiesDidChange
@@ -14,15 +14,15 @@
 */
 
 // ========================================================================
-// Ember.Observable Tests
+// Ngular.Observable Tests
 // ========================================================================
 
-import EmberObject from 'ember-runtime/system/object';
-import Observable from 'ember-runtime/mixins/observable';
-import {computed} from 'ember-metal/computed';
-import {observer} from "ember-metal/mixin";
+import NgularObject from 'ngular-runtime/system/object';
+import Observable from 'ngular-runtime/mixins/observable';
+import {computed} from 'ngular-metal/computed';
+import {observer} from "ngular-metal/mixin";
 
-var ObservableObject = EmberObject.extend(Observable);
+var ObservableObject = NgularObject.extend(Observable);
 
 var revMatches = false;
 var ObjectA;

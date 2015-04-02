@@ -1,27 +1,27 @@
-import Ember from "ember-metal/core";
-import { get } from "ember-metal/property_get";
-import { set } from "ember-metal/property_set";
-import run from "ember-metal/run_loop";
-import { guidFor } from "ember-metal/utils";
+import Ngular from "ngular-metal/core";
+import { get } from "ngular-metal/property_get";
+import { set } from "ngular-metal/property_set";
+import run from "ngular-metal/run_loop";
+import { guidFor } from "ngular-metal/utils";
 
-import EmberObject from "ember-runtime/system/object";
-import EmberLocation from "ember-routing/location/api";
+import NgularObject from "ngular-runtime/system/object";
+import NgularLocation from "ngular-routing/location/api";
 
 /**
-@module ember
-@submodule ember-routing
+@module ngular
+@submodule ngular-routing
 */
 
 /**
-  `Ember.HashLocation` implements the location API using the browser's
+  `Ngular.HashLocation` implements the location API using the browser's
   hash. At present, it relies on a `hashchange` event existing in the
   browser.
 
   @class HashLocation
-  @namespace Ember
-  @extends Ember.Object
+  @namespace Ngular
+  @extends Ngular.Object
 */
-export default EmberObject.extend({
+export default NgularObject.extend({
   implementation: 'hash',
 
   init() {
@@ -36,7 +36,7 @@ export default EmberObject.extend({
     @since 1.5.1
     @method getHash
   */
-  getHash: EmberLocation._getHash,
+  getHash: NgularLocation._getHash,
 
   /**
     Returns the normalized URL, constructed from `location.hash`.
@@ -69,7 +69,7 @@ export default EmberObject.extend({
   },
 
   /**
-    Set the `location.hash` and remembers what was set. This prevents
+    Set the `location.hash` and remngulars what was set. This prevents
     `onUpdateURL` callbacks from triggering when the hash was set by
     `HashLocation`.
 
@@ -107,7 +107,7 @@ export default EmberObject.extend({
   onUpdateURL(callback) {
     var guid = guidFor(this);
 
-    Ember.$(window).on(`hashchange.ember-location-${guid}`, () => {
+    Ngular.$(window).on(`hashchange.ngular-location-${guid}`, () => {
       run(() => {
         var path = this.getURL();
         if (get(this, 'lastSetURL') === path) { return; }
@@ -143,6 +143,6 @@ export default EmberObject.extend({
   willDestroy() {
     var guid = guidFor(this);
 
-    Ember.$(window).off(`hashchange.ember-location-${guid}`);
+    Ngular.$(window).off(`hashchange.ngular-location-${guid}`);
   }
 });

@@ -1,6 +1,6 @@
-import create from 'ember-metal/platform/create';
+import create from 'ngular-metal/platform/create';
 
-QUnit.module("Ember.create()");
+QUnit.module("Ngular.create()");
 
 QUnit.test("should inherit the properties from the parent object", function() {
   var obj = { foo: 'FOO' };

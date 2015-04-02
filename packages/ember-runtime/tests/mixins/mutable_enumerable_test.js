@@ -1,15 +1,15 @@
-import MutableEnumerableTests from 'ember-runtime/tests/suites/mutable_enumerable';
-import MutableEnumerable from 'ember-runtime/mixins/mutable_enumerable';
-import { indexOf } from 'ember-metal/enumerable_utils';
-import EmberObject from 'ember-runtime/system/object';
-import { computed } from 'ember-metal/computed';
-import { get } from 'ember-metal/property_get';
+import MutableEnumerableTests from 'ngular-runtime/tests/suites/mutable_enumerable';
+import MutableEnumerable from 'ngular-runtime/mixins/mutable_enumerable';
+import { indexOf } from 'ngular-metal/enumerable_utils';
+import NgularObject from 'ngular-runtime/system/object';
+import { computed } from 'ngular-metal/computed';
+import { get } from 'ngular-metal/property_get';
 
 /*
   Implement a basic fake mutable array.  This validates that any non-native
   enumerable can impl this API.
 */
-var TestMutableEnumerable = EmberObject.extend(MutableEnumerable, {
+var TestMutableEnumerable = NgularObject.extend(MutableEnumerable, {
 
   _content: null,
 

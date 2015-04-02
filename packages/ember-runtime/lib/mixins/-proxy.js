@@ -1,26 +1,26 @@
 /**
-@module ember
-@submodule ember-runtime
+@module ngular
+@submodule ngular-runtime
 */
 
-import Ember from "ember-metal/core"; // Ember.assert
-import { get } from "ember-metal/property_get";
-import { set } from "ember-metal/property_set";
-import { meta } from "ember-metal/utils";
+import Ngular from "ngular-metal/core"; // Ngular.assert
+import { get } from "ngular-metal/property_get";
+import { set } from "ngular-metal/property_set";
+import { meta } from "ngular-metal/utils";
 import {
   addObserver,
   removeObserver,
   addBeforeObserver,
   removeBeforeObserver
-} from "ember-metal/observer";
+} from "ngular-metal/observer";
 import {
   propertyWillChange,
   propertyDidChange
-} from "ember-metal/property_events";
-import { computed } from "ember-metal/computed";
-import { defineProperty } from "ember-metal/properties";
-import { Mixin, observer } from "ember-metal/mixin";
-import { fmt } from "ember-runtime/system/string";
+} from "ngular-metal/property_events";
+import { computed } from "ngular-metal/computed";
+import { defineProperty } from "ngular-metal/properties";
+import { Mixin, observer } from "ngular-metal/mixin";
+import { fmt } from "ngular-runtime/system/string";
 
 function contentPropertyWillChange(content, contentKey) {
   var key = contentKey.slice(8); // remove "content."
@@ -35,23 +35,23 @@ function contentPropertyDidChange(content, contentKey) {
 }
 
 /**
-  `Ember.ProxyMixin` forwards all properties not defined by the proxy itself
-  to a proxied `content` object.  See Ember.ObjectProxy for more details.
+  `Ngular.ProxyMixin` forwards all properties not defined by the proxy itself
+  to a proxied `content` object.  See Ngular.ObjectProxy for more details.
 
   @class ProxyMixin
-  @namespace Ember
+  @namespace Ngular
 */
 export default Mixin.create({
   /**
     The object whose properties will be forwarded.
 
     @property content
-    @type Ember.Object
+    @type Ngular.Object
     @default null
   */
   content: null,
   _contentDidChange: observer('content', function() {
-    Ember.assert("Can't set Proxy's content to itself", get(this, 'content') !== this);
+    Ngular.assert("Can't set Proxy's content to itself", get(this, 'content') !== this);
   }),
 
   isTruthy: computed.bool('content'),
@@ -73,7 +73,7 @@ export default Mixin.create({
   unknownProperty(key) {
     var content = get(this, 'content');
     if (content) {
-      Ember.deprecate(
+      Ngular.deprecate(
         fmt('You attempted to access `%@` from `%@`, but object proxying is deprecated. ' +
             'Please use `model.%@` instead.', [key, this, key]),
         !this.isController
@@ -92,10 +92,10 @@ export default Mixin.create({
     }
 
     var content = get(this, 'content');
-    Ember.assert(fmt("Cannot delegate set('%@', %@) to the 'content' property of" +
+    Ngular.assert(fmt("Cannot delegate set('%@', %@) to the 'content' property of" +
                      " object proxy %@: its 'content' is undefined.", [key, value, this]), content);
 
-    Ember.deprecate(
+    Ngular.deprecate(
       fmt('You attempted to set `%@` from `%@`, but object proxying is deprecated. ' +
           'Please use `model.%@` instead.', [key, this, key]),
       !this.isController

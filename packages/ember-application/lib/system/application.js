@@ -1,44 +1,44 @@
 /**
-@module ember
-@submodule ember-application
+@module ngular
+@submodule ngular-application
 */
 import DAG from 'dag-map';
 import Registry from 'container/registry';
 
-import Ember from "ember-metal"; // Ember.FEATURES, Ember.deprecate, Ember.assert, Ember.libraries, LOG_VERSION, Namespace, BOOTED
-import { get } from "ember-metal/property_get";
-import { set } from "ember-metal/property_set";
-import { runLoadHooks } from "ember-runtime/system/lazy_load";
-import Namespace from "ember-runtime/system/namespace";
-import DeferredMixin from "ember-runtime/mixins/deferred";
-import DefaultResolver from "ember-application/system/resolver";
-import create from "ember-metal/platform/create";
-import run from "ember-metal/run_loop";
-import { canInvoke } from "ember-metal/utils";
-import Controller from "ember-runtime/controllers/controller";
-import EnumerableUtils from "ember-metal/enumerable_utils";
-import ObjectController from "ember-runtime/controllers/object_controller";
-import ArrayController from "ember-runtime/controllers/array_controller";
-import Renderer from "ember-views/system/renderer";
+import Ngular from "ngular-metal"; // Ngular.FEATURES, Ngular.deprecate, Ngular.assert, Ngular.libraries, LOG_VERSION, Namespace, BOOTED
+import { get } from "ngular-metal/property_get";
+import { set } from "ngular-metal/property_set";
+import { runLoadHooks } from "ngular-runtime/system/lazy_load";
+import Namespace from "ngular-runtime/system/namespace";
+import DeferredMixin from "ngular-runtime/mixins/deferred";
+import DefaultResolver from "ngular-application/system/resolver";
+import create from "ngular-metal/platform/create";
+import run from "ngular-metal/run_loop";
+import { canInvoke } from "ngular-metal/utils";
+import Controller from "ngular-runtime/controllers/controller";
+import EnumerableUtils from "ngular-metal/enumerable_utils";
+import ObjectController from "ngular-runtime/controllers/object_controller";
+import ArrayController from "ngular-runtime/controllers/array_controller";
+import Renderer from "ngular-views/system/renderer";
 import DOMHelper from "dom-helper";
-import SelectView from "ember-views/views/select";
-import { OutletView } from "ember-routing-views/views/outlet";
-import EmberView from "ember-views/views/view";
-import _MetamorphView from "ember-views/views/metamorph_view";
-import EventDispatcher from "ember-views/system/event_dispatcher";
-import jQuery from "ember-views/system/jquery";
-import Route from "ember-routing/system/route";
-import Router from "ember-routing/system/router";
-import HashLocation from "ember-routing/location/hash_location";
-import HistoryLocation from "ember-routing/location/history_location";
-import AutoLocation from "ember-routing/location/auto_location";
-import NoneLocation from "ember-routing/location/none_location";
-import BucketCache from "ember-routing/system/cache";
-import ApplicationInstance from "ember-application/system/application-instance";
+import SelectView from "ngular-views/views/select";
+import { OutletView } from "ngular-routing-views/views/outlet";
+import NgularView from "ngular-views/views/view";
+import _MetamorphView from "ngular-views/views/metamorph_view";
+import EventDispatcher from "ngular-views/system/event_dispatcher";
+import jQuery from "ngular-views/system/jquery";
+import Route from "ngular-routing/system/route";
+import Router from "ngular-routing/system/router";
+import HashLocation from "ngular-routing/location/hash_location";
+import HistoryLocation from "ngular-routing/location/history_location";
+import AutoLocation from "ngular-routing/location/auto_location";
+import NoneLocation from "ngular-routing/location/none_location";
+import BucketCache from "ngular-routing/system/cache";
+import ApplicationInstance from "ngular-application/system/application-instance";
 
-import ContainerDebugAdapter from "ember-extension-support/container_debug_adapter";
+import ContainerDebugAdapter from "ngular-extension-support/container_debug_adapter";
 
-import environment from 'ember-metal/environment';
+import environment from 'ngular-metal/environment';
 
 function props(obj) {
   var properties = [];
@@ -53,67 +53,67 @@ function props(obj) {
 var librariesRegistered = false;
 
 /**
-  An instance of `Ember.Application` is the starting point for every Ember
+  An instance of `Ngular.Application` is the starting point for every Ngular
   application. It helps to instantiate, initialize and coordinate the many
   objects that make up your app.
 
-  Each Ember app has one and only one `Ember.Application` object. In fact, the
+  Each Ngular app has one and only one `Ngular.Application` object. In fact, the
   very first thing you should do in your application is create the instance:
 
   ```javascript
-  window.App = Ember.Application.create();
+  window.App = Ngular.Application.create();
   ```
 
   Typically, the application object is the only global variable. All other
-  classes in your app should be properties on the `Ember.Application` instance,
+  classes in your app should be properties on the `Ngular.Application` instance,
   which highlights its first role: a global namespace.
 
   For example, if you define a view class, it might look like this:
 
   ```javascript
-  App.MyView = Ember.View.extend();
+  App.MyView = Ngular.View.extend();
   ```
 
-  By default, calling `Ember.Application.create()` will automatically initialize
-  your application by calling the `Ember.Application.initialize()` method. If
+  By default, calling `Ngular.Application.create()` will automatically initialize
+  your application by calling the `Ngular.Application.initialize()` method. If
   you need to delay initialization, you can call your app's `deferReadiness()`
   method. When you are ready for your app to be initialized, call its
   `advanceReadiness()` method.
 
-  You can define a `ready` method on the `Ember.Application` instance, which
-  will be run by Ember when the application is initialized.
+  You can define a `ready` method on the `Ngular.Application` instance, which
+  will be run by Ngular when the application is initialized.
 
-  Because `Ember.Application` inherits from `Ember.Namespace`, any classes
+  Because `Ngular.Application` inherits from `Ngular.Namespace`, any classes
   you create will have useful string representations when calling `toString()`.
-  See the `Ember.Namespace` documentation for more information.
+  See the `Ngular.Namespace` documentation for more information.
 
-  While you can think of your `Ember.Application` as a container that holds the
+  While you can think of your `Ngular.Application` as a container that holds the
   other classes in your application, there are several other responsibilities
   going on under-the-hood that you may want to understand.
 
   ### Event Delegation
 
-  Ember uses a technique called _event delegation_. This allows the framework
+  Ngular uses a technique called _event delegation_. This allows the framework
   to set up a global, shared event listener instead of requiring each view to
   do it manually. For example, instead of each view registering its own
-  `mousedown` listener on its associated element, Ember sets up a `mousedown`
+  `mousedown` listener on its associated element, Ngular sets up a `mousedown`
   listener on the `body`.
 
-  If a `mousedown` event occurs, Ember will look at the target of the event and
+  If a `mousedown` event occurs, Ngular will look at the target of the event and
   start walking up the DOM node tree, finding corresponding views and invoking
   their `mouseDown` method as it goes.
 
-  `Ember.Application` has a number of default events that it listens for, as
+  `Ngular.Application` has a number of default events that it listens for, as
   well as a mapping from lowercase events to camel-cased view method names. For
   example, the `keypress` event causes the `keyPress` method on the view to be
   called, the `dblclick` event causes `doubleClick` to be called, and so on.
 
-  If there is a bubbling browser event that Ember does not listen for by
+  If there is a bubbling browser event that Ngular does not listen for by
   default, you can specify custom events and their corresponding view method
   names by setting the application's `customEvents` property:
 
   ```javascript
-  var App = Ember.Application.create({
+  var App = Ngular.Application.create({
     customEvents: {
       // add support for the paste event
       paste: 'paste'
@@ -122,16 +122,16 @@ var librariesRegistered = false;
   ```
 
   By default, the application sets up these event listeners on the document
-  body. However, in cases where you are embedding an Ember application inside
+  body. However, in cases where you are embedding an Ngular application inside
   an existing page, you may want it to set up the listeners on an element
   inside the body.
 
-  For example, if only events inside a DOM element with the ID of `ember-app`
+  For example, if only events inside a DOM element with the ID of `ngular-app`
   should be delegated, set your application's `rootElement` property:
 
   ```javascript
-  var App = Ember.Application.create({
-    rootElement: '#ember-app'
+  var App = Ngular.Application.create({
+    rootElement: '#ngular-app'
   });
   ```
 
@@ -140,16 +140,16 @@ var librariesRegistered = false;
   not receive events.* If you specify a custom root element, make sure you only
   append views inside it!
 
-  To learn more about the advantages of event delegation and the Ember view
+  To learn more about the advantages of event delegation and the Ngular view
   layer, and a list of the event listeners that are setup by default, visit the
-  [Ember View Layer guide](http://emberjs.com/guides/understanding-ember/the-view-layer/#toc_event-delegation).
+  [Ngular View Layer guide](http://github.com/mjc/ngular/guides/understanding-ngular/the-view-layer/#toc_event-delegation).
 
   ### Initializers
 
-  Libraries on top of Ember can add initializers, like so:
+  Libraries on top of Ngular can add initializers, like so:
 
   ```javascript
-  Ember.Application.initializer({
+  Ngular.Application.initializer({
     name: 'api-adapter',
 
     initialize: function(container, application) {
@@ -159,21 +159,21 @@ var librariesRegistered = false;
   ```
 
   Initializers provide an opportunity to access the container, which
-  organizes the different components of an Ember application. Additionally
+  organizes the different components of an Ngular application. Additionally
   they provide a chance to access the instantiated application. Beyond
   being used for libraries, initializers are also a great way to organize
   dependency injection or setup in your own application.
 
   ### Routing
 
-  In addition to creating your application's router, `Ember.Application` is
+  In addition to creating your application's router, `Ngular.Application` is
   also responsible for telling the router when to start routing. Transitions
   between routes can be logged with the `LOG_TRANSITIONS` flag, and more
   detailed intra-transition logging can be logged with
   the `LOG_TRANSITIONS_INTERNAL` flag:
 
   ```javascript
-  var App = Ember.Application.create({
+  var App = Ngular.Application.create({
     LOG_TRANSITIONS: true, // basic logging of successful transitions
     LOG_TRANSITIONS_INTERNAL: true // detailed logging of all routing steps
   });
@@ -189,8 +189,8 @@ var librariesRegistered = false;
   begins.
 
   @class Application
-  @namespace Ember
-  @extends Ember.Namespace
+  @namespace Ngular
+  @extends Ngular.Namespace
 */
 
 var Application = Namespace.extend(DeferredMixin, {
@@ -212,17 +212,17 @@ var Application = Namespace.extend(DeferredMixin, {
   rootElement: 'body',
 
   /**
-    The `Ember.EventDispatcher` responsible for delegating events to this
+    The `Ngular.EventDispatcher` responsible for delegating events to this
     application's views.
 
     The event dispatcher is created by the application at initialization time
     and sets up event listeners on the DOM element described by the
     application's `rootElement` property.
 
-    See the documentation for `Ember.EventDispatcher` for more information.
+    See the documentation for `Ngular.EventDispatcher` for more information.
 
     @property eventDispatcher
-    @type Ember.EventDispatcher
+    @type Ngular.EventDispatcher
     @default null
   */
   eventDispatcher: null,
@@ -230,18 +230,18 @@ var Application = Namespace.extend(DeferredMixin, {
   /**
     The DOM events for which the event dispatcher should listen.
 
-    By default, the application's `Ember.EventDispatcher` listens
+    By default, the application's `Ngular.EventDispatcher` listens
     for a set of standard DOM events, such as `mousedown` and
-    `keyup`, and delegates them to your application's `Ember.View`
+    `keyup`, and delegates them to your application's `Ngular.View`
     instances.
 
     If you would like additional bubbling events to be delegated to your
-    views, set your `Ember.Application`'s `customEvents` property
+    views, set your `Ngular.Application`'s `customEvents` property
     to a hash containing the DOM event name as the key and the
     corresponding view method name as the value. For example:
 
     ```javascript
-    var App = Ember.Application.create({
+    var App = Ngular.Application.create({
       customEvents: {
         // add support for the paste event
         paste: 'paste'
@@ -285,11 +285,11 @@ var Application = Namespace.extend(DeferredMixin, {
     // decremented by the Application's own `initialize` method.
     this._readinessDeferrals = 1;
 
-    if (Ember.FEATURES.isEnabled('ember-application-visit')) {
+    if (Ngular.FEATURES.isEnabled('ngular-application-visit')) {
       if (this.autoboot) {
-        // Create subclass of Ember.Router for this Application instance.
+        // Create subclass of Ngular.Router for this Application instance.
         // This is to ensure that someone reopening `App.Router` does not
-        // tamper with the default `Ember.Router`.
+        // tamper with the default `Ngular.Router`.
         // 2.0TODO: Can we move this into a globals-mode-only library?
         this.Router = (this.Router || Router).extend();
         this.waitForDOMReady(this.buildDefaultInstance());
@@ -305,7 +305,7 @@ var Application = Namespace.extend(DeferredMixin, {
 
     @private
     @method buildRegistry
-    @return {Ember.Registry} the configured registry
+    @return {Ngular.Registry} the configured registry
   */
   buildRegistry() {
     var registry = this.registry = Application.buildRegistry(this);
@@ -318,7 +318,7 @@ var Application = Namespace.extend(DeferredMixin, {
 
     @private
     @method buildInstance
-    @return {Ember.Container} the configured container
+    @return {Ngular.Container} the configured container
   */
   buildInstance() {
     return ApplicationInstance.create({
@@ -332,8 +332,8 @@ var Application = Namespace.extend(DeferredMixin, {
     var instance = this.buildInstance();
 
     // For the default instance only, set the view registry to the global
-    // Ember.View.views hash for backwards-compatibility.
-    EmberView.views = instance.container.lookup('-view-registry:main');
+    // Ngular.View.views hash for backwards-compatibility.
+    NgularView.views = instance.container.lookup('-view-registry:main');
 
     // TODO2.0: Legacy support for App.__container__
     // and global methods on App that rely on a single,
@@ -374,11 +374,11 @@ var Application = Namespace.extend(DeferredMixin, {
     Example:
 
     ```javascript
-    var App = Ember.Application.create();
+    var App = Ngular.Application.create();
 
     App.deferReadiness();
-    // Ember.$ is a reference to the jQuery object/function
-    Ember.$.getJSON('/auth-token', function(token) {
+    // Ngular.$ is a reference to the jQuery object/function
+    Ngular.$.getJSON('/auth-token', function(token) {
       App.token = token;
       App.advanceReadiness();
     });
@@ -393,8 +393,8 @@ var Application = Namespace.extend(DeferredMixin, {
     @method deferReadiness
   */
   deferReadiness() {
-    Ember.assert("You must call deferReadiness on an instance of Ember.Application", this instanceof Application);
-    Ember.assert("You cannot defer readiness since the `ready()` hook has already been called.", this._readinessDeferrals > 0);
+    Ngular.assert("You must call deferReadiness on an instance of Ngular.Application", this instanceof Application);
+    Ngular.assert("You cannot defer readiness since the `ready()` hook has already been called.", this._readinessDeferrals > 0);
     this._readinessDeferrals++;
   },
 
@@ -404,10 +404,10 @@ var Application = Namespace.extend(DeferredMixin, {
     or the application will never become ready and routing will not begin.
 
     @method advanceReadiness
-    @see {Ember.Application#deferReadiness}
+    @see {Ngular.Application#deferReadiness}
   */
   advanceReadiness() {
-    Ember.assert("You must call advanceReadiness on an instance of Ember.Application", this instanceof Application);
+    Ngular.assert("You must call advanceReadiness on an instance of Ngular.Application", this instanceof Application);
     this._readinessDeferrals--;
 
     if (this._readinessDeferrals === 0) {
@@ -423,27 +423,27 @@ var Application = Namespace.extend(DeferredMixin, {
     A simple example:
 
     ```javascript
-    var App = Ember.Application.create();
+    var App = Ngular.Application.create();
 
-    App.Orange = Ember.Object.extend();
+    App.Orange = Ngular.Object.extend();
     App.register('fruit:favorite', App.Orange);
     ```
 
-    Ember will resolve factories from the `App` namespace automatically.
+    Ngular will resolve factories from the `App` namespace automatically.
     For example `App.CarsController` will be discovered and returned if
     an application requests `controller:cars`.
 
     An example of registering a controller with a non-standard name:
 
     ```javascript
-    var App = Ember.Application.create();
-    var Session = Ember.Controller.extend();
+    var App = Ngular.Application.create();
+    var Session = Ngular.Controller.extend();
 
     App.register('controller:session', Session);
 
     // The Session controller can now be treated like a normal controller,
     // despite its non-standard name.
-    App.ApplicationController = Ember.Controller.extend({
+    App.ApplicationController = Ngular.Controller.extend({
       needs: ['session']
     });
     ```
@@ -455,12 +455,12 @@ var Application = Namespace.extend(DeferredMixin, {
     Some examples modifying that default behavior:
 
     ```javascript
-    var App = Ember.Application.create();
+    var App = Ngular.Application.create();
 
-    App.Person  = Ember.Object.extend();
-    App.Orange  = Ember.Object.extend();
-    App.Email   = Ember.Object.extend();
-    App.session = Ember.Object.create();
+    App.Person  = Ngular.Object.extend();
+    App.Orange  = Ngular.Object.extend();
+    App.Email   = Ngular.Object.extend();
+    App.session = Ngular.Object.create();
 
     App.register('model:user', App.Person, { singleton: false });
     App.register('fruit:favorite', App.Orange);
@@ -481,15 +481,15 @@ var Application = Namespace.extend(DeferredMixin, {
     Define a dependency injection onto a specific factory or all factories
     of a type.
 
-    When Ember instantiates a controller, view, or other framework component
+    When Ngular instantiates a controller, view, or other framework component
     it can attach a dependency to that component. This is often used to
     provide services to a set of framework components.
 
     An example of providing a session object to all controllers:
 
     ```javascript
-    var App = Ember.Application.create();
-    var Session = Ember.Object.extend({ isAuthenticated: false });
+    var App = Ngular.Application.create();
+    var Session = Ngular.Object.extend({ isAuthenticated: false });
 
     // A factory must be registered before it can be injected
     App.register('session:main', Session);
@@ -498,8 +498,8 @@ var Application = Namespace.extend(DeferredMixin, {
     // with the name 'session'
     App.inject('controller', 'session', 'session:main');
 
-    App.IndexController = Ember.Controller.extend({
-      isLoggedIn: Ember.computed.alias('session.isAuthenticated')
+    App.IndexController = Ngular.Controller.extend({
+      isLoggedIn: Ngular.computed.alias('session.isAuthenticated')
     });
     ```
 
@@ -512,13 +512,13 @@ var Application = Namespace.extend(DeferredMixin, {
     ```
 
     It is important to note that injections can only be performed on
-    classes that are instantiated by Ember itself. Instantiating a class
+    classes that are instantiated by Ngular itself. Instantiating a class
     directly (via `create` or `new`) bypasses the dependency injection
     system.
 
-    **Note:** Ember-Data instantiates its models in a unique manner, and consequently
+    **Note:** Ngular-Data instantiates its models in a unique manner, and consequently
     injections onto models (or all models) will not work as expected. Injections
-    on models can be enabled by setting `Ember.MODEL_FACTORY_INJECTIONS`
+    on models can be enabled by setting `Ngular.MODEL_FACTORY_INJECTIONS`
     to `true`.
 
     @method inject
@@ -533,15 +533,15 @@ var Application = Namespace.extend(DeferredMixin, {
   /**
     Calling initialize manually is not supported.
 
-    Please see Ember.Application#advanceReadiness and
-    Ember.Application#deferReadiness.
+    Please see Ngular.Application#advanceReadiness and
+    Ngular.Application#deferReadiness.
 
     @private
     @deprecated
     @method initialize
    **/
   initialize() {
-    Ember.deprecate('Calling initialize manually is not supported. Please see Ember.Application#advanceReadiness and Ember.Application#deferReadiness');
+    Ngular.deprecate('Calling initialize manually is not supported. Please see Ngular.Application#advanceReadiness and Ngular.Application#deferReadiness');
   },
 
   /**
@@ -569,7 +569,7 @@ var Application = Namespace.extend(DeferredMixin, {
   boot() {
     if (this._bootPromise) { return this._bootPromise; }
 
-    var defer = new Ember.RSVP.defer();
+    var defer = new Ngular.RSVP.defer();
     this._bootPromise = defer.promise;
     this._bootResolver = defer;
 
@@ -596,7 +596,7 @@ var Application = Namespace.extend(DeferredMixin, {
     var App;
 
     run(function() {
-      App = Ember.Application.create();
+      App = Ngular.Application.create();
     });
 
     module('acceptance test', {
@@ -624,7 +624,7 @@ var Application = Namespace.extend(DeferredMixin, {
     var App;
 
     run(function() {
-      App = Ember.Application.create();
+      App = Ngular.Application.create();
     });
 
     module('acceptance test', {
@@ -674,9 +674,9 @@ var Application = Namespace.extend(DeferredMixin, {
   runInitializers(registry) {
     var App = this;
     this._runInitializer('initializers', function(name, initializer) {
-      Ember.assert("No application initializer named '" + name + "'", !!initializer);
+      Ngular.assert("No application initializer named '" + name + "'", !!initializer);
 
-      if (Ember.FEATURES.isEnabled("ember-application-initializer-context")) {
+      if (Ngular.FEATURES.isEnabled("ngular-application-initializer-context")) {
         initializer.initialize(registry, App);
       } else {
         var ref = initializer.initialize;
@@ -687,7 +687,7 @@ var Application = Namespace.extend(DeferredMixin, {
 
   runInstanceInitializers(instance) {
     this._runInitializer('instanceInitializers', function(name, initializer) {
-      Ember.assert("No instance initializer named '" + name + "'", !!initializer);
+      Ngular.assert("No instance initializer named '" + name + "'", !!initializer);
       initializer.initialize(instance);
     });
   },
@@ -721,10 +721,10 @@ var Application = Namespace.extend(DeferredMixin, {
       this.ready(); // user hook
       this.__deprecatedInstance__.startRouting();
 
-      if (!Ember.testing) {
+      if (!Ngular.testing) {
         // Eagerly name all classes that are already loaded
-        Ember.Namespace.processAll();
-        Ember.BOOTED = true;
+        Ngular.Namespace.processAll();
+        Ngular.BOOTED = true;
       }
 
       this.resolve(this);
@@ -743,7 +743,7 @@ var Application = Namespace.extend(DeferredMixin, {
 
   /**
     @deprecated Use 'Resolver' instead
-    Set this to provide an alternate class to `Ember.DefaultResolver`
+    Set this to provide an alternate class to `Ngular.DefaultResolver`
 
 
     @property resolver
@@ -751,7 +751,7 @@ var Application = Namespace.extend(DeferredMixin, {
   resolver: null,
 
   /**
-    Set this to provide an alternate class to `Ember.DefaultResolver`
+    Set this to provide an alternate class to `Ngular.DefaultResolver`
 
     @property resolver
   */
@@ -759,7 +759,7 @@ var Application = Namespace.extend(DeferredMixin, {
 
   // This method must be moved to the application instance object
   willDestroy() {
-    Ember.BOOTED = false;
+    Ngular.BOOTED = false;
     this._bootPromise = null;
     this._bootResolver = null;
     this.__deprecatedInstance__.destroy();
@@ -775,13 +775,13 @@ var Application = Namespace.extend(DeferredMixin, {
     @deprecated
   */
   then() {
-    Ember.deprecate('Do not use `.then` on an instance of Ember.Application.  Please use the `.ready` hook instead.', false, { url: 'http://emberjs.com/guides/deprecations/#toc_deprecate-code-then-code-on-ember-application' });
+    Ngular.deprecate('Do not use `.then` on an instance of Ngular.Application.  Please use the `.ready` hook instead.', false, { url: 'http://github.com/mjc/ngular/guides/deprecations/#toc_deprecate-code-then-code-on-ngular-application' });
 
     this._super(...arguments);
   }
 });
 
-if (Ember.FEATURES.isEnabled('ember-application-instance-initializers')) {
+if (Ngular.FEATURES.isEnabled('ngular-application-instance-initializers')) {
   Application.reopen({
     instanceInitializer(options) {
       this.constructor.instanceInitializer(options);
@@ -793,7 +793,7 @@ if (Ember.FEATURES.isEnabled('ember-application-instance-initializers')) {
   });
 }
 
-if (Ember.FEATURES.isEnabled('ember-application-visit')) {
+if (Ngular.FEATURES.isEnabled('ngular-application-visit')) {
   Application.reopen({
     /**
       Creates a new instance of the application and instructs it to route to the
@@ -814,7 +814,7 @@ if (Ember.FEATURES.isEnabled('ember-application-visit')) {
       var instance = this.buildInstance();
       this.runInstanceInitializers(instance);
 
-      var renderPromise = new Ember.RSVP.Promise(function(res, rej) {
+      var renderPromise = new Ngular.RSVP.Promise(function(res, rej) {
         instance.didCreateRootView = function(view) {
           instance.view = view;
           res(instance);
@@ -844,11 +844,11 @@ Application.reopenClass({
     same name will result in an error.
 
     ```javascript
-    Ember.Application.initializer({
+    Ngular.Application.initializer({
       name: 'namedInitializer',
 
       initialize: function(container, application) {
-        Ember.debug('Running namedInitializer!');
+        Ngular.debug('Running namedInitializer!');
       }
     });
     ```
@@ -860,11 +860,11 @@ Application.reopenClass({
     An example of ordering initializers, we create an initializer named `first`:
 
     ```javascript
-    Ember.Application.initializer({
+    Ngular.Application.initializer({
       name: 'first',
 
       initialize: function(container, application) {
-        Ember.debug('First initializer!');
+        Ngular.debug('First initializer!');
       }
     });
 
@@ -875,12 +875,12 @@ Application.reopenClass({
     after the initializer named `first`:
 
     ```javascript
-    Ember.Application.initializer({
+    Ngular.Application.initializer({
       name: 'second',
       after: 'first',
 
       initialize: function(container, application) {
-        Ember.debug('Second initializer!');
+        Ngular.debug('Second initializer!');
       }
     });
 
@@ -892,12 +892,12 @@ Application.reopenClass({
     that it should run before the initializer named `first`:
 
     ```javascript
-    Ember.Application.initializer({
+    Ngular.Application.initializer({
       name: 'pre',
       before: 'first',
 
       initialize: function(container, application) {
-        Ember.debug('Pre initializer!');
+        Ngular.debug('Pre initializer!');
       }
     });
 
@@ -910,12 +910,12 @@ Application.reopenClass({
     both the `first` and the `second` initializers:
 
     ```javascript
-    Ember.Application.initializer({
+    Ngular.Application.initializer({
       name: 'post',
       after: ['first', 'second'],
 
       initialize: function(container, application) {
-        Ember.debug('Post initializer!');
+        Ngular.debug('Post initializer!');
       }
     });
 
@@ -931,7 +931,7 @@ Application.reopenClass({
     Example of using `container` to preload data into the store:
 
     ```javascript
-    Ember.Application.initializer({
+    Ngular.Application.initializer({
       name: 'preload-data',
 
       initialize: function(container, application) {
@@ -945,7 +945,7 @@ Application.reopenClass({
     Example of using `application` to register an adapter:
 
     ```javascript
-    Ember.Application.initializer({
+    Ngular.Application.initializer({
       name: 'api-adapter',
 
       initialize: function(container, application) {
@@ -960,7 +960,7 @@ Application.reopenClass({
   initializer: buildInitializerMethod('initializers', 'initializer'),
 
   /**
-    This creates a registry with the default Ember naming conventions.
+    This creates a registry with the default Ngular naming conventions.
 
     It also configures the registry:
 
@@ -980,9 +980,9 @@ Application.reopenClass({
     @private
     @method buildRegistry
     @static
-    @param {Ember.Application} namespace the application for which to
+    @param {Ngular.Application} namespace the application for which to
       build the registry
-    @return {Ember.Registry} the built registry
+    @return {Ngular.Registry} the built registry
   */
   buildRegistry(namespace) {
     var registry = new Registry();
@@ -1015,7 +1015,7 @@ Application.reopenClass({
     registry.injection('view', '_viewRegistry', '-view-registry:main');
 
     registry.register('view:default', _MetamorphView);
-    registry.register('view:toplevel', EmberView.extend());
+    registry.register('view:toplevel', NgularView.extend());
 
     registry.register('route:basic', Route, { instantiate: false });
     registry.register('event_dispatcher:main', EventDispatcher);
@@ -1053,7 +1053,7 @@ Application.reopenClass({
 /**
   This function defines the default lookup rules for container lookups:
 
-  * templates are looked up on `Ember.TEMPLATES`
+  * templates are looked up on `Ngular.TEMPLATES`
   * other names are looked up on the application after classifying the name.
     For example, `controller:post` looks up `App.PostController` by default.
   * if the default lookup fails, look for registered classes on the container
@@ -1063,11 +1063,11 @@ Application.reopenClass({
 
   @private
   @method resolverFor
-  @param {Ember.Namespace} namespace the namespace to look for classes
+  @param {Ngular.Namespace} namespace the namespace to look for classes
   @return {*} the resolved value for a given lookup
 */
 function resolverFor(namespace) {
-  Ember.deprecate('Application.resolver is deprecated in favor of Application.Resolver', !namespace.get('resolver'));
+  Ngular.deprecate('Application.resolver is deprecated in favor of Application.Resolver', !namespace.get('resolver'));
 
   var ResolverClass = namespace.get('resolver') || namespace.get('Resolver') || DefaultResolver;
   var resolver = ResolverClass.create({
@@ -1090,7 +1090,7 @@ function resolverFor(namespace) {
     if (resolver.normalize) {
       return resolver.normalize(fullName);
     } else {
-      Ember.deprecate('The Resolver should now provide a \'normalize\' function', false);
+      Ngular.deprecate('The Resolver should now provide a \'normalize\' function', false);
       return fullName;
     }
   };
@@ -1105,16 +1105,16 @@ function registerLibraries() {
     librariesRegistered = true;
 
     if (environment.hasDOM) {
-      Ember.libraries.registerCoreLibrary('jQuery', jQuery().jquery);
+      Ngular.libraries.registerCoreLibrary('jQuery', jQuery().jquery);
     }
   }
 }
 
 function logLibraryVersions() {
-  if (Ember.LOG_VERSION) {
+  if (Ngular.LOG_VERSION) {
     // we only need to see this once per Application#init
-    Ember.LOG_VERSION = false;
-    var libs = Ember.libraries._registry;
+    Ngular.LOG_VERSION = false;
+    var libs = Ngular.libraries._registry;
 
     var nameLengths = EnumerableUtils.map(libs, function(item) {
       return get(item, 'name.length');
@@ -1122,13 +1122,13 @@ function logLibraryVersions() {
 
     var maxNameLength = Math.max.apply(this, nameLengths);
 
-    Ember.debug('-------------------------------');
+    Ngular.debug('-------------------------------');
     for (var i = 0, l = libs.length; i < l; i++) {
       var lib = libs[i];
       var spaces = new Array(maxNameLength - lib.name.length + 1).join(' ');
-      Ember.debug([lib.name, spaces, ' : ', lib.version].join(''));
+      Ngular.debug([lib.name, spaces, ' : ', lib.version].join(''));
     }
-    Ember.debug('-------------------------------');
+    Ngular.debug('-------------------------------');
   }
 }
 
@@ -1144,9 +1144,9 @@ function buildInitializerMethod(bucketName, humanName) {
       this.reopenClass(attrs);
     }
 
-    Ember.assert("The " + humanName + " '" + initializer.name + "' has already been registered", !this[bucketName][initializer.name]);
-    Ember.assert("An " + humanName + " cannot be registered without an initialize function", canInvoke(initializer, 'initialize'));
-    Ember.assert("An " + humanName + " cannot be registered without a name property", initializer.name !== undefined);
+    Ngular.assert("The " + humanName + " '" + initializer.name + "' has already been registered", !this[bucketName][initializer.name]);
+    Ngular.assert("An " + humanName + " cannot be registered without an initialize function", canInvoke(initializer, 'initialize'));
+    Ngular.assert("An " + humanName + " cannot be registered without a name property", initializer.name !== undefined);
 
     this[bucketName][initializer.name] = initializer;
   };

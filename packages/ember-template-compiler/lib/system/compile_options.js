@@ -1,10 +1,10 @@
 /**
-@module ember
-@submodule ember-template-compiler
+@module ngular
+@submodule ngular-template-compiler
 */
 
-import Ember from "ember-metal/core";
-import plugins from "ember-template-compiler/plugins";
+import Ngular from "ngular-metal/core";
+import plugins from "ngular-template-compiler/plugins";
 
 /**
   @private
@@ -12,12 +12,12 @@ import plugins from "ember-template-compiler/plugins";
 */
 export default function() {
   var disableComponentGeneration = true;
-  if (Ember.FEATURES.isEnabled('ember-htmlbars-component-generation')) {
+  if (Ngular.FEATURES.isEnabled('ngular-htmlbars-component-generation')) {
     disableComponentGeneration = false;
   }
 
   return {
-    revision: 'Ember@VERSION_STRING_PLACEHOLDER',
+    revision: 'Ngular@VERSION_STRING_PLACEHOLDER',
 
     disableComponentGeneration: disableComponentGeneration,
 

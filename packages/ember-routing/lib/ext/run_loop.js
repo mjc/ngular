@@ -1,8 +1,8 @@
-import run from "ember-metal/run_loop";
+import run from "ngular-metal/run_loop";
 
 /**
-@module ember
-@submodule ember-views
+@module ngular
+@submodule ngular-views
 */
 
 // Add a new named queue after the 'actions' queue (where RSVP promises

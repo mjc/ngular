@@ -1,11 +1,11 @@
-import { forEach } from "ember-metal/enumerable_utils";
-import Enumerable from "ember-runtime/mixins/enumerable";
-import { Mixin } from "ember-metal/mixin";
-import {beginPropertyChanges, endPropertyChanges} from "ember-metal/property_events";
+import { forEach } from "ngular-metal/enumerable_utils";
+import Enumerable from "ngular-runtime/mixins/enumerable";
+import { Mixin } from "ngular-metal/mixin";
+import {beginPropertyChanges, endPropertyChanges} from "ngular-metal/property_events";
 
 /**
-@module ember
-@submodule ember-runtime
+@module ngular
+@submodule ngular-runtime
 */
 
 /**
@@ -41,11 +41,11 @@ import {beginPropertyChanges, endPropertyChanges} from "ember-metal/property_eve
 
   If you are implementing an object and want to support this API, just include
   this mixin in your class and implement the required methods. In your unit
-  tests, be sure to apply the Ember.MutableEnumerableTests to your object.
+  tests, be sure to apply the Ngular.MutableEnumerableTests to your object.
 
   @class MutableEnumerable
-  @namespace Ember
-  @uses Ember.Enumerable
+  @namespace Ngular
+  @uses Ngular.Enumerable
 */
 export default Mixin.create(Enumerable, {
 
@@ -69,7 +69,7 @@ export default Mixin.create(Enumerable, {
     Adds each object in the passed enumerable to the receiver.
 
     @method addObjects
-    @param {Ember.Enumerable} objects the objects to add.
+    @param {Ngular.Enumerable} objects the objects to add.
     @return {Object} receiver
   */
   addObjects(objects) {
@@ -100,7 +100,7 @@ export default Mixin.create(Enumerable, {
     Removes each object in the passed enumerable from the receiver.
 
     @method removeObjects
-    @param {Ember.Enumerable} objects the objects to remove
+    @param {Ngular.Enumerable} objects the objects to remove
     @return {Object} receiver
   */
   removeObjects(objects) {

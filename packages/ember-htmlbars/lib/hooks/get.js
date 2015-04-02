@@ -1,6 +1,6 @@
 /**
-@module ember
-@submodule ember-htmlbars
+@module ngular
+@submodule ngular-htmlbars
 */
 
 export default function get(env, view, path) {

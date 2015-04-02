@@ -1,8 +1,8 @@
-import isNone from 'ember-metal/is_none';
+import isNone from 'ngular-metal/is_none';
 
-QUnit.module("Ember.isNone");
+QUnit.module("Ngular.isNone");
 
-QUnit.test("Ember.isNone", function() {
+QUnit.test("Ngular.isNone", function() {
   var string = "string";
   var fn = function() {};
 

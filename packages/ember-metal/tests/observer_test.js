@@ -1,5 +1,5 @@
-import Ember from 'ember-metal/core';
-import { testBoth } from 'ember-metal/tests/props_helper';
+import Ngular from 'ngular-metal/core';
+import { testBoth } from 'ngular-metal/tests/props_helper';
 import {
   addObserver,
   removeObserver,
@@ -7,30 +7,30 @@ import {
   _suspendObserver,
   _suspendObservers,
   removeBeforeObserver
-} from "ember-metal/observer";
+} from "ngular-metal/observer";
 import {
   propertyWillChange,
   propertyDidChange
-} from 'ember-metal/property_events';
-import create from 'ember-metal/platform/create';
-import { defineProperty } from 'ember-metal/properties';
+} from 'ngular-metal/property_events';
+import create from 'ngular-metal/platform/create';
+import { defineProperty } from 'ngular-metal/properties';
 import {
   computed,
   cacheFor
-} from 'ember-metal/computed';
+} from 'ngular-metal/computed';
 import {
   Mixin,
   mixin,
   observer,
   beforeObserver,
   immediateObserver
-} from 'ember-metal/mixin';
-import run from 'ember-metal/run_loop';
+} from 'ngular-metal/mixin';
+import run from 'ngular-metal/run_loop';
 import {
   beginPropertyChanges,
   endPropertyChanges,
   changeProperties
-} from "ember-metal/property_events";
+} from "ngular-metal/property_events";
 
 // ..........................................................
 // ADD OBSERVER
@@ -89,7 +89,7 @@ testBoth('observer should continue to fire after dependent properties are access
   equal(observerCount, 10, 'should continue to fire indefinitely');
 });
 
-if (Ember.EXTEND_PROTOTYPES) {
+if (Ngular.EXTEND_PROTOTYPES) {
   testBoth('observer added declaratively via brace expansion should fire when property changes', function (get, set) {
     var obj = { };
     var count = 0;
@@ -711,7 +711,7 @@ testBoth('observer should fire before dependent property is modified', function(
   equal(count, 1, 'should have invoked observer');
 });
 
-if (Ember.EXTEND_PROTOTYPES) {
+if (Ngular.EXTEND_PROTOTYPES) {
   testBoth('before observer added declaratively via brace expansion should fire when property changes', function (get, set) {
     var obj = {};
     var count = 0;
@@ -867,7 +867,7 @@ testBoth('addBeforeObserver should respect targets with methods', function(get, 
 //
 
 var obj, count, lookup;
-var originalLookup = Ember.lookup;
+var originalLookup = Ngular.lookup;
 
 QUnit.module('addObserver - dependentkey with chained properties', {
   setup() {
@@ -881,7 +881,7 @@ QUnit.module('addObserver - dependentkey with chained properties', {
       }
     };
 
-    Ember.lookup = lookup = {
+    Ngular.lookup = lookup = {
       Global: {
         foo: {
           bar: {
@@ -898,7 +898,7 @@ QUnit.module('addObserver - dependentkey with chained properties', {
 
   teardown() {
     obj = count = null;
-    Ember.lookup = originalLookup;
+    Ngular.lookup = originalLookup;
   }
 });
 
@@ -1051,7 +1051,7 @@ testBoth('setting a cached computed property whose value has changed should trig
   equal(get(obj, 'foo'), 'bar');
 });
 
-QUnit.module("Ember.immediateObserver");
+QUnit.module("Ngular.immediateObserver");
 
 testBoth("immediate observers should fire synchronously", function(get, set) {
   var obj = {};
@@ -1085,7 +1085,7 @@ testBoth("immediate observers should fire synchronously", function(get, set) {
 });
 
 
-if (Ember.EXTEND_PROTOTYPES) {
+if (Ngular.EXTEND_PROTOTYPES) {
   testBoth('immediate observers added declaratively via brace expansion fire synchronously', function (get, set) {
     var obj = {};
     var observerCalled = 0;

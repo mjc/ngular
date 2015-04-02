@@ -1,5 +1,5 @@
-import run from 'ember-metal/run_loop';
-import EmberError from 'ember-metal/error';
+import run from 'ngular-metal/run_loop';
+import NgularError from 'ngular-metal/error';
 
 QUnit.module('system/run_loop/unwind_test');
 
@@ -8,7 +8,7 @@ QUnit.test('RunLoop unwinds despite unhandled exception', function() {
 
   throws(function() {
     run(function() {
-      run.schedule('actions', function() { throw new EmberError("boom!"); });
+      run.schedule('actions', function() { throw new NgularError("boom!"); });
     });
   }, Error, "boom!");
 
@@ -28,9 +28,9 @@ QUnit.test('run unwinds despite unhandled exception', function() {
 
   throws(function() {
     run(function() {
-      throw new EmberError("boom!");
+      throw new NgularError("boom!");
     });
-  }, EmberError, "boom!");
+  }, NgularError, "boom!");
 
   equal(run.currentRunLoop, initialRunLoop, "Previous run loop should be cleaned up despite exception");
 

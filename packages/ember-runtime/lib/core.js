@@ -1,6 +1,6 @@
 /**
-@module ember
-@submodule ember-runtime
+@module ngular
+@submodule ngular-runtime
 */
 
 /**
@@ -10,13 +10,13 @@
   respect that method.
 
   ```javascript
-  Ember.isEqual('hello', 'hello');  // true
-  Ember.isEqual(1, 2);              // false
-  Ember.isEqual([4, 2], [4, 2]);    // false
+  Ngular.isEqual('hello', 'hello');  // true
+  Ngular.isEqual(1, 2);              // false
+  Ngular.isEqual([4, 2], [4, 2]);    // false
   ```
 
   @method isEqual
-  @for Ember
+  @for Ngular
   @param {Object} a first object to compare
   @param {Object} b second object to compare
   @return {Boolean}

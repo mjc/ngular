@@ -1,27 +1,27 @@
 /**
-@module ember
-@submodule ember-runtime
+@module ngular
+@submodule ngular-runtime
 */
 
-import Ember from 'ember-metal/core'; // Ember.EXTEND_PROTOTYPES, Ember.assert
-import expandProperties from 'ember-metal/expand_properties';
-import { computed } from 'ember-metal/computed';
-import { observer } from "ember-metal/mixin";
+import Ngular from 'ngular-metal/core'; // Ngular.EXTEND_PROTOTYPES, Ngular.assert
+import expandProperties from 'ngular-metal/expand_properties';
+import { computed } from 'ngular-metal/computed';
+import { observer } from "ngular-metal/mixin";
 
 var a_slice = Array.prototype.slice;
 var FunctionPrototype = Function.prototype;
 
-if (Ember.EXTEND_PROTOTYPES === true || Ember.EXTEND_PROTOTYPES.Function) {
+if (Ngular.EXTEND_PROTOTYPES === true || Ngular.EXTEND_PROTOTYPES.Function) {
 
   /**
     The `property` extension of Javascript's Function prototype is available
-    when `Ember.EXTEND_PROTOTYPES` or `Ember.EXTEND_PROTOTYPES.Function` is
+    when `Ngular.EXTEND_PROTOTYPES` or `Ngular.EXTEND_PROTOTYPES.Function` is
     `true`, which is the default.
 
     Computed properties allow you to treat a function like a property:
 
     ```javascript
-    MyApp.President = Ember.Object.extend({
+    MyApp.President = Ngular.Object.extend({
       firstName: '',
       lastName:  '',
 
@@ -43,30 +43,30 @@ if (Ember.EXTEND_PROTOTYPES === true || Ember.EXTEND_PROTOTYPES.Function) {
 
     Many computed properties have dependencies on other properties. For
     example, in the above example, the `fullName` property depends on
-    `firstName` and `lastName` to determine its value. You can tell Ember
+    `firstName` and `lastName` to determine its value. You can tell Ngular
     about these dependencies like this:
 
     ```javascript
-    MyApp.President = Ember.Object.extend({
+    MyApp.President = Ngular.Object.extend({
       firstName: '',
       lastName:  '',
 
       fullName: function() {
         return this.get('firstName') + ' ' + this.get('lastName');
 
-        // Tell Ember.js that this computed property depends on firstName
+        // Tell Ngular.js that this computed property depends on firstName
         // and lastName
       }.property('firstName', 'lastName')
     });
     ```
 
-    Make sure you list these dependencies so Ember knows when to update
+    Make sure you list these dependencies so Ngular knows when to update
     bindings that connect to a computed property. Changing a dependency
     will not immediately trigger an update of the computed property, but
     will instead clear the cache so that it is updated when the next `get`
     is called on the property.
 
-    See [Ember.ComputedProperty](/api/classes/Ember.ComputedProperty.html), [Ember.computed](/api/#method_computed).
+    See [Ngular.ComputedProperty](/api/classes/Ngular.ComputedProperty.html), [Ngular.computed](/api/#method_computed).
 
     @method property
     @for Function
@@ -80,7 +80,7 @@ if (Ember.EXTEND_PROTOTYPES === true || Ember.EXTEND_PROTOTYPES.Function) {
 
   /**
     The `observes` extension of Javascript's Function prototype is available
-    when `Ember.EXTEND_PROTOTYPES` or `Ember.EXTEND_PROTOTYPES.Function` is
+    when `Ngular.EXTEND_PROTOTYPES` or `Ngular.EXTEND_PROTOTYPES.Function` is
     true, which is the default.
 
     You can observe property changes simply by adding the `observes`
@@ -88,7 +88,7 @@ if (Ember.EXTEND_PROTOTYPES === true || Ember.EXTEND_PROTOTYPES.Function) {
     For example:
 
     ```javascript
-    Ember.Object.extend({
+    Ngular.Object.extend({
       valueObserver: function() {
         // Executes whenever the "value" property changes
       }.observes('value')
@@ -98,7 +98,7 @@ if (Ember.EXTEND_PROTOTYPES === true || Ember.EXTEND_PROTOTYPES.Function) {
     In the future this method may become asynchronous. If you want to ensure
     synchronous behavior, use `observesImmediately`.
 
-    See `Ember.observer`.
+    See `Ngular.observer`.
 
     @method observes
     @for Function
@@ -110,15 +110,15 @@ if (Ember.EXTEND_PROTOTYPES === true || Ember.EXTEND_PROTOTYPES.Function) {
 
   /**
     The `observesImmediately` extension of Javascript's Function prototype is
-    available when `Ember.EXTEND_PROTOTYPES` or
-    `Ember.EXTEND_PROTOTYPES.Function` is true, which is the default.
+    available when `Ngular.EXTEND_PROTOTYPES` or
+    `Ngular.EXTEND_PROTOTYPES.Function` is true, which is the default.
 
     You can observe property changes simply by adding the `observesImmediately`
     call to the end of your method declarations in classes that you write.
     For example:
 
     ```javascript
-    Ember.Object.extend({
+    Ngular.Object.extend({
       valueObserver: function() {
         // Executes immediately after the "value" property changes
       }.observesImmediately('value')
@@ -128,13 +128,13 @@ if (Ember.EXTEND_PROTOTYPES === true || Ember.EXTEND_PROTOTYPES.Function) {
     In the future, `observes` may become asynchronous. In this event,
     `observesImmediately` will maintain the synchronous behavior.
 
-    See `Ember.immediateObserver`.
+    See `Ngular.immediateObserver`.
 
     @method observesImmediately
     @for Function
   */
   FunctionPrototype.observesImmediately = function () {
-    Ember.assert('Immediate observers must observe internal properties only, ' +
+    Ngular.assert('Immediate observers must observe internal properties only, ' +
                  'not properties on other objects.', function checkIsInternalProperty() {
       for (var i = 0, l = arguments.length; i < l; i++) {
         if (arguments[i].indexOf('.') !== -1) {
@@ -150,22 +150,22 @@ if (Ember.EXTEND_PROTOTYPES === true || Ember.EXTEND_PROTOTYPES.Function) {
 
   /**
     The `observesBefore` extension of Javascript's Function prototype is
-    available when `Ember.EXTEND_PROTOTYPES` or
-    `Ember.EXTEND_PROTOTYPES.Function` is true, which is the default.
+    available when `Ngular.EXTEND_PROTOTYPES` or
+    `Ngular.EXTEND_PROTOTYPES.Function` is true, which is the default.
 
     You can get notified when a property change is about to happen by
     adding the `observesBefore` call to the end of your method
     declarations in classes that you write. For example:
 
     ```javascript
-    Ember.Object.extend({
+    Ngular.Object.extend({
       valueObserver: function() {
         // Executes whenever the "value" property is about to change
       }.observesBefore('value')
     });
     ```
 
-    See `Ember.beforeObserver`.
+    See `Ngular.beforeObserver`.
 
     @method observesBefore
     @for Function
@@ -180,35 +180,35 @@ if (Ember.EXTEND_PROTOTYPES === true || Ember.EXTEND_PROTOTYPES.Function) {
       expandProperties(arguments[i], addWatchedProperty);
     }
 
-    this.__ember_observesBefore__ = watched;
+    this.__ngular_observesBefore__ = watched;
 
     return this;
   };
 
   /**
     The `on` extension of Javascript's Function prototype is available
-    when `Ember.EXTEND_PROTOTYPES` or `Ember.EXTEND_PROTOTYPES.Function` is
+    when `Ngular.EXTEND_PROTOTYPES` or `Ngular.EXTEND_PROTOTYPES.Function` is
     true, which is the default.
 
     You can listen for events simply by adding the `on` call to the end of
     your method declarations in classes or mixins that you write. For example:
 
     ```javascript
-    Ember.Mixin.create({
+    Ngular.Mixin.create({
       doSomethingWithElement: function() {
         // Executes whenever the "didInsertElement" event fires
       }.on('didInsertElement')
     });
     ```
 
-    See `Ember.on`.
+    See `Ngular.on`.
 
     @method on
     @for Function
   */
   FunctionPrototype.on = function () {
     var events = a_slice.call(arguments);
-    this.__ember_listens__ = events;
+    this.__ngular_listens__ = events;
 
     return this;
   };

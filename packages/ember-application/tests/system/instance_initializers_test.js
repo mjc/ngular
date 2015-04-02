@@ -1,17 +1,17 @@
-import run from "ember-metal/run_loop";
-import Application from "ember-application/system/application";
-import ApplicationInstance from "ember-application/system/application-instance";
-import { indexOf } from "ember-metal/array";
-import jQuery from "ember-views/system/jquery";
+import run from "ngular-metal/run_loop";
+import Application from "ngular-application/system/application";
+import ApplicationInstance from "ngular-application/system/application-instance";
+import { indexOf } from "ngular-metal/array";
+import jQuery from "ngular-views/system/jquery";
 
 var app, initializeContextFeatureEnabled;
 
-if (Ember.FEATURES.isEnabled("ember-application-initializer-context")) {
+if (Ngular.FEATURES.isEnabled("ngular-application-initializer-context")) {
   initializeContextFeatureEnabled = true;
 }
 
-if (Ember.FEATURES.isEnabled('ember-application-instance-initializers')) {
-  QUnit.module("Ember.Application instance initializers", {
+if (Ngular.FEATURES.isEnabled('ngular-application-instance-initializers')) {
+  QUnit.module("Ngular.Application instance initializers", {
     setup() {
     },
 
@@ -33,7 +33,7 @@ if (Ember.FEATURES.isEnabled('ember-application-instance-initializers')) {
 
     expectAssertion(function() {
       run(function() {
-        MyApplication.instanceInitializer({ initialize: Ember.K });
+        MyApplication.instanceInitializer({ initialize: Ngular.K });
       });
     });
 

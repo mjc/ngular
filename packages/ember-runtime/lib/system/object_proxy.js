@@ -1,16 +1,16 @@
-import EmberObject from "ember-runtime/system/object";
-import _ProxyMixin from "ember-runtime/mixins/-proxy";
+import NgularObject from "ngular-runtime/system/object";
+import _ProxyMixin from "ngular-runtime/mixins/-proxy";
 
 /**
-  `Ember.ObjectProxy` forwards all properties not defined by the proxy itself
+  `Ngular.ObjectProxy` forwards all properties not defined by the proxy itself
   to a proxied `content` object.
 
   ```javascript
-  object = Ember.Object.create({
+  object = Ngular.Object.create({
     name: 'Foo'
   });
 
-  proxy = Ember.ObjectProxy.create({
+  proxy = Ngular.ObjectProxy.create({
     content: object
   });
 
@@ -28,7 +28,7 @@ import _ProxyMixin from "ember-runtime/mixins/-proxy";
   Error.
 
   ```javascript
-  proxy = Ember.ObjectProxy.create({
+  proxy = Ngular.ObjectProxy.create({
     content: null,
     flag: null
   });
@@ -43,7 +43,7 @@ import _ProxyMixin from "ember-runtime/mixins/-proxy";
   Computed properties on the proxy itself can depend on delegated properties.
 
   ```javascript
-  ProxyWithComputedProperty = Ember.ObjectProxy.extend({
+  ProxyWithComputedProperty = Ngular.ObjectProxy.extend({
     fullName: function () {
       var firstName = this.get('firstName'),
           lastName = this.get('lastName');
@@ -65,9 +65,9 @@ import _ProxyMixin from "ember-runtime/mixins/-proxy";
   ```
 
   @class ObjectProxy
-  @namespace Ember
-  @extends Ember.Object
-  @extends Ember._ProxyMixin
+  @namespace Ngular
+  @extends Ngular.Object
+  @extends Ngular._ProxyMixin
 */
 
-export default EmberObject.extend(_ProxyMixin);
+export default NgularObject.extend(_ProxyMixin);

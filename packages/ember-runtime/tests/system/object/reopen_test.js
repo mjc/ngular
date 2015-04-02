@@ -1,11 +1,11 @@
-import {get} from "ember-metal/property_get";
-import EmberObject from "ember-runtime/system/object";
+import {get} from "ngular-metal/property_get";
+import NgularObject from "ngular-runtime/system/object";
 
 QUnit.module('system/core_object/reopen');
 
 QUnit.test('adds new properties to subclass instance', function() {
 
-  var Subclass = EmberObject.extend();
+  var Subclass = NgularObject.extend();
   Subclass.reopen({
     foo() { return 'FOO'; },
     bar: 'BAR'
@@ -17,7 +17,7 @@ QUnit.test('adds new properties to subclass instance', function() {
 
 QUnit.test('reopened properties inherited by subclasses', function() {
 
-  var Subclass = EmberObject.extend();
+  var Subclass = NgularObject.extend();
   var SubSub = Subclass.extend();
 
   Subclass.reopen({
@@ -31,7 +31,7 @@ QUnit.test('reopened properties inherited by subclasses', function() {
 });
 
 QUnit.test('allows reopening already instantiated classes', function() {
-  var Subclass = EmberObject.extend();
+  var Subclass = NgularObject.extend();
 
   Subclass.create();
 

@@ -1,4 +1,4 @@
-import {isEqual} from "ember-runtime/core";
+import {isEqual} from "ngular-runtime/core";
 
 QUnit.module("isEqual");
 

@@ -1,11 +1,11 @@
 /**
-@module ember
-@submodule ember-htmlbars
+@module ngular
+@submodule ngular-htmlbars
 */
 
-import Ember from "ember-metal/core";
-import { read } from "ember-metal/streams/utils";
-import lookupHelper from "ember-htmlbars/system/lookup-helper";
+import Ngular from "ngular-metal/core";
+import { read } from "ngular-metal/streams/utils";
+import lookupHelper from "ngular-htmlbars/system/lookup-helper";
 
 export default function element(env, domElement, view, path, params, hash) { //jshint ignore:line
   var helper = lookupHelper(path, view, env);
@@ -22,7 +22,7 @@ export default function element(env, domElement, view, path, params, hash) { //j
 
   var value = read(valueOrLazyValue);
   if (value) {
-    Ember.deprecate('Returning a string of attributes from a helper inside an element is deprecated.');
+    Ngular.deprecate('Returning a string of attributes from a helper inside an element is deprecated.');
 
     var parts = value.toString().split(/\s+/);
     for (var i = 0, l = parts.length; i < l; i++) {

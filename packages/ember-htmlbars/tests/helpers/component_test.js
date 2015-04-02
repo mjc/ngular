@@ -1,15 +1,15 @@
-import ComponentLookup from "ember-views/component_lookup";
+import ComponentLookup from "ngular-views/component_lookup";
 import Registry from "container/registry";
-import EmberView from "ember-views/views/view";
-import compile from "ember-template-compiler/system/compile";
-import { runAppend, runDestroy } from "ember-runtime/tests/utils";
+import NgularView from "ngular-views/views/view";
+import compile from "ngular-template-compiler/system/compile";
+import { runAppend, runDestroy } from "ngular-runtime/tests/utils";
 
-var set = Ember.set;
-var get = Ember.get;
+var set = Ngular.set;
+var get = Ngular.get;
 var view, registry, container;
 
-if (Ember.FEATURES.isEnabled('ember-htmlbars-component-helper')) {
-  QUnit.module("ember-htmlbars: {{#component}} helper", {
+if (Ngular.FEATURES.isEnabled('ngular-htmlbars-component-helper')) {
+  QUnit.module("ngular-htmlbars: {{#component}} helper", {
     setup() {
       registry = new Registry();
       container = registry.container();
@@ -29,7 +29,7 @@ if (Ember.FEATURES.isEnabled('ember-htmlbars-component-helper')) {
     registry.register('template:components/foo-bar', compile('yippie! {{location}} {{yield}}'));
     registry.register('template:components/baz-qux', compile('yummy {{location}} {{yield}}'));
 
-    view = EmberView.create({
+    view = NgularView.create({
       container: container,
       dynamicComponent: 'foo-bar',
       location: 'Caracas',
@@ -39,7 +39,7 @@ if (Ember.FEATURES.isEnabled('ember-htmlbars-component-helper')) {
     runAppend(view);
     equal(view.$().text(), 'yippie! Caracas arepas!', 'component was looked up and rendered');
 
-    Ember.run(function() {
+    Ngular.run(function() {
       set(view, "dynamicComponent", 'baz-qux');
       set(view, "location", 'Loisaida');
     });
@@ -48,7 +48,7 @@ if (Ember.FEATURES.isEnabled('ember-htmlbars-component-helper')) {
 
   QUnit.test("component helper with actions", function() {
     registry.register('template:components/foo-bar', compile('yippie! {{yield}}'));
-    registry.register('component:foo-bar', Ember.Component.extend({
+    registry.register('component:foo-bar', Ngular.Component.extend({
       classNames: 'foo-bar',
       didInsertElement() {
         // trigger action on click in absence of app's EventDispatcher
@@ -63,7 +63,7 @@ if (Ember.FEATURES.isEnabled('ember-htmlbars-component-helper')) {
     }));
 
     var actionTriggered = 0;
-    var controller = Ember.Controller.extend({
+    var controller = Ngular.Controller.extend({
       dynamicComponent: 'foo-bar',
       actions: {
         mappedAction() {
@@ -71,14 +71,14 @@ if (Ember.FEATURES.isEnabled('ember-htmlbars-component-helper')) {
         }
       }
     }).create();
-    view = EmberView.create({
+    view = NgularView.create({
       container: container,
       controller: controller,
       template: compile('{{#component dynamicComponent fooBarred="mappedAction"}}arepas!{{/component}}')
     });
 
     runAppend(view);
-    Ember.run(function() {
+    Ngular.run(function() {
       view.$('.foo-bar').trigger('click');
     });
     equal(actionTriggered, 1, 'action was triggered');
@@ -87,13 +87,13 @@ if (Ember.FEATURES.isEnabled('ember-htmlbars-component-helper')) {
   QUnit.test('component helper maintains expected logical parentView', function() {
     registry.register('template:components/foo-bar', compile('yippie! {{yield}}'));
     var componentInstance;
-    registry.register('component:foo-bar', Ember.Component.extend({
+    registry.register('component:foo-bar', Ngular.Component.extend({
       didInsertElement() {
         componentInstance = this;
       }
     }));
 
-    view = EmberView.create({
+    view = NgularView.create({
       container: container,
       dynamicComponent: 'foo-bar',
       template: compile('{{#component view.dynamicComponent}}arepas!{{/component}}')
@@ -108,7 +108,7 @@ if (Ember.FEATURES.isEnabled('ember-htmlbars-component-helper')) {
     registry.register('template:components/baz-qux', compile('yummy {{location}} {{yield}}'));
     registry.register('template:components/corge-grault', compile('delicious {{location}} {{yield}}'));
 
-    view = EmberView.create({
+    view = NgularView.create({
       container: container,
       dynamicComponent1: 'foo-bar',
       dynamicComponent2: 'baz-qux',
@@ -119,7 +119,7 @@ if (Ember.FEATURES.isEnabled('ember-htmlbars-component-helper')) {
     runAppend(view);
     equal(view.$().text(), 'yippie! Caracas yummy Caracas arepas!', 'components were looked up and rendered');
 
-    Ember.run(function() {
+    Ngular.run(function() {
       set(view, "dynamicComponent1", 'corge-grault');
       set(view, "location", 'Loisaida');
     });
@@ -129,7 +129,7 @@ if (Ember.FEATURES.isEnabled('ember-htmlbars-component-helper')) {
   QUnit.test("component helper can be used with a quoted string (though you probably would not do this)", function() {
     registry.register('template:components/foo-bar', compile('yippie! {{location}} {{yield}}'));
 
-    view = EmberView.create({
+    view = NgularView.create({
       container: container,
       location: 'Caracas',
       template: compile('{{#component "foo-bar" location=view.location}}arepas!{{/component}}')
@@ -141,7 +141,7 @@ if (Ember.FEATURES.isEnabled('ember-htmlbars-component-helper')) {
   });
 
   QUnit.test("component with unquoted param resolving to non-existent component", function() {
-    view = EmberView.create({
+    view = NgularView.create({
       container: container,
       dynamicComponent: 'does-not-exist',
       location: 'Caracas',
@@ -154,7 +154,7 @@ if (Ember.FEATURES.isEnabled('ember-htmlbars-component-helper')) {
   });
 
   QUnit.test("component with quoted param for non-existent component", function() {
-    view = EmberView.create({
+    view = NgularView.create({
       container: container,
       location: 'Caracas',
       template: compile('{{#component "does-not-exist" location=view.location}}arepas!{{/component}}')

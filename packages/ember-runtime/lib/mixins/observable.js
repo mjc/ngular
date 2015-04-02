@@ -1,47 +1,47 @@
 /**
-@module ember
-@submodule ember-runtime
+@module ngular
+@submodule ngular-runtime
 */
-import Ember from "ember-metal/core"; // Ember.assert
+import Ngular from "ngular-metal/core"; // Ngular.assert
 
 import {
   get,
   getWithDefault
-} from "ember-metal/property_get";
-import { set } from "ember-metal/property_set";
-import getProperties from "ember-metal/get_properties";
-import setProperties from "ember-metal/set_properties";
-import { Mixin } from "ember-metal/mixin";
-import { hasListeners } from "ember-metal/events";
+} from "ngular-metal/property_get";
+import { set } from "ngular-metal/property_set";
+import getProperties from "ngular-metal/get_properties";
+import setProperties from "ngular-metal/set_properties";
+import { Mixin } from "ngular-metal/mixin";
+import { hasListeners } from "ngular-metal/events";
 import {
   beginPropertyChanges,
   propertyWillChange,
   propertyDidChange,
   endPropertyChanges
-} from "ember-metal/property_events";
+} from "ngular-metal/property_events";
 import {
   addObserver,
   addBeforeObserver,
   removeObserver,
   observersFor
-} from "ember-metal/observer";
-import { cacheFor } from "ember-metal/computed";
-import isNone from "ember-metal/is_none";
+} from "ngular-metal/observer";
+import { cacheFor } from "ngular-metal/computed";
+import isNone from "ngular-metal/is_none";
 
 /**
   ## Overview
 
   This mixin provides properties and property observing functionality, core
-  features of the Ember object model.
+  features of the Ngular object model.
 
   Properties and observers allow one object to observe changes to a
   property on another object. This is one of the fundamental ways that
-  models, controllers and views communicate with each other in an Ember
+  models, controllers and views communicate with each other in an Ngular
   application.
 
   Any object that has this mixin applied can be used in observer
-  operations. That includes `Ember.Object` and most objects you will
-  interact with as you write your Ember application.
+  operations. That includes `Ngular.Object` and most objects you will
+  interact with as you write your Ngular application.
 
   Note that you will not generally apply this mixin to classes yourself,
   but you will use the features provided by this module frequently, so it
@@ -49,7 +49,7 @@ import isNone from "ember-metal/is_none";
 
   ## Using `get()` and `set()`
 
-  Because of Ember's support for bindings and observers, you will always
+  Because of Ngular's support for bindings and observers, you will always
   access properties using the get method, and set properties using the
   set method. This allows the observing objects to be notified and
   computed properties to be handled properly.
@@ -63,7 +63,7 @@ import isNone from "ember-metal/is_none";
   For example:
 
   ```javascript
-  Ember.Object.extend({
+  Ngular.Object.extend({
     valueObserver: function() {
       // Executes whenever the "value" property changes
     }.observes('value')
@@ -71,7 +71,7 @@ import isNone from "ember-metal/is_none";
   ```
 
   Although this is the most common way to add an observer, this capability
-  is actually built into the `Ember.Object` class on top of two methods
+  is actually built into the `Ngular.Object` class on top of two methods
   defined in this mixin: `addObserver` and `removeObserver`. You can use
   these two methods to add and remove observers yourself if you need to
   do so at runtime.
@@ -91,7 +91,7 @@ import isNone from "ember-metal/is_none";
   because computed properties are not computed until `get` is called.
 
   @class Observable
-  @namespace Ember
+  @namespace Ngular
 */
 export default Mixin.create({
 
@@ -174,7 +174,7 @@ export default Mixin.create({
     defined (see the `get()` method for an example), then `set()` will call
     that method, passing both the value and key instead of simply changing
     the value itself. This is useful for those times when you need to
-    implement a property that is composed of one or more member
+    implement a property that is composed of one or more mngular
     properties.
 
     ### Unknown Properties
@@ -207,7 +207,7 @@ export default Mixin.create({
     @method set
     @param {String} keyName The property to set
     @param {Object} value The value to set or `null`.
-    @return {Ember.Observable}
+    @return {Ngular.Observable}
   */
   set(keyName, value) {
     set(this, keyName, value);
@@ -226,7 +226,7 @@ export default Mixin.create({
 
     @method setProperties
     @param {Hash} hash the hash of keys and values to set
-    @return {Ember.Observable}
+    @return {Ngular.Observable}
   */
   setProperties(hash) {
     return setProperties(this, hash);
@@ -244,7 +244,7 @@ export default Mixin.create({
     deferring.
 
     @method beginPropertyChanges
-    @return {Ember.Observable}
+    @return {Ngular.Observable}
   */
   beginPropertyChanges() {
     beginPropertyChanges();
@@ -262,7 +262,7 @@ export default Mixin.create({
     deliver the deferred change notifications and end deferring.
 
     @method endPropertyChanges
-    @return {Ember.Observable}
+    @return {Ngular.Observable}
   */
   endPropertyChanges() {
     endPropertyChanges();
@@ -285,7 +285,7 @@ export default Mixin.create({
 
     @method propertyWillChange
     @param {String} keyName The property key that is about to change.
-    @return {Ember.Observable}
+    @return {Ngular.Observable}
   */
   propertyWillChange(keyName) {
     propertyWillChange(this, keyName);
@@ -308,7 +308,7 @@ export default Mixin.create({
 
     @method propertyDidChange
     @param {String} keyName The property key that has just changed.
-    @return {Ember.Observable}
+    @return {Ngular.Observable}
   */
   propertyDidChange(keyName) {
     propertyDidChange(this, keyName);
@@ -321,7 +321,7 @@ export default Mixin.create({
 
     @method notifyPropertyChange
     @param {String} keyName The property key to be notified about.
-    @return {Ember.Observable}
+    @return {Ngular.Observable}
   */
   notifyPropertyChange(keyName) {
     this.propertyWillChange(keyName);
@@ -330,7 +330,7 @@ export default Mixin.create({
   },
 
   addBeforeObserver(key, target, method) {
-    Ember.deprecate('Before observers are deprecated and will be removed in a future release. If you want to keep track of previous values you have to implement it yourself.', false, { url: 'http://emberjs.com/guides/deprecations/#toc_deprecate-beforeobservers' });
+    Ngular.deprecate('Before observers are deprecated and will be removed in a future release. If you want to keep track of previous values you have to implement it yourself.', false, { url: 'http://github.com/mjc/ngular/guides/deprecations/#toc_deprecate-beforeobservers' });
     addBeforeObserver(this, key, target, method);
   },
 
@@ -445,7 +445,7 @@ export default Mixin.create({
   */
   incrementProperty(keyName, increment) {
     if (isNone(increment)) { increment = 1; }
-    Ember.assert("Must pass a numeric value to incrementProperty", (!isNaN(parseFloat(increment)) && isFinite(increment)));
+    Ngular.assert("Must pass a numeric value to incrementProperty", (!isNaN(parseFloat(increment)) && isFinite(increment)));
     set(this, keyName, (parseFloat(get(this, keyName)) || 0) + increment);
     return get(this, keyName);
   },
@@ -465,7 +465,7 @@ export default Mixin.create({
   */
   decrementProperty(keyName, decrement) {
     if (isNone(decrement)) { decrement = 1; }
-    Ember.assert("Must pass a numeric value to decrementProperty", (!isNaN(parseFloat(decrement)) && isFinite(decrement)));
+    Ngular.assert("Must pass a numeric value to decrementProperty", (!isNaN(parseFloat(decrement)) && isFinite(decrement)));
     set(this, keyName, (get(this, keyName) || 0) - decrement);
     return get(this, keyName);
   },

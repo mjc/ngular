@@ -1,23 +1,23 @@
-import Ember from 'ember-metal/core';
-import { runLoadHooks } from 'ember-runtime/system/lazy_load';
+import Ngular from 'ngular-metal/core';
+import { runLoadHooks } from 'ngular-runtime/system/lazy_load';
 
 /**
-Ember Application
+Ngular Application
 
-@module ember
-@submodule ember-application
-@requires ember-views, ember-routing
+@module ngular
+@submodule ngular-application
+@requires ngular-views, ngular-routing
 */
 
-import DefaultResolver from 'ember-application/system/resolver';
+import DefaultResolver from 'ngular-application/system/resolver';
 import {
   Resolver
-} from 'ember-application/system/resolver';
-import Application from 'ember-application/system/application';
-import 'ember-application/ext/controller'; // side effect of extending ControllerMixin
+} from 'ngular-application/system/resolver';
+import Application from 'ngular-application/system/application';
+import 'ngular-application/ext/controller'; // side effect of extending ControllerMixin
 
-Ember.Application = Application;
-Ember.Resolver = Resolver;
-Ember.DefaultResolver = DefaultResolver;
+Ngular.Application = Application;
+Ngular.Resolver = Resolver;
+Ngular.DefaultResolver = DefaultResolver;
 
-runLoadHooks('Ember.Application', Application);
+runLoadHooks('Ngular.Application', Application);

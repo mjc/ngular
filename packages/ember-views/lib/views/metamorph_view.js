@@ -1,12 +1,12 @@
 /*jshint newcap:false*/
-import Ember from "ember-metal/core"; // Ember.deprecate
+import Ngular from "ngular-metal/core"; // Ngular.deprecate
 
-import View from "ember-views/views/view";
-import { Mixin } from "ember-metal/mixin";
+import View from "ngular-views/views/view";
+import { Mixin } from "ngular-metal/mixin";
 
 /**
-@module ember
-@submodule ember-views
+@module ngular
+@submodule ngular-views
 */
 
 // The `morph` and `outerHTML` properties are internal only
@@ -14,7 +14,7 @@ import { Mixin } from "ember-metal/mixin";
 
 /**
   @class _Metamorph
-  @namespace Ember
+  @namespace Ngular
   @private
 */
 export var _Metamorph = Mixin.create({
@@ -25,16 +25,16 @@ export var _Metamorph = Mixin.create({
 
   init() {
     this._super.apply(this, arguments);
-    Ember.deprecate('Supplying a tagName to Metamorph views is unreliable and is deprecated.' +
+    Ngular.deprecate('Supplying a tagName to Metamorph views is unreliable and is deprecated.' +
                     ' You may be setting the tagName on a Handlebars helper that creates a Metamorph.', !this.tagName);
   }
 });
 
 /**
   @class _MetamorphView
-  @namespace Ember
-  @extends Ember.View
-  @uses Ember._Metamorph
+  @namespace Ngular
+  @extends Ngular.View
+  @uses Ngular._Metamorph
   @private
 */
 export default View.extend(_Metamorph);

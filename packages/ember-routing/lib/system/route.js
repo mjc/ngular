@@ -1,48 +1,48 @@
-import Ember from "ember-metal/core"; // FEATURES, A, deprecate, assert, Logger
-import EmberError from "ember-metal/error";
-import { get } from "ember-metal/property_get";
-import { set } from "ember-metal/property_set";
-import getProperties from "ember-metal/get_properties";
-import { forEach } from "ember-metal/enumerable_utils";
-import isNone from "ember-metal/is_none";
-import { computed } from "ember-metal/computed";
-import merge from "ember-metal/merge";
+import Ngular from "ngular-metal/core"; // FEATURES, A, deprecate, assert, Logger
+import NgularError from "ngular-metal/error";
+import { get } from "ngular-metal/property_get";
+import { set } from "ngular-metal/property_set";
+import getProperties from "ngular-metal/get_properties";
+import { forEach } from "ngular-metal/enumerable_utils";
+import isNone from "ngular-metal/is_none";
+import { computed } from "ngular-metal/computed";
+import merge from "ngular-metal/merge";
 import {
   isArray,
   typeOf
-} from "ember-metal/utils";
-import run from "ember-metal/run_loop";
-import keys from "ember-metal/keys";
-import copy from "ember-runtime/copy";
+} from "ngular-metal/utils";
+import run from "ngular-metal/run_loop";
+import keys from "ngular-metal/keys";
+import copy from "ngular-runtime/copy";
 import {
   classify
-} from "ember-runtime/system/string";
-import EmberObject from "ember-runtime/system/object";
-import Evented from "ember-runtime/mixins/evented";
-import ActionHandler from "ember-runtime/mixins/action_handler";
-import generateController from "ember-routing/system/generate_controller";
-import { stashParamNames } from "ember-routing/utils";
+} from "ngular-runtime/system/string";
+import NgularObject from "ngular-runtime/system/object";
+import Evented from "ngular-runtime/mixins/evented";
+import ActionHandler from "ngular-runtime/mixins/action_handler";
+import generateController from "ngular-routing/system/generate_controller";
+import { stashParamNames } from "ngular-routing/utils";
 
 var slice = Array.prototype.slice;
 
 function K() { return this; }
 
 /**
-@module ember
-@submodule ember-routing
+@module ngular
+@submodule ngular-routing
 */
 
 /**
-  The `Ember.Route` class is used to define individual routes. Refer to
-  the [routing guide](http://emberjs.com/guides/routing/) for documentation.
+  The `Ngular.Route` class is used to define individual routes. Refer to
+  the [routing guide](http://github.com/mjc/ngular/guides/routing/) for documentation.
 
   @class Route
-  @namespace Ember
-  @extends Ember.Object
-  @uses Ember.ActionHandler
-  @uses Ember.Evented
+  @namespace Ngular
+  @extends Ngular.Object
+  @uses Ngular.ActionHandler
+  @uses Ngular.Evented
 */
-var Route = EmberObject.extend(ActionHandler, Evented, {
+var Route = NgularObject.extend(ActionHandler, Evented, {
   /**
     Configuration hash for this route's queryParams. The possible
     configuration options and their defaults are as follows
@@ -81,7 +81,7 @@ var Route = EmberObject.extend(ActionHandler, Evented, {
     ```
 
     @property queryParams
-    @for Ember.Route
+    @for Ngular.Route
     @type Hash
   */
   queryParams: {},
@@ -113,7 +113,7 @@ var Route = EmberObject.extend(ActionHandler, Evented, {
       var defaultValue = get(controllerProto, propName);
 
       if (isArray(defaultValue)) {
-        defaultValue = Ember.A(defaultValue.slice());
+        defaultValue = Ngular.A(defaultValue.slice());
       }
 
       var type = typeOf(defaultValue);
@@ -303,7 +303,7 @@ var Route = EmberObject.extend(ActionHandler, Evented, {
     } else if (defaultValueType === 'number') {
       return (Number(value)).valueOf();
     } else if (defaultValueType === 'array') {
-      return Ember.A(JSON.parse(value));
+      return Ngular.A(JSON.parse(value));
     }
     return value;
   },
@@ -332,7 +332,7 @@ var Route = EmberObject.extend(ActionHandler, Evented, {
     changes or the route is exiting.
 
     ```javascript
-    App.ArticlesRoute = Ember.Route.extend({
+    App.ArticlesRoute = Ngular.Route.extend({
       // ...
 
       resetController: function (controller, isExiting, transition) {
@@ -399,7 +399,7 @@ var Route = EmberObject.extend(ActionHandler, Evented, {
     the following routes will all render using the `App.PostsListView` view:
 
     ```javascript
-    var PostsList = Ember.Route.extend({
+    var PostsList = Ngular.Route.extend({
       viewName: 'postsList'
     });
 
@@ -422,7 +422,7 @@ var Route = EmberObject.extend(ActionHandler, Evented, {
     template without a view.
 
     ```javascript
-    var PostsList = Ember.Route.extend({
+    var PostsList = Ngular.Route.extend({
       templateName: 'posts/list'
     });
 
@@ -440,7 +440,7 @@ var Route = EmberObject.extend(ActionHandler, Evented, {
   /**
     The name of the controller to associate with this route.
 
-    By default, Ember will lookup a route's controller that matches the name
+    By default, Ngular will lookup a route's controller that matches the name
     of the route (i.e. `App.PostController` for `App.PostRoute`). However,
     if you would like to define a specific controller to use, you can do so
     using this property.
@@ -468,7 +468,7 @@ var Route = EmberObject.extend(ActionHandler, Evented, {
     half-filled out:
 
     ```javascript
-    App.ContactFormRoute = Ember.Route.extend({
+    App.ContactFormRoute = Ngular.Route.extend({
       actions: {
         willTransition: function(transition) {
           if (this.controller.get('userHasEnteredData')) {
@@ -502,7 +502,7 @@ var Route = EmberObject.extend(ActionHandler, Evented, {
     state on the controller.
 
     ```javascript
-    App.LoginRoute = Ember.Route.extend({
+    App.LoginRoute = Ngular.Route.extend({
       actions: {
         didTransition: function() {
           this.controller.get('errors.base').clear();
@@ -523,10 +523,10 @@ var Route = EmberObject.extend(ActionHandler, Evented, {
     triggered the loading event is the second parameter.
 
     ```javascript
-    App.ApplicationRoute = Ember.Route.extend({
+    App.ApplicationRoute = Ngular.Route.extend({
       actions: {
         loading: function(transition, route) {
-          var view = Ember.View.create({
+          var view = Ngular.View.create({
             classNames: ['app-loading']
           })
           .append();
@@ -543,7 +543,7 @@ var Route = EmberObject.extend(ActionHandler, Evented, {
 
     @event loading
     @param {Transition} transition
-    @param {Ember.Route} route The route that triggered the loading event
+    @param {Ngular.Route} route The route that triggered the loading event
     @since 1.2.0
   */
 
@@ -559,9 +559,9 @@ var Route = EmberObject.extend(ActionHandler, Evented, {
     as well as any unhandled errors from child routes:
 
     ```javascript
-    App.AdminRoute = Ember.Route.extend({
+    App.AdminRoute = Ngular.Route.extend({
       beforeModel: function() {
-        return Ember.RSVP.reject('bad things!');
+        return Ngular.RSVP.reject('bad things!');
       },
 
       actions: {
@@ -588,7 +588,7 @@ var Route = EmberObject.extend(ActionHandler, Evented, {
     `error` handler on `ApplicationRoute`:
 
     ```javascript
-    App.ApplicationRoute = Ember.Route.extend({
+    App.ApplicationRoute = Ngular.Route.extend({
       actions: {
         error: function(error, transition) {
           this.controllerFor('banner').displayError(error.message);
@@ -606,7 +606,7 @@ var Route = EmberObject.extend(ActionHandler, Evented, {
     not executed when the model for the route changes.
 
     ```javascript
-    App.ApplicationRoute = Ember.Route.extend({
+    App.ApplicationRoute = Ngular.Route.extend({
       collectAnalytics: function(){
         collectAnalytics();
       }.on('activate')
@@ -622,7 +622,7 @@ var Route = EmberObject.extend(ActionHandler, Evented, {
     route. It is not executed when the model for the route changes.
 
     ```javascript
-    App.IndexRoute = Ember.Route.extend({
+    App.IndexRoute = Ngular.Route.extend({
       trackPageLeaveAnalytics: function(){
         trackPageLeaveAnalytics();
       }.on('deactivate')
@@ -639,7 +639,7 @@ var Route = EmberObject.extend(ActionHandler, Evented, {
     Example
 
     ```javascript
-    App.FormRoute = Ember.Route.extend({
+    App.FormRoute = Ngular.Route.extend({
       actions: {
         willTransition: function(transition) {
           if (this.controller.get('userHasEnteredData') &&
@@ -656,7 +656,7 @@ var Route = EmberObject.extend(ActionHandler, Evented, {
     ```
 
     @property controller
-    @type Ember.Controller
+    @type Ngular.Controller
     @since 1.6.0
   */
 
@@ -856,7 +856,7 @@ var Route = EmberObject.extend(ActionHandler, Evented, {
       this.route('fourOhFour', { path: '*:' });
     });
 
-    App.IndexRoute = Ember.Route.extend({
+    App.IndexRoute = Ngular.Route.extend({
       actions: {
         moveToSecret: function(context) {
           if (authorized()) {
@@ -878,7 +878,7 @@ var Route = EmberObject.extend(ActionHandler, Evented, {
       });
     });
 
-    App.IndexRoute = Ember.Route.extend({
+    App.IndexRoute = Ngular.Route.extend({
       actions: {
         transitionToNewArticle: function() {
           this.transitionTo('articles.new');
@@ -898,7 +898,7 @@ var Route = EmberObject.extend(ActionHandler, Evented, {
       });
     });
 
-    App.IndexRoute = Ember.Route.extend({
+    App.IndexRoute = Ngular.Route.extend({
       actions: {
         moveToChocolateCereal: function() {
           var cereal = { cerealId: 'ChocolateYumminess' };
@@ -919,7 +919,7 @@ var Route = EmberObject.extend(ActionHandler, Evented, {
       });
     });
 
-    App.IndexRoute = Ember.Route.extend({
+    App.IndexRoute = Ngular.Route.extend({
       actions: {
         transitionToApples: function() {
           this.transitionTo('fruits.apples', {queryParams: {color: 'red'}});
@@ -1002,7 +1002,7 @@ var Route = EmberObject.extend(ActionHandler, Evented, {
       this.route('secret');
     });
 
-    App.SecretRoute = Ember.Route.extend({
+    App.SecretRoute = Ngular.Route.extend({
       afterModel: function() {
         if (!authorized()){
           this.replaceWith('index');
@@ -1034,7 +1034,7 @@ var Route = EmberObject.extend(ActionHandler, Evented, {
       this.route('index');
     });
 
-    App.ApplicationRoute = Ember.Route.extend({
+    App.ApplicationRoute = Ngular.Route.extend({
       actions: {
         track: function(arg) {
           console.log(arg, 'was clicked');
@@ -1042,7 +1042,7 @@ var Route = EmberObject.extend(ActionHandler, Evented, {
       }
     });
 
-    App.IndexRoute = Ember.Route.extend({
+    App.IndexRoute = Ngular.Route.extend({
       actions: {
         trackIfDebug: function(arg) {
           if (debug) {
@@ -1058,7 +1058,7 @@ var Route = EmberObject.extend(ActionHandler, Evented, {
     @param {...*} args
   */
   send(...args) {
-    if (this.router || !Ember.testing) {
+    if (this.router || !Ngular.testing) {
       this.router.send(...args);
     } else {
       var name = args[0];
@@ -1089,7 +1089,7 @@ var Route = EmberObject.extend(ActionHandler, Evented, {
     this.controller = controller;
 
     if (this.setupControllers) {
-      Ember.deprecate("Ember.Route.setupControllers is deprecated. Please use Ember.Route.setupController(controller, model) instead.");
+      Ngular.deprecate("Ngular.Route.setupControllers is deprecated. Please use Ngular.Route.setupController(controller, model) instead.");
       this.setupControllers(controller, context);
     } else {
       var states = get(this, '_qp.states');
@@ -1110,7 +1110,7 @@ var Route = EmberObject.extend(ActionHandler, Evented, {
     }
 
     if (this.renderTemplates) {
-      Ember.deprecate("Ember.Route.renderTemplates is deprecated. Please use Ember.Route.renderTemplate(controller, model) instead.");
+      Ngular.deprecate("Ngular.Route.renderTemplates is deprecated. Please use Ngular.Route.renderTemplate(controller, model) instead.");
       this.renderTemplates(context);
     } else {
       this.renderTemplate(controller, context);
@@ -1141,10 +1141,10 @@ var Route = EmberObject.extend(ActionHandler, Evented, {
     the server that is required to enter a route.
 
     ```javascript
-    App.PostRoute = Ember.Route.extend({
+    App.PostRoute = Ngular.Route.extend({
       beforeModel: function(transition) {
         if (!App.Post) {
-          return Ember.$.getScript('/models/post.js');
+          return Ngular.$.getScript('/models/post.js');
         }
       }
     });
@@ -1155,18 +1155,18 @@ var Route = EmberObject.extend(ActionHandler, Evented, {
     returns a promise that resolves after the server has
     successfully retrieved and executed the code from the
     server. Note that if an error were to occur, it would
-    be passed to the `error` hook on `Ember.Route`, but
+    be passed to the `error` hook on `Ngular.Route`, but
     it's also possible to handle errors specific to
     `beforeModel` right from within the hook (to distinguish
     from the shared error handling behavior of the `error`
     hook):
 
     ```javascript
-    App.PostRoute = Ember.Route.extend({
+    App.PostRoute = Ngular.Route.extend({
       beforeModel: function(transition) {
         if (!App.Post) {
           var self = this;
-          return Ember.$.getScript('post.js').then(null, function(e) {
+          return Ngular.$.getScript('post.js').then(null, function(e) {
             self.transitionTo('help');
 
             // Note that the above transitionTo will implicitly
@@ -1177,7 +1177,7 @@ var Route = EmberObject.extend(ActionHandler, Evented, {
             // transition would continue. To propagate the
             // error so that it'd be handled by the `error`
             // hook, you would have to
-            return Ember.RSVP.reject(e);
+            return Ngular.RSVP.reject(e);
           });
         }
       }
@@ -1202,7 +1202,7 @@ var Route = EmberObject.extend(ActionHandler, Evented, {
     resolved.
 
     ```javascript
-    App.PostsRoute = Ember.Route.extend({
+    App.PostsRoute = Ngular.Route.extend({
       afterModel: function(posts, transition) {
         if (posts.get('length') === 1) {
           this.transitionTo('post.show', posts.get('firstObject'));
@@ -1308,12 +1308,12 @@ var Route = EmberObject.extend(ActionHandler, Evented, {
     This hook follows the asynchronous/promise semantics
     described in the documentation for `beforeModel`. In particular,
     if a promise returned from `model` fails, the error will be
-    handled by the `error` hook on `Ember.Route`.
+    handled by the `error` hook on `Ngular.Route`.
 
     Example
 
     ```javascript
-    App.PostRoute = Ember.Route.extend({
+    App.PostRoute = Ngular.Route.extend({
       model: function(params) {
         return this.store.find('post', params.post_id);
       }
@@ -1404,12 +1404,12 @@ var Route = EmberObject.extend(ActionHandler, Evented, {
       find(name, value) {
         var modelClass = container.lookupFactory(`model:${name}`);
 
-        Ember.assert(
+        Ngular.assert(
           `You used the dynamic segment ${name}_id in your route ${routeName}, but ${namespace}.${classify(name)} did not exist and you did not override your route's \`model\` hook.`, !!modelClass);
 
         if (!modelClass) { return; }
 
-        Ember.assert(`${classify(name)} has no method \`find\`.`, typeof modelClass.find === 'function');
+        Ngular.assert(`${classify(name)} has no method \`find\`.`, typeof modelClass.find === 'function');
 
         return modelClass.find(value);
       }
@@ -1425,10 +1425,10 @@ var Route = EmberObject.extend(ActionHandler, Evented, {
       this.resource('post', { path: '/posts/:post_id' });
     });
 
-    App.PostRoute = Ember.Route.extend({
+    App.PostRoute = Ngular.Route.extend({
       model: function(params) {
         // the server returns `{ id: 12 }`
-        return Ember.$.getJSON('/posts/' + params.post_id);
+        return Ngular.$.getJSON('/posts/' + params.post_id);
       },
 
       serialize: function(model) {
@@ -1441,7 +1441,7 @@ var Route = EmberObject.extend(ActionHandler, Evented, {
     The default `serialize` method will insert the model's `id` into the
     route's dynamic segment (in this case, `:post_id`) if the segment contains '_id'.
     If the route has multiple dynamic segments or does not contain '_id', `serialize`
-    will return `Ember.getProperties(model, params)`
+    will return `Ngular.getProperties(model, params)`
 
     This method is called when `transitionTo` is called with a context
     in order to populate the URL.
@@ -1487,7 +1487,7 @@ var Route = EmberObject.extend(ActionHandler, Evented, {
     `_super`:
 
     ```javascript
-    App.PhotosRoute = Ember.Route.extend({
+    App.PhotosRoute = Ngular.Route.extend({
       model: function() {
         return this.store.find('photo');
       },
@@ -1507,12 +1507,12 @@ var Route = EmberObject.extend(ActionHandler, Evented, {
     The provided controller will be one resolved based on the name
     of this route.
 
-    If no explicit controller is defined, Ember will automatically create
+    If no explicit controller is defined, Ngular will automatically create
     an appropriate controller for the model.
 
-    * if the model is an `Ember.Array` (including record arrays from Ember
-      Data), the controller is an `Ember.ArrayController`.
-    * otherwise, the controller is an `Ember.ObjectController`.
+    * if the model is an `Ngular.Array` (including record arrays from Ngular
+      Data), the controller is an `Ngular.ArrayController`.
+    * otherwise, the controller is an `Ngular.ObjectController`.
 
     As an example, consider the router:
 
@@ -1523,13 +1523,13 @@ var Route = EmberObject.extend(ActionHandler, Evented, {
     ```
 
     For the `post` route, a controller named `App.PostController` would
-    be used if it is defined. If it is not defined, an `Ember.ObjectController`
+    be used if it is defined. If it is not defined, an `Ngular.ObjectController`
     instance would be used.
 
     Example
 
     ```javascript
-    App.PostRoute = Ember.Route.extend({
+    App.PostRoute = Ngular.Route.extend({
       setupController: function(controller, model) {
         controller.set('model', model);
       }
@@ -1553,7 +1553,7 @@ var Route = EmberObject.extend(ActionHandler, Evented, {
     associated route or using `generateController`.
 
     ```javascript
-    App.PostRoute = Ember.Route.extend({
+    App.PostRoute = Ngular.Route.extend({
       setupController: function(controller, post) {
         this._super(controller, post);
         this.controllerFor('posts').set('currentPost', post);
@@ -1563,7 +1563,7 @@ var Route = EmberObject.extend(ActionHandler, Evented, {
 
     @method controllerFor
     @param {String} name the name of the route or controller
-    @return {Ember.Controller}
+    @return {Ngular.Controller}
   */
   controllerFor(name, _skipAssert) {
     var container = this.container;
@@ -1579,7 +1579,7 @@ var Route = EmberObject.extend(ActionHandler, Evented, {
     // NOTE: We're specifically checking that skipAssert is true, because according
     //   to the old API the second parameter was model. We do not want people who
     //   passed a model to skip the assertion.
-    Ember.assert(`The controller named '${name}' could not be found. Make sure that this route exists and has already been entered at least once. If you are accessing a controller not associated with a route, make sure the controller class is explicitly defined.`, controller || _skipAssert === true);
+    Ngular.assert(`The controller named '${name}' could not be found. Make sure that this route exists and has already been entered at least once. If you are accessing a controller not associated with a route, make sure the controller class is explicitly defined.`, controller || _skipAssert === true);
 
     return controller;
   },
@@ -1593,7 +1593,7 @@ var Route = EmberObject.extend(ActionHandler, Evented, {
     Example
 
     ```javascript
-    App.PostRoute = Ember.Route.extend({
+    App.PostRoute = Ngular.Route.extend({
       setupController: function(controller, post) {
         this._super(controller, post);
         this.generateController('posts', post);
@@ -1631,7 +1631,7 @@ var Route = EmberObject.extend(ActionHandler, Evented, {
         });
     });
 
-    App.CommentsRoute = Ember.Route.extend({
+    App.CommentsRoute = Ngular.Route.extend({
         afterModel: function() {
             this.set('post', this.modelFor('post'));
         }
@@ -1669,7 +1669,7 @@ var Route = EmberObject.extend(ActionHandler, Evented, {
     alternative templates.
 
     ```javascript
-    App.PostsRoute = Ember.Route.extend({
+    App.PostsRoute = Ngular.Route.extend({
       renderTemplate: function(controller, model) {
         var favController = this.controllerFor('favoritePost');
 
@@ -1723,7 +1723,7 @@ var Route = EmberObject.extend(ActionHandler, Evented, {
 
     ```javascript
     // posts route
-    Ember.Route.extend({
+    Ngular.Route.extend({
       renderTemplate: function() {
         this.render('photos', {
           into: 'application',
@@ -1739,7 +1739,7 @@ var Route = EmberObject.extend(ActionHandler, Evented, {
 
     ```javascript
     // posts route
-    Ember.Route.extend({
+    Ngular.Route.extend({
       renderTemplate: function(controller, model){
         this.render('posts', {    // the template to render, referenced by name
           into: 'application',    // the template to render into, referenced by name
@@ -1754,7 +1754,7 @@ var Route = EmberObject.extend(ActionHandler, Evented, {
 
     The string values provided for the template name, view, and controller
     will eventually pass through to the resolver for lookup. See
-    Ember.Resolver for how these are mapped to JavaScript objects in your
+    Ngular.Resolver for how these are mapped to JavaScript objects in your
     application.
 
     Not all options need to be passed to `render`. Default values will be used
@@ -1811,10 +1811,10 @@ var Route = EmberObject.extend(ActionHandler, Evented, {
                     Defaults to the return value of the Route's model hook
   */
   render(_name, options) {
-    Ember.assert("The name in the given arguments is undefined", arguments.length > 0 ? !isNone(arguments[0]) : true);
+    Ngular.assert("The name in the given arguments is undefined", arguments.length > 0 ? !isNone(arguments[0]) : true);
 
     var namePassed = typeof _name === 'string' && !!_name;
-    var isDefaultRender = arguments.length === 0 || Ember.isEmpty(arguments[0]);
+    var isDefaultRender = arguments.length === 0 || Ngular.isEmpty(arguments[0]);
     var name;
 
     if (typeof _name === 'object' && !options) {
@@ -1987,7 +1987,7 @@ function buildRenderOptions(route, namePassed, isDefaultRender, name, options) {
     var controllerName = controller;
     controller = route.container.lookup(`controller:${controllerName}`);
     if (!controller) {
-      throw new EmberError(`You passed \`controller: '${controllerName}'\` into the \`render\` method, but no such controller could be found.`);
+      throw new NgularError(`You passed \`controller: '${controllerName}'\` into the \`render\` method, but no such controller could be found.`);
     }
   }
 
@@ -1999,10 +1999,10 @@ function buildRenderOptions(route, namePassed, isDefaultRender, name, options) {
   ViewClass = route.container.lookupFactory(`view:${viewName}`);
   template = route.container.lookup(`template:${templateName}`);
   if (!ViewClass && !template) {
-    Ember.assert(`Could not find "${name}" template or view.`, isDefaultRender);
+    Ngular.assert(`Could not find "${name}" template or view.`, isDefaultRender);
     if (LOG_VIEW_LOOKUPS) {
       var fullName = `template:${name}`;
-      Ember.Logger.info(`Could not find "${name}" template or view. Nothing will be rendered`, { fullName: fullName });
+      Ngular.Logger.info(`Could not find "${name}" template or view. Nothing will be rendered`, { fullName: fullName });
     }
   }
 
@@ -2062,7 +2062,7 @@ function getQueryParamsFor(route, state) {
 
 function copyDefaultValue(value) {
   if (isArray(value)) {
-    return Ember.A(value.slice());
+    return Ngular.A(value.slice());
   }
   return value;
 }

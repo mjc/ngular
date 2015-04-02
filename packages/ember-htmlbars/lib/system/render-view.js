@@ -1,6 +1,6 @@
-import Ember from "ember-metal/core";
-import { get } from "ember-metal/property_get";
-import defaultEnv from "ember-htmlbars/env";
+import Ngular from "ngular-metal/core";
+import { get } from "ngular-metal/property_get";
+import defaultEnv from "ngular-htmlbars/env";
 
 export default function renderView(view, buffer, template) {
   if (!template) {
@@ -10,10 +10,10 @@ export default function renderView(view, buffer, template) {
   var output;
 
   if (template.isHTMLBars) {
-    Ember.assert('template must be an object. Did you mean to call Ember.Handlebars.compile("...") or specify templateName instead?', typeof template === 'object');
+    Ngular.assert('template must be an object. Did you mean to call Ngular.Handlebars.compile("...") or specify templateName instead?', typeof template === 'object');
     output = renderHTMLBarsTemplate(view, buffer, template);
   } else {
-    Ember.assert('template must be a function. Did you mean to call Ember.Handlebars.compile("...") or specify templateName instead?', typeof template === 'function');
+    Ngular.assert('template must be a function. Did you mean to call Ngular.Handlebars.compile("...") or specify templateName instead?', typeof template === 'function');
     output = renderLegacyTemplate(view, buffer, template);
   }
 
@@ -23,10 +23,10 @@ export default function renderView(view, buffer, template) {
 }
 
 function renderHTMLBarsTemplate(view, buffer, template) {
-  Ember.assert(
+  Ngular.assert(
     'The template being rendered by `' + view + '` was compiled with `' + template.revision +
-    '` which does not match `Ember@VERSION_STRING_PLACEHOLDER` (this revision).',
-    template.revision === 'Ember@VERSION_STRING_PLACEHOLDER'
+    '` which does not match `Ngular@VERSION_STRING_PLACEHOLDER` (this revision).',
+    template.revision === 'Ngular@VERSION_STRING_PLACEHOLDER'
   );
 
   var contextualElement = buffer.innerContextualElement();

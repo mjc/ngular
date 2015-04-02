@@ -1,6 +1,6 @@
-import setProperties from 'ember-metal/set_properties';
+import setProperties from 'ngular-metal/set_properties';
 
-QUnit.module('Ember.setProperties');
+QUnit.module('Ngular.setProperties');
 
 QUnit.test("supports setting multiple attributes at once", function() {
   deepEqual(setProperties(null, null), null, 'noop for null properties and null object');

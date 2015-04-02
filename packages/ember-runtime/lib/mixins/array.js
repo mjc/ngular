@@ -1,33 +1,33 @@
 /**
-@module ember
-@submodule ember-runtime
+@module ngular
+@submodule ngular-runtime
 */
 
 // ..........................................................
 // HELPERS
 //
-import Ember from 'ember-metal/core'; // ES6TODO: Ember.A
+import Ngular from 'ngular-metal/core'; // ES6TODO: Ngular.A
 
-import { get } from 'ember-metal/property_get';
+import { get } from 'ngular-metal/property_get';
 import {
   computed,
   cacheFor
-} from 'ember-metal/computed';
-import isNone from 'ember-metal/is_none';
-import Enumerable from 'ember-runtime/mixins/enumerable';
-import { map } from 'ember-metal/enumerable_utils';
-import { Mixin } from 'ember-metal/mixin';
+} from 'ngular-metal/computed';
+import isNone from 'ngular-metal/is_none';
+import Enumerable from 'ngular-runtime/mixins/enumerable';
+import { map } from 'ngular-metal/enumerable_utils';
+import { Mixin } from 'ngular-metal/mixin';
 import {
   propertyWillChange,
   propertyDidChange
-} from 'ember-metal/property_events';
+} from 'ngular-metal/property_events';
 import {
   addListener,
   removeListener,
   sendEvent,
   hasListeners
-} from 'ember-metal/events';
-import { isWatching } from 'ember-metal/watching';
+} from 'ngular-metal/events';
+import { isWatching } from 'ngular-metal/watching';
 
 function arrayObserversHelper(obj, target, opts, operation, notify) {
   var willChange = (opts && opts.willChange) || 'arrayWillChange';
@@ -61,7 +61,7 @@ function arrayObserversHelper(obj, target, opts, operation, notify) {
   the Array Mixin by way of the MutableArray mixin, which allows observable
   changes to be made to the underlying array.
 
-  Unlike `Ember.Enumerable,` this mixin defines methods specifically for
+  Unlike `Ngular.Enumerable,` this mixin defines methods specifically for
   collections that provide index-ordered access to their contents. When you
   are designing code that needs to accept any kind of Array-like object, you
   should use these methods instead of Array primitives because these will
@@ -74,18 +74,18 @@ function arrayObserversHelper(obj, target, opts, operation, notify) {
 
   You can use the methods defined in this module to access and modify array
   contents in a KVO-friendly way. You can also be notified whenever the
-  membership of an array changes by using `.observes('myArray.[]')`.
+  mngularship of an array changes by using `.observes('myArray.[]')`.
 
-  To support `Ember.Array` in your own class, you must override two
+  To support `Ngular.Array` in your own class, you must override two
   primitives to use it: `replace()` and `objectAt()`.
 
-  Note that the Ember.Array mixin also incorporates the `Ember.Enumerable`
-  mixin. All `Ember.Array`-like objects are also enumerable.
+  Note that the Ngular.Array mixin also incorporates the `Ngular.Enumerable`
+  mixin. All `Ngular.Array`-like objects are also enumerable.
 
   @class Array
-  @namespace Ember
-  @uses Ember.Enumerable
-  @since Ember 0.9.0
+  @namespace Ngular
+  @uses Ngular.Enumerable
+  @since Ngular 0.9.0
 */
 export default Mixin.create(Enumerable, {
 
@@ -103,7 +103,7 @@ export default Mixin.create(Enumerable, {
     Returns the object at the given `index`. If the given `index` is negative
     or is greater or equal than the array length, returns `undefined`.
 
-    This is one of the primitives you must implement to support `Ember.Array`.
+    This is one of the primitives you must implement to support `Ngular.Array`.
     If your object supports retrieving the value of an array item using `get()`
     (i.e. `myArray.get(0)`), then you do not need to implement this method
     yourself.
@@ -152,7 +152,7 @@ export default Mixin.create(Enumerable, {
     });
   },
 
-  // overrides Ember.Enumerable version
+  // overrides Ngular.Enumerable version
   nextObject(idx) {
     return this.objectAt(idx);
   },
@@ -162,7 +162,7 @@ export default Mixin.create(Enumerable, {
     this property, it will return this. If you set this property to a new
     array, it will replace the current content.
 
-    This property overrides the default property defined in `Ember.Enumerable`.
+    This property overrides the default property defined in `Ngular.Enumerable`.
 
     @property []
     @return this
@@ -190,7 +190,7 @@ export default Mixin.create(Enumerable, {
     return this.indexOf(obj) >= 0;
   },
 
-  // Add any extra methods to Ember.Array that are native to the built-in Array.
+  // Add any extra methods to Ngular.Array that are native to the built-in Array.
   /**
     Returns a new array that is a slice of the receiver. This implementation
     uses the observable array methods to retrieve the objects for the new
@@ -210,7 +210,7 @@ export default Mixin.create(Enumerable, {
     @return {Array} New array with specified slice
   */
   slice(beginIndex, endIndex) {
-    var ret = Ember.A();
+    var ret = Ngular.A();
     var length = get(this, 'length');
 
     if (isNone(beginIndex)) {
@@ -348,7 +348,7 @@ export default Mixin.create(Enumerable, {
     @param {Object} target The observer object.
     @param {Hash} opts Optional hash of configuration options including
       `willChange` and `didChange` option.
-    @return {Ember.Array} receiver
+    @return {Ngular.Array} receiver
   */
 
   addArrayObserver(target, opts) {
@@ -364,7 +364,7 @@ export default Mixin.create(Enumerable, {
     @param {Object} target The object observing the array.
     @param {Hash} opts Optional hash of configuration options including
       `willChange` and `didChange` option.
-    @return {Ember.Array} receiver
+    @return {Ngular.Array} receiver
   */
   removeArrayObserver(target, opts) {
     return arrayObserversHelper(this, target, opts, removeListener, true);
@@ -381,7 +381,7 @@ export default Mixin.create(Enumerable, {
   }),
 
   /**
-    If you are implementing an object that supports `Ember.Array`, call this
+    If you are implementing an object that supports `Ngular.Array`, call this
     method just before the array content changes to notify any observers and
     invalidate any related properties. Pass the starting index of the change
     as well as a delta of the amounts to change.
@@ -392,7 +392,7 @@ export default Mixin.create(Enumerable, {
       pass `null` assumes 0
     @param {Number} addAmt The number of items that will be added. If you
       pass `null` assumes 0.
-    @return {Ember.Array} receiver
+    @return {Ngular.Array} receiver
   */
   arrayContentWillChange(startIdx, removeAmt, addAmt) {
     var removing, lim;
@@ -435,7 +435,7 @@ export default Mixin.create(Enumerable, {
   },
 
   /**
-    If you are implementing an object that supports `Ember.Array`, call this
+    If you are implementing an object that supports `Ngular.Array`, call this
     method just after the array content changes to notify any observers and
     invalidate any related properties. Pass the starting index of the change
     as well as a delta of the amounts to change.
@@ -446,7 +446,7 @@ export default Mixin.create(Enumerable, {
       pass `null` assumes 0
     @param {Number} addAmt The number of items that were added. If you
       pass `null` assumes 0.
-    @return {Ember.Array} receiver
+    @return {Ngular.Array} receiver
   */
   arrayContentDidChange(startIdx, removeAmt, addAmt) {
     var adding, lim;
@@ -504,7 +504,7 @@ export default Mixin.create(Enumerable, {
     Returns a special object that can be used to observe individual properties
     on the array. Just get an equivalent property on this object and it will
     return an enumerable that maps automatically to the named key on the
-    member objects.
+    mngular objects.
 
     If you merely want to watch for any items being added or removed to the array,
     use the `[]` property instead of `@each`.
@@ -514,7 +514,7 @@ export default Mixin.create(Enumerable, {
   '@each': computed(function() {
     if (!this.__each) {
       // ES6TODO: GRRRRR
-      var EachProxy = requireModule('ember-runtime/system/each_proxy')['EachProxy'];
+      var EachProxy = requireModule('ngular-runtime/system/each_proxy')['EachProxy'];
 
       this.__each = new EachProxy(this);
     }

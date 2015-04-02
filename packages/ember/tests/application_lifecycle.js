@@ -1,11 +1,11 @@
-import "ember";
+import "ngular";
 
 var App, container, router;
 
 QUnit.module("Application Lifecycle", {
   setup() {
-    Ember.run(function() {
-      App = Ember.Application.create({
+    Ngular.run(function() {
+      App = Ngular.Application.create({
         rootElement: '#qunit-fixture'
       });
 
@@ -21,13 +21,13 @@ QUnit.module("Application Lifecycle", {
 
   teardown() {
     router = null;
-    Ember.run(App, 'destroy');
+    Ngular.run(App, 'destroy');
   }
 });
 
 function handleURL(path) {
   router = container.lookup('router:main');
-  return Ember.run(function() {
+  return Ngular.run(function() {
     return router.handleURL(path).then(function(value) {
       ok(true, 'url: `' + path + '` was handled');
       return value;
@@ -44,7 +44,7 @@ QUnit.test("Resetting the application allows controller properties to be set whe
     this.route('home', { path: '/' });
   });
 
-  App.HomeRoute = Ember.Route.extend({
+  App.HomeRoute = Ngular.Route.extend({
     setupController() {
       this.controllerFor('home').set('selectedMenuItem', 'home');
     },
@@ -52,7 +52,7 @@ QUnit.test("Resetting the application allows controller properties to be set whe
       this.controllerFor('home').set('selectedMenuItem', null);
     }
   });
-  App.ApplicationRoute = Ember.Route.extend({
+  App.ApplicationRoute = Ngular.Route.extend({
     setupController() {
       this.controllerFor('application').set('selectedMenuItem', 'home');
     },
@@ -63,17 +63,17 @@ QUnit.test("Resetting the application allows controller properties to be set whe
 
   container.lookup('router:main');
 
-  Ember.run(App, 'advanceReadiness');
+  Ngular.run(App, 'advanceReadiness');
 
   handleURL('/');
 
-  equal(Ember.controllerFor(container, 'home').get('selectedMenuItem'), 'home');
-  equal(Ember.controllerFor(container, 'application').get('selectedMenuItem'), 'home');
+  equal(Ngular.controllerFor(container, 'home').get('selectedMenuItem'), 'home');
+  equal(Ngular.controllerFor(container, 'application').get('selectedMenuItem'), 'home');
 
   App.reset();
 
-  equal(Ember.controllerFor(container, 'home').get('selectedMenuItem'), null);
-  equal(Ember.controllerFor(container, 'application').get('selectedMenuItem'), null);
+  equal(Ngular.controllerFor(container, 'home').get('selectedMenuItem'), null);
+  equal(Ngular.controllerFor(container, 'application').get('selectedMenuItem'), null);
 });
 
 QUnit.test("Destroying the application resets the router before the container is destroyed", function() {
@@ -81,7 +81,7 @@ QUnit.test("Destroying the application resets the router before the container is
     this.route('home', { path: '/' });
   });
 
-  App.HomeRoute = Ember.Route.extend({
+  App.HomeRoute = Ngular.Route.extend({
     setupController() {
       this.controllerFor('home').set('selectedMenuItem', 'home');
     },
@@ -89,7 +89,7 @@ QUnit.test("Destroying the application resets the router before the container is
       this.controllerFor('home').set('selectedMenuItem', null);
     }
   });
-  App.ApplicationRoute = Ember.Route.extend({
+  App.ApplicationRoute = Ngular.Route.extend({
     setupController() {
       this.controllerFor('application').set('selectedMenuItem', 'home');
     },
@@ -100,15 +100,15 @@ QUnit.test("Destroying the application resets the router before the container is
 
   container.lookup('router:main');
 
-  Ember.run(App, 'advanceReadiness');
+  Ngular.run(App, 'advanceReadiness');
 
   handleURL('/');
 
-  equal(Ember.controllerFor(container, 'home').get('selectedMenuItem'), 'home');
-  equal(Ember.controllerFor(container, 'application').get('selectedMenuItem'), 'home');
+  equal(Ngular.controllerFor(container, 'home').get('selectedMenuItem'), 'home');
+  equal(Ngular.controllerFor(container, 'application').get('selectedMenuItem'), 'home');
 
-  Ember.run(App, 'destroy');
+  Ngular.run(App, 'destroy');
 
-  equal(Ember.controllerFor(container, 'home').get('selectedMenuItem'), null);
-  equal(Ember.controllerFor(container, 'application').get('selectedMenuItem'), null);
+  equal(Ngular.controllerFor(container, 'home').get('selectedMenuItem'), null);
+  equal(Ngular.controllerFor(container, 'application').get('selectedMenuItem'), null);
 });

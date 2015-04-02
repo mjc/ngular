@@ -1,16 +1,16 @@
-import run from "ember-metal/run_loop";
+import run from "ngular-metal/run_loop";
 
-import EmberView from "ember-views/views/view";
-import ContainerView from "ember-views/views/container_view";
+import NgularView from "ngular-views/views/view";
+import ContainerView from "ngular-views/views/container_view";
 
-QUnit.module("EmberView - context property");
+QUnit.module("NgularView - context property");
 
 QUnit.test("setting a controller on an inner view should change it context", function() {
   var App = {};
   var a = { name: 'a' };
   var b = { name: 'b' };
 
-  var innerView = EmberView.create();
+  var innerView = NgularView.create();
   var middleView = ContainerView.create();
   var outerView = App.outerView = ContainerView.create({
     controller: a

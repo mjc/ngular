@@ -1,13 +1,13 @@
-import { get } from "ember-metal/property_get";
-import run from "ember-metal/run_loop";
-import EmberView from "ember-views/views/view";
+import { get } from "ngular-metal/property_get";
+import run from "ngular-metal/run_loop";
+import NgularView from "ngular-views/views/view";
 
-QUnit.module("Ember.View#destroy");
+QUnit.module("Ngular.View#destroy");
 
 QUnit.test("should teardown viewName on parentView when childView is destroyed", function() {
   var viewName = "someChildView";
-  var parentView = EmberView.create();
-  var childView = parentView.createChildView(EmberView, { viewName: viewName });
+  var parentView = NgularView.create();
+  var childView = parentView.createChildView(NgularView, { viewName: viewName });
 
   equal(get(parentView, viewName), childView, "Precond - child view was registered on parent");
 

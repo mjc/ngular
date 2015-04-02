@@ -1,44 +1,44 @@
-import Renderer from "ember-views/system/renderer";
+import Renderer from "ngular-views/system/renderer";
 import DOMHelper from "dom-helper";
 
 import {
   cloneStates,
   states
-} from "ember-views/views/states";
-import EmberObject from "ember-runtime/system/object";
-import Evented from "ember-runtime/mixins/evented";
-import ActionHandler from "ember-runtime/mixins/action_handler";
+} from "ngular-views/views/states";
+import NgularObject from "ngular-runtime/system/object";
+import Evented from "ngular-runtime/mixins/evented";
+import ActionHandler from "ngular-runtime/mixins/action_handler";
 
-import { get } from "ember-metal/property_get";
-import { computed } from "ember-metal/computed";
+import { get } from "ngular-metal/property_get";
+import { computed } from "ngular-metal/computed";
 
-import { typeOf } from "ember-metal/utils";
+import { typeOf } from "ngular-metal/utils";
 
 function K() { return this; }
 
 // Normally, the renderer is injected by the container when the view is looked
 // up. However, if someone creates a view without looking it up via the
-// container (e.g. `Ember.View.create().append()`) then we create a fallback
+// container (e.g. `Ngular.View.create().append()`) then we create a fallback
 // DOM renderer that is shared. In general, this path should be avoided since
 // views created this way cannot run in a node environment.
 var renderer;
 
 /**
-  `Ember.CoreView` is an abstract class that exists to give view-like behavior
-  to both Ember's main view class `Ember.View` and other classes that don't need
-  the fully functionaltiy of `Ember.View`.
+  `Ngular.CoreView` is an abstract class that exists to give view-like behavior
+  to both Ngular's main view class `Ngular.View` and other classes that don't need
+  the fully functionaltiy of `Ngular.View`.
 
-  Unless you have specific needs for `CoreView`, you will use `Ember.View`
+  Unless you have specific needs for `CoreView`, you will use `Ngular.View`
   in your applications.
 
   @class CoreView
-  @namespace Ember
-  @extends Ember.Object
-  @deprecated Use `Ember.View` instead.
-  @uses Ember.Evented
-  @uses Ember.ActionHandler
+  @namespace Ngular
+  @extends Ngular.Object
+  @deprecated Use `Ngular.View` instead.
+  @uses Ngular.Evented
+  @uses Ngular.ActionHandler
 */
-var CoreView = EmberObject.extend(Evented, ActionHandler, {
+var CoreView = NgularObject.extend(Evented, ActionHandler, {
   isView: true,
   isVirtual: false,
 
@@ -63,7 +63,7 @@ var CoreView = EmberObject.extend(Evented, ActionHandler, {
     property will point to the parent of the view.
 
     @property parentView
-    @type Ember.View
+    @type Ngular.View
     @default null
   */
   parentView: computed('_parentView', function() {
@@ -98,7 +98,7 @@ var CoreView = EmberObject.extend(Evented, ActionHandler, {
   },
 
   /**
-    Override the default event firing from `Ember.Evented` to
+    Override the default event firing from `Ngular.Evented` to
     also call methods with the given name.
 
     @method trigger
@@ -156,7 +156,7 @@ CoreView.reopenClass({
 
 export var DeprecatedCoreView = CoreView.extend({
   init() {
-    Ember.deprecate('Ember.CoreView is deprecated. Please use Ember.View.', false);
+    Ngular.deprecate('Ngular.CoreView is deprecated. Please use Ngular.View.', false);
     this._super.apply(this, arguments);
   }
 });

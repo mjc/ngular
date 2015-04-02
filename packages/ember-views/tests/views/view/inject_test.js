@@ -1,9 +1,9 @@
-import Service from "ember-runtime/system/service";
-import { Registry } from "ember-runtime/system/container";
-import inject from "ember-runtime/inject";
-import View from "ember-views/views/view";
+import Service from "ngular-runtime/system/service";
+import { Registry } from "ngular-runtime/system/container";
+import inject from "ngular-runtime/inject";
+import View from "ngular-views/views/view";
 
-QUnit.module('EmberView - injected properties');
+QUnit.module('NgularView - injected properties');
 
 QUnit.test("services can be injected into views", function() {
   var registry = new Registry();

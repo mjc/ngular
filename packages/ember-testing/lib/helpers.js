@@ -1,14 +1,14 @@
-import Ember from "ember-metal/core";
-import { get } from "ember-metal/property_get";
-import EmberError from "ember-metal/error";
-import run from "ember-metal/run_loop";
-import jQuery from "ember-views/system/jquery";
-import Test from "ember-testing/test";
-import RSVP from "ember-runtime/ext/rsvp";
+import Ngular from "ngular-metal/core";
+import { get } from "ngular-metal/property_get";
+import NgularError from "ngular-metal/error";
+import run from "ngular-metal/run_loop";
+import jQuery from "ngular-views/system/jquery";
+import Test from "ngular-testing/test";
+import RSVP from "ngular-runtime/ext/rsvp";
 
 /**
-* @module ember
-* @submodule ember-testing
+* @module ngular
+* @submodule ngular-testing
 */
 
 var helper = Test.registerHelper;
@@ -34,7 +34,7 @@ function currentURL(app) {
 
 function pauseTest() {
   Test.adapter.asyncStart();
-  return new Ember.RSVP.Promise(function() { }, 'TestAdapter paused promise');
+  return new Ngular.RSVP.Promise(function() { }, 'TestAdapter paused promise');
 }
 
 function focus(el) {
@@ -86,7 +86,7 @@ function check(app, selector, context) {
   var $el = app.testHelpers.findWithAssert(selector, context);
   var type = $el.prop('type');
 
-  Ember.assert('To check \'' + selector +
+  Ngular.assert('To check \'' + selector +
       '\', the input must be a checkbox', type === 'checkbox');
 
   if (!$el.prop('checked')) {
@@ -100,7 +100,7 @@ function uncheck(app, selector, context) {
   var $el = app.testHelpers.findWithAssert(selector, context);
   var type = $el.prop('type');
 
-  Ember.assert('To uncheck \'' + selector +
+  Ngular.assert('To uncheck \'' + selector +
       '\', the input must be a checkbox', type === 'checkbox');
 
   if ($el.prop('checked')) {
@@ -181,7 +181,7 @@ function fillIn(app, selector, contextOrText, text) {
 function findWithAssert(app, selector, context) {
   var $el = app.testHelpers.find(selector, context);
   if ($el.length === 0) {
-    throw new EmberError("Element " + selector + " not found.");
+    throw new NgularError("Element " + selector + " not found.");
   }
   return $el;
 }
@@ -268,14 +268,14 @@ asyncHelper('visit', visit);
 */
 asyncHelper('click', click);
 
-if (Ember.FEATURES.isEnabled('ember-testing-checkbox-helpers')) {
+if (Ngular.FEATURES.isEnabled('ngular-testing-checkbox-helpers')) {
   /**
   * Checks a checkbox. Ensures the presence of the `checked` attribute
   *
   * Example:
   *
   * ```javascript
-  * check('#remember-me').then(function() {
+  * check('#remngular-me').then(function() {
   *   // assert something
   * });
   * ```
@@ -293,7 +293,7 @@ if (Ember.FEATURES.isEnabled('ember-testing-checkbox-helpers')) {
   * Example:
   *
   * ```javascript
-  * uncheck('#remember-me').then(function() {
+  * uncheck('#remngular-me').then(function() {
   *   // assert something
   * });
   * ```
@@ -387,7 +387,7 @@ helper('findWithAssert', findWithAssert);
   Example:
 
   ```javascript
-  Ember.Test.registerAsyncHelper('loginUser', function(app, username, password) {
+  Ngular.Test.registerAsyncHelper('loginUser', function(app, username, password) {
     visit('secured/path/here')
     .fillIn('#username', username)
     .fillIn('#password', password)

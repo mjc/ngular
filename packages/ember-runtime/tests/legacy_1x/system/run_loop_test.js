@@ -1,8 +1,8 @@
-import {observer as emberObserver} from 'ember-metal/mixin';
-import run from "ember-metal/run_loop";
-import {Binding} from "ember-metal/binding";
-import Observable from "ember-runtime/mixins/observable";
-import EmberObject from 'ember-runtime/system/object';
+import {observer as ngularObserver} from 'ngular-metal/mixin';
+import run from "ngular-metal/run_loop";
+import {Binding} from "ngular-metal/binding";
+import Observable from "ngular-runtime/mixins/observable";
+import NgularObject from 'ngular-runtime/system/object';
 
 /*
   NOTE: This test is adapted from the 1.x series of unit tests.  The tests
@@ -23,27 +23,27 @@ var MyApp, binding1, binding2;
 QUnit.module("System:run_loop() - chained binding", {
   setup() {
     MyApp = {};
-    MyApp.first = EmberObject.createWithMixins(Observable, {
+    MyApp.first = NgularObject.createWithMixins(Observable, {
       output: 'MyApp.first'
     });
 
-    MyApp.second = EmberObject.createWithMixins(Observable, {
+    MyApp.second = NgularObject.createWithMixins(Observable, {
       input: 'MyApp.second',
       output: 'MyApp.second',
 
-      inputDidChange: emberObserver("input", function() {
+      inputDidChange: ngularObserver("input", function() {
         this.set("output", this.get("input"));
       })
 
     });
 
-    MyApp.third = EmberObject.createWithMixins(Observable, {
+    MyApp.third = NgularObject.createWithMixins(Observable, {
       input: "MyApp.third"
     });
   }
 });
 
-QUnit.test("Should propagate bindings after the RunLoop completes (using Ember.RunLoop)", function() {
+QUnit.test("Should propagate bindings after the RunLoop completes (using Ngular.RunLoop)", function() {
   run(function () {
 
     //Binding of output of MyApp.first object to input of MyApp.second object

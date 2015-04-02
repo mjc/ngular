@@ -1,18 +1,18 @@
 /**
-@module ember
-@submodule ember-htmlbars
+@module ngular
+@submodule ngular-htmlbars
 */
 
-import Ember from "ember-metal/core"; // Ember.warn, Ember.assert
-import { read } from "ember-metal/streams/utils";
-import { readViewFactory } from "ember-views/streams/utils";
-import View from "ember-views/views/view";
-import mergeViewBindings from "ember-htmlbars/system/merge-view-bindings";
-import appendTemplatedView from "ember-htmlbars/system/append-templated-view";
+import Ngular from "ngular-metal/core"; // Ngular.warn, Ngular.assert
+import { read } from "ngular-metal/streams/utils";
+import { readViewFactory } from "ngular-views/streams/utils";
+import View from "ngular-views/views/view";
+import mergeViewBindings from "ngular-htmlbars/system/merge-view-bindings";
+import appendTemplatedView from "ngular-htmlbars/system/append-templated-view";
 
 /**
-  `{{view}}` inserts a new instance of an `Ember.View` into a template passing its
-  options to the `Ember.View`'s `create` method and using the supplied block as
+  `{{view}}` inserts a new instance of an `Ngular.View` into a template passing its
+  options to the `Ngular.View`'s `create` method and using the supplied block as
   the view's own template.
 
   An empty `<body>` and the following template:
@@ -29,12 +29,12 @@ import appendTemplatedView from "ember-htmlbars/system/append-templated-view";
   ```html
   <body>
     <!-- Note: the handlebars template script
-         also results in a rendered Ember.View
+         also results in a rendered Ngular.View
          which is the outer <div> here -->
 
-    <div class="ember-view">
+    <div class="ngular-view">
       A span:
-      <span id="ember1" class="ember-view">
+      <span id="ngular1" class="ngular-view">
         Hello.
       </span>
     </div>
@@ -43,13 +43,13 @@ import appendTemplatedView from "ember-htmlbars/system/append-templated-view";
 
   ### `parentView` setting
 
-  The `parentView` property of the new `Ember.View` instance created through
-  `{{view}}` will be set to the `Ember.View` instance of the template where
+  The `parentView` property of the new `Ngular.View` instance created through
+  `{{view}}` will be set to the `Ngular.View` instance of the template where
   `{{view}}` was called.
 
   ```javascript
-  aView = Ember.View.create({
-    template: Ember.Handlebars.compile("{{#view}} my parent: {{parentView.elementId}} {{/view}}")
+  aView = Ngular.View.create({
+    template: Ngular.Handlebars.compile("{{#view}} my parent: {{parentView.elementId}} {{/view}}")
   });
 
   aView.appendTo('body');
@@ -58,9 +58,9 @@ import appendTemplatedView from "ember-htmlbars/system/append-templated-view";
   Will result in HTML structure:
 
   ```html
-  <div id="ember1" class="ember-view">
-    <div id="ember2" class="ember-view">
-      my parent: ember1
+  <div id="ngular1" class="ngular-view">
+    <div id="ngular2" class="ngular-view">
+      my parent: ngular1
     </div>
   </div>
   ```
@@ -68,7 +68,7 @@ import appendTemplatedView from "ember-htmlbars/system/append-templated-view";
   ### Setting CSS id and class attributes
 
   The HTML `id` attribute can be set on the `{{view}}`'s resulting element with
-  the `id` option. This option will _not_ be passed to `Ember.View.create`.
+  the `id` option. This option will _not_ be passed to `Ngular.View.create`.
 
   ```handlebars
   {{#view tagName="span" id="a-custom-id"}}
@@ -79,8 +79,8 @@ import appendTemplatedView from "ember-htmlbars/system/append-templated-view";
   Results in the following HTML structure:
 
   ```html
-  <div class="ember-view">
-    <span id="a-custom-id" class="ember-view">
+  <div class="ngular-view">
+    <span id="a-custom-id" class="ngular-view">
       hello.
     </span>
   </div>
@@ -89,8 +89,8 @@ import appendTemplatedView from "ember-htmlbars/system/append-templated-view";
   The HTML `class` attribute can be set on the `{{view}}`'s resulting element
   with the `class` or `classNameBindings` options. The `class` option will
   directly set the CSS `class` attribute and will not be passed to
-  `Ember.View.create`. `classNameBindings` will be passed to `create` and use
-  `Ember.View`'s class name binding functionality:
+  `Ngular.View.create`. `classNameBindings` will be passed to `create` and use
+  `Ngular.View`'s class name binding functionality:
 
   ```handlebars
   {{#view tagName="span" class="a-custom-class"}}
@@ -101,8 +101,8 @@ import appendTemplatedView from "ember-htmlbars/system/append-templated-view";
   Results in the following HTML structure:
 
   ```html
-  <div class="ember-view">
-    <span id="ember2" class="ember-view a-custom-class">
+  <div class="ngular-view">
+    <span id="ngular2" class="ngular-view a-custom-class">
       hello.
     </span>
   </div>
@@ -123,12 +123,12 @@ import appendTemplatedView from "ember-htmlbars/system/append-templated-view";
   context.
 
   ```javascript
-  MyApp = Ember.Application.create({});
-  MyApp.OuterView = Ember.View.extend({
-    innerViewClass: Ember.View.extend({
+  MyApp = Ngular.Application.create({});
+  MyApp.OuterView = Ngular.View.extend({
+    innerViewClass: Ngular.View.extend({
       classNames: ['a-custom-view-class-as-property']
     }),
-    template: Ember.Handlebars.compile('{{#view view.innerViewClass}} hi {{/view}}')
+    template: Ngular.Handlebars.compile('{{#view view.innerViewClass}} hi {{/view}}')
   });
 
   MyApp.OuterView.create().appendTo('body');
@@ -137,8 +137,8 @@ import appendTemplatedView from "ember-htmlbars/system/append-templated-view";
   Will result in the following HTML:
 
   ```html
-  <div id="ember1" class="ember-view">
-    <div id="ember2" class="ember-view a-custom-view-class-as-property">
+  <div id="ngular1" class="ngular-view">
+    <div id="ngular2" class="ngular-view a-custom-view-class-as-property">
       hi
     </div>
   </div>
@@ -146,14 +146,14 @@ import appendTemplatedView from "ember-htmlbars/system/append-templated-view";
 
   ### Blockless use
 
-  If you supply a custom `Ember.View` subclass that specifies its own template
+  If you supply a custom `Ngular.View` subclass that specifies its own template
   or provide a `templateName` option to `{{view}}` it can be used without
   supplying a block. Attempts to use both a `templateName` option and supply a
   block will throw an error.
 
   ```javascript
-  var App = Ember.Application.create();
-  App.WithTemplateDefinedView = Ember.View.extend({
+  var App = Ngular.Application.create();
+  App.WithTemplateDefinedView = Ngular.View.extend({
     templateName: 'defined-template'
   });
   ```
@@ -170,23 +170,23 @@ import appendTemplatedView from "ember-htmlbars/system/append-templated-view";
 
   ### `viewName` property
 
-  You can supply a `viewName` option to `{{view}}`. The `Ember.View` instance
+  You can supply a `viewName` option to `{{view}}`. The `Ngular.View` instance
   will be referenced as a property of its parent view by this name.
 
   ```javascript
-  aView = Ember.View.create({
-    template: Ember.Handlebars.compile('{{#view viewName="aChildByName"}} hi {{/view}}')
+  aView = Ngular.View.create({
+    template: Ngular.Handlebars.compile('{{#view viewName="aChildByName"}} hi {{/view}}')
   });
 
   aView.appendTo('body');
-  aView.get('aChildByName') // the instance of Ember.View created by {{view}} helper
+  aView.get('aChildByName') // the instance of Ngular.View created by {{view}} helper
   ```
 
   @method view
-  @for Ember.Handlebars.helpers
+  @for Ngular.Handlebars.helpers
 */
 export function viewHelper(params, hash, options, env) {
-  Ember.assert(
+  Ngular.assert(
     "The `view` helper expects zero or one arguments.",
     params.length <= 2
   );

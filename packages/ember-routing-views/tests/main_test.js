@@ -1,8 +1,8 @@
-import Ember from 'ember-metal/core';
+import Ngular from 'ngular-metal/core';
 
-QUnit.module("ember-routing-views");
+QUnit.module("ngular-routing-views");
 
 QUnit.test("exports correctly", function() {
-  ok(Ember.LinkView, "LinkView is exported correctly");
-  ok(Ember.OutletView, "OutletView is exported correctly");
+  ok(Ngular.LinkView, "LinkView is exported correctly");
+  ok(Ngular.OutletView, "OutletView is exported correctly");
 });

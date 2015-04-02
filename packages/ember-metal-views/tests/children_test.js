@@ -3,9 +3,9 @@ import {
   equalHTML,
   subject,
   testsFor
-} from "ember-metal-views/tests/test_helpers";
+} from "ngular-metal-views/tests/test_helpers";
 
-testsFor("ember-metal-views - children");
+testsFor("ngular-metal-views - children");
 
 QUnit.test("a view can have child views", function() {
   var view = {

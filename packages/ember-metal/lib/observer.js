@@ -1,17 +1,17 @@
 import {
   watch,
   unwatch
-} from "ember-metal/watching";
-import { map } from "ember-metal/array";
+} from "ngular-metal/watching";
+import { map } from "ngular-metal/array";
 import {
   listenersFor,
   addListener,
   removeListener,
   suspendListeners,
   suspendListener
-} from "ember-metal/events";
+} from "ngular-metal/events";
 /**
-@module ember-metal
+@module ngular-metal
 */
 
 var AFTER_OBSERVERS = ':change';
@@ -27,7 +27,7 @@ function beforeEvent(keyName) {
 
 /**
   @method addObserver
-  @for Ember
+  @for Ngular
   @param obj
   @param {String} path
   @param {Object|Function} targetOrMethod
@@ -46,7 +46,7 @@ export function observersFor(obj, path) {
 
 /**
   @method removeObserver
-  @for Ember
+  @for Ngular
   @param obj
   @param {String} path
   @param {Object|Function} target
@@ -61,7 +61,7 @@ export function removeObserver(obj, path, target, method) {
 
 /**
   @method addBeforeObserver
-  @for Ember
+  @for Ngular
   @param obj
   @param {String} path
   @param {Object|Function} target
@@ -102,7 +102,7 @@ export function beforeObserversFor(obj, path) {
 
 /**
   @method removeBeforeObserver
-  @for Ember
+  @for Ngular
   @param obj
   @param {String} path
   @param {Object|Function} target

@@ -1,13 +1,13 @@
-import {typeOf} from "ember-metal/utils";
-import EmberObject from "ember-runtime/system/object";
+import {typeOf} from "ngular-metal/utils";
+import NgularObject from "ngular-runtime/system/object";
 
-QUnit.module("Ember Type Checking");
+QUnit.module("Ngular Type Checking");
 
-QUnit.test("Ember.typeOf", function() {
+QUnit.test("Ngular.typeOf", function() {
   var a = null;
   var arr = [1,2,3];
   var obj = {};
-  var object = EmberObject.create({ method() {} });
+  var object = NgularObject.create({ method() {} });
 
   equal(typeOf(undefined), 'undefined', "item of type undefined");
   equal(typeOf(a), 'null', "item of type null");
@@ -15,6 +15,6 @@ QUnit.test("Ember.typeOf", function() {
   equal(typeOf(obj), 'object', "item of type object");
   equal(typeOf(object), 'instance', "item of type instance");
   equal(typeOf(object.method), 'function', "item of type function");
-  equal(typeOf(EmberObject), 'class', "item of type class");
+  equal(typeOf(NgularObject), 'class', "item of type class");
   equal(typeOf(new Error()), 'error', "item of type error");
 });

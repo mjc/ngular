@@ -1,24 +1,24 @@
 /**
-@module ember
-@submodule ember-runtime
+@module ngular
+@submodule ngular-runtime
 */
 
-import CoreObject from "ember-runtime/system/core_object";
-import Observable from "ember-runtime/mixins/observable";
+import CoreObject from "ngular-runtime/system/core_object";
+import Observable from "ngular-runtime/mixins/observable";
 
 /**
-  `Ember.Object` is the main base class for all Ember objects. It is a subclass
-  of `Ember.CoreObject` with the `Ember.Observable` mixin applied. For details,
+  `Ngular.Object` is the main base class for all Ngular objects. It is a subclass
+  of `Ngular.CoreObject` with the `Ngular.Observable` mixin applied. For details,
   see the documentation for each of these.
 
   @class Object
-  @namespace Ember
-  @extends Ember.CoreObject
-  @uses Ember.Observable
+  @namespace Ngular
+  @extends Ngular.CoreObject
+  @uses Ngular.Observable
 */
-var EmberObject = CoreObject.extend(Observable);
-EmberObject.toString = function() {
-  return "Ember.Object";
+var NgularObject = CoreObject.extend(Observable);
+NgularObject.toString = function() {
+  return "Ngular.Object";
 };
 
-export default EmberObject;
+export default NgularObject;

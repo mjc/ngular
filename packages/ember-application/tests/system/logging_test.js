@@ -1,25 +1,25 @@
-/*globals EmberDev */
+/*globals NgularDev */
 
-import run from "ember-metal/run_loop";
-import Application from "ember-application/system/application";
-import View from "ember-views/views/view";
-import Controller from "ember-runtime/controllers/controller";
-import Route from "ember-routing/system/route";
-import RSVP from "ember-runtime/ext/rsvp";
-import keys from "ember-metal/keys";
-import compile from "ember-template-compiler/system/compile";
+import run from "ngular-metal/run_loop";
+import Application from "ngular-application/system/application";
+import View from "ngular-views/views/view";
+import Controller from "ngular-runtime/controllers/controller";
+import Route from "ngular-routing/system/route";
+import RSVP from "ngular-runtime/ext/rsvp";
+import keys from "ngular-metal/keys";
+import compile from "ngular-template-compiler/system/compile";
 
-import "ember-routing";
+import "ngular-routing";
 
 var App, logs, originalLogger;
 
-QUnit.module("Ember.Application – logging of generated classes", {
+QUnit.module("Ngular.Application – logging of generated classes", {
   setup() {
     logs = {};
 
-    originalLogger = Ember.Logger.info;
+    originalLogger = Ngular.Logger.info;
 
-    Ember.Logger.info = function() {
+    Ngular.Logger.info = function() {
       var fullName = arguments[1].fullName;
 
       logs[fullName] = logs[fullName] || 0;
@@ -44,7 +44,7 @@ QUnit.module("Ember.Application – logging of generated classes", {
   },
 
   teardown() {
-    Ember.Logger.info = originalLogger;
+    Ngular.Logger.info = originalLogger;
 
     run(App, 'destroy');
 
@@ -79,7 +79,7 @@ function visit(path) {
 }
 
 QUnit.test("log class generation if logging enabled", function() {
-  if (EmberDev && EmberDev.runningProdBuild) {
+  if (NgularDev && NgularDev.runningProdBuild) {
     ok(true, 'Logging does not occur in production builds');
     return;
   }
@@ -87,7 +87,7 @@ QUnit.test("log class generation if logging enabled", function() {
   run(App, 'advanceReadiness');
 
   visit('/posts').then(function() {
-    equal(Ember.keys(logs).length, 6, 'expected logs');
+    equal(Ngular.keys(logs).length, 6, 'expected logs');
   });
 });
 
@@ -104,7 +104,7 @@ QUnit.test("do NOT log class generation if logging disabled", function() {
 });
 
 QUnit.test("actively generated classes get logged", function() {
-  if (EmberDev && EmberDev.runningProdBuild) {
+  if (NgularDev && NgularDev.runningProdBuild) {
     ok(true, 'Logging does not occur in production builds');
     return;
   }
@@ -138,13 +138,13 @@ QUnit.test("predefined classes do not get logged", function() {
   });
 });
 
-QUnit.module("Ember.Application – logging of view lookups", {
+QUnit.module("Ngular.Application – logging of view lookups", {
   setup() {
     logs = {};
 
-    originalLogger = Ember.Logger.info;
+    originalLogger = Ngular.Logger.info;
 
-    Ember.Logger.info = function() {
+    Ngular.Logger.info = function() {
       var fullName = arguments[1].fullName;
 
       logs[fullName] = logs[fullName] || 0;
@@ -169,7 +169,7 @@ QUnit.module("Ember.Application – logging of view lookups", {
   },
 
   teardown() {
-    Ember.Logger.info = originalLogger;
+    Ngular.Logger.info = originalLogger;
 
     run(App, 'destroy');
 
@@ -178,7 +178,7 @@ QUnit.module("Ember.Application – logging of view lookups", {
 });
 
 QUnit.test("log when template and view are missing when flag is active", function() {
-  if (EmberDev && EmberDev.runningProdBuild) {
+  if (NgularDev && NgularDev.runningProdBuild) {
     ok(true, 'Logging does not occur in production builds');
     return;
   }
@@ -206,7 +206,7 @@ QUnit.test("do not log when template and view are missing when flag is not true"
 });
 
 QUnit.test("log which view is used with a template", function() {
-  if (EmberDev && EmberDev.runningProdBuild) {
+  if (NgularDev && NgularDev.runningProdBuild) {
     ok(true, 'Logging does not occur in production builds');
     return;
   }

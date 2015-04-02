@@ -1,9 +1,9 @@
 /* global Promise:true */
 
-import run from "ember-metal/run_loop";
-import RSVP from "ember-runtime/ext/rsvp";
+import run from "ngular-metal/run_loop";
+import RSVP from "ngular-runtime/ext/rsvp";
 
-QUnit.module('Ember.RSVP');
+QUnit.module('Ngular.RSVP');
 
 QUnit.test('Ensure that errors thrown from within a promise are sent to the console', function() {
   var error = new Error('Error thrown in a promise for testing purposes.');
@@ -24,15 +24,15 @@ var asyncStarted = 0;
 var asyncEnded = 0;
 var Promise = RSVP.Promise;
 
-var EmberTest;
-var EmberTesting;
+var NgularTest;
+var NgularTesting;
 
 QUnit.module("Deferred RSVP's async + Testing", {
   setup() {
-    EmberTest = Ember.Test;
-    EmberTesting = Ember.testing;
+    NgularTest = Ngular.Test;
+    NgularTesting = Ngular.testing;
 
-    Ember.Test = {
+    Ngular.Test = {
       adapter: {
         asyncStart() {
           asyncStarted++;
@@ -49,17 +49,17 @@ QUnit.module("Deferred RSVP's async + Testing", {
     asyncStarted = 0;
     asyncEnded = 0;
 
-    Ember.testing = EmberTesting;
-    Ember.Test =  EmberTest;
+    Ngular.testing = NgularTesting;
+    Ngular.Test =  NgularTest;
   }
 });
 
-QUnit.test("given `Ember.testing = true`, correctly informs the test suite about async steps", function() {
+QUnit.test("given `Ngular.testing = true`, correctly informs the test suite about async steps", function() {
   expect(19);
 
   ok(!run.currentRunLoop, 'expect no run-loop');
 
-  Ember.testing = true;
+  Ngular.testing = true;
 
   equal(asyncStarted, 0);
   equal(asyncEnded, 0);
@@ -121,12 +121,12 @@ QUnit.test('TransitionAborted errors are not re-thrown', function() {
 QUnit.test('rejections like jqXHR which have errorThrown property work', function() {
   expect(2);
 
-  var wasEmberTesting = Ember.testing;
-  var wasOnError      = Ember.onerror;
+  var wasNgularTesting = Ngular.testing;
+  var wasOnError      = Ngular.onerror;
 
   try {
-    Ember.testing = false;
-    Ember.onerror = function(error) {
+    Ngular.testing = false;
+    Ngular.onerror = function(error) {
       equal(error, actualError, 'expected the real error on the jqXHR');
       equal(error.__reason_with_error_thrown__, jqXHR, 'also retains a helpful reference to the rejection reason');
     };
@@ -138,8 +138,8 @@ QUnit.test('rejections like jqXHR which have errorThrown property work', functio
 
     run(RSVP, 'reject', jqXHR);
   } finally {
-    Ember.onerror = wasOnError;
-    Ember.testing = wasEmberTesting;
+    Ngular.onerror = wasOnError;
+    Ngular.testing = wasNgularTesting;
   }
 });
 
@@ -147,12 +147,12 @@ QUnit.test('rejections like jqXHR which have errorThrown property work', functio
 QUnit.test('rejections where the errorThrown is a string should wrap the sting in an error object', function() {
   expect(2);
 
-  var wasEmberTesting = Ember.testing;
-  var wasOnError      = Ember.onerror;
+  var wasNgularTesting = Ngular.testing;
+  var wasOnError      = Ngular.onerror;
 
   try {
-    Ember.testing = false;
-    Ember.onerror = function(error) {
+    Ngular.testing = false;
+    Ngular.onerror = function(error) {
       equal(error.message, actualError, 'expected the real error on the jqXHR');
       equal(error.__reason_with_error_thrown__, jqXHR, 'also retains a helpful reference to the rejection reason');
     };
@@ -164,7 +164,7 @@ QUnit.test('rejections where the errorThrown is a string should wrap the sting i
 
     run(RSVP, 'reject', jqXHR);
   } finally {
-    Ember.onerror = wasOnError;
-    Ember.testing = wasEmberTesting;
+    Ngular.onerror = wasOnError;
+    Ngular.testing = wasNgularTesting;
   }
 });

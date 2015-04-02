@@ -1,28 +1,28 @@
 /*jshint newcap:false*/
-import EmberView from "ember-views/views/view";
-import run from "ember-metal/run_loop";
-import EmberObject from "ember-runtime/system/object";
-import { computed } from "ember-metal/computed";
-import { set } from "ember-metal/property_set";
-import { get } from "ember-metal/property_get";
-import ObjectController from "ember-runtime/controllers/object_controller";
+import NgularView from "ngular-views/views/view";
+import run from "ngular-metal/run_loop";
+import NgularObject from "ngular-runtime/system/object";
+import { computed } from "ngular-metal/computed";
+import { set } from "ngular-metal/property_set";
+import { get } from "ngular-metal/property_get";
+import ObjectController from "ngular-runtime/controllers/object_controller";
 import {
   objectControllerDeprecation
-} from "ember-runtime/controllers/object_controller";
-import EmberController from 'ember-runtime/controllers/controller';
-import { Registry } from "ember-runtime/system/container";
-import compile from "ember-template-compiler/system/compile";
-import { runAppend, runDestroy } from "ember-runtime/tests/utils";
+} from "ngular-runtime/controllers/object_controller";
+import NgularController from 'ngular-runtime/controllers/controller';
+import { Registry } from "ngular-runtime/system/container";
+import compile from "ngular-template-compiler/system/compile";
+import { runAppend, runDestroy } from "ngular-runtime/tests/utils";
 
 var view, lookup;
-var originalLookup = Ember.lookup;
+var originalLookup = Ngular.lookup;
 
 function testWithAs(moduleName, templateString) {
   QUnit.module(moduleName, {
     setup() {
-      Ember.lookup = lookup = { Ember: Ember };
+      Ngular.lookup = lookup = { Ngular: Ngular };
 
-      view = EmberView.create({
+      view = NgularView.create({
         template: compile(templateString),
         context: {
           title: "Señor Engineer",
@@ -35,7 +35,7 @@ function testWithAs(moduleName, templateString) {
 
     teardown() {
       runDestroy(view);
-      Ember.lookup = originalLookup;
+      Ngular.lookup = originalLookup;
     }
   });
 
@@ -72,13 +72,13 @@ function testWithAs(moduleName, templateString) {
   });
 }
 
-testWithAs("ember-htmlbars: {{#with}} helper", "{{#with person as tom}}{{title}}: {{tom.name}}{{/with}}");
+testWithAs("ngular-htmlbars: {{#with}} helper", "{{#with person as tom}}{{title}}: {{tom.name}}{{/with}}");
 
 QUnit.module("Multiple Handlebars {{with foo as bar}} helpers", {
   setup() {
-    Ember.lookup = lookup = { Ember: Ember };
+    Ngular.lookup = lookup = { Ngular: Ngular };
 
-    view = EmberView.create({
+    view = NgularView.create({
       template: compile("Admin: {{#with admin as person}}{{person.name}}{{/with}} User: {{#with user as person}}{{person.name}}{{/with}}"),
       context: {
         admin: { name: "Tom Dale" },
@@ -92,7 +92,7 @@ QUnit.module("Multiple Handlebars {{with foo as bar}} helpers", {
   teardown() {
     runDestroy(view);
 
-    Ember.lookup = originalLookup;
+    Ngular.lookup = originalLookup;
   }
 });
 
@@ -127,17 +127,17 @@ QUnit.test("nested {{with}} blocks shadow the outer scoped variable properly.", 
 
 QUnit.module("Handlebars {{#with}} globals helper [DEPRECATED]", {
   setup() {
-    Ember.lookup = lookup = { Ember: Ember };
+    Ngular.lookup = lookup = { Ngular: Ngular };
 
     lookup.Foo = { bar: 'baz' };
-    view = EmberView.create({
+    view = NgularView.create({
       template: compile("{{#with Foo.bar as qux}}{{qux}}{{/with}}")
     });
   },
 
   teardown() {
     runDestroy(view);
-    Ember.lookup = originalLookup;
+    Ngular.lookup = originalLookup;
   }
 });
 
@@ -158,7 +158,7 @@ QUnit.test("it should support #with Foo.bar as qux [DEPRECATED]", function() {
 QUnit.module("Handlebars {{#with keyword as foo}}");
 
 QUnit.test("it should support #with view as foo", function() {
-  var view = EmberView.create({
+  var view = NgularView.create({
     template: compile("{{#with view as myView}}{{myView.name}}{{/with}}"),
     name: "Sonics"
   });
@@ -176,7 +176,7 @@ QUnit.test("it should support #with view as foo", function() {
 });
 
 QUnit.test("it should support #with name as food, then #with foo as bar", function() {
-  var view = EmberView.create({
+  var view = NgularView.create({
     template: compile("{{#with name as foo}}{{#with foo as bar}}{{bar}}{{/with}}{{/with}}"),
     context: { name: "caterpillar" }
   });
@@ -196,9 +196,9 @@ QUnit.test("it should support #with name as food, then #with foo as bar", functi
 QUnit.module("Handlebars {{#with this as foo}}");
 
 QUnit.test("it should support #with this as qux", function() {
-  var view = EmberView.create({
+  var view = NgularView.create({
     template: compile("{{#with this as person}}{{person.name}}{{/with}}"),
-    controller: EmberObject.create({ name: "Los Pivots" })
+    controller: NgularObject.create({ name: "Los Pivots" })
   });
 
   runAppend(view);
@@ -224,16 +224,16 @@ QUnit.test("it should wrap context with object controller [DEPRECATED]", functio
     })
   });
 
-  var person = EmberObject.create({ name: 'Steve Holt' });
+  var person = NgularObject.create({ name: 'Steve Holt' });
   var registry = new Registry();
   var container = registry.container();
 
-  var parentController = EmberObject.create({
+  var parentController = NgularObject.create({
     container: container,
     name: 'Bob Loblaw'
   });
 
-  view = EmberView.create({
+  view = NgularView.create({
     container: container,
     template: compile('{{#with view.person controller="person"}}{{controllerName}}{{/with}}'),
     person: person,
@@ -285,13 +285,13 @@ QUnit.test("it should still have access to original parentController within an {
   var registry = new Registry();
   var container = registry.container();
 
-  var parentController = EmberObject.create({
+  var parentController = NgularObject.create({
     container: container,
     name: 'Bob Loblaw',
     people: people
   });
 
-  view = EmberView.create({
+  view = NgularView.create({
     container: container,
     template: compile('{{#each person in people}}{{#with person controller="person"}}{{controllerName}}{{/with}}{{/each}}'),
     controller: parentController
@@ -316,17 +316,17 @@ QUnit.test("it should wrap keyword with object controller [DEPRECATED]", functio
     })
   });
 
-  var person = EmberObject.create({ name: 'Steve Holt' });
+  var person = NgularObject.create({ name: 'Steve Holt' });
   var registry = new Registry();
   var container = registry.container();
 
-  var parentController = EmberObject.create({
+  var parentController = NgularObject.create({
     container: container,
     person: person,
     name: 'Bob Loblaw'
   });
 
-  view = EmberView.create({
+  view = NgularView.create({
     container: container,
     template: compile('{{#with person as steve controller="person"}}{{name}} - {{steve.name}}{{/with}}'),
     controller: parentController
@@ -363,24 +363,24 @@ QUnit.test("it should wrap keyword with object controller [DEPRECATED]", functio
 
 QUnit.test("destroys the controller generated with {{with foo controller='blah'}} [DEPRECATED]", function() {
   var destroyed = false;
-  var Controller = EmberController.extend({
+  var Controller = NgularController.extend({
     willDestroy() {
       this._super.apply(this, arguments);
       destroyed = true;
     }
   });
 
-  var person = EmberObject.create({ name: 'Steve Holt' });
+  var person = NgularObject.create({ name: 'Steve Holt' });
   var registry = new Registry();
   var container = registry.container();
 
-  var parentController = EmberObject.create({
+  var parentController = NgularObject.create({
     container: container,
     person: person,
     name: 'Bob Loblaw'
   });
 
-  view = EmberView.create({
+  view = NgularView.create({
     container: container,
     template: compile('{{#with person controller="person"}}{{controllerName}}{{/with}}'),
     controller: parentController
@@ -399,24 +399,24 @@ QUnit.test("destroys the controller generated with {{with foo controller='blah'}
 
 QUnit.test("destroys the controller generated with {{with foo as bar controller='blah'}}", function() {
   var destroyed = false;
-  var Controller = EmberController.extend({
+  var Controller = NgularController.extend({
     willDestroy() {
       this._super.apply(this, arguments);
       destroyed = true;
     }
   });
 
-  var person = EmberObject.create({ name: 'Steve Holt' });
+  var person = NgularObject.create({ name: 'Steve Holt' });
   var registry = new Registry();
   var container = registry.container();
 
-  var parentController = EmberObject.create({
+  var parentController = NgularObject.create({
     container: container,
     person: person,
     name: 'Bob Loblaw'
   });
 
-  view = EmberView.create({
+  view = NgularView.create({
     container: container,
     template: compile('{{#with person as steve controller="person"}}{{controllerName}}{{/with}}'),
     controller: parentController
@@ -433,9 +433,9 @@ QUnit.test("destroys the controller generated with {{with foo as bar controller=
 
 QUnit.module("{{#with}} helper binding to view keyword", {
   setup() {
-    Ember.lookup = lookup = { Ember: Ember };
+    Ngular.lookup = lookup = { Ngular: Ngular };
 
-    view = EmberView.create({
+    view = NgularView.create({
       template: compile("We have: {{#with view.thing as fromView}}{{fromView.name}} and {{fromContext.name}}{{/with}}"),
       thing: { name: 'this is from the view' },
       context: {
@@ -448,7 +448,7 @@ QUnit.module("{{#with}} helper binding to view keyword", {
 
   teardown() {
     runDestroy(view);
-    Ember.lookup = originalLookup;
+    Ngular.lookup = originalLookup;
   }
 });
 
@@ -456,13 +456,13 @@ QUnit.test("{{with}} helper can bind to keywords with 'as'", function() {
   equal(view.$().text(), "We have: this is from the view and this is from the context", "should render");
 });
 
-testWithAs("ember-htmlbars: {{#with x as |y|}}", "{{#with person as |tom|}}{{title}}: {{tom.name}}{{/with}}");
+testWithAs("ngular-htmlbars: {{#with x as |y|}}", "{{#with person as |tom|}}{{title}}: {{tom.name}}{{/with}}");
 
 QUnit.module("Multiple Handlebars {{with foo as |bar|}} helpers", {
   setup() {
-    Ember.lookup = lookup = { Ember: Ember };
+    Ngular.lookup = lookup = { Ngular: Ngular };
 
-    view = EmberView.create({
+    view = NgularView.create({
       template: compile("Admin: {{#with admin as |person|}}{{person.name}}{{/with}} User: {{#with user as |person|}}{{person.name}}{{/with}}"),
       context: {
         admin: { name: "Tom Dale" },
@@ -475,7 +475,7 @@ QUnit.module("Multiple Handlebars {{with foo as |bar|}} helpers", {
 
   teardown() {
     runDestroy(view);
-    Ember.lookup = originalLookup;
+    Ngular.lookup = originalLookup;
   }
 });
 
